@@ -329,6 +329,32 @@ python3 -m http.server 3000
 # then open http://localhost:3000/[cluster]/[cluster].html
 ```
 
+### Step 6 — Verify prototype (mandatory before presenting output)
+
+After generating, verify all files load correctly and there are no console errors:
+
+```bash
+# Check all referenced files exist
+grep -oE '(src|href)="[^"]+"' ~/doctolib/pf-design-factory/prototypes/[cluster]/[cluster].html | \
+  grep -v "^http" | sed 's/(src|href)="//g' | sed 's/"//g' | while read f; do
+    full="~/doctolib/pf-design-factory/prototypes/[cluster]/$f"
+    [ ! -f "$full" ] && echo "❌ MISSING: $f"
+  done
+
+# Check JSX files for obvious syntax errors
+node --input-type=module < ~/doctolib/pf-design-factory/prototypes/[cluster]/[cluster].app.jsx 2>&1 | grep -i error
+```
+
+Fix any missing files or errors before presenting the output. Most common issues:
+- Wrong relative path to boilerplate (`../../boilerplate/preview/` not `./` or absolute)
+- Component imported but not defined
+- Missing required props on a component
+- JSX syntax error in generated code
+
+Only present the prototype to the user once it loads without errors.
+
+### Step 7 — Update master index
+
 Update `prototypes/index.html` with the new cluster:
 - Name, market/persona, feature count, date generated
 - Link to cluster entry point
