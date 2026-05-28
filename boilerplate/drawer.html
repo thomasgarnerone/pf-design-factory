@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Drawer</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=12">
+<style>
+body{padding:3.2rem;max-width:128rem;font-family:Roboto,sans-serif}
+h1{font:700 2.8rem/1.2 Montserrat,sans-serif;color:#192634;margin:0 0 .6rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:#4B739B;margin:0 0 1.4rem;font-weight:600;padding-bottom:.6rem;border-bottom:0.1rem solid #E4EDF6}
+.lede{color:#3A5978;font-size:1.4rem;line-height:1.5;margin:0 0 3rem;max-width:72rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2.4rem}
+.caption{font-family:'Roboto Mono',monospace;font-size:1.1rem;color:#6B91B8;display:flex;gap:.8rem;align-items:center}
+.caption code{background:#EEF3F8;color:#2351CC;padding:.2rem .6rem;border-radius:.4rem;font-size:1rem}
+.stage{position:relative;border:0.1rem solid #E4EDF6;border-radius:1.2rem;overflow:hidden;height:36rem;background:#F7FAFE}
+.stage--tall{height:44rem}
+.page-bg{position:absolute;inset:0;padding:1.6rem;color:#A7BBD0;font-size:1.2rem;line-height:1.5}
+.page-bg .row{height:1rem;background:#E4EDF6;border-radius:.4rem;margin-bottom:1rem}
+.page-bg .row.short{width:60%}
+.page-bg .row.medium{width:80%}
+.backdrop{position:absolute;inset:0;background:rgba(25,38,52,.35)}
+.drawer{position:absolute;background:#fff;display:flex;flex-direction:column;overflow:hidden}
+.drawer--right{top:0;right:0;bottom:0;width:32rem;box-shadow:-0.4rem 0 1.6rem rgba(0,0,0,.12)}
+.drawer--left{top:0;left:0;bottom:0;width:32rem;box-shadow:0.4rem 0 1.6rem rgba(0,0,0,.12)}
+.drawer--top{top:0;left:0;right:0;height:18rem;box-shadow:0 0.4rem 1.6rem rgba(0,0,0,.12)}
+.drawer--bottom{left:0;right:0;bottom:0;height:18rem;box-shadow:0 -0.4rem 1.6rem rgba(0,0,0,.12)}
+.drawer--no-bg{box-shadow:0 1rem 3rem rgba(25,38,52,.18)}
+.dh{padding:1.4rem 1.8rem;border-bottom:0.1rem solid #E4EDF6;display:flex;align-items:center;justify-content:space-between}
+.dh h3{font:700 1.6rem/1.3 Roboto;color:#192634;margin:0}
+.dx{background:none;border:none;cursor:pointer;padding:.2rem;color:#6B91B8;font-size:2rem;line-height:1}
+.dc{flex:1;padding:1.4rem 1.8rem;overflow:auto;color:#3A5978;font-size:1.3rem;line-height:1.5}
+.df{padding:1.2rem 1.8rem;border-top:0.1rem solid #E4EDF6;display:flex;justify-content:flex-end;gap:.6rem}
+.spec{font-family:'Roboto Mono',monospace;font-size:1.1rem;border-collapse:collapse;color:#3A5978}
+.spec td{padding:.4rem 2rem .4rem 0;vertical-align:top}
+.spec td:first-child{color:#6B91B8}
+</style></head>
+<body>
+
+<h1>Drawer</h1>
+<p class="lede">Side-sliding panel for secondary content — filters, details, settings, action sheets. Anchors to any of the four edges (<code>placement: 'right' | 'left' | 'top' | 'bottom'</code>) and renders with or without a scrim (<code>backdrop: boolean</code>) for non-modal use cases.</p>
+
+<!-- ============== PLACEMENTS WITH BACKDROP ============== -->
+<div class="section">
+  <h2>Placement — with backdrop (modal)</h2>
+  <div class="grid">
+
+    <!-- RIGHT -->
+    <div>
+      <div class="caption"><code>placement="right"</code><code>backdrop</code> · default</div>
+      <div class="stage" style="margin-top:.8rem">
+        <div class="page-bg"><div class="row medium"></div><div class="row short"></div><div class="row"></div><div class="row short"></div><div class="row medium"></div></div>
+        <div class="backdrop"></div>
+        <aside class="drawer drawer--right" role="dialog" aria-modal="true" aria-labelledby="dr-r-title">
+          <header class="dh"><h3 id="dr-r-title">Filter patients</h3><button class="dx" aria-label="Close">×</button></header>
+          <div class="dc">
+            <label style="display:block;font-size:1.1rem;color:#3A5978;font-weight:600;margin-bottom:.4rem">Status</label>
+            <select style="width:100%;height:3.6rem;border:0.1rem solid #C9D9E8;border-radius:.6rem;padding:0 1rem;margin-bottom:1.2rem;font-size:1.3rem"><option>All statuses</option></select>
+            <label style="display:block;font-size:1.1rem;color:#3A5978;font-weight:600;margin-bottom:.4rem">Age range</label>
+            <div style="display:flex;gap:.6rem"><input placeholder="Min" style="flex:1;height:3.6rem;border:0.1rem solid #C9D9E8;border-radius:.6rem;padding:0 1rem;font-size:1.3rem"><input placeholder="Max" style="flex:1;height:3.6rem;border:0.1rem solid #C9D9E8;border-radius:.6rem;padding:0 1rem;font-size:1.3rem"></div>
+          </div>
+          <footer class="df">
+            <button class="ox-button ox-button--variant-outlined ox-button--ui-neutral ox-button--size-small"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Reset</span></span></button>
+            <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-small"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Apply</span></span></button>
+          </footer>
+        </aside>
+      </div>
+    </div>
+
+    <!-- LEFT -->
+    <div>
+      <div class="caption"><code>placement="left"</code><code>backdrop</code></div>
+      <div class="stage" style="margin-top:.8rem">
+        <div class="page-bg"><div class="row medium"></div><div class="row short"></div><div class="row"></div><div class="row short"></div><div class="row medium"></div></div>
+        <div class="backdrop"></div>
+        <aside class="drawer drawer--left" role="dialog" aria-modal="true" aria-labelledby="dr-l-title">
+          <header class="dh"><h3 id="dr-l-title">Navigation</h3><button class="dx" aria-label="Close">×</button></header>
+          <div class="dc">
+            <div style="display:flex;flex-direction:column;gap:.4rem">
+              <div style="padding:.8rem 1rem;border-radius:.6rem;background:#EBF1FF;color:#2351CC;font-weight:600">Today</div>
+              <div style="padding:.8rem 1rem;border-radius:.6rem;color:#3A5978">Patients</div>
+              <div style="padding:.8rem 1rem;border-radius:.6rem;color:#3A5978">Messages</div>
+              <div style="padding:.8rem 1rem;border-radius:.6rem;color:#3A5978">Documents</div>
+              <div style="padding:.8rem 1rem;border-radius:.6rem;color:#3A5978">Settings</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- TOP -->
+    <div>
+      <div class="caption"><code>placement="top"</code><code>backdrop</code></div>
+      <div class="stage" style="margin-top:.8rem">
+        <div class="page-bg"><div class="row medium"></div><div class="row short"></div><div class="row"></div><div class="row short"></div><div class="row medium"></div></div>
+        <div class="backdrop"></div>
+        <aside class="drawer drawer--top" role="dialog" aria-modal="true" aria-labelledby="dr-t-title">
+          <header class="dh"><h3 id="dr-t-title">Quick search</h3><button class="dx" aria-label="Close">×</button></header>
+          <div class="dc"><input placeholder="Search patients, documents, messages…" style="width:100%;height:4rem;border:0.1rem solid #C9D9E8;border-radius:.6rem;padding:0 1.2rem;font-size:1.4rem"></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- BOTTOM -->
+    <div>
+      <div class="caption"><code>placement="bottom"</code><code>backdrop</code> · action sheet</div>
+      <div class="stage" style="margin-top:.8rem">
+        <div class="page-bg"><div class="row medium"></div><div class="row short"></div><div class="row"></div><div class="row short"></div><div class="row medium"></div></div>
+        <div class="backdrop"></div>
+        <aside class="drawer drawer--bottom" role="dialog" aria-modal="true" aria-labelledby="dr-b-title">
+          <header class="dh"><h3 id="dr-b-title">Reschedule appointment</h3><button class="dx" aria-label="Close">×</button></header>
+          <div class="dc">
+            <div style="display:flex;flex-direction:column;gap:.6rem">
+              <button style="text-align:left;padding:1rem 1.2rem;border-radius:.8rem;border:0.1rem solid #E4EDF6;background:#fff;cursor:pointer;font-size:1.3rem;color:#192634">Tomorrow · 10:30 AM</button>
+              <button style="text-align:left;padding:1rem 1.2rem;border-radius:.8rem;border:0.1rem solid #E4EDF6;background:#fff;cursor:pointer;font-size:1.3rem;color:#192634">Tomorrow · 2:15 PM</button>
+              <button style="text-align:left;padding:1rem 1.2rem;border-radius:.8rem;border:0.1rem solid #E4EDF6;background:#fff;cursor:pointer;font-size:1.3rem;color:#192634">Wed 30 · 9:00 AM</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============== NO BACKDROP ============== -->
+<div class="section">
+  <h2>No backdrop — non-modal (page stays interactive)</h2>
+  <div class="grid">
+
+    <!-- RIGHT NO-BG -->
+    <div>
+      <div class="caption"><code>placement="right"</code><code>backdrop={false}</code> · inspector pattern</div>
+      <div class="stage" style="margin-top:.8rem">
+        <div class="page-bg"><div class="row medium"></div><div class="row short"></div><div class="row"></div><div class="row short"></div><div class="row medium"></div><div class="row"></div></div>
+        <aside class="drawer drawer--right drawer--no-bg" role="complementary" aria-labelledby="dr-rn-title">
+          <header class="dh"><h3 id="dr-rn-title">Patient details</h3><button class="dx" aria-label="Close">×</button></header>
+          <div class="dc">
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem">
+              <div style="width:4rem;height:4rem;border-radius:50%;background:#EBF1FF;color:#2351CC;display:grid;place-items:center;font-weight:700">CM</div>
+              <div><div style="color:#192634;font-weight:600">Camille Martin</div><div style="color:#6B91B8;font-size:1.1rem">42 · F · DOB 12 Mar 1983</div></div>
+            </div>
+            <div style="font-size:1.1rem;color:#6B91B8;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.4rem">Last visit</div>
+            <div style="margin-bottom:1.2rem">17 Apr 2026 · Dr. Lemoine · routine</div>
+            <div style="font-size:1.1rem;color:#6B91B8;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.4rem">Allergies</div>
+            <div>Penicillin, latex</div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- BOTTOM NO-BG -->
+    <div>
+      <div class="caption"><code>placement="bottom"</code><code>backdrop={false}</code> · persistent banner</div>
+      <div class="stage" style="margin-top:.8rem">
+        <div class="page-bg"><div class="row medium"></div><div class="row short"></div><div class="row"></div><div class="row short"></div><div class="row medium"></div><div class="row"></div></div>
+        <aside class="drawer drawer--bottom drawer--no-bg" role="complementary" aria-labelledby="dr-bn-title" style="height:11rem">
+          <div class="dc" style="display:flex;align-items:center;justify-content:space-between;gap:1.2rem">
+            <div>
+              <div id="dr-bn-title" style="color:#192634;font-weight:600;margin-bottom:.2rem">3 patients selected</div>
+              <div style="color:#6B91B8;font-size:1.2rem">Choose a bulk action to apply</div>
+            </div>
+            <div style="display:flex;gap:.6rem">
+              <button class="ox-button ox-button--variant-outlined ox-button--ui-neutral ox-button--size-small"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Export CSV</span></span></button>
+              <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-small"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Send reminder</span></span></button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+  <tr><td>Placement</td><td><code>'right'</code> (default) · <code>'left'</code> · <code>'top'</code> · <code>'bottom'</code></td></tr>
+  <tr><td>Backdrop</td><td><code>backdrop?: boolean = true</code> — when <code>false</code>, no scrim is rendered and the page behind stays interactive (inspector / persistent banner pattern)</td></tr>
+  <tr><td>Modality</td><td>With backdrop → <code>role="dialog" aria-modal="true"</code> · Without → <code>role="complementary"</code></td></tr>
+  <tr><td>Size</td><td>Side drawers: <code>s</code> 32 rem · <code>m</code> 40 rem · <code>l</code> 56 rem · Top/Bottom: <code>auto</code> by content, max 60% of viewport</td></tr>
+  <tr><td>Motion</td><td>Slides in from its anchored edge · 240 ms cubic-bezier(.2,.8,.2,1) · scrim fades 200 ms</td></tr>
+  <tr><td>Scrim</td><td><code>rgba(25, 38, 52, .35)</code> · click to dismiss (when modal)</td></tr>
+  <tr><td>Source</td><td>overlays/Drawer/Drawer.{tsx,scss}</td></tr>
+</table></div>
+
+</body></html>

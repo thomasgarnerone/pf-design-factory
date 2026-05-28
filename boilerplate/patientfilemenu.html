@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · PatientFileMenu</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=13">
+<style>
+body{padding:3.2rem;max-width:140rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+.section > h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:74rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:74rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+
+.stage{padding:1.6rem;background:var(--oxygen-color-semantic-neutral-subtle-weaker);border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:1.2rem}
+
+.pfm{display:flex;flex-direction:column;gap:.8rem;height:54rem;min-height:0}
+.pfm.split{flex-direction:row;gap:.8rem}
+.pfm__main{display:flex;flex-direction:column;gap:.8rem;flex:1;min-width:0;height:100%}
+.pfm__side{min-width:32rem;width:32rem;flex-shrink:0;background:#fff;border-radius:1.2rem;display:flex;flex-direction:column;overflow:hidden}
+
+/* Menu header */
+.mh{background:#fff;border-radius:1.2rem;padding:.6rem;display:flex;align-items:center;gap:.8rem;justify-content:space-between}
+.tabs{display:flex;align-items:center;gap:.4rem;flex:1;min-width:0;overflow:hidden}
+.tab{display:inline-flex;align-items:center;gap:.6rem;padding:.8rem 1.2rem;border-radius:.8rem;font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-strong);cursor:pointer;background:transparent;border:none;white-space:nowrap}
+.tab:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.tab.is-active{background:var(--oxygen-color-semantic-brand-subtle-weak);color:var(--oxygen-color-semantic-brand-prominent-strong);font:var(--oxygen-font-semantic-body-m-bold)}
+.tab svg{width:1.6rem;height:1.6rem}
+.tab.is-live{color:var(--oxygen-color-semantic-positive-prominent-strong)}
+.tab.is-live::before{content:"";width:.8rem;height:.8rem;border-radius:50%;background:var(--oxygen-color-semantic-positive-prominent-base);box-shadow:0 0 0 0 rgba(0,150,80,.5);animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,150,80,.5)}100%{box-shadow:0 0 0 .8rem rgba(0,150,80,0)}}
+.cta{display:flex;align-items:center;gap:.8rem;flex-shrink:0;padding-right:.4rem}
+.vdiv{width:.1rem;height:2.4rem;background:var(--oxygen-color-semantic-neutral-subtle-strong)}
+.cta-btn{display:inline-flex;align-items:center;gap:.6rem;padding:.8rem 1.4rem;border-radius:.8rem;background:var(--oxygen-color-semantic-brand-prominent-base);color:#fff;border:none;cursor:pointer;font:var(--oxygen-font-semantic-body-m-bold)}
+.cta-btn:hover{background:var(--oxygen-color-semantic-brand-prominent-strong)}
+.cta-btn svg{width:1.4rem;height:1.4rem}
+
+/* Panel */
+.panel{background:#fff;border-radius:1.2rem;flex:1;min-height:0;overflow-y:auto;padding:2.4rem}
+.panel h3{font:var(--oxygen-font-semantic-title-m-bold);margin:0 0 .4rem;color:var(--oxygen-color-semantic-neutral-prominent-stronger)}
+.panel p{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 1.6rem}
+.row{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 0;border-bottom:.1rem solid var(--oxygen-color-semantic-neutral-subtle-weak)}
+.row:last-child{border-bottom:none}
+.row .lab{font:var(--oxygen-font-semantic-body-s-bold);color:var(--oxygen-color-semantic-neutral-prominent-weak);text-transform:uppercase;letter-spacing:.04em}
+.row .val{font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+
+/* HO side panel */
+.ho-head{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.6rem;border-bottom:.1rem solid var(--oxygen-color-semantic-neutral-subtle-weak);background:linear-gradient(180deg,#F1F8FA,#fff)}
+.ho-head .t{font:var(--oxygen-font-semantic-title-s-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);display:flex;align-items:center;gap:.8rem}
+.ho-head .t::before{content:"";width:.8rem;height:.8rem;border-radius:50%;background:var(--oxygen-color-semantic-positive-prominent-base);animation:pulse 1.6s ease-out infinite}
+.ho-close{width:2.8rem;height:2.8rem;border-radius:.6rem;border:none;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+.ho-close:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.ho-body{padding:1.6rem;display:flex;flex-direction:column;gap:1.2rem;flex:1;overflow-y:auto}
+.ho-field{background:var(--oxygen-color-semantic-neutral-subtle-weaker);border-radius:.8rem;padding:1rem 1.2rem}
+.ho-field .l{font:var(--oxygen-font-semantic-body-xs-bold);text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-bottom:.4rem}
+.ho-field .v{font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+.ho-foot{padding:1.2rem 1.6rem;border-top:.1rem solid var(--oxygen-color-semantic-neutral-subtle-weak);display:flex;justify-content:space-between;align-items:center;background:var(--oxygen-color-semantic-neutral-subtle-weaker)}
+.ho-foot .ts{font:var(--oxygen-font-semantic-body-xs-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);font-family:'JetBrains Mono',monospace}
+.btn-prim{padding:.8rem 1.4rem;border-radius:.8rem;background:var(--oxygen-color-semantic-brand-prominent-base);color:#fff;border:none;cursor:pointer;font:var(--oxygen-font-semantic-body-m-bold)}
+</style></head>
+<body>
+<h1>PatientFileMenu</h1>
+<p class="lede">Primary navigation for patient file sections. Built on <code>SectionMenu</code>: a horizontal tab bar (collapses to dropdown when narrow) plus a panel below. Configurable per market — and when a Health Observation session is active, a side panel (≥1280 px) or live tab (&lt;1280 px) appears.</p>
+<div class="note"><b>Configuration-driven.</b> Tab set comes from <code>usePatientFileConfiguration('tabs')</code>. EHR markets see Health · Financial · Administrative · History. BMS-DE sees Administrative · History · Documents · Notes. BMS-FR/IT sees Administrative · History. Routes mount under <code>/patients/:patientId/:tabId</code> — note that the History tab uses <code>timeline</code> as its route path.</p>
+
+<div class="section"><h2>Default · EHR · 4 tabs · Start HO CTA</h2>
+<div class="stage">
+<div class="pfm">
+  <div class="pfm__main">
+    <div class="mh">
+      <div class="tabs" role="tablist">
+        <button class="tab is-active" role="tab" aria-selected="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4" stroke="white" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+          Health
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20M16 14h2"/></svg>
+          Financial
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M5 17c1-2 3-3 4-3s3 1 4 3M14 9h5M14 13h4"/></svg>
+          Administrative
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h6"/></svg>
+          History
+        </button>
+      </div>
+      <div class="cta">
+        <div class="vdiv"></div>
+        <button class="cta-btn" type="button">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Start health observation
+        </button>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Health</h3>
+      <p>Vital signs, allergies, medications, problems, and immunisations for the patient.</p>
+      <div class="row"><span class="lab">Allergies</span><span class="val">Penicillin · Latex</span></div>
+      <div class="row"><span class="lab">Active medications</span><span class="val">3</span></div>
+      <div class="row"><span class="lab">Problems</span><span class="val">Type 2 diabetes · Hypertension</span></div>
+      <div class="row"><span class="lab">Last vitals</span><span class="val">28 Apr 2026 — BP 132/88, HR 76</span></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="section"><h2>Health Observation active · ≥1280px · side panel</h2>
+<div class="stage">
+<div class="pfm split">
+  <div class="pfm__main">
+    <div class="mh">
+      <div class="tabs" role="tablist">
+        <button class="tab is-active" role="tab" aria-selected="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="3" width="12" height="18" rx="2"/></svg>
+          Health
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          Financial
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+          Administrative
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/></svg>
+          History
+        </button>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Health</h3>
+      <p>The Health tab continues to be readable while the observation is in progress in the side panel.</p>
+      <div class="row"><span class="lab">Active medications</span><span class="val">3</span></div>
+      <div class="row"><span class="lab">Allergies</span><span class="val">Penicillin · Latex</span></div>
+    </div>
+  </div>
+
+  <aside class="pfm__side" aria-label="Health observation panel">
+    <div class="ho-head">
+      <span class="t">Health observation</span>
+      <button class="ho-close" type="button" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="ho-body">
+      <div class="ho-field"><div class="l">Reason</div><div class="v">Annual check-up + blood pressure follow-up</div></div>
+      <div class="ho-field"><div class="l">Subjective</div><div class="v">Fatigue last 2 weeks, mild headache morning. No chest pain.</div></div>
+      <div class="ho-field"><div class="l">Objective</div><div class="v">BP 138/86 · HR 72 · BMI 27.4 · SpO₂ 98%</div></div>
+      <div class="ho-field"><div class="l">Assessment</div><div class="v">Stable hypertension, lifestyle counselling.</div></div>
+      <div class="ho-field"><div class="l">Plan</div><div class="v">Continue Lisinopril 10mg · Walk 30 min/day · Recheck in 6 weeks</div></div>
+    </div>
+    <div class="ho-foot">
+      <span class="ts">Auto-saved · 14:02:47</span>
+      <button class="btn-prim" type="button">Sign &amp; close</button>
+    </div>
+  </aside>
+</div>
+</div>
+</div>
+
+<div class="section"><h2>Health Observation active · &lt;1280px · live tab</h2>
+<div class="stage" style="max-width:96rem">
+<div class="pfm">
+  <div class="pfm__main">
+    <div class="mh">
+      <div class="tabs" role="tablist">
+        <button class="tab is-live is-active" role="tab" aria-selected="true">Health observation</button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="3" width="12" height="18" rx="2"/></svg>
+          Health
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          Financial
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+          Administrative
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/></svg>
+          History
+        </button>
+      </div>
+    </div>
+    <div class="panel" style="background:linear-gradient(180deg,#F1F8FA,#fff)">
+      <h3>Health observation</h3>
+      <p>Below 1280px, the observation merges into the focus area as a "liveItem" tab. Switching to another tab keeps the session alive — the live indicator stays animating.</p>
+      <div class="row"><span class="lab">Reason</span><span class="val">Annual check-up</span></div>
+      <div class="row"><span class="lab">BP / HR</span><span class="val">138/86 · 72</span></div>
+      <div class="row"><span class="lab">Plan</span><span class="val">Continue Lisinopril, recheck 6 wks</span></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="section"><h2>BMS-DE configuration · 4 different tabs · no HO CTA</h2>
+<div class="stage" style="max-width:96rem">
+<div class="pfm">
+  <div class="pfm__main">
+    <div class="mh">
+      <div class="tabs" role="tablist">
+        <button class="tab is-active" role="tab" aria-selected="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+          Administrative
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/></svg>
+          History
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          Documents
+        </button>
+        <button class="tab" role="tab">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4h11l3 3v13a2 2 0 0 1-2 2H5z"/><path d="M16 4v3h3" fill="white"/></svg>
+          Notes
+        </button>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Administrative</h3>
+      <p>Patient personal data, addresses, identity documents, insurance details. EHR-style markets do not see this configuration.</p>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="section"><h2>Tab routing</h2>
+<table class="spec">
+<tr><td>health</td><td>/health</td><td>ClipboardMedical icon</td></tr>
+<tr><td>financial</td><td>/financial</td><td>Wallet icon</td></tr>
+<tr><td>administrative</td><td>/administrative</td><td>AddressCard icon</td></tr>
+<tr><td>history</td><td>/timeline ⚠</td><td>Ballot icon · route uses 'timeline' for compatibility</td></tr>
+<tr><td>documents</td><td>/documents</td><td>Files icon</td></tr>
+<tr><td>notes</td><td>/notes</td><td>NoteSticky icon</td></tr>
+<tr><td>health-observation</td><td>n/a</td><td>Live item · only on small screens · not URL-driven</td></tr>
+</table></div>
+
+<div class="section"><h2>Selection priority</h2>
+<table class="spec">
+<tr><td>1</td><td>manuallySelectedTab === 'health-observation'</td><td>only valid on small screens</td></tr>
+<tr><td>2</td><td>autoSelectHealthObservation</td><td>after large→small resize with HO active</td></tr>
+<tr><td>3</td><td>currentTabId from URL</td><td>fallback / default</td></tr>
+</table></div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Source</td><td>packages/pro-patient-file/src/components/PatientFileMenu.tsx</td></tr>
+<tr><td>Props</td><td>recorderId: number</td></tr>
+<tr><td>Wraps</td><td>SectionMenu (from @doctolib/global-ux)</td></tr>
+<tr><td>Configuration</td><td>usePatientFileConfiguration('tabs') · ('canStartHealthObservation')</td></tr>
+<tr><td>Breakpoint</td><td>1280 px · hysteresis 50 px</td></tr>
+<tr><td>Health observation</td><td>FocusPanel side panel ≥1280 · liveItem &lt;1280 · 320 px wide</td></tr>
+<tr><td>Telemetry</td><td>telemetryPrefix='patient_file'</td></tr>
+<tr><td>Pieces</td><td>MenuHeader · HealthObservationContent · createTabContentMap · useTabItems · patient-file-menu-utils · tab-icons</td></tr>
+</table></div>
+
+<script>
+document.querySelectorAll('.tabs').forEach(group=>{
+  group.addEventListener('click',e=>{
+    const t=e.target.closest('.tab');if(!t)return;
+    group.querySelectorAll('.tab').forEach(x=>{x.classList.remove('is-active');x.setAttribute('aria-selected','false')});
+    t.classList.add('is-active');t.setAttribute('aria-selected','true');
+  });
+});
+</script>
+</body></html>

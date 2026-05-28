@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · SectionMenu</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=13">
+<style>
+body{padding:3.2rem;max-width:128rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+.section > h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+
+/* SectionMenu */
+.sm{background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:1.2rem;overflow:hidden;container-type:inline-size}
+.sm__list{display:flex;align-items:stretch;gap:.4rem;padding:.8rem;border-bottom:.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.sm__tab{align-items:center;border:none;border-radius:.8rem;cursor:pointer;display:flex;gap:.6rem;padding:.8rem 1.6rem;font:var(--oxygen-font-semantic-body-m-regular);background:transparent;color:var(--oxygen-color-semantic-neutral-prominent-strong);transition:background-color .15s,color .15s}
+.sm__tab:hover{background:var(--oxygen-color-semantic-neutral-subtle-base)}
+.sm__tab[aria-selected="true"]{background:var(--oxygen-color-semantic-neutral-prominent-strong);color:white}
+.sm__tab[aria-selected="true"]:hover{background:var(--oxygen-color-semantic-neutral-prominent-stronger)}
+.sm__tab svg{flex-shrink:0}
+.sm__divider{width:.1rem;background:var(--oxygen-color-semantic-neutral-subtle-strong);margin:.4rem .4rem;align-self:stretch}
+.sm__panel{padding:2rem 2.4rem;min-height:14rem}
+.sm__panel h3{margin:0 0 .8rem;font:var(--oxygen-font-semantic-title-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)}
+.sm__panel p{margin:0 0 .8rem;color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular)}
+
+/* Dropdown trigger (overflow) */
+.sm__list--dropdown .sm__tab[data-dd-trigger]{background:var(--oxygen-color-semantic-neutral-prominent-strong);color:white}
+.sm__list--dropdown .sm__tab[data-dd-trigger] .sm__chev{transition:transform .2s}
+.sm__list--dropdown .sm__tab[data-dd-trigger][aria-expanded="true"] .sm__chev{transform:rotate(180deg)}
+.sm__dd{position:relative}
+.sm__menu{position:absolute;top:calc(100% + .4rem);left:0;background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:.8rem;box-shadow:0 .8rem 2.4rem rgba(25,38,52,.12);min-width:24rem;max-width:26.4rem;padding:.4rem;z-index:20;display:none}
+.sm__dd.is-open .sm__menu{display:block}
+.sm__menuitem{display:flex;align-items:flex-start;gap:.8rem;padding:.8rem 1rem;border-radius:.6rem;font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-strong);background:transparent;border:none;width:100%;text-align:left;cursor:pointer}
+.sm__menuitem:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.sm__menuitem .sm__check{margin-left:auto;color:var(--oxygen-color-semantic-positive-prominent-base);visibility:hidden}
+.sm__menuitem.is-active .sm__check{visibility:visible}
+
+/* Width controller */
+.width-shifter{display:flex;align-items:center;gap:1rem;background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:.8rem;padding:.8rem 1.2rem;font:var(--oxygen-font-semantic-body-s-regular)}
+.width-shifter button{padding:.4rem 1rem;border-radius:.4rem;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);background:white;cursor:pointer;font:var(--oxygen-font-semantic-body-xs-bold);font-family:'JetBrains Mono',monospace}
+.width-shifter button.is-active{background:var(--oxygen-color-semantic-brand-prominent-base);color:white;border-color:transparent}
+.host{transition:width .25s;max-width:100%}
+
+.toast{position:fixed;bottom:2.4rem;left:50%;transform:translateX(-50%);background:var(--oxygen-color-primitive-gray-800);color:white;padding:1rem 1.6rem;border-radius:.8rem;font:var(--oxygen-font-semantic-body-s-regular);opacity:0;transition:opacity .2s;pointer-events:none;z-index:9999}
+.toast.is-show{opacity:1}
+</style></head>
+<body>
+<h1>SectionMenu</h1>
+<p class="lede">Section navigation that auto-switches between tab strip (wide) and dropdown picker (narrow). Selected tab uses the inverted-surface token (dark fill, white text). Each item carries an active + inactive icon variant; arrow keys, Home/End, Enter and Space are wired for keyboard nav.</p>
+<div class="note"><b>Container-aware.</b> The component measures its own width and falls into dropdown mode when tabs would overflow — try the width controls below.</div>
+
+<div class="section"><h2>Basic · 3 items</h2>
+<div class="sm" data-sm>
+  <div class="sm__list" role="tablist">
+    <button class="sm__tab" role="tab" aria-selected="true" data-id="overview">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/><circle cx="12" cy="12" r="2.5"/></svg>
+      Overview
+    </button>
+    <button class="sm__tab" role="tab" aria-selected="false" data-id="details">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+      Details
+    </button>
+    <button class="sm__tab" role="tab" aria-selected="false" data-id="history">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+      History
+    </button>
+  </div>
+  <div class="sm__panel" data-panel>
+    <h3>Overview</h3>
+    <p>Summary of the most important information for this record.</p>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>With live tab (right of divider · stays mounted)</h2>
+<div class="sm" data-sm>
+  <div class="sm__list" role="tablist">
+    <button class="sm__tab" role="tab" aria-selected="true" data-id="s1">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></svg>
+      Section 1
+    </button>
+    <button class="sm__tab" role="tab" aria-selected="false" data-id="s2">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+      Section 2
+    </button>
+    <button class="sm__tab" role="tab" aria-selected="false" data-id="s3">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+      Section 3
+    </button>
+    <div class="sm__divider" role="separator"></div>
+    <button class="sm__tab" role="tab" aria-selected="false" data-id="monitoring" data-live="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      Monitoring
+    </button>
+  </div>
+  <div class="sm__panel" data-panel>
+    <h3>Section 1</h3>
+    <p>The Monitoring tab stays mounted in the background so its state survives tab switches.</p>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>Auto-switching · resize to collapse into dropdown</h2>
+<div class="width-shifter">
+  <span style="font-family:'JetBrains Mono',monospace">container width:</span>
+  <button type="button" data-w="900" class="is-active">900</button>
+  <button type="button" data-w="700">700</button>
+  <button type="button" data-w="500">500</button>
+  <button type="button" data-w="380">380</button>
+</div>
+<div id="responsive-host" class="host" style="width:90rem">
+  <div class="sm" data-sm data-auto>
+    <div class="sm__list" role="tablist">
+      <button class="sm__tab" role="tab" aria-selected="true" data-id="med">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7z"/></svg>
+        Medical history
+      </button>
+      <button class="sm__tab" role="tab" aria-selected="false" data-id="cons">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        Consultation notes
+      </button>
+      <button class="sm__tab" role="tab" aria-selected="false" data-id="lab">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        Lab results
+      </button>
+      <button class="sm__tab" role="tab" aria-selected="false" data-id="rx">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>
+        Prescriptions
+      </button>
+    </div>
+    <div class="sm__panel" data-panel>
+      <h3>Medical history</h3>
+      <p>Past diagnoses, treatments, and conditions.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Source</td><td>packages/global-ux/src/components/SectionMenu/</td></tr>
+<tr><td>Compound API</td><td>&lt;SectionMenu&gt; → &lt;SectionMenu.List ariaLabel /&gt; + &lt;SectionMenu.Panels /&gt; (UI may inject between)</td></tr>
+<tr><td>items</td><td>{ id, label, icon:{active,inactive}, content, staysMounted?, ariaLabel? } · min 1</td></tr>
+<tr><td>liveItem</td><td>last slot, divider before · icon optional · always staysMounted</td></tr>
+<tr><td>Mode</td><td>tabs (default) → auto-switches to dropdown if overflow</td></tr>
+<tr><td>Selected style</td><td>inverted surface · white text · radius medium</td></tr>
+<tr><td>Keyboard</td><td>← → Home End Enter Space</td></tr>
+<tr><td>Telemetry</td><td>{prefix}__section_menu_tab__selected · {prefix}__section_menu_mode__displayed</td></tr>
+</table></div>
+
+<div class="toast" id="toast"></div>
+<script>
+const toast=document.getElementById('toast');
+function showToast(t){toast.textContent=t;toast.classList.add('is-show');clearTimeout(showToast._t);showToast._t=setTimeout(()=>toast.classList.remove('is-show'),1400)}
+const PANEL_BODY={
+  overview:['Overview','Summary of the most important information for this record.'],
+  details:['Details','Detailed information lives here — forms, tables, anything.'],
+  history:['History','Past events and activities.'],
+  s1:['Section 1','Content for section 1.'],
+  s2:['Section 2','Content for section 2.'],
+  s3:['Section 3','Content for section 3.'],
+  monitoring:['Monitoring (live)','This panel stays mounted across tab switches.'],
+  med:['Medical history','Past diagnoses, treatments, and conditions.'],
+  cons:['Consultation notes','Notes from current and previous consultations.'],
+  lab:['Lab results','Complete laboratory test results and analysis reports.'],
+  rx:['Prescriptions','Current and historical prescriptions.']
+};
+function selectIn(sm,id){
+  sm.querySelectorAll('[role="tab"]').forEach(t=>t.setAttribute('aria-selected', t.dataset.id===id?'true':'false'));
+  const ddTrigger=sm.querySelector('[data-dd-trigger]');
+  if(ddTrigger){
+    const tab=sm.querySelector(`[data-id="${id}"]`);
+    ddTrigger.querySelector('.sm__label').textContent=tab?tab.dataset.label||tab.textContent.trim():id;
+  }
+  sm.querySelectorAll('.sm__menuitem').forEach(mi=>mi.classList.toggle('is-active',mi.dataset.id===id));
+  const panel=sm.querySelector('[data-panel]');
+  const body=PANEL_BODY[id]||[id,''];
+  panel.innerHTML=`<h3>${body[0]}</h3><p>${body[1]}</p>`;
+  showToast(`Selected: ${body[0]}`);
+}
+document.querySelectorAll('[data-sm]').forEach(sm=>{
+  sm.querySelectorAll('[role="tab"]').forEach(tab=>{
+    tab.dataset.label=tab.textContent.trim();
+    tab.addEventListener('click',()=>selectIn(sm,tab.dataset.id));
+  });
+});
+
+/* Auto-switch on resize via container query (manual JS to mirror useOverflowDetection) */
+function buildDropdown(sm){
+  if(sm.dataset.mode==='dropdown')return;
+  const tabs=[...sm.querySelectorAll('[role="tab"]:not([data-live])')];
+  const live=sm.querySelector('[data-live]');
+  const sel=sm.querySelector('[aria-selected="true"]')||tabs[0];
+  const list=sm.querySelector('.sm__list');
+  list.innerHTML='';
+  list.classList.add('sm__list--dropdown');
+  const dd=document.createElement('div');dd.className='sm__dd';
+  const trig=document.createElement('button');trig.type='button';trig.className='sm__tab';trig.dataset.ddTrigger='1';trig.setAttribute('aria-expanded','false');
+  trig.innerHTML=`<span class="sm__label">${sel.dataset.label}</span><svg class="sm__chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+  const menu=document.createElement('div');menu.className='sm__menu';
+  tabs.forEach(t=>{
+    const id=t.dataset.id;
+    const mi=document.createElement('button');mi.type='button';mi.className='sm__menuitem'+(id===sel.dataset.id?' is-active':'');mi.dataset.id=id;
+    mi.innerHTML=`<span>${t.dataset.label}</span><svg class="sm__check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    mi.addEventListener('click',e=>{e.stopPropagation();selectIn(sm,id);dd.classList.remove('is-open');trig.setAttribute('aria-expanded','false')});
+    menu.appendChild(mi);
+  });
+  trig.addEventListener('click',e=>{e.stopPropagation();const open=dd.classList.toggle('is-open');trig.setAttribute('aria-expanded',open?'true':'false')});
+  dd.append(trig,menu);list.appendChild(dd);
+  // hidden tabs (keep behavior contract)
+  tabs.forEach(t=>{t.style.display='none';list.appendChild(t)});
+  if(live){const div=document.createElement('div');div.className='sm__divider';list.append(div,live)}
+  sm.dataset.mode='dropdown';
+}
+function buildTabs(sm){
+  if(sm.dataset.mode==='tabs')return;
+  const tabs=[...sm.querySelectorAll('[role="tab"]:not([data-live])')];
+  const live=sm.querySelector('[data-live]');
+  const list=sm.querySelector('.sm__list');
+  list.innerHTML='';list.classList.remove('sm__list--dropdown');
+  tabs.forEach(t=>{t.style.display='';list.appendChild(t)});
+  if(live){const div=document.createElement('div');div.className='sm__divider';list.append(div,live)}
+  sm.dataset.mode='tabs';
+}
+const autoSm=document.querySelector('[data-auto]');
+function check(){
+  const w=autoSm.getBoundingClientRect().width;
+  if(w<560)buildDropdown(autoSm);else buildTabs(autoSm);
+}
+new ResizeObserver(check).observe(autoSm);
+const host=document.getElementById('responsive-host');
+document.querySelectorAll('.width-shifter button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.width-shifter button').forEach(x=>x.classList.remove('is-active'));
+  b.classList.add('is-active');
+  host.style.width=(b.dataset.w/10)+'rem';
+}));
+document.addEventListener('click',()=>document.querySelectorAll('.sm__dd.is-open').forEach(d=>{d.classList.remove('is-open');const t=d.querySelector('[data-dd-trigger]');if(t)t.setAttribute('aria-expanded','false')}));
+</script>
+</body></html>

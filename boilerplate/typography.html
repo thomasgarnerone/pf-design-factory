@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Oxygen · Typography</title>
+  <link rel="stylesheet" href="_base.css?v=4">
+  <link rel="stylesheet" href="_components.css?v=5">
+  <style>
+    body { padding: 3.2rem; max-width: 96rem; }
+    h2 { font: var(--oxygen-font-semantic-title-s-bold); margin: 0 0 1.2rem; color: var(--oxygen-color-semantic-neutral-prominent-strong); text-transform: uppercase; letter-spacing: 0.04em; }
+    .section { margin-bottom: 4.8rem; }
+    .row { display: grid; grid-template-columns: 14rem 1fr; gap: 1.6rem; padding: 1.2rem 0; border-bottom: 0.1rem solid var(--oxygen-color-primitive-gray-200); align-items: baseline; }
+    .row:last-child { border-bottom: 0; }
+    .spec { font: var(--oxygen-font-semantic-body-xs-regular); color: var(--oxygen-color-semantic-neutral-prominent-weak); font-family: 'JetBrains Mono', ui-monospace, monospace; }
+    .note { font: var(--oxygen-font-semantic-body-xs-regular); color: var(--oxygen-color-semantic-neutral-prominent-base); margin-top: 0.8rem; max-width: 56rem; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <h2>Heading · Montserrat bold</h2>
+  <div class="row"><span class="spec">xxxl · 40/56</span><h1 class="ox-heading ox-heading--xxxl">Book in 30 seconds</h1></div>
+  <div class="row"><span class="spec">xxl · 32/40</span><h1 class="ox-heading ox-heading--xxl">Book in 30 seconds</h1></div>
+  <div class="row"><span class="spec">xl · 24/32</span><h2 class="ox-heading ox-heading--xl">Upcoming appointments</h2></div>
+  <div class="row"><span class="spec">l · 18/24</span><h3 class="ox-heading ox-heading--l">Patient details</h3></div>
+  <div class="row"><span class="spec">m · 16/24</span><h4 class="ox-heading ox-heading--m">Medical history</h4></div>
+  <div class="row"><span class="spec">s · 14/24</span><h5 class="ox-heading ox-heading--s">Allergies</h5></div>
+  <p class="note">Use Heading for semantic headings. Choose visual size independently of the HTML level when needed.</p>
+</div>
+
+<div class="section">
+  <h2>Paragraph · Roboto regular</h2>
+  <div class="row"><span class="spec">m · 16/24</span><p class="ox-paragraph ox-text--m">A body paragraph in body-m-regular. Doctolib uses 16/24 Roboto for long-form copy — guideline text, article bodies, patient instructions.</p></div>
+  <div class="row"><span class="spec">s · 14/24</span><p class="ox-paragraph ox-text--s">The default dense reading size. Used in cards, list rows, table cells, form helpers. Roboto 14/24 pairs with the Montserrat titles above.</p></div>
+  <div class="row"><span class="spec">xs · 12/16</span><p class="ox-paragraph ox-text--xs">Captions, meta, timestamps. Also the size of input hints and tooltip copy.</p></div>
+</div>
+
+<div class="section">
+  <h2>Text · inline spans, color variants</h2>
+  <div class="row"><span class="spec">default</span><span class="ox-text ox-text--m">Appointment confirmed.</span></div>
+  <div class="row"><span class="spec">bold</span><span class="ox-text ox-text--m ox-text--bold">Dr Marie Dubois</span></div>
+  <div class="row"><span class="spec">muted</span><span class="ox-text ox-text--m ox-text--muted">1 rue de Rivoli, Paris 1</span></div>
+  <div class="row"><span class="spec">subtle</span><span class="ox-text ox-text--m ox-text--subtle">21 min ago</span></div>
+  <div class="row"><span class="spec">brand</span><span class="ox-text ox-text--m ox-text--brand">Save 15% with Doctolib Pro</span></div>
+  <div class="row"><span class="spec">danger</span><span class="ox-text ox-text--m ox-text--danger">Payment failed · retry now</span></div>
+  <div class="row"><span class="spec">positive</span><span class="ox-text ox-text--m ox-text--positive">All changes saved</span></div>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec" style="border-collapse:collapse;color:var(--oxygen-color-semantic-neutral-prominent-base)">
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Title family</td><td>Montserrat (bold 700)</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Body family</td><td>Roboto (regular 400, bold 700)</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Root rem</td><td>1rem = 10px (html font-size: 62.5%)</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Source</td><td>packages/core/src/dataDisplay/text/Text/Text.scss</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

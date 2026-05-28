@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Progress bar</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=2026-04-27-progress2">
+<style>
+/* Inlined progress styles — authoritative source for this preview,
+   so the page renders correctly even if the external CSS is cached. */
+.ox-progress{display:flex;flex-direction:column;gap:.6rem;width:100%}
+.ox-progress__header{display:flex;justify-content:space-between;align-items:baseline;gap:1.6rem;min-width:0}
+.ox-progress__label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ox-progress__value{flex:0 0 auto}
+.ox-progress__label,.ox-progress__value{font:var(--oxygen-font-semantic-body-m-regular);font-weight:300;color:var(--oxygen-color-semantic-neutral-prominent-base)}
+.ox-progress__value{font-variant-numeric:tabular-nums}
+.ox-progress__track{position:relative;width:100%;height:.4rem;border-radius:999px;background:var(--oxygen-color-semantic-neutral-subtle-base)}
+.ox-progress--square .ox-progress__track{border-radius:0}
+.ox-progress__fill{height:100%;border-radius:inherit;background:#107ACA;width:var(--p,0%);transition:width 320ms cubic-bezier(.2,.8,.2,1)}
+/* Trailing end-cap dot — fixed at the right edge of the track to
+   signify the size / extent of the progress bar (100% mark). */
+.ox-progress__cap{position:absolute;top:50%;right:0;width:1rem;height:1rem;border-radius:999px;background:#107ACA;transform:translate(50%,-50%);pointer-events:none}
+.ox-progress--square .ox-progress__cap{display:none}
+
+body{padding:3.2rem;max-width:72rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2.4rem}
+.section--bleed{margin-left:-3.2rem;margin-right:-3.2rem;width:calc(100% + 6.4rem);max-width:none}
+.section--bleed > .ox-progress{width:100%}
+.section--bleed > h2{padding:0 3.2rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#794006;background:#FFF9E5;border-left:0.3rem solid var(--oxygen-color-primitive-yellow-500);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+</style></head>
+<body>
+
+<h1>Progress bar</h1>
+<p class="lede">Linear progress for file uploads, long server work, anything with a known completion fraction. Single thin pill track in brand blue (#107ACA), with a fixed end-cap dot marking the 100% mark.</p>
+
+<div class="note"><b>Not yet in Oxygen core.</b> Single size (4 px). Brand blue only — no semantic variants.</div>
+
+<div class="section">
+  <h2>Default — with label &amp; value</h2>
+
+  <div class="ox-progress" style="--p:33%" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">
+    <div class="ox-progress__header">
+      <span class="ox-progress__label">Progress bar with a label</span>
+      <span class="ox-progress__value">33%</span>
+    </div>
+    <div class="ox-progress__track">
+      <div class="ox-progress__fill"></div>
+      <div class="ox-progress__cap"></div>
+    </div>
+  </div>
+
+  <div class="ox-progress" style="--p:72%" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
+    <div class="ox-progress__header">
+      <span class="ox-progress__label">Uploading <code style="font-family:'JetBrains Mono',monospace;font-size:.95em">contract-final.pdf</code></span>
+      <span class="ox-progress__value">72%</span>
+    </div>
+    <div class="ox-progress__track">
+      <div class="ox-progress__fill"></div>
+      <div class="ox-progress__cap"></div>
+    </div>
+  </div>
+
+  <div class="ox-progress" style="--p:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+    <div class="ox-progress__header">
+      <span class="ox-progress__label">Backup complete</span>
+      <span class="ox-progress__value">100%</span>
+    </div>
+    <div class="ox-progress__track">
+      <div class="ox-progress__fill"></div>
+      <div class="ox-progress__cap"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Label only · value only · neither</h2>
+
+  <div class="ox-progress" style="--p:40%" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+    <div class="ox-progress__header">
+      <span class="ox-progress__label">Importing schedule</span>
+    </div>
+    <div class="ox-progress__track">
+      <div class="ox-progress__fill"></div>
+      <div class="ox-progress__cap"></div>
+    </div>
+  </div>
+
+  <div class="ox-progress" style="--p:40%" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+    <div class="ox-progress__header">
+      <span></span>
+      <span class="ox-progress__value">40%</span>
+    </div>
+    <div class="ox-progress__track">
+      <div class="ox-progress__fill"></div>
+      <div class="ox-progress__cap"></div>
+    </div>
+  </div>
+
+  <div class="ox-progress" style="--p:40%" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+    <div class="ox-progress__track">
+      <div class="ox-progress__fill"></div>
+      <div class="ox-progress__cap"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section section--bleed">
+  <h2>Square — full-bleed (no radius, no dot)</h2>
+  <div class="ox-progress ox-progress--square" style="--p:35%" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">
+    <div class="ox-progress__track">
+      <div class="ox-progress__fill"></div>
+    </div>
+  </div>
+  <div class="ox-progress ox-progress--square" style="--p:65%" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+    <div class="ox-progress__track">
+      <div class="ox-progress__fill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec">
+    <tr><td>Track</td><td>4 px · neutral-subtle-base · radius 999px (pill) — <code>--square</code> drops radius for full-bleed use</td></tr>
+    <tr><td>Fill</td><td>#107ACA · width driven by <code>--p</code> on the root · 320 ms cubic-bezier ease</td></tr>
+    <tr><td>End-cap dot</td><td>10 × 10 px · #107ACA · fixed at the right edge of the track (100% mark) · hidden in <code>--square</code></td></tr>
+    <tr><td>Header</td><td>optional label (top-left) + optional value (top-right) · body-m · weight 300 · neutral-prominent-base</td></tr>
+  </table>
+</div>
+
+</body></html>

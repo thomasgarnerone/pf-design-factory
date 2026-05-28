@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Beta combobox</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=12">
+<style>
+body{padding:3.2rem;max-width:112rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:0.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.ox-cb{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-prominent-weaker);border-radius:.8rem;padding:.6rem .8rem;min-height:4.4rem}.ox-cb__inp{border:0;outline:0;flex:1;min-width:8rem;font:var(--oxygen-font-semantic-body-m-regular);background:none}.ox-cb-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--oxygen-color-semantic-brand-subtle-weak);color:var(--oxygen-color-semantic-brand-prominent-stronger);padding:.3rem .8rem;border-radius:999px;font:var(--oxygen-font-semantic-body-s-regular)}.ox-cb-chip button{background:none;border:0;cursor:pointer;color:inherit}.ox-cb-pop{background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:.8rem;box-shadow:var(--oxygen-shadow-floating);margin-top:.4rem;overflow:hidden}.ox-cb-row{display:flex;align-items:center;gap:.8rem;padding:1rem 1.2rem;cursor:pointer;font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-stronger)}.ox-cb-row:hover{background:var(--oxygen-color-semantic-neutral-subtle-weakest)}.ox-cb-row mark{background:var(--oxygen-color-semantic-warning-subtle-weak);color:inherit;font-weight:700;padding:0 .1rem}.ox-cb-avt{width:2.8rem;height:2.8rem;border-radius:50%;background:var(--oxygen-color-semantic-brand-subtle-weak);color:var(--oxygen-color-semantic-brand-prominent-stronger);display:grid;place-items:center;font:var(--oxygen-font-semantic-body-xs-bold)}
+</style></head>
+<body><h1>Beta combobox</h1><p class="lede">Next-gen combobox: better async handling, create-new action, multi-select chips, and match highlighting.</p><div class="note"><b>From Oxygen core. Beta.</b> <code>inputs/BetaComboBox/BetaComboBox.tsx</code>. Supersedes legacy Combobox — use for new flows.</div>
+<div class="section"><h2>Multi-select with chips</h2>
+<div style="max-width:48rem">
+<div class="ox-field"><label class="ox-field__lbl">Practitioners</label>
+<div class="ox-cb">
+<span class="ox-cb-chip">Dr Rousseau <button>✕</button></span>
+<span class="ox-cb-chip">Dr Martin <button>✕</button></span>
+<input type="text" class="ox-cb__inp" placeholder="Search…" value="bel">
+<span style="margin-left:auto;color:var(--oxygen-color-semantic-neutral-prominent-weak)">▾</span>
+</div>
+<div class="ox-cb-pop">
+<div class="ox-cb-row"><span class="ox-cb-avt">AB</span><div style="flex:1"><div style="font-weight:600">Dr Albert <mark>Bel</mark>mond</div><div style="font:var(--oxygen-font-semantic-body-xs-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)">Cardiologue</div></div></div>
+<div class="ox-cb-row"><span class="ox-cb-avt">IB</span><div style="flex:1"><div style="font-weight:600">Dr Isabelle <mark>Bel</mark></div><div style="font:var(--oxygen-font-semantic-body-xs-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)">Généraliste</div></div></div>
+</div>
+</div></div></div>
+<div class="section"><h2>Single-select with create new</h2>
+<div style="max-width:48rem">
+<div class="ox-cb" style="padding:.8rem 1.2rem"><input type="text" class="ox-cb__inp" value="Consultation pédiatrique urgente" style="flex:1"></div>
+<div class="ox-cb-pop">
+<div class="ox-cb-row"><div style="flex:1"><div>Consultation <mark>pédiatrique</mark> — 30 min</div></div></div>
+<div class="ox-cb-row"><div style="flex:1"><div>Consultation <mark>pédiatrique</mark> de suivi — 20 min</div></div></div>
+<div style="border-top:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);padding:1rem 1.2rem;color:var(--oxygen-color-semantic-brand-prominent-base);font-weight:600;cursor:pointer;display:flex;align-items:center;gap:.8rem">＋ Create "Consultation pédiatrique urgente"</div>
+</div></div></div>
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Status</td><td><b>Beta</b> — API stabilizing; prefer over classic combobox for new work</td></tr>
+<tr><td>Modes</td><td>single · multi</td></tr>
+<tr><td>Features</td><td>async loading · match highlight · create new · async validation</td></tr>
+<tr><td>Chips</td><td>radius-full · brand-subtle-weak bg · removable</td></tr>
+<tr><td>Source</td><td>inputs/BetaComboBox/BetaComboBox.tsx</td></tr>
+</table></div></body></html>

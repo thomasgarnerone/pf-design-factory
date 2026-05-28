@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Oxygen · Button</title>
+  <link rel="stylesheet" href="_base.css?v=4">
+  <link rel="stylesheet" href="_components.css?v=4">
+  <style>
+    body { padding: 3.2rem; }
+    h2 { font: var(--oxygen-font-semantic-title-s-bold); margin-bottom: 1.2rem; color: var(--oxygen-color-semantic-neutral-prominent-strong); }
+    .section { margin-bottom: 3.2rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: 12rem repeat(4, minmax(14rem, 1fr));
+      gap: 1.2rem 1.6rem;
+      align-items: center;
+      justify-items: start;
+    }
+    .grid > .ox-button,
+    .grid > .inverted-row { justify-self: start; }
+    .grid .head { font: var(--oxygen-font-semantic-body-xs-bold); color: var(--oxygen-color-semantic-neutral-prominent-weak); text-transform: uppercase; letter-spacing: 0.04em; }
+    .grid .lead { font: var(--oxygen-font-semantic-body-xs-bold); color: var(--oxygen-color-semantic-neutral-prominent-weak); }
+    .inverted-row { background: var(--oxygen-color-semantic-brand-prominent-strong); padding: 1.6rem; border-radius: 1.2rem; display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
+    .note { font: var(--oxygen-font-semantic-body-xs-regular); color: var(--oxygen-color-semantic-neutral-prominent-weak); margin-top: 0.4rem; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <h2>Button · variant × uiStyle · size = medium</h2>
+  <div class="grid">
+    <div class="lead"></div>
+    <div class="head">brand</div>
+    <div class="head">danger</div>
+    <div class="head">neutral</div>
+    <div class="head">inverted</div>
+
+    <div class="lead">solid</div>
+    <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Book appointment</span></span></button>
+    <button class="ox-button ox-button--variant-solid ox-button--ui-danger ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Delete account</span></span></button>
+    <span class="note">✕ forbidden combo</span>
+    <div class="inverted-row" style="padding:0.8rem">
+      <button class="ox-button ox-button--variant-solid ox-button--ui-inverted ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Learn more</span></span></button>
+    </div>
+
+    <div class="lead">outlined</div>
+    <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">See availability</span></span></button>
+    <span class="note">✕ forbidden combo</span>
+    <button class="ox-button ox-button--variant-outlined ox-button--ui-neutral ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Cancel</span></span></button>
+    <div class="inverted-row" style="padding:0.8rem">
+      <button class="ox-button ox-button--variant-outlined ox-button--ui-inverted ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Learn more</span></span></button>
+    </div>
+
+    <div class="lead">transparent</div>
+    <button class="ox-button ox-button--variant-transparent ox-button--ui-brand ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">See all doctors</span></span></button>
+    <button class="ox-button ox-button--variant-transparent ox-button--ui-danger ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Remove</span></span></button>
+    <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Skip</span></span></button>
+    <div class="inverted-row" style="padding:0.8rem">
+      <button class="ox-button ox-button--variant-transparent ox-button--ui-inverted ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Skip</span></span></button>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Button · size · brand</h2>
+  <div class="row" style="align-items:center">
+    <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Medium · 40</span></span></button>
+    <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-small"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Small · 32</span></span></button>
+    <span class="mono">only medium (40) and small (32) exist</span>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Button · states · solid-brand-medium</h2>
+  <div class="row" style="align-items:center">
+    <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Default</span></span></button>
+    <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" style="background:var(--oxygen-color-semantic-brand-prominent-base);border-radius:inherit"><span class="ox-button__innerWrapper" style="background:var(--oxygen-color-semantic-brand-prominent-base);color:var(--oxygen-color-semantic-common-subtle)"><span class="ox-button__contentWrapper">Hover</span></span></button>
+    <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" style="background:var(--oxygen-color-semantic-brand-prominent-strong);border-radius:inherit"><span class="ox-button__innerWrapper" style="background:var(--oxygen-color-semantic-brand-prominent-strong);color:var(--oxygen-color-semantic-common-subtle)"><span class="ox-button__contentWrapper">Pressed</span></span></button>
+    <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" disabled><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Disabled</span></span></button>
+  </div>
+  <div class="note">Hover / Pressed shown as static swatches — the live component animates a ripple (see Button.module.scss).</div>
+</div>
+
+<div class="section">
+  <h2>ButtonFloating</h2>
+  <div class="row" style="align-items:center">
+    <button class="ox-buttonfloating">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>
+      Quick book
+    </button>
+  </div>
+</div>
+
+</body>
+</html>

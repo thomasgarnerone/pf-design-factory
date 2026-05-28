@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Oxygen · Select</title>
+  <link rel="stylesheet" href="_base.css?v=4">
+  <link rel="stylesheet" href="_components.css?v=5">
+  <style>
+    body { padding: 3.2rem; max-width: 96rem; }
+    h2 { font: var(--oxygen-font-semantic-title-s-bold); margin: 0 0 1.2rem; color: var(--oxygen-color-semantic-neutral-prominent-strong); text-transform: uppercase; letter-spacing: 0.04em; }
+    .section { margin-bottom: 4rem; }
+    .row { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .ox-field { width: 32rem; }
+    .spec { font: var(--oxygen-font-semantic-body-xs-regular); color: var(--oxygen-color-semantic-neutral-prominent-base); font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <h2>Default</h2>
+  <div class="row">
+    <div class="ox-field">
+      <label class="ox-field__label">Speciality</label>
+      <select class="ox-input ox-select">
+        <option>General medicine</option>
+        <option>Cardiology</option>
+        <option>Dermatology</option>
+        <option>Gynaecology</option>
+        <option>Paediatrics</option>
+      </select>
+    </div>
+
+    <div class="ox-field">
+      <label class="ox-field__label">Language</label>
+      <select class="ox-input ox-select">
+        <option>French</option>
+        <option>English</option>
+        <option>German</option>
+        <option>Italian</option>
+        <option>Spanish</option>
+      </select>
+      <span class="ox-field__hint">Preferred for written communication.</span>
+    </div>
+
+    <div class="ox-field">
+      <label class="ox-field__label">Country<span class="ox-field__required">*</span></label>
+      <select class="ox-input ox-select" aria-invalid="true">
+        <option value="">Select a country…</option>
+      </select>
+      <span class="ox-field__message ox-field__message--danger">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 3a1 1 0 0 1 1 1v4a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 8.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+        Country is required.
+      </span>
+    </div>
+
+    <div class="ox-field">
+      <label class="ox-field__label">Insurance provider</label>
+      <select class="ox-input ox-select" disabled>
+        <option>Loading…</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Grouped options (optgroup)</h2>
+  <div class="row">
+    <div class="ox-field">
+      <label class="ox-field__label">Specialty</label>
+      <select class="ox-input ox-select">
+        <optgroup label="General">
+          <option>General medicine</option>
+          <option>Paediatrics</option>
+        </optgroup>
+        <optgroup label="Medical imaging">
+          <option>Radiology</option>
+          <option>Echography</option>
+          <option>MRI</option>
+        </optgroup>
+        <optgroup label="Surgery">
+          <option>General surgery</option>
+          <option>Orthopaedics</option>
+          <option>Ophthalmology</option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec" style="border-collapse:collapse">
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Height / radius</td><td>Same as InputText — 4rem / 4px</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Caret</td><td>Inline SVG, gray-700, right-gutter 1.2rem</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Note</td><td>Native &lt;select&gt; wrapping. For combo / autocomplete use ComboBox / Autocomplete.</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Source</td><td>packages/core/src/forms/Select/Select.scss</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

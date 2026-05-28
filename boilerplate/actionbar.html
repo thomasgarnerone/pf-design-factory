@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · ActionBar</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=13">
+<style>
+body{padding:3.2rem;max-width:120rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.demo-shell{display:flex;gap:0;border-radius:1.2rem;overflow:hidden;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);background:white;height:48rem}
+.action-bar{height:100%;overflow-y:auto;max-width:36rem;min-width:25rem;width:16vw;padding:2rem 1.6rem;background:var(--oxygen-color-semantic-neutral-subtle-weak);border-right:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);display:flex;flex-direction:column;gap:.8rem}
+.action-bar .ab-section{font:var(--oxygen-font-semantic-body-xs-bold);text-transform:uppercase;letter-spacing:.06em;color:var(--oxygen-color-semantic-neutral-prominent-weak);padding:.4rem .8rem;margin-top:.8rem}
+.action-bar .ab-section:first-child{margin-top:0}
+.ab-item{display:flex;align-items:center;gap:1.2rem;padding:1rem 1.2rem;border-radius:.8rem;color:var(--oxygen-color-semantic-neutral-prominent-strong);font:var(--oxygen-font-semantic-body-m-regular);cursor:pointer;border:none;background:transparent;text-align:left;width:100%;transition:background .15s}
+.ab-item:hover{background:var(--oxygen-color-semantic-neutral-subtle-base)}
+.ab-item.is-active{background:var(--oxygen-color-semantic-brand-subtle-weak);color:var(--oxygen-color-semantic-brand-prominent-strong);font:var(--oxygen-font-semantic-body-m-bold)}
+.ab-item svg{flex-shrink:0;width:1.8rem;height:1.8rem}
+.ab-badge{margin-left:auto;font:var(--oxygen-font-semantic-body-xs-bold);background:var(--oxygen-color-semantic-danger-prominent-base);color:white;border-radius:99rem;min-width:2rem;height:2rem;padding:0 .6rem;display:inline-flex;align-items:center;justify-content:center}
+.demo-stage{flex:1;background:var(--oxygen-color-semantic-neutral-subtle-weaker);padding:3.2rem;display:flex;align-items:center;justify-content:center;color:var(--oxygen-color-semantic-neutral-prominent-weak);font-family:'JetBrains Mono',monospace;font-size:1.2rem}
+</style></head>
+<body>
+<h1>ActionBar</h1>
+<p class="lede">Sidebar action rail. Hosts a vertical column of navigation actions inside a parent layout — typically the left rail of a workspace shell.</p>
+<div class="note"><b>Tiny by design.</b> The component itself is just an <code>&lt;aside&gt;</code> with a <code>VStack gap="xsmall"</code>; the children determine the look. Sized 250–360 px (16vw), full-height, scrolls overflow.</div>
+
+<div class="section"><h2>Live · in a workspace shell</h2>
+<div class="demo-shell">
+  <aside class="action-bar" role="navigation" aria-label="Patient navigation">
+    <div class="ab-section">Patient file</div>
+    <button class="ab-item is-active" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Overview
+    </button>
+    <button class="ab-item" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+      Documents
+      <span class="ab-badge">3</span>
+    </button>
+    <button class="ab-item" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></svg>
+      Prescriptions
+    </button>
+    <button class="ab-item" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Appointments
+    </button>
+    <div class="ab-section">Care</div>
+    <button class="ab-item" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+      Care plan
+    </button>
+    <button class="ab-item" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Messages
+    </button>
+  </aside>
+  <div class="demo-stage">/* main content area */</div>
+</div>
+<p style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin:0">Click any item — active state cycles. The bar's content is consumer-defined; ActionBar only constrains width and scroll behaviour.</p>
+</div>
+
+<div class="section"><h2>Empty / minimal</h2>
+<div class="demo-shell" style="height:24rem">
+  <aside class="action-bar">
+    <button class="ab-item is-active" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      Home
+    </button>
+    <button class="ab-item" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Search
+    </button>
+  </aside>
+  <div class="demo-stage">/* width clamps at min-width: 250px */</div>
+</div>
+</div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Source</td><td>packages/global-ux/src/components/ActionBar/ActionBar.tsx</td></tr>
+<tr><td>Markup</td><td>&lt;aside&gt; → &lt;VStack gap="xsmall"&gt; → children</td></tr>
+<tr><td>Width</td><td>min 250px · max 360px · default 16vw</td></tr>
+<tr><td>Height</td><td>100% (consumes parent height)</td></tr>
+<tr><td>Overflow</td><td>overflow-y: auto</td></tr>
+<tr><td>Use when</td><td>Building a workspace shell with a persistent left navigation rail</td></tr>
+<tr><td>Children</td><td>Consumer-defined. Typically Buttons, IconButtons, or custom nav items.</td></tr>
+</table></div>
+
+<script>
+document.querySelectorAll('.action-bar').forEach(bar=>{
+  bar.addEventListener('click',e=>{
+    const item=e.target.closest('.ab-item');if(!item)return;
+    bar.querySelectorAll('.ab-item').forEach(i=>i.classList.remove('is-active'));
+    item.classList.add('is-active');
+  });
+});
+</script>
+</body></html>

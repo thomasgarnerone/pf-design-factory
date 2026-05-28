@@ -1,0 +1,325 @@
+/* ============================================================
+   Oxygen Design Tokens — light/web theme
+   Source: doctolib/oxygen @ packages/tokens/src/tokens.css
+   DO NOT hand-edit; mirrors the generated file.
+   ============================================================ */
+
+:root {
+  /* ---------- Primitive · Color ---------- */
+  --oxygen-color-primitive-black: #0D1721;
+  --oxygen-color-primitive-white: #FFFFFF;
+
+  --oxygen-color-primitive-blue-100: #E7F4FD;
+  --oxygen-color-primitive-blue-200: #D0E9FB;
+  --oxygen-color-primitive-blue-300: #A0D2F8;
+  --oxygen-color-primitive-blue-400: #5AB0F2;
+  --oxygen-color-primitive-blue-500: #107ACA;
+  --oxygen-color-primitive-blue-600: #045FAE;
+  --oxygen-color-primitive-blue-700: #004080;
+  --oxygen-color-primitive-blue-800: #00264C;
+
+  --oxygen-color-primitive-gray-100: #F1F7FE;
+  --oxygen-color-primitive-gray-200: #E4EDF6;
+  --oxygen-color-primitive-gray-250: #C9D9E8;
+  --oxygen-color-primitive-gray-300: #A9BFD6;
+  --oxygen-color-primitive-gray-400: #6B91B8;
+  --oxygen-color-primitive-gray-500: #4B739B;
+  --oxygen-color-primitive-gray-600: #3A5978;
+  --oxygen-color-primitive-gray-700: #294056;
+  --oxygen-color-primitive-gray-800: #192634;
+
+  --oxygen-color-primitive-green-100: #EEFEE7;
+  --oxygen-color-primitive-green-200: #DEFCCF;
+  --oxygen-color-primitive-green-300: #BDFA9E;
+  --oxygen-color-primitive-green-400: #A1E87D;
+  --oxygen-color-primitive-green-500: #79C653;
+  --oxygen-color-primitive-green-600: #32730D;
+  --oxygen-color-primitive-green-700: #2E5309;
+  --oxygen-color-primitive-green-800: #1F3409;
+
+  --oxygen-color-primitive-orange-100: #FEF5F0;
+  --oxygen-color-primitive-orange-200: #FEEEE6;
+  --oxygen-color-primitive-orange-300: #FBCDB6;
+  --oxygen-color-primitive-orange-400: #FCAB83;
+  --oxygen-color-primitive-orange-500: #F57B3D;
+  --oxygen-color-primitive-orange-600: #AD421F;
+  --oxygen-color-primitive-orange-700: #792306;
+  --oxygen-color-primitive-orange-800: #490404;
+
+  --oxygen-color-primitive-purple-100: #FDF5FF;
+  --oxygen-color-primitive-purple-200: #F9E5FF;
+  --oxygen-color-primitive-purple-300: #F2CCFF;
+  --oxygen-color-primitive-purple-400: #E599FF;
+  --oxygen-color-primitive-purple-500: #C986F9;
+  --oxygen-color-primitive-purple-600: #7333CC;
+  --oxygen-color-primitive-purple-700: #360679;
+  --oxygen-color-primitive-purple-800: #20004D;
+
+  --oxygen-color-primitive-red-100: #FFF5F6;
+  --oxygen-color-primitive-red-200: #FFE5E8;
+  --oxygen-color-primitive-red-300: #FFCCD0;
+  --oxygen-color-primitive-red-400: #FF99A1;
+  --oxygen-color-primitive-red-500: #FF4773;
+  --oxygen-color-primitive-red-600: #E5004C;
+  --oxygen-color-primitive-red-700: #A30036;
+  --oxygen-color-primitive-red-800: #660022;
+
+  --oxygen-color-primitive-sky-100: #E5F9FF;
+  --oxygen-color-primitive-sky-200: #CCF2FF;
+  --oxygen-color-primitive-sky-300: #75DDFF;
+  --oxygen-color-primitive-sky-400: #00BFFF;
+  --oxygen-color-primitive-sky-500: #05A1DE;
+  --oxygen-color-primitive-sky-600: #007AB3;
+  --oxygen-color-primitive-sky-700: #005780;
+  --oxygen-color-primitive-sky-800: #00344C;
+
+  --oxygen-color-primitive-teal-100: #E8FDF9;
+  --oxygen-color-primitive-teal-200: #D1FAF3;
+  --oxygen-color-primitive-teal-300: #99FFEE;
+  --oxygen-color-primitive-teal-400: #4DFFE1;
+  --oxygen-color-primitive-teal-500: #00E5BF;
+  --oxygen-color-primitive-teal-600: #00806A;
+  --oxygen-color-primitive-teal-700: #004D40;
+  --oxygen-color-primitive-teal-800: #00332A;
+
+  --oxygen-color-primitive-yellow-100: #FFF9E5;
+  --oxygen-color-primitive-yellow-200: #FFECB2;
+  --oxygen-color-primitive-yellow-300: #FFDD80;
+  --oxygen-color-primitive-yellow-400: #FFCD4D;
+  --oxygen-color-primitive-yellow-500: #FFBA1A;
+  --oxygen-color-primitive-yellow-600: #AA6709;
+  --oxygen-color-primitive-yellow-700: #794006;
+  --oxygen-color-primitive-yellow-800: #492704;
+
+  --oxygen-color-primitive-gray-opacity-00: #19263400;
+  --oxygen-color-primitive-gray-opacity-15: #19263426;
+  --oxygen-color-primitive-gray-opacity-25: #19263440;
+  --oxygen-color-primitive-gray-opacity-35: #19263459;
+  --oxygen-color-primitive-gray-opacity-50: #19263480;
+  --oxygen-color-primitive-gray-opacity-70: #192634B3;
+  --oxygen-color-primitive-gray-opacity-90: #192634E6;
+
+  --oxygen-color-primitive-blue-opacity-07: #052B4712;
+  --oxygen-color-primitive-blue-opacity-08: #052B4714;
+  --oxygen-color-primitive-blue-opacity-09: #052B4717;
+  --oxygen-color-primitive-blue-opacity-10: #052B471A;
+  --oxygen-color-primitive-blue-opacity-16: #052B4729;
+
+  --oxygen-color-primitive-white-opacity-15: #FFFFFF26;
+  --oxygen-color-primitive-white-opacity-25: #FFFFFF40;
+  --oxygen-color-primitive-white-opacity-35: #FFFFFF59;
+  --oxygen-color-primitive-white-opacity-50: #FFFFFF80;
+  --oxygen-color-primitive-white-opacity-70: #FFFFFFB3;
+  --oxygen-color-primitive-white-opacity-90: #FFFFFFE6;
+
+  /* ---------- Semantic · Color ---------- */
+  --oxygen-color-semantic-common-prominent: var(--oxygen-color-primitive-black);
+  --oxygen-color-semantic-common-subtle: var(--oxygen-color-primitive-white);
+
+  --oxygen-color-semantic-brand-prominent-weak: var(--oxygen-color-primitive-blue-500);
+  --oxygen-color-semantic-brand-prominent-base: var(--oxygen-color-primitive-blue-600);
+  --oxygen-color-semantic-brand-prominent-strong: var(--oxygen-color-primitive-blue-700);
+  --oxygen-color-semantic-brand-prominent-stronger: var(--oxygen-color-primitive-blue-800);
+  --oxygen-color-semantic-brand-subtle-weak: var(--oxygen-color-primitive-blue-100);
+  --oxygen-color-semantic-brand-subtle-base: var(--oxygen-color-primitive-blue-200);
+  --oxygen-color-semantic-brand-subtle-strong: var(--oxygen-color-primitive-blue-300);
+  --oxygen-color-semantic-brand-subtle-stronger: var(--oxygen-color-primitive-blue-400);
+
+  --oxygen-color-semantic-neutral-prominent-weak: var(--oxygen-color-primitive-gray-500);
+  --oxygen-color-semantic-neutral-prominent-base: var(--oxygen-color-primitive-gray-600);
+  --oxygen-color-semantic-neutral-prominent-strong: var(--oxygen-color-primitive-gray-700);
+  --oxygen-color-semantic-neutral-prominent-stronger: var(--oxygen-color-primitive-gray-800);
+  --oxygen-color-semantic-neutral-subtle-weak: var(--oxygen-color-primitive-gray-100);
+  --oxygen-color-semantic-neutral-subtle-base: var(--oxygen-color-primitive-gray-200);
+  --oxygen-color-semantic-neutral-subtle-strong: var(--oxygen-color-primitive-gray-250);
+  --oxygen-color-semantic-neutral-subtle-stronger: var(--oxygen-color-primitive-gray-300);
+
+  --oxygen-color-semantic-danger-prominent-weak: var(--oxygen-color-primitive-red-500);
+  --oxygen-color-semantic-danger-prominent-base: var(--oxygen-color-primitive-red-600);
+  --oxygen-color-semantic-danger-prominent-strong: var(--oxygen-color-primitive-red-700);
+  --oxygen-color-semantic-danger-prominent-stronger: var(--oxygen-color-primitive-red-800);
+  --oxygen-color-semantic-danger-subtle-weak: var(--oxygen-color-primitive-red-100);
+  --oxygen-color-semantic-danger-subtle-base: var(--oxygen-color-primitive-red-200);
+  --oxygen-color-semantic-danger-subtle-strong: var(--oxygen-color-primitive-red-300);
+  --oxygen-color-semantic-danger-subtle-stronger: var(--oxygen-color-primitive-red-400);
+
+  --oxygen-color-semantic-warning-prominent-weak: var(--oxygen-color-primitive-yellow-500);
+  --oxygen-color-semantic-warning-prominent-base: var(--oxygen-color-primitive-yellow-600);
+  --oxygen-color-semantic-warning-prominent-strong: var(--oxygen-color-primitive-yellow-700);
+  --oxygen-color-semantic-warning-prominent-stronger: var(--oxygen-color-primitive-yellow-800);
+  --oxygen-color-semantic-warning-subtle-weak: var(--oxygen-color-primitive-yellow-100);
+  --oxygen-color-semantic-warning-subtle-base: var(--oxygen-color-primitive-yellow-200);
+  --oxygen-color-semantic-warning-subtle-strong: var(--oxygen-color-primitive-yellow-300);
+  --oxygen-color-semantic-warning-subtle-stronger: var(--oxygen-color-primitive-yellow-400);
+
+  --oxygen-color-semantic-positive-prominent-weak: var(--oxygen-color-primitive-teal-500);
+  --oxygen-color-semantic-positive-prominent-base: var(--oxygen-color-primitive-teal-600);
+  --oxygen-color-semantic-positive-prominent-strong: var(--oxygen-color-primitive-teal-700);
+  --oxygen-color-semantic-positive-prominent-stronger: var(--oxygen-color-primitive-teal-800);
+  --oxygen-color-semantic-positive-subtle-weak: var(--oxygen-color-primitive-teal-100);
+  --oxygen-color-semantic-positive-subtle-base: var(--oxygen-color-primitive-teal-200);
+
+  --oxygen-color-semantic-informative-prominent-weak: var(--oxygen-color-primitive-sky-500);
+  --oxygen-color-semantic-informative-prominent-base: var(--oxygen-color-primitive-sky-600);
+  --oxygen-color-semantic-informative-prominent-strong: var(--oxygen-color-primitive-sky-700);
+  --oxygen-color-semantic-informative-subtle-weak: var(--oxygen-color-primitive-sky-100);
+  --oxygen-color-semantic-informative-subtle-base: var(--oxygen-color-primitive-sky-200);
+
+  /* alternative accents: green / purple / orange */
+  --oxygen-color-semantic-alternative1-prominent-base: var(--oxygen-color-primitive-green-600);
+  --oxygen-color-semantic-alternative1-subtle-base: var(--oxygen-color-primitive-green-200);
+  --oxygen-color-semantic-alternative2-prominent-base: var(--oxygen-color-primitive-purple-600);
+  --oxygen-color-semantic-alternative2-subtle-base: var(--oxygen-color-primitive-purple-200);
+  --oxygen-color-semantic-alternative3-prominent-base: var(--oxygen-color-primitive-orange-600);
+  --oxygen-color-semantic-alternative3-subtle-base: var(--oxygen-color-primitive-orange-200);
+
+  /* ---------- Font ---------- */
+  --oxygen-font-primitive-fontFamily-prominent: Montserrat;
+  --oxygen-font-primitive-fontFamily-subtle: Roboto;
+
+  --oxygen-font-primitive-fontSize-xsmall: 1.2rem;
+  --oxygen-font-primitive-fontSize-small: 1.4rem;
+  --oxygen-font-primitive-fontSize-medium: 1.6rem;
+  --oxygen-font-primitive-fontSize-large: 1.8rem;
+  --oxygen-font-primitive-fontSize-xlarge: 2.4rem;
+  --oxygen-font-primitive-fontSize-xxlarge: 3.2rem;
+  --oxygen-font-primitive-fontSize-xxxlarge: 4.0rem;
+
+  --oxygen-font-primitive-lineHeight-xsmall: 1.6rem;
+  --oxygen-font-primitive-lineHeight-small: 2.4rem;
+  --oxygen-font-primitive-lineHeight-medium: 3.2rem;
+  --oxygen-font-primitive-lineHeight-large: 4.0rem;
+  --oxygen-font-primitive-lineHeight-xlarge: 5.6rem;
+
+  --oxygen-font-semantic-body-xs-regular: normal 1.2rem/1.6rem Roboto, arial, sans-serif;
+  --oxygen-font-semantic-body-xs-bold:    bold   1.2rem/1.6rem Roboto, arial, sans-serif;
+  --oxygen-font-semantic-body-s-regular:  normal 1.4rem/2.4rem Roboto, arial, sans-serif;
+  --oxygen-font-semantic-body-s-bold:     bold   1.4rem/2.4rem Roboto, arial, sans-serif;
+  --oxygen-font-semantic-body-m-regular:  normal 1.6rem/2.4rem Roboto, arial, sans-serif;
+  --oxygen-font-semantic-body-m-bold:     bold   1.6rem/2.4rem Roboto, arial, sans-serif;
+
+  --oxygen-font-semantic-title-s-bold:    bold   1.4rem/2.4rem Montserrat, arial, sans-serif;
+  --oxygen-font-semantic-title-m-bold:    bold   1.6rem/5.6rem Montserrat, arial, sans-serif;
+  --oxygen-font-semantic-title-l-bold:    bold   1.8rem/2.4rem Montserrat, arial, sans-serif;
+  --oxygen-font-semantic-title-xl-bold:   bold   2.4rem/3.2rem Montserrat, arial, sans-serif;
+  --oxygen-font-semantic-title-xxl-bold:  bold   3.2rem/4.0rem Montserrat, arial, sans-serif;
+  --oxygen-font-semantic-title-xxxl-bold: bold   4.0rem/5.6rem Montserrat, arial, sans-serif;
+
+  /* ---------- Scale · Grid ---------- */
+  --oxygen-scale-primitive-gridUnit-x0:     0.0rem;
+  --oxygen-scale-primitive-gridUnit-x0_25:  0.2rem;
+  --oxygen-scale-primitive-gridUnit-x0_5:   0.4rem;
+  --oxygen-scale-primitive-gridUnit-x1:     0.8rem;
+  --oxygen-scale-primitive-gridUnit-x1_5:   1.2rem;
+  --oxygen-scale-primitive-gridUnit-x2:     1.6rem;
+  --oxygen-scale-primitive-gridUnit-x2_5:   2.0rem;
+  --oxygen-scale-primitive-gridUnit-x3:     2.4rem;
+  --oxygen-scale-primitive-gridUnit-x4:     3.2rem;
+  --oxygen-scale-primitive-gridUnit-x5:     4.0rem;
+  --oxygen-scale-primitive-gridUnit-x6:     4.8rem;
+  --oxygen-scale-primitive-gridUnit-x7:     5.6rem;
+  --oxygen-scale-primitive-gridUnit-x8:     6.4rem;
+  --oxygen-scale-primitive-gridUnit-x9:     7.2rem;
+  --oxygen-scale-primitive-gridUnit-x10:    8.0rem;
+  --oxygen-scale-primitive-gridUnit-x999:   99.9rem;
+
+  /* ---------- Scale · Semantic aliases ---------- */
+  --oxygen-scale-semantic-gap-none:       var(--oxygen-scale-primitive-gridUnit-x0);
+  --oxygen-scale-semantic-gap-xxxsmall:   var(--oxygen-scale-primitive-gridUnit-x0_25);
+  --oxygen-scale-semantic-gap-xxsmall:    var(--oxygen-scale-primitive-gridUnit-x0_5);
+  --oxygen-scale-semantic-gap-xsmall:     var(--oxygen-scale-primitive-gridUnit-x1);
+  --oxygen-scale-semantic-gap-small:      var(--oxygen-scale-primitive-gridUnit-x1_5);
+  --oxygen-scale-semantic-gap-medium:     var(--oxygen-scale-primitive-gridUnit-x2);
+  --oxygen-scale-semantic-gap-large:      var(--oxygen-scale-primitive-gridUnit-x3);
+  --oxygen-scale-semantic-gap-xlarge:     var(--oxygen-scale-primitive-gridUnit-x5);
+
+  --oxygen-scale-semantic-padding-xsmall:  var(--oxygen-scale-primitive-gridUnit-x0_25);
+  --oxygen-scale-semantic-padding-small:   var(--oxygen-scale-primitive-gridUnit-x0_5);
+  --oxygen-scale-semantic-padding-medium:  var(--oxygen-scale-primitive-gridUnit-x1);
+  --oxygen-scale-semantic-padding-large:   var(--oxygen-scale-primitive-gridUnit-x1_5);
+  --oxygen-scale-semantic-padding-xlarge:  var(--oxygen-scale-primitive-gridUnit-x2);
+  --oxygen-scale-semantic-padding-xxlarge: var(--oxygen-scale-primitive-gridUnit-x2_5);
+  --oxygen-scale-semantic-padding-xxxlarge:var(--oxygen-scale-primitive-gridUnit-x3);
+
+  --oxygen-scale-semantic-radius-xsmall:  var(--oxygen-scale-primitive-gridUnit-x0_5);
+  --oxygen-scale-semantic-radius-small:   var(--oxygen-scale-primitive-gridUnit-x1);
+  --oxygen-scale-semantic-radius-medium:  var(--oxygen-scale-primitive-gridUnit-x1_5);
+  --oxygen-scale-semantic-radius-large:   var(--oxygen-scale-primitive-gridUnit-x2);
+  --oxygen-scale-semantic-radius-xlarge:  var(--oxygen-scale-primitive-gridUnit-x2_5);
+  --oxygen-scale-semantic-radius-xxlarge: var(--oxygen-scale-primitive-gridUnit-x3);
+  --oxygen-scale-semantic-radius-full:    var(--oxygen-scale-primitive-gridUnit-x999);
+
+  /* ---------- Component tokens (forms, nav, feedback, table) ---------- */
+  /* Mirrors the aliases resolved at compile time from packages/tokens. */
+
+  /* forms.global.border.* — input border states */
+  --oxygen-color-forms-global-border-default:   var(--oxygen-color-primitive-gray-400);
+  --oxygen-color-forms-global-border-hover:     var(--oxygen-color-primitive-blue-500);
+  --oxygen-color-forms-global-border-focus:     var(--oxygen-color-primitive-gray-500);
+  --oxygen-color-forms-global-border-disabled:  var(--oxygen-color-primitive-gray-250);
+  --oxygen-color-forms-global-danger-border-default: var(--oxygen-color-primitive-red-600);
+
+  /* component.form._field.brand.* */
+  --oxygen-color-component-form-_field-brand-background-default: var(--oxygen-color-primitive-white);
+  --oxygen-color-component-form-_field-brand-border-default:     var(--oxygen-color-primitive-gray-400);
+  --oxygen-color-component-form-_field-brand-border-hover:       var(--oxygen-color-primitive-blue-500);
+  --oxygen-color-component-form-_field-brand-border-pressed:     var(--oxygen-color-primitive-blue-600);
+  --oxygen-color-component-form-_field-brand-border-disabled:    var(--oxygen-color-primitive-gray-250);
+  --oxygen-color-component-form-_field-danger-border-default:    var(--oxygen-color-primitive-red-600);
+  --oxygen-color-component-form-_field-danger-border-hover:      var(--oxygen-color-primitive-red-700);
+  --oxygen-color-component-form-_field-danger-border-pressed:    var(--oxygen-color-primitive-red-800);
+  --oxygen-color-component-form-_control-on-brand-border-default: var(--oxygen-color-primitive-blue-500);
+  --oxygen-color-component-form-_control-on-brand-border-hover:   var(--oxygen-color-primitive-blue-600);
+  --oxygen-color-component-form-_control-on-brand-border-pressed: var(--oxygen-color-primitive-blue-700);
+  --oxygen-color-component-form-_control-off-brand-background-pressed: var(--oxygen-color-primitive-blue-100);
+  --oxygen-color-component-form-_control-off-danger-background-pressed: var(--oxygen-color-primitive-red-100);
+  --oxygen-color-component-form-_highlight-brand:  #045FAE26;  /* blue-600 at ~15% */
+  --oxygen-color-component-form-_highlight-danger: #E5004C26;
+  --oxygen-color-component-form-_value-brand-default:  var(--oxygen-color-primitive-gray-800);
+  --oxygen-color-component-form-_value-brand-disabled: var(--oxygen-color-primitive-gray-400);
+  --oxygen-color-component-form-global-label-default:  var(--oxygen-color-primitive-gray-800);
+  --oxygen-color-component-form-global-label-disabled: var(--oxygen-color-primitive-gray-400);
+  --oxygen-color-component-form-global-hint-helper-default:  var(--oxygen-color-primitive-gray-600);
+  --oxygen-color-component-form-global-hint-helper-disabled: var(--oxygen-color-primitive-gray-400);
+  --oxygen-color-component-form-global-hint-danger-text:     var(--oxygen-color-primitive-red-600);
+  --oxygen-color-component-form-global-hint-warning-text:    var(--oxygen-color-primitive-yellow-700);
+
+  /* checkbox.brand.* */
+  --oxygen-color-forms-checkbox-brand-border-unchecked-default: var(--oxygen-color-primitive-gray-400);
+  --oxygen-color-forms-checkbox-brand-border-unchecked-hover:   var(--oxygen-color-primitive-blue-500);
+  --oxygen-color-forms-checkbox-brand-border-checked-default:   var(--oxygen-color-primitive-blue-500);
+  --oxygen-color-forms-checkbox-brand-border-checked-hover:     var(--oxygen-color-primitive-blue-600);
+  --oxygen-color-forms-checkbox-brand-background-checked-default:  var(--oxygen-color-primitive-blue-500);
+  --oxygen-color-forms-checkbox-brand-background-checked-hover:    var(--oxygen-color-primitive-blue-600);
+  --oxygen-color-forms-checkbox-brand-background-checked-disabled: var(--oxygen-color-primitive-gray-300);
+  --oxygen-color-forms-checkbox-brand-background-unchecked-disabled: var(--oxygen-color-primitive-gray-100);
+  --oxygen-color-forms-checkbox-brand-border-unchecked-disabled:     var(--oxygen-color-primitive-gray-300);
+
+  /* navigation.link.* */
+  --oxygen-color-navigation-link-brand-label-default:  var(--oxygen-color-primitive-blue-600);
+  --oxygen-color-navigation-link-brand-label-hover:    var(--oxygen-color-primitive-blue-700);
+  --oxygen-color-navigation-link-brand-label-pressed:  var(--oxygen-color-primitive-blue-800);
+  --oxygen-color-navigation-link-brand-label-disabled: var(--oxygen-color-primitive-gray-400);
+  --oxygen-color-navigation-link-neutral-text-default: var(--oxygen-color-primitive-gray-800);
+  --oxygen-color-navigation-link-neutral-text-hover:   var(--oxygen-color-primitive-gray-700);
+  --oxygen-color-navigation-link-neutral-text-pressed: var(--oxygen-color-primitive-gray-600);
+  --oxygen-color-navigation-link-neutral-text-disabled:var(--oxygen-color-primitive-gray-400);
+  --oxygen-color-navigation-link-danger-label-default: var(--oxygen-color-primitive-red-600);
+  --oxygen-color-navigation-link-danger-label-hover:   var(--oxygen-color-primitive-red-700);
+  --oxygen-color-navigation-link-danger-label-pressed: var(--oxygen-color-primitive-red-800);
+  --oxygen-color-navigation-link-danger-label-disabled:var(--oxygen-color-primitive-gray-400);
+  --oxygen-color-navigation-link-inverted-label-default: var(--oxygen-color-primitive-white);
+  --oxygen-color-navigation-link-inverted-label-hover:   var(--oxygen-color-primitive-blue-100);
+  --oxygen-color-navigation-link-inverted-label-pressed: var(--oxygen-color-primitive-blue-200);
+  --oxygen-color-navigation-link-inverted-label-disabled: var(--oxygen-color-primitive-gray-400);
+
+  /* feedback.tooltip */
+  --oxygen-color-feedback-tooltip-background: var(--oxygen-color-primitive-gray-800);
+  --oxygen-color-feedback-tooltip-text:       var(--oxygen-color-primitive-white);
+
+  /* component.collection.table.* */
+  --oxygen-color-component-surface-border-neutral-base-default: var(--oxygen-color-primitive-gray-200);
+  --oxygen-color-component-collection-table-border-hover:  var(--oxygen-color-primitive-blue-500);
+  --oxygen-color-component-collection-table-border-active: var(--oxygen-color-primitive-blue-600);
+  --oxygen-color-component-surface-background-brand-base-default: var(--oxygen-color-primitive-blue-100);
+}

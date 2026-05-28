@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="_base.css">
+  <title>Alerts</title>
+  <style>
+    /* ---------- Alert tokens (component-indicator-alert-*) ----------
+       Resolved from colorsHex.json: subtle-weak bg / subtle-strong border / prominent-strong text. */
+    :root {
+      /* positive / teal */
+      --ox-alert-bg-positive: var(--oxygen-color-primitive-teal-100, #E8FDF9);
+      --ox-alert-bd-positive: var(--oxygen-color-primitive-teal-300, #99FFEE);
+      --ox-alert-tx-positive: var(--oxygen-color-primitive-teal-700, #00806A);
+      --ox-alert-ic-positive: var(--oxygen-color-primitive-teal-600, #00A388);
+
+      /* danger / red */
+      --ox-alert-bg-danger: var(--oxygen-color-primitive-red-100, #FFF5F6);
+      --ox-alert-bd-danger: var(--oxygen-color-primitive-red-300, #FFCCD0);
+      --ox-alert-tx-danger: var(--oxygen-color-primitive-red-700, #A30036);
+      --ox-alert-ic-danger: var(--oxygen-color-primitive-red-600, #E5004C);
+
+      /* warning / orange */
+      --ox-alert-bg-warning: var(--oxygen-color-primitive-orange-100, #FFF9E5);
+      --ox-alert-bd-warning: var(--oxygen-color-primitive-orange-300, #FFDD80);
+      --ox-alert-tx-warning: var(--oxygen-color-primitive-orange-700, #792306);
+      --ox-alert-ic-warning: var(--oxygen-color-primitive-orange-600, #AD421F);
+
+      /* informative / sky */
+      --ox-alert-bg-informative: var(--oxygen-color-primitive-sky-100, #E5F9FF);
+      --ox-alert-bd-informative: var(--oxygen-color-primitive-sky-300, #75DDFF);
+      --ox-alert-tx-informative: var(--oxygen-color-primitive-sky-700, #005780);
+      --ox-alert-ic-informative: var(--oxygen-color-primitive-sky-600, #007AB3);
+
+      /* tips / green */
+      --ox-alert-bg-tips: var(--oxygen-color-primitive-green-100, #EEFEE7);
+      --ox-alert-bd-tips: var(--oxygen-color-primitive-green-300, #BDFA9E);
+      --ox-alert-tx-tips: var(--oxygen-color-primitive-green-700, #2E5309);
+      --ox-alert-ic-tips: var(--oxygen-color-primitive-green-600, #32730D);
+
+      /* neutral */
+      --ox-alert-bg-neutral: var(--oxygen-color-primitive-white);
+      --ox-alert-bd-neutral: var(--oxygen-color-semantic-neutral-subtle-base);
+      --ox-alert-tx-neutral: var(--oxygen-color-primitive-gray-700);
+      --ox-alert-ic-neutral: var(--oxygen-color-primitive-blue-500); /* brand-weak */
+    }
+
+    /* ---------- Private/_Alert.module.scss shell ---------- */
+    .alert {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      padding: var(--oxygen-scale-semantic-padding-medium);
+      gap: var(--oxygen-scale-semantic-gap-xsmall, 0.8rem);
+      align-items: flex-start;
+      font-size: 1.4rem;
+      line-height: 1.5;
+    }
+    .alert .iconWrapper {
+      flex-shrink: 0; width: 1.8rem; height: 1.8rem; margin-top: 0.3rem;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .alert .iconWrapper svg { width: 100%; height: 100%; fill: currentColor; display: block; }
+    .alert .innerContent { flex: 1; min-width: 0; }
+    .alert .titleWrapper { font-weight: 700; margin-bottom: 0.2rem; }
+    .alert .labelWrapper { color: inherit; }
+    .alert .actionsWrapper {
+      display: flex; gap: var(--oxygen-scale-semantic-gap-medium, 1.6rem);
+      margin-top: 0.8rem;
+    }
+    .alert .action {
+      background: none; border: 0; padding: 0;
+      color: inherit; font: inherit; font-weight: 700; text-decoration: underline;
+      cursor: pointer;
+    }
+    .alert .closeButtonWrapper {
+      position: absolute; top: var(--oxygen-scale-semantic-padding-small);
+      right: var(--oxygen-scale-semantic-padding-small);
+    }
+    .alert .closeBtn {
+      width: 2.4rem; height: 2.4rem; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: inherit; cursor: pointer; background: transparent; border: 0;
+    }
+    .alert .closeBtn svg { width: 1.2rem; height: 1.2rem; fill: currentColor; }
+
+    /* ---------- Variants ---------- */
+    .variant-card {
+      border: 0.1rem solid;
+      border-radius: var(--oxygen-scale-semantic-radius-small);
+    }
+    .variant-banner {
+      border-radius: 0;
+      justify-content: center;
+      text-align: center;
+      padding-block: var(--oxygen-scale-semantic-padding-small);
+    }
+    .variant-banner .innerContent { flex: 0 1 auto; }
+    .variant-hint {
+      padding: 0; background: transparent !important; border: 0 !important;
+    }
+
+    /* ---------- uiStyle color tokens ---------- */
+    .uiStyle-positive.variant-card,
+    .uiStyle-positive.variant-banner { background: var(--ox-alert-bg-positive); color: var(--ox-alert-tx-positive); }
+    .uiStyle-positive.variant-card   { border-color: var(--ox-alert-bd-positive); }
+    .uiStyle-positive.variant-hint   { color: var(--ox-alert-tx-positive); }
+    .uiStyle-positive .iconWrapper   { color: var(--ox-alert-ic-positive); }
+
+    .uiStyle-danger.variant-card,
+    .uiStyle-danger.variant-banner { background: var(--ox-alert-bg-danger); color: var(--ox-alert-tx-danger); }
+    .uiStyle-danger.variant-card   { border-color: var(--ox-alert-bd-danger); }
+    .uiStyle-danger.variant-hint   { color: var(--ox-alert-tx-danger); }
+    .uiStyle-danger .iconWrapper   { color: var(--ox-alert-ic-danger); }
+
+    .uiStyle-warning.variant-card,
+    .uiStyle-warning.variant-banner { background: var(--ox-alert-bg-warning); color: var(--ox-alert-tx-warning); }
+    .uiStyle-warning.variant-card   { border-color: var(--ox-alert-bd-warning); }
+    .uiStyle-warning.variant-hint   { color: var(--ox-alert-tx-warning); }
+    .uiStyle-warning .iconWrapper   { color: var(--ox-alert-ic-warning); }
+
+    .uiStyle-informative.variant-card,
+    .uiStyle-informative.variant-banner { background: var(--ox-alert-bg-informative); color: var(--ox-alert-tx-informative); }
+    .uiStyle-informative.variant-card   { border-color: var(--ox-alert-bd-informative); }
+    .uiStyle-informative.variant-hint   { color: var(--ox-alert-tx-informative); }
+    .uiStyle-informative .iconWrapper   { color: var(--ox-alert-ic-informative); }
+
+    .uiStyle-tips.variant-card,
+    .uiStyle-tips.variant-banner { background: var(--ox-alert-bg-tips); color: var(--ox-alert-tx-tips); }
+    .uiStyle-tips.variant-card   { border-color: var(--ox-alert-bd-tips); }
+    .uiStyle-tips.variant-hint   { color: var(--ox-alert-tx-tips); }
+    .uiStyle-tips .iconWrapper   { color: var(--ox-alert-ic-tips); }
+
+    .uiStyle-neutral.variant-card,
+    .uiStyle-neutral.variant-banner { background: var(--ox-alert-bg-neutral); color: var(--ox-alert-tx-neutral); }
+    .uiStyle-neutral.variant-card   { border-color: var(--ox-alert-bd-neutral); }
+    .uiStyle-neutral.variant-hint   { color: var(--ox-alert-tx-neutral); }
+    .uiStyle-neutral .iconWrapper   { color: var(--ox-alert-ic-neutral); }
+
+    /* size */
+    .size-xsmall { padding: var(--oxygen-scale-semantic-padding-small); font-size: 1.3rem; gap: 0.6rem; }
+    .size-xsmall .iconWrapper { width: 1.6rem; height: 1.6rem; margin-top: 0.1rem; }
+
+    /* ---------- Page chrome ---------- */
+    body { padding: 0; }
+    .page { padding: 2.4rem 2.8rem; max-width: 72rem; margin: 0 auto; }
+    h1 { font: var(--oxygen-font-semantic-title-l-bold); margin-bottom: 0.4rem; }
+    .sub { color: var(--oxygen-color-semantic-common-weak); margin-bottom: 3.2rem; font-size: 1.3rem; }
+    section { margin-bottom: 4rem; }
+    .sect-title { font: var(--oxygen-font-semantic-title-s-bold); margin-bottom: 0.4rem; }
+    .sect-desc { color: var(--oxygen-color-semantic-common-weak); font-size: 1.3rem; margin-bottom: 1.6rem; }
+    .stack { display: flex; flex-direction: column; gap: 1.2rem; }
+    .banner-wrap { display: flex; flex-direction: column; gap: 0; margin-inline: -2.8rem; }
+    .banner-wrap .alert + .alert { border-top: 0.1rem solid rgba(0,0,0,0.04); }
+    .variant-tag { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1rem; color: var(--oxygen-color-semantic-common-weak); text-transform: uppercase; letter-spacing: 0.04em; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <h1>Alerts</h1>
+  <p class="sub">Three variants from <code>indicator/Alert</code> — <b>Banner</b> for page-level status, <b>Card</b> for contextual blocks, <b>Hint</b> for inline feedback. Each supports six <code>uiStyle</code>s.</p>
+
+  <section>
+    <div class="sect-title">AlertCard</div>
+    <div class="sect-desc">Bordered, radius-small surface. Stands out more than Banner/Hint. Use inside content blocks.</div>
+    <div class="stack">
+
+      <div class="alert variant-card uiStyle-informative">
+        <span class="iconWrapper"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 14.4A6.4 6.4 0 1 0 8 1.6a6.4 6.4 0 0 0 0 12.8m0-7.793a1.084 1.084 0 1 1 0-2.168 1.084 1.084 0 0 1 0 2.168m1.135 4.696h-2.27a.31.31 0 0 1-.31-.31v-.619a.31.31 0 0 1 .31-.31h.31v-1.65h-.31a.31.31 0 0 1-.31-.31v-.619a.31.31 0 0 1 .31-.31h1.651a.31.31 0 0 1 .31.31v2.58h.31a.31.31 0 0 1 .31.31v.62a.31.31 0 0 1-.31.31z"/></svg></span>
+        <div class="innerContent">
+          <div class="titleWrapper">Health data hosted in France.</div>
+          <div class="labelWrapper">Encrypted and visible only to your practitioner.</div>
+          <div class="actionsWrapper"><button class="action">Learn more</button></div>
+        </div>
+        <div class="closeButtonWrapper"><button class="closeBtn" aria-label="Close"><svg viewBox="0 0 16 16"><path d="M13.022 11.984a.724.724 0 0 1 0 1.055.73.73 0 0 1-.515.211.74.74 0 0 1-.539-.211L8.028 9.06l-3.943 3.98a.73.73 0 0 1-.515.211.74.74 0 0 1-.538-.211.724.724 0 0 1 0-1.055L6.95 7.98 2.978 4.034a.724.724 0 0 1 0-1.055.72.72 0 0 1 1.054 0l3.995 3.947 3.941-3.947a.72.72 0 0 1 1.054 0 .724.724 0 0 1 0 1.055L9.08 8.004z"/></svg></button></div>
+      </div>
+
+      <div class="alert variant-card uiStyle-positive">
+        <span class="iconWrapper"><svg viewBox="0 0 16 16"><path d="M2 8c0-3.305 2.672-6 6-6 3.305 0 6 2.695 6 6 0 3.328-2.695 6-6 6-3.328 0-6-2.672-6-6m8.695-1.031a.637.637 0 0 0 0-.914.637.637 0 0 0-.914 0L7.25 8.585l-1.055-1.03a.637.637 0 0 0-.914 0 .637.637 0 0 0 0 .914l1.5 1.5a.637.637 0 0 0 .914 0z"/></svg></span>
+        <div class="innerContent">
+          <div class="titleWrapper">Appointment confirmed.</div>
+          <div class="labelWrapper">You'll receive a reminder 24&nbsp;h before.</div>
+        </div>
+      </div>
+
+      <div class="alert variant-card uiStyle-warning">
+        <span class="iconWrapper"><svg viewBox="0 0 16 16"><path d="m13.86 11.773-4.993-8.53c-.398-.657-1.36-.657-1.734 0l-5.016 8.53a.987.987 0 0 0 .867 1.477h10.008a.987.987 0 0 0 .867-1.477M7.437 5.938c0-.305.234-.563.562-.563a.57.57 0 0 1 .563.563v3A.555.555 0 0 1 8 9.5a.57.57 0 0 1-.562-.562zM8 11.75a.736.736 0 0 1-.75-.727c0-.398.328-.726.75-.726a.73.73 0 0 1 .727.726.73.73 0 0 1-.727.727"/></svg></span>
+        <div class="innerContent">
+          <div class="titleWrapper">No availability this week.</div>
+          <div class="labelWrapper">Try a nearby location or a different time range.</div>
+        </div>
+      </div>
+
+      <div class="alert variant-card uiStyle-danger">
+        <span class="iconWrapper"><svg viewBox="0 0 16 16"><path d="M13.648 7.227 8.773 2.328c-.445-.422-1.171-.422-1.593 0L2.328 7.227a1.09 1.09 0 0 0 0 1.57l4.875 4.875a1.09 1.09 0 0 0 1.57 0l4.875-4.875a1.09 1.09 0 0 0 0-1.57m-6.21-1.665C7.438 5.235 7.672 5 8 5c.305 0 .563.234.563.563v2.625A.57.57 0 0 1 8 8.75a.555.555 0 0 1-.562-.562zM8 11a.755.755 0 0 1-.75-.75A.74.74 0 0 1 8 9.5c.398 0 .75.328.75.75 0 .398-.352.75-.75.75"/></svg></span>
+        <div class="innerContent">
+          <div class="titleWrapper">Booking failed.</div>
+          <div class="labelWrapper">This time slot is no longer available. Please pick another.</div>
+        </div>
+        <div class="closeButtonWrapper"><button class="closeBtn" aria-label="Close"><svg viewBox="0 0 16 16"><path d="M13.022 11.984a.724.724 0 0 1 0 1.055.73.73 0 0 1-.515.211.74.74 0 0 1-.539-.211L8.028 9.06l-3.943 3.98a.73.73 0 0 1-.515.211.74.74 0 0 1-.538-.211.724.724 0 0 1 0-1.055L6.95 7.98 2.978 4.034a.724.724 0 0 1 0-1.055.72.72 0 0 1 1.054 0l3.995 3.947 3.941-3.947a.72.72 0 0 1 1.054 0 .724.724 0 0 1 0 1.055L9.08 8.004z"/></svg></button></div>
+      </div>
+
+      <div class="alert variant-card uiStyle-tips">
+        <span class="iconWrapper"><svg viewBox="0 0 16 16"><path d="M6.125 12.664c0 .14.023.281.117.399l.399.609c.117.187.398.328.632.328h1.43c.235 0 .516-.14.633-.328l.398-.61a.8.8 0 0 0 .118-.398l.023-.914h-3.75zm1.852-10.64c-2.391 0-4.102 1.921-4.102 4.101 0 1.031.375 1.969 1.008 2.695.398.446.984 1.383 1.219 2.156V11h3.773v-.024c.234-.773.82-1.71 1.219-2.156a4 4 0 0 0 1.031-2.695c0-2.273-1.875-4.125-4.148-4.102M8 4.273c-1.055 0-1.875.82-1.875 1.851 0 .21-.187.375-.375.375a.37.37 0 0 1-.375-.375c0-1.43 1.172-2.602 2.625-2.602.188 0 .375.188.375.375A.385.385 0 0 1 8 4.272"/></svg></span>
+        <div class="innerContent">
+          <div class="titleWrapper">Tip — save this practitioner.</div>
+          <div class="labelWrapper">Favourites appear on your home screen for one-tap booking.</div>
+        </div>
+      </div>
+
+      <div class="alert variant-card uiStyle-neutral">
+        <span class="iconWrapper"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 14.4A6.4 6.4 0 1 0 8 1.6a6.4 6.4 0 0 0 0 12.8m0-7.793a1.084 1.084 0 1 1 0-2.168 1.084 1.084 0 0 1 0 2.168m1.135 4.696h-2.27a.31.31 0 0 1-.31-.31v-.619a.31.31 0 0 1 .31-.31h.31v-1.65h-.31a.31.31 0 0 1-.31-.31v-.619a.31.31 0 0 1 .31-.31h1.651a.31.31 0 0 1 .31.31v2.58h.31a.31.31 0 0 1 .31.31v.62a.31.31 0 0 1-.31.31z"/></svg></span>
+        <div class="innerContent">
+          <div class="titleWrapper">Neutral.</div>
+          <div class="labelWrapper">Works over imagery or surfaces where color would compete.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="sect-title">AlertBanner</div>
+    <div class="sect-desc">Full-bleed, no radius, no border. Centered content. Use at the top of a page for site-wide notices.</div>
+    <div class="banner-wrap">
+      <div class="alert variant-banner uiStyle-informative">
+        <span class="iconWrapper"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 14.4A6.4 6.4 0 1 0 8 1.6a6.4 6.4 0 0 0 0 12.8m0-7.793a1.084 1.084 0 1 1 0-2.168 1.084 1.084 0 0 1 0 2.168m1.135 4.696h-2.27a.31.31 0 0 1-.31-.31v-.619a.31.31 0 0 1 .31-.31h.31v-1.65h-.31a.31.31 0 0 1-.31-.31v-.619a.31.31 0 0 1 .31-.31h1.651a.31.31 0 0 1 .31.31v2.58h.31a.31.31 0 0 1 .31.31v.62a.31.31 0 0 1-.31.31z"/></svg></span>
+        <div class="innerContent">Scheduled maintenance Sunday 02:00–04:00 CET.</div>
+      </div>
+      <div class="alert variant-banner uiStyle-warning">
+        <span class="iconWrapper"><svg viewBox="0 0 16 16"><path d="m13.86 11.773-4.993-8.53c-.398-.657-1.36-.657-1.734 0l-5.016 8.53a.987.987 0 0 0 .867 1.477h10.008a.987.987 0 0 0 .867-1.477M7.437 5.938c0-.305.234-.563.562-.563a.57.57 0 0 1 .563.563v3A.555.555 0 0 1 8 9.5a.57.57 0 0 1-.562-.562zM8 11.75a.736.736 0 0 1-.75-.727c0-.398.328-.726.75-.726a.73.73 0 0 1 .727.726.73.73 0 0 1-.727.727"/></svg></span>
+        <div class="innerContent">You have 2 incomplete patient forms.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sect-title">AlertHint</div>
+    <div class="sect-desc">No background, no border, no padding. Inline feedback for form fields or compact contexts.</div>
+    <div class="stack">
+      <div class="alert variant-hint size-xsmall uiStyle-danger">
+        <span class="iconWrapper"><svg viewBox="0 0 16 16"><path d="M13.648 7.227 8.773 2.328c-.445-.422-1.171-.422-1.593 0L2.328 7.227a1.09 1.09 0 0 0 0 1.57l4.875 4.875a1.09 1.09 0 0 0 1.57 0l4.875-4.875a1.09 1.09 0 0 0 0-1.57m-6.21-1.665C7.438 5.235 7.672 5 8 5c.305 0 .563.234.563.563v2.625A.57.57 0 0 1 8 8.75a.555.555 0 0 1-.562-.562zM8 11a.755.755 0 0 1-.75-.75A.74.74 0 0 1 8 9.5c.398 0 .75.328.75.75 0 .398-.352.75-.75.75"/></svg></span>
+        <div class="innerContent"><div class="labelWrapper">Please enter a valid phone number.</div></div>
+      </div>
+      <div class="alert variant-hint size-xsmall uiStyle-positive">
+        <span class="iconWrapper"><svg viewBox="0 0 16 16"><path d="M2 8c0-3.305 2.672-6 6-6 3.305 0 6 2.695 6 6 0 3.328-2.695 6-6 6-3.328 0-6-2.672-6-6m8.695-1.031a.637.637 0 0 0 0-.914.637.637 0 0 0-.914 0L7.25 8.585l-1.055-1.03a.637.637 0 0 0-.914 0 .637.637 0 0 0 0 .914l1.5 1.5a.637.637 0 0 0 .914 0z"/></svg></span>
+        <div class="innerContent"><div class="labelWrapper">Number verified.</div></div>
+      </div>
+      <div class="alert variant-hint size-xsmall uiStyle-informative">
+        <span class="iconWrapper"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 14.4A6.4 6.4 0 1 0 8 1.6a6.4 6.4 0 0 0 0 12.8m0-7.793a1.084 1.084 0 1 1 0-2.168 1.084 1.084 0 0 1 0 2.168m1.135 4.696h-2.27a.31.31 0 0 1-.31-.31v-.619a.31.31 0 0 1 .31-.31h.31v-1.65h-.31a.31.31 0 0 1-.31-.31v-.619a.31.31 0 0 1 .31-.31h1.651a.31.31 0 0 1 .31.31v2.58h.31a.31.31 0 0 1 .31.31v.62a.31.31 0 0 1-.31.31z"/></svg></span>
+        <div class="innerContent"><div class="labelWrapper">A reminder will be sent to this number.</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

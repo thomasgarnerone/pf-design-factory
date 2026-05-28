@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Pagination</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=10">
+<style>
+body{padding:3.2rem;max-width:96rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.chev{display:inline-block;width:1rem;height:1rem}
+</style></head>
+<body>
+
+<h1>Pagination</h1>
+<p class="lede">Paged navigation for tables and long result lists. Page numbers + prev/next chevrons; optional info line (“Showing 1–10 of 124”). Active page fills with subtle brand; hover on other pages promotes to brand fill.</p>
+
+<div class="section">
+  <h2>Default — page 3 of 12</h2>
+  <nav class="ox-pagination" aria-label="Pagination">
+    <ul class="ox-pagination__buttons">
+      <li><button class="ox-pagination__btn" aria-label="Previous">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg>
+      </button></li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">1</button></li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">2</button></li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page active" aria-current="true">3</button></li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">4</button></li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">5</button></li>
+      <li class="ox-pagination__ellipsis">…</li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">12</button></li>
+      <li><button class="ox-pagination__btn" aria-label="Next">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3.5 4.5 4.5L6 12.5"/></svg>
+      </button></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="section">
+  <h2>With info line</h2>
+  <nav class="ox-pagination" aria-label="Pagination">
+    <div class="ox-pagination__infos">Showing 21–30 of 124 results</div>
+    <ul class="ox-pagination__buttons">
+      <li><button class="ox-pagination__btn" aria-label="Previous">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg>
+      </button></li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">1</button></li>
+      <li class="ox-pagination__ellipsis">…</li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">2</button></li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page active" aria-current="true">3</button></li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">4</button></li>
+      <li class="ox-pagination__ellipsis">…</li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">13</button></li>
+      <li><button class="ox-pagination__btn" aria-label="Next">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3.5 4.5 4.5L6 12.5"/></svg>
+      </button></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="section">
+  <h2>First page — previous disabled</h2>
+  <nav class="ox-pagination" aria-label="Pagination">
+    <ul class="ox-pagination__buttons">
+      <li><button class="ox-pagination__btn" aria-label="Previous" disabled>
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg>
+      </button></li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page active" aria-current="true">1</button></li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">2</button></li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">3</button></li>
+      <li class="ox-pagination__ellipsis">…</li>
+      <li><button class="ox-pagination__btn ox-pagination__btn--page">12</button></li>
+      <li><button class="ox-pagination__btn" aria-label="Next">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3.5 4.5 4.5L6 12.5"/></svg>
+      </button></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec">
+    <tr><td>Button size</td><td>3.2 × 3.2 rem · radius small</td></tr>
+    <tr><td>Active</td><td>brand-prominent-weak bg · white label · bold</td></tr>
+    <tr><td>Hover</td><td>brand-prominent-base bg · white label</td></tr>
+    <tr><td>Prev/next</td><td>bordered · chevron icon · promotes on hover</td></tr>
+    <tr><td>Gap</td><td>0.8 rem between items</td></tr>
+    <tr><td>Source</td><td>packages/core/src/navigation/Pagination/Pagination.{tsx,scss}</td></tr>
+  </table>
+</div>
+
+</body></html>

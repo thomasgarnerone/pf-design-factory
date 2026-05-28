@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<title>Elevation — Oxygen</title>
+<style>
+  :root{
+    /* ---------- Shadow scale (Figma only — NOT yet in the codebase) ---------- */
+    /* Size scale from small to elevated. Values are placeholders derived from the
+       five Figma shadow tokens; names reflect a flat S → 2XL progression. Replace
+       the values once codified in tokens.css. */
+    --oxygen-shadow-scale-s:   0 0.1rem 0.2rem 0 #052B471A;
+    --oxygen-shadow-scale-m:   0 0.1rem 0.4rem 0 #052B4729, 0 0 0.1rem 0 #052B471A;
+    --oxygen-shadow-scale-l:   0 0.2rem 0.8rem 0 #052B4724, 0 0 0.1rem 0 #052B471F;
+    --oxygen-shadow-scale-xl:  0 0.5rem 0.8rem 0 #052B4714, 0 1rem 4rem 0 #052B4714;
+    --oxygen-shadow-scale-2xl: 0 1.2rem 2.4rem 0 #052B4724, 0 2rem 6rem 0 #052B4714;
+
+    /* Focus tokens — from packages/core/src/style/focus.scss */
+    --oxygen-color-core-white: #ffffff;
+    --oxygen-color-core-blue-500: #107ACA;
+
+    --ink: #192634;
+    --body: #3A5978;
+    --hint: #6B91B8;
+    --line: #E4EDF6;
+    --line-2: #C9D9E8;
+    --mono: 'Roboto Mono', ui-monospace, monospace;
+  }
+
+  body {
+    padding: 2.8rem 3.2rem;
+    font-family: Roboto, sans-serif;
+    color: var(--ink);
+    background: #F7FAFE;
+  }
+  .wrap { max-width: 118rem; }
+
+  .page-title {
+    font: 700 2.8rem/1.2 Montserrat, sans-serif;
+    margin: 0 0 0.4rem;
+    color: var(--ink);
+  }
+  .page-sub {
+    font: 400 1.4rem/1.5 Roboto, sans-serif;
+    color: var(--body);
+    max-width: 76rem;
+    margin: 0 0 2rem;
+  }
+
+  /* Warning banner — source of truth callout */
+  .banner {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding: 1.2rem 1.4rem;
+    border-radius: 0.6rem;
+    background: #FFF7E6;
+    border: 1px solid #F5C87A;
+    font: 400 1.25rem/1.5 Roboto, sans-serif;
+    color: #5E4213;
+    margin: 0 0 3rem;
+    max-width: 92rem;
+  }
+  .banner .dot {
+    flex: 0 0 auto;
+    width: 0.9rem; height: 0.9rem;
+    border-radius: 999px;
+    background: #D9822B;
+    margin-top: 0.5rem;
+  }
+  .banner b { color: #3E2A0C; }
+  .banner code {
+    font-family: var(--mono);
+    background: #FDECD2;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.3rem;
+    color: #5E4213;
+  }
+
+  h3.section {
+    font: 600 1.1rem/1.4 Roboto, sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4B739B;
+    margin: 4rem 0 1.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 0.1rem solid var(--line);
+  }
+  h3.section:first-of-type { margin-top: 0; }
+
+  /* ---------- compare strip: all 5 sizes side by side ---------- */
+  .compare-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.6rem;
+    padding: 4rem 3rem 4.4rem;
+    margin: 0 0 1.6rem;
+    background:
+      linear-gradient(#F7FAFE, #F7FAFE),
+      repeating-linear-gradient(0deg, rgba(25,38,52,0.04) 0 1px, transparent 1px 16px);
+    background-blend-mode: multiply;
+    border: 1px solid var(--line);
+    border-radius: 0.8rem;
+  }
+  .compare-tile {
+    background: #fff;
+    height: 10rem;
+    border-radius: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 700 1.6rem/1 Montserrat, sans-serif;
+    color: var(--ink);
+    position: relative;
+    letter-spacing: 0.04em;
+  }
+  .compare-tile::before {
+    content: attr(data-step);
+    position: absolute;
+    top: -2.4rem; left: 50%; transform: translateX(-50%);
+    font: 600 0.9rem/1 var(--mono);
+    color: var(--hint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .compare-tile::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: -2.6rem; left: 50%; transform: translateX(-50%);
+    font: 400 1.1rem/1.3 var(--mono);
+    color: var(--body);
+    white-space: nowrap;
+  }
+  .compare-strip .compare-tile:nth-child(1) { box-shadow: var(--oxygen-shadow-scale-s); }
+  .compare-strip .compare-tile:nth-child(2) { box-shadow: var(--oxygen-shadow-scale-m); }
+  .compare-strip .compare-tile:nth-child(3) { box-shadow: var(--oxygen-shadow-scale-l); }
+  .compare-strip .compare-tile:nth-child(4) { box-shadow: var(--oxygen-shadow-scale-xl); }
+  .compare-strip .compare-tile:nth-child(5) { box-shadow: var(--oxygen-shadow-scale-2xl); }
+
+  /* ---------- individual callouts ---------- */
+  .shadow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+    gap: 3.2rem 2.4rem;
+  }
+  .shadow-cell { display: flex; flex-direction: column; gap: 1rem; }
+
+  .shadow-stage {
+    position: relative;
+    padding: 3.6rem 2.4rem 2.4rem;
+    border-radius: 0.6rem;
+    background:
+      linear-gradient(#FFFFFF00, #FFFFFF00),
+      repeating-linear-gradient(0deg, rgba(25,38,52,0.06) 0 1px, transparent 1px 8px);
+    border: 1px solid var(--line);
+  }
+  .shadow-stage .size-badge {
+    position: absolute; top: 0.8rem; left: 1rem;
+    font: 700 0.95rem/1 var(--mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 0.35rem 0.65rem;
+    border-radius: 0.25rem;
+  }
+  .shadow-stage[data-size="s"]   .size-badge { background: #8EA6BD; }
+  .shadow-stage[data-size="m"]   .size-badge { background: #4B8AC4; }
+  .shadow-stage[data-size="l"]   .size-badge { background: #107ACA; }
+  .shadow-stage[data-size="xl"]  .size-badge { background: #6B4BB3; }
+  .shadow-stage[data-size="2xl"] .size-badge { background: #294056; }
+
+  .shadow-box {
+    background: #ffffff;
+    border-radius: 0.8rem;
+    height: 9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 700 1.4rem/1 Montserrat, sans-serif;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+  .sz-s   { box-shadow: var(--oxygen-shadow-scale-s); }
+  .sz-m   { box-shadow: var(--oxygen-shadow-scale-m); }
+  .sz-l   { box-shadow: var(--oxygen-shadow-scale-l); }
+  .sz-xl  { box-shadow: var(--oxygen-shadow-scale-xl); }
+  .sz-2xl { box-shadow: var(--oxygen-shadow-scale-2xl); }
+
+  .shadow-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    line-height: 1.45;
+  }
+  .shadow-meta .tname { color: #107ACA; font-weight: 500; }
+  .shadow-meta .tdesc { color: var(--body); font-family: Roboto, sans-serif; font-size: 1.2rem; }
+  .shadow-meta .traw  {
+    color: var(--hint);
+    font-size: 1rem;
+    line-height: 1.5;
+    word-break: break-all;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 0.3rem;
+    padding: 0.4rem 0.6rem;
+    margin-top: 0.3rem;
+  }
+  .shadow-meta .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font: 500 1rem/1 Roboto, sans-serif;
+    color: #8A5A12;
+    background: #FFF2D6;
+    border: 1px solid #F5C87A;
+    padding: 0.3rem 0.55rem;
+    border-radius: 0.25rem;
+    align-self: flex-start;
+    margin-top: 0.2rem;
+  }
+  .shadow-meta .status::before {
+    content: ''; width: 0.55rem; height: 0.55rem; border-radius: 999px; background: #D9822B;
+  }
+
+  /* ---------- focus ring ---------- */
+  .focus-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
+    gap: 2.4rem;
+    align-items: start;
+  }
+  .focus-cell { display: flex; flex-direction: column; gap: 1rem; }
+  .focus-box {
+    background: #fff;
+    border-radius: 0.6rem;
+    padding: 1.8rem;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line);
+    min-height: 9rem;
+  }
+  .oxy-focusable {
+    display: inline-block;
+    padding: 0.8rem 1.4rem;
+    background: #fff;
+    border: 1px solid var(--line-2);
+    border-radius: 0.4rem;
+    font: 500 1.4rem/1 Roboto, sans-serif;
+    color: var(--ink);
+  }
+  .oxy-focusable.focused {
+    outline: 0.2rem solid var(--oxygen-color-core-blue-500);
+    outline-offset: 0.2rem;
+    box-shadow: 0 0 0 0.2rem var(--oxygen-color-core-white);
+  }
+  .focus-meta {
+    font-family: var(--mono); font-size: 1.1rem; line-height: 1.5;
+    color: var(--body);
+  }
+  .focus-meta code {
+    background: #fff; border: 1px solid var(--line);
+    padding: 0.15rem 0.4rem; border-radius: 0.3rem; color: #004080;
+  }
+  .focus-meta .tname { color: #107ACA; font-weight: 500; display:block; margin-bottom: 0.4rem; }
+
+  .legend {
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    color: var(--body);
+    margin: 0 0 2.4rem;
+    max-width: 92rem;
+    line-height: 1.6;
+  }
+  .legend b { color: var(--ink); font-weight: 700; font-family: Roboto, sans-serif; }
+  .legend code {
+    background: #fff; border: 1px solid var(--line);
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.3rem;
+    color: #004080;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1 class="page-title">Elevation</h1>
+  <p class="page-sub">Shadow size scale (S → 2XL).</p>
+
+  <div class="banner" role="note">
+    <span class="dot" aria-hidden="true"></span>
+    <div>
+      <b>Heads up — shadows are Figma-only.</b> The five shadow tokens below exist in the Oxygen Figma file but have
+      <b>not yet been codified</b> in the Oxygen codebase. A grep for <code>shadow</code> across
+      <code>packages/tokens/src/tokens.css</code>, <code>config.cjs</code> and <code>tokensCSS.ts</code> returns
+      zero matches — current production components express elevation through <b>borders and surface colour</b>, not
+      <code>box-shadow</code>. Values shown here are derived from the Figma swatches and will be superseded once
+      tokens land in <code>tokens.css</code>.
+    </div>
+  </div>
+
+  <h3 class="section">At a glance — size scale</h3>
+  <p class="legend">
+    Five sizes from smallest to most elevated. Scan horizontally to compare blur spread and y-offset.
+  </p>
+  <div class="compare-strip">
+    <div class="compare-tile" data-step="1" data-label="shadow/scale/s">S</div>
+    <div class="compare-tile" data-step="2" data-label="shadow/scale/m">M</div>
+    <div class="compare-tile" data-step="3" data-label="shadow/scale/l">L</div>
+    <div class="compare-tile" data-step="4" data-label="shadow/scale/xl">XL</div>
+    <div class="compare-tile" data-step="5" data-label="shadow/scale/2xl">2XL</div>
+  </div>
+
+  <h3 class="section">Per-size detail</h3>
+  <div class="shadow-grid">
+
+    <div class="shadow-cell">
+      <div class="shadow-stage" data-size="s">
+        <span class="size-badge">1 · S</span>
+        <div class="shadow-box sz-s">S</div>
+      </div>
+      <div class="shadow-meta">
+        <span class="tname">oxygen-shadow/scale/s</span>
+        <span class="tdesc"><b>Barely lifted.</b> The gentlest separation — good for row-level chips or dense tables where depth should be felt, not seen.</span>
+        <span class="traw">0 0.1rem 0.2rem 0 #052B471A</span>
+        <span class="status">Figma only — not codified</span>
+      </div>
+    </div>
+
+    <div class="shadow-cell">
+      <div class="shadow-stage" data-size="m">
+        <span class="size-badge">2 · M</span>
+        <div class="shadow-box sz-m">M</div>
+      </div>
+      <div class="shadow-meta">
+        <span class="tname">oxygen-shadow/scale/m</span>
+        <span class="tdesc"><b>Resting card.</b> The default tile elevation — practitioner cards, list items, most surfaces lifted off the page.</span>
+        <span class="traw">0 0.1rem 0.4rem 0 #052B4729, 0 0 0.1rem 0 #052B471A</span>
+        <span class="status">Figma only — not codified</span>
+      </div>
+    </div>
+
+    <div class="shadow-cell">
+      <div class="shadow-stage" data-size="l">
+        <span class="size-badge">3 · L</span>
+        <div class="shadow-box sz-l">L</div>
+      </div>
+      <div class="shadow-meta">
+        <span class="tname">oxygen-shadow/scale/l</span>
+        <span class="tdesc"><b>Persistent surface.</b> Sticky headers, pinned toolbars, hovered tiles — anything that stays above regular content.</span>
+        <span class="traw">0 0.2rem 0.8rem 0 #052B4724, 0 0 0.1rem 0 #052B471F</span>
+        <span class="status">Figma only — not codified</span>
+      </div>
+    </div>
+
+    <div class="shadow-cell">
+      <div class="shadow-stage" data-size="xl">
+        <span class="size-badge">4 · XL</span>
+        <div class="shadow-box sz-xl">XL</div>
+      </div>
+      <div class="shadow-meta">
+        <span class="tname">oxygen-shadow/scale/xl</span>
+        <span class="tdesc"><b>Overlay layer.</b> Dialogs, popovers, dropdowns — a diffuse halo that signals "this floats above the page".</span>
+        <span class="traw">0 0.5rem 0.8rem 0 #052B4714, 0 1rem 4rem 0 #052B4714</span>
+        <span class="status">Figma only — not codified</span>
+      </div>
+    </div>
+
+    <div class="shadow-cell">
+      <div class="shadow-stage" data-size="2xl">
+        <span class="size-badge">5 · 2XL</span>
+        <div class="shadow-box sz-2xl">2XL</div>
+      </div>
+      <div class="shadow-meta">
+        <span class="tname">oxygen-shadow/scale/2xl</span>
+        <span class="tdesc"><b>Most elevated.</b> Full-screen takeovers, side panels, command menus — the top of the z-stack.</span>
+        <span class="traw">0 1.2rem 2.4rem 0 #052B4724, 0 2rem 6rem 0 #052B4714</span>
+        <span class="status">Figma only — not codified</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Divider</title>
+<link rel="stylesheet" href="_base.css?v=4"><link rel="stylesheet" href="_components.css?v=12">
+<style>
+  body{padding:3.2rem;max-width:112rem;font-family:Roboto,sans-serif}
+  h1{font:700 2.8rem/1.2 Montserrat,sans-serif;color:#192634;margin:0 0 .6rem}
+  h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:#4B739B;margin:0 0 1.4rem;font-weight:600;padding-bottom:.6rem;border-bottom:0.1rem solid #E4EDF6}
+  .lede{color:#3A5978;font-size:1.4rem;line-height:1.5;margin:0 0 3rem;max-width:72rem}
+  .section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}
+  .caption{font:500 1.2rem/1 'Roboto Mono',monospace;color:#6B91B8;margin-bottom:.4rem}
+  .spec{font-family:'Roboto Mono',monospace;font-size:1.1rem;border-collapse:collapse;color:#3A5978}
+  .spec td{padding:.4rem 2rem .4rem 0;vertical-align:top}
+  .spec td:first-child{color:#6B91B8;white-space:nowrap}
+  .prop{display:inline-block;font-family:'Roboto Mono',monospace;font-size:1.1rem;background:#F2F6FB;color:#2351CC;padding:.2rem .6rem;border-radius:.3rem;margin-right:.4rem}
+
+  /* Divider component — faithful to Divider.module.scss */
+  .ox-divider{
+    position:relative;
+    border:0;
+    flex-shrink:0;
+    box-sizing:border-box;
+    margin:-0.1rem 0 0;
+    height:0.1rem;
+    border-top:0.1rem solid var(--c, #E4EDF6);
+  }
+  .ox-divider.is-vertical{
+    width:0.1rem;
+    min-height:100%;
+    height:auto;
+    margin:0 0 0 -0.1rem;
+    border-top:0;
+    border-left:0.1rem solid var(--c, #E4EDF6);
+  }
+  .ox-divider.has-margin:not(.is-vertical){margin:1.6rem 0}
+  .ox-divider.has-margin.is-vertical{margin:0 1.6rem}
+
+  /* uiStyle tokens */
+  .ox-divider.s-neutral-030{--c:#E4EDF6}     /* neutral-subtle-base */
+  .ox-divider.s-neutral-130{--c:#3A5978}     /* neutral-prominent-base */
+  .ox-divider.s-warning-090{--c:#B45309}     /* warning-prominent-weak */
+  .ox-divider.s-white{--c:#FFFFFF}
+
+  .surface{background:#fff;padding:1.6rem 2rem;border-radius:.8rem;border:0.1rem solid #E4EDF6;width:56rem}
+  .surface p{margin:0;font-size:1.4rem;color:#192634;line-height:1.5}
+  .surface-brand{background:#2351CC;color:#fff;padding:2rem;border-radius:.8rem;width:56rem}
+  .surface-brand p{margin:0;color:#fff;font-size:1.4rem}
+
+  /* Vertical demo */
+  .v-row{display:flex;align-items:stretch;gap:0;width:56rem;background:#fff;border:0.1rem solid #E4EDF6;border-radius:.8rem;padding:1.6rem}
+  .v-row > span{flex:1;padding:0 1.6rem;font-size:1.3rem;color:#3A5978;line-height:1.5}
+  .v-row > span:first-child{padding-left:0}
+  .v-row > span:last-child{padding-right:0}
+</style></head><body>
+
+<h1>Divider</h1>
+<p class="lede">A thin rule that provides visual separation between elements in a page, section, or group. Always 1px thick — the color adapts to the surrounding surface.</p>
+
+<div class="section">
+  <h2>Default · uiStyle="neutral-030"</h2>
+  <div class="caption">&lt;Divider /&gt;</div>
+  <div class="surface">
+    <p>First paragraph of content</p>
+    <hr class="ox-divider s-neutral-030 has-margin" aria-hidden="true">
+    <p>Second paragraph of content</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Colors · uiStyle</h2>
+
+  <div>
+    <div class="caption">uiStyle="neutral-030" · default, on light surface</div>
+    <div class="surface">
+      <p>Above</p>
+      <hr class="ox-divider s-neutral-030 has-margin" aria-hidden="true">
+      <p>Below</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="caption">uiStyle="neutral-130" · strong separator</div>
+    <div class="surface">
+      <p>Above</p>
+      <hr class="ox-divider s-neutral-130 has-margin" aria-hidden="true">
+      <p>Below</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="caption">uiStyle="warning-090" · warning context</div>
+    <div class="surface">
+      <p>Above</p>
+      <hr class="ox-divider s-warning-090 has-margin" aria-hidden="true">
+      <p>Below</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="caption">uiStyle="white" · for use on brand / dark surfaces</div>
+    <div class="surface-brand">
+      <p>Above</p>
+      <hr class="ox-divider s-white has-margin" aria-hidden="true">
+      <p>Below</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>With margin</h2>
+  <div class="caption">&lt;Divider margin /&gt; — adds 1.6rem (2 × grid-unit) vertical spacing</div>
+  <div class="surface">
+    <p>Paragraph one</p>
+    <hr class="ox-divider s-neutral-030 has-margin" aria-hidden="true">
+    <p>Paragraph two</p>
+    <hr class="ox-divider s-neutral-030 has-margin" aria-hidden="true">
+    <p>Paragraph three</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Without margin</h2>
+  <div class="caption">&lt;Divider /&gt; — flush against adjacent content</div>
+  <div class="surface">
+    <p>Paragraph one</p>
+    <hr class="ox-divider s-neutral-030" aria-hidden="true">
+    <p>Paragraph two</p>
+    <hr class="ox-divider s-neutral-030" aria-hidden="true">
+    <p>Paragraph three</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Vertical</h2>
+  <div class="caption">&lt;Divider isVertical /&gt; — inside a flex / grid / columns container</div>
+  <div class="v-row">
+    <span>Left column content aligned side by side with the adjacent column.</span>
+    <hr class="ox-divider s-neutral-030 is-vertical" aria-hidden="true">
+    <span>Right column content. The divider stretches to match the container height.</span>
+    <hr class="ox-divider s-neutral-030 is-vertical" aria-hidden="true">
+    <span>And a third column on the right.</span>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Props</h2>
+  <table class="spec">
+    <tr><td><span class="prop">uiStyle</span></td><td>'white' · 'neutral-030' (default) · 'neutral-130' · 'warning-090'</td></tr>
+    <tr><td><span class="prop">isVertical</span></td><td>boolean — switch to a vertical 1px rule</td></tr>
+    <tr><td><span class="prop">margin</span></td><td>boolean — adds 2 × grid-unit (1.6rem) on both sides</td></tr>
+    <tr><td>Thickness</td><td>0.1rem (1px) — never increase</td></tr>
+    <tr><td>Element</td><td>&lt;hr&gt; with aria-hidden="true" by default</td></tr>
+    <tr><td>Source</td><td>dataDisplay/Divider/Divider.tsx</td></tr>
+  </table>
+</div>
+
+</body></html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · FileDropZone</title>
+<link rel="stylesheet" href="_base.css?v=4"><link rel="stylesheet" href="_components.css?v=12">
+<style>body{padding:3.2rem;max-width:112rem}h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2rem}.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:0.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}</style></head><body><h1>FileDropZone</h1><p class="lede">Drag-and-drop upload target with progress, validation, and error recovery.</p><div class="note"><b>From Oxygen core.</b> Used heavily for patient document uploads (lab results, prescriptions, scans). Validates client-side before the XHR begins.</div>
+<div class="section"><h2>Empty</h2>
+<div style="max-width:60rem;border:0.2rem dashed var(--oxygen-color-semantic-neutral-prominent-weaker);background:var(--oxygen-color-semantic-neutral-subtle-weak);border-radius:1.2rem;padding:4rem 2.4rem;text-align:center">
+<div style="width:4.8rem;height:4.8rem;background:white;border-radius:99rem;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.2rem;box-shadow:0 .1rem .3rem rgba(0,0,0,.06)">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--oxygen-color-semantic-brand-prominent-base)"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+</div>
+<div style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin-bottom:.4rem">Drag files here, or <a href="#" style="color:var(--oxygen-color-semantic-brand-prominent-base);text-decoration:underline">browse your computer</a></div>
+<div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)">PDF, PNG, JPG up to 10 MB each</div>
+</div></div>
+
+<div class="section"><h2>Drag-over (hover)</h2>
+<div style="max-width:60rem;border:0.2rem dashed var(--oxygen-color-semantic-brand-prominent-base);background:var(--oxygen-color-semantic-brand-subtle-weak);border-radius:1.2rem;padding:4rem 2.4rem;text-align:center">
+<div style="width:4.8rem;height:4.8rem;background:var(--oxygen-color-semantic-brand-prominent-base);border-radius:99rem;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.2rem;color:white">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+</div>
+<div style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-brand-prominent-stronger)">Release to upload 3 files</div>
+</div></div>
+
+<div class="section"><h2>With file list · uploading</h2>
+<div style="max-width:60rem">
+<div style="border:0.2rem dashed var(--oxygen-color-semantic-neutral-prominent-weaker);background:var(--oxygen-color-semantic-neutral-subtle-weak);border-radius:1.2rem;padding:2rem;text-align:center;margin-bottom:1.6rem">
+<div style="font:var(--oxygen-font-semantic-body-s-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)"><a href="#" style="color:var(--oxygen-color-semantic-brand-prominent-base);text-decoration:underline">Add more files</a> or drop them here</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:.8rem">
+
+<div class="ox-card ox-card--outlined" style="padding:1.2rem 1.6rem;display:flex;align-items:center;gap:1.2rem">
+<div style="width:4rem;height:4rem;background:var(--oxygen-color-semantic-neutral-subtle-weak);border-radius:.6rem;display:flex;align-items:center;justify-content:center;color:var(--oxygen-color-semantic-neutral-prominent-weak);font-size:1rem;font-weight:700">PDF</div>
+<div style="flex:1;min-width:0">
+<div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><div style="font:var(--oxygen-font-semantic-body-s-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Lab_results_2025-10-12.pdf</div><div style="font:var(--oxygen-font-semantic-body-xs-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);flex-shrink:0;margin-left:1rem">2.4 MB</div></div>
+<div style="height:.4rem;background:var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:99rem;overflow:hidden"><div style="width:100%;height:100%;background:var(--oxygen-color-semantic-success-prominent-base);border-radius:99rem"></div></div>
+</div>
+<button style="background:none;border:none;cursor:pointer;color:var(--oxygen-color-semantic-neutral-prominent-weak);padding:.6rem"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+</div>
+<div class="ox-card ox-card--outlined" style="padding:1.2rem 1.6rem;display:flex;align-items:center;gap:1.2rem">
+<div style="width:4rem;height:4rem;background:var(--oxygen-color-semantic-neutral-subtle-weak);border-radius:.6rem;display:flex;align-items:center;justify-content:center;color:var(--oxygen-color-semantic-neutral-prominent-weak);font-size:1rem;font-weight:700">JPG</div>
+<div style="flex:1;min-width:0">
+<div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><div style="font:var(--oxygen-font-semantic-body-s-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Prescription_scan.jpg</div><div style="font:var(--oxygen-font-semantic-body-xs-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);flex-shrink:0;margin-left:1rem">5.1 MB</div></div>
+<div style="height:.4rem;background:var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:99rem;overflow:hidden"><div style="width:62%;height:100%;background:var(--oxygen-color-semantic-brand-prominent-base);border-radius:99rem"></div></div>
+</div>
+<button style="background:none;border:none;cursor:pointer;color:var(--oxygen-color-semantic-neutral-prominent-weak);padding:.6rem"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+</div>
+<div class="ox-card ox-card--outlined" style="padding:1.2rem 1.6rem;display:flex;align-items:center;gap:1.2rem">
+<div style="width:4rem;height:4rem;background:var(--oxygen-color-semantic-neutral-subtle-weak);border-radius:.6rem;display:flex;align-items:center;justify-content:center;color:var(--oxygen-color-semantic-neutral-prominent-weak);font-size:1rem;font-weight:700">PNG</div>
+<div style="flex:1;min-width:0">
+<div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><div style="font:var(--oxygen-font-semantic-body-s-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">X-ray_knee_left.png</div><div style="font:var(--oxygen-font-semantic-body-xs-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);flex-shrink:0;margin-left:1rem">18.2 MB</div></div>
+<div style="font:var(--oxygen-font-semantic-body-xs-regular);color:var(--oxygen-color-semantic-danger-prominent-stronger)">File too large. Maximum is 10 MB.</div>
+</div>
+<button style="background:none;border:none;cursor:pointer;color:var(--oxygen-color-semantic-neutral-prominent-weak);padding:.6rem"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+</div>
+</div></div></div>
+
+<div class="section"><h2>Specs</h2><table class="spec">
+<tr><td>Accept</td><td>MIME types array · file-size max · file-count max</td></tr>
+<tr><td>States</td><td>empty · drag-over · uploading · success · error</td></tr>
+<tr><td>File item</td><td>Type badge · name · size · inline progress or error</td></tr>
+<tr><td>Source</td><td>inputs/FileDropZone/FileDropZone.tsx</td></tr></table></div></body></html>

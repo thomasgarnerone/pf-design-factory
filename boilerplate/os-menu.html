@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Oxygen · OS Menu</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 62.5%; }
+  body {
+    font-family: 'Roboto', -apple-system, sans-serif;
+    background: var(--oxygen-color-primitive-grey-00);
+    color: var(--oxygen-color-primitive-grey-150);
+    padding: 4rem;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--oxygen-color-primitive-grey-150);
+    margin: 0 0 0.6rem;
+  }
+  .lede {
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: var(--oxygen-color-primitive-grey-75);
+    margin: 0 0 3.2rem;
+    max-width: 72rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    color: var(--oxygen-color-primitive-grey-100);
+    margin: 0 0 1.6rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 0.1rem solid var(--oxygen-color-primitive-grey-05);
+  }
+  .section { margin-bottom: 4.8rem; }
+  .row {
+    display: flex;
+    gap: 4rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .cap {
+    font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size: 1.1rem;
+    color: var(--oxygen-color-primitive-grey-75);
+    margin-top: 1.2rem;
+    text-align: center;
+  }
+  .cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .spec {
+    font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size: 1.1rem;
+    color: var(--oxygen-color-primitive-grey-75);
+    border-collapse: collapse;
+    line-height: 1.7;
+  }
+  .spec td { padding: 0.4rem 2.4rem 0.4rem 0; vertical-align: top; }
+  .spec td:first-child { color: var(--oxygen-color-primitive-grey-50); }
+
+  /* ============================================================
+   * OS Menu
+   * ============================================================ */
+  .ox-osmenu {
+    --osmenu-bg: #00264C;
+    --osmenu-hover: rgba(255, 255, 255, 0.15);
+    --osmenu-active: rgba(255, 255, 255, 0.25);
+    --osmenu-fg: #FFFFFF;
+    --osmenu-badge-bg: #F5B400;     /* yellow notification badge */
+    --osmenu-badge-fg: #00264C;
+    --osmenu-new-bg: #F5B400;        /* yellow "New" pill */
+    --osmenu-new-fg: #00264C;
+
+    width: 8rem;
+    background: var(--osmenu-bg);
+    color: var(--osmenu-fg);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.2rem 0;
+    gap: 0.2rem;
+    user-select: none;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  /* "D" brand logo at top */
+  .ox-osmenu__brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 6.4rem;
+    margin-bottom: 0.4rem;
+    color: var(--osmenu-fg);
+  }
+  .ox-osmenu__brand svg {
+    width: 2.7rem;
+    height: 3rem;
+    display: block;
+  }
+
+  /* Item — clickable button rendering icon + label */
+  .ox-osmenu__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1.2rem 0.4rem;
+    border: 0;
+    background: transparent;
+    color: var(--osmenu-fg);
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 150ms ease-out;
+    font-family: inherit;
+  }
+  .ox-osmenu__item:hover {
+    background: var(--osmenu-hover);
+  }
+  .ox-osmenu__item:focus-visible {
+    outline: 0.2rem solid #FFFFFF;
+    outline-offset: -0.2rem;
+  }
+  .ox-osmenu__item[aria-current="page"],
+  .ox-osmenu__item.is-active {
+    background: var(--osmenu-active);
+  }
+
+  .ox-osmenu__icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--osmenu-fg);
+  }
+  .ox-osmenu__label {
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--osmenu-fg);
+    text-wrap: balance;
+  }
+
+  /* Notification badge — yellow circle, top-right of icon */
+  .ox-osmenu__badge {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.8rem;
+    min-width: 1.8rem;
+    height: 1.8rem;
+    padding: 0 0.5rem;
+    border-radius: 99rem;
+    background: var(--osmenu-badge-bg);
+    color: var(--osmenu-badge-fg);
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  /* "New" pill — sits above the icon */
+  .ox-osmenu__new {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.4rem;
+    background: var(--osmenu-new-bg);
+    color: var(--osmenu-new-fg);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* Spacer pushes the footer to the bottom */
+  .ox-osmenu__spacer { flex: 1; }
+
+  /* Footer avatars */
+  .ox-osmenu__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.2rem 0 0.4rem;
+  }
+  .ox-osmenu__avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 99rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #FFFFFF;
+    border: 0.2rem solid var(--osmenu-bg);
+    box-shadow: 0 0 0 0.1rem rgba(255,255,255,0.15);
+  }
+  .ox-osmenu__avatar--user { background: #B45A1A; }   /* warm orange/brown */
+  .ox-osmenu__avatar--more { background: var(--oxygen-color-primitive-blue-107); }
+
+  /* Demo frame to show menu against a page background */
+  .ox-osmenu-frame {
+    display: inline-flex;
+    background: #FFFFFF;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    box-shadow: var(--oxygen-elevation-card-rest);
+    border: 0.1rem solid var(--oxygen-color-primitive-grey-05);
+  }
+  .ox-osmenu-frame .placeholder {
+    width: 32rem;
+    background: linear-gradient(
+      135deg,
+      var(--oxygen-color-primitive-grey-00) 25%,
+      var(--oxygen-color-primitive-white) 25%,
+      var(--oxygen-color-primitive-white) 50%,
+      var(--oxygen-color-primitive-grey-00) 50%,
+      var(--oxygen-color-primitive-grey-00) 75%,
+      var(--oxygen-color-primitive-white) 75%
+    );
+    background-size: 1.2rem 1.2rem;
+    opacity: 0.5;
+  }
+
+  /* Standalone variants row */
+  .variants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: 2.4rem;
+    max-width: 96rem;
+  }
+  .variant-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .variant-cell .ox-osmenu {
+    width: 8rem;
+    border-radius: 0.4rem;
+    height: auto;
+  }
+  .single {
+    display: inline-flex;
+    background: var(--osmenu-bg, #00264C);
+    border-radius: 0.4rem;
+    overflow: hidden;
+  }
+  .single .ox-osmenu__item { width: 8rem; }
+</style>
+</head>
+<body>
+
+<h1>OS Menu</h1>
+<p class="lede">Primary OS-level vertical navigation. Compact 80px-wide rail anchored to the left of every signed-in screen — surfaces the application's top-level destinations as icon + label cells with optional notification badges and a footer for user identity. Lives on a deep-navy chrome (<code>#00264C</code>) so it reads as system shell, not page content.</p>
+
+<!-- ============================================================
+     Default — full menu in context
+     ============================================================ -->
+<div class="section">
+  <h2>Default</h2>
+  <div class="ox-osmenu-frame">
+    <nav class="ox-osmenu" aria-label="Primary">
+      <div class="ox-osmenu__brand" aria-label="Doctolib">
+        <svg viewBox="0 0 27 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M26.383 14.5641C27.1787 10.1879 27.1787 1.54163 13.4401 0.0829107C9.8066 -0.288401 4.18388 0.6664 0.125981 1.3825C0.0729362 1.3825 0.0464139 1.43554 0.0198917 1.48859C-0.00663056 1.54163 -0.00663056 1.67424 0.0198917 1.78033C0.125981 2.0986 0.523814 2.68209 1.00121 2.89427C1.37253 3.07992 2.19472 3.02688 2.3008 3.02688C14.8458 1.91295 23.8103 4.64474 22.1925 13.8214C21.2377 19.1259 17.7633 25.7299 8.18874 25.7299C6.25262 25.7299 6.01392 25.5708 6.25262 24.006C6.27914 23.7938 9.24963 7.93349 9.43529 6.34216C9.43529 6.28911 9.40877 6.23607 9.35572 6.20955C9.24963 6.20955 7.15438 5.70562 6.65045 7.72131C6.54436 8.14567 1.50514 26.9234 1.26644 27.9047C0.94817 29.2839 1.87645 30 8.02961 30C23.5982 29.9735 25.9321 17.1367 26.383 14.5641Z" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <button type="button" class="ox-osmenu__item is-active" aria-current="page">
+        <span class="ox-osmenu__icon"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span>
+        <span class="ox-osmenu__label">Calendar</span>
+      </button>
+
+      <button type="button" class="ox-osmenu__item">
+        <span class="ox-osmenu__icon"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></span>
+        <span class="ox-osmenu__label">Tasks</span>
+      </button>
+
+      <button type="button" class="ox-osmenu__item">
+        <span class="ox-osmenu__new">New</span>
+        <span class="ox-osmenu__icon"><i class="fa-solid fa-comment-medical" aria-hidden="true"></i></span>
+        <span class="ox-osmenu__label">Connect (Tele-expertise)</span>
+      </button>
+
+      <button type="button" class="ox-osmenu__item">
+        <span class="ox-osmenu__badge" aria-label="2 unread">2</span>
+        <span class="ox-osmenu__icon"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i></span>
+        <span class="ox-osmenu__label">Patient Messaging</span>
+      </button>
+
+      <button type="button" class="ox-osmenu__item">
+        <span class="ox-osmenu__icon"><i class="fa-solid fa-folder-open" aria-hidden="true"></i></span>
+        <span class="ox-osmenu__label">Patient Management</span>
+      </button>
+
+      <button type="button" class="ox-osmenu__item">
+        <span class="ox-osmenu__icon"><i class="fa-solid fa-envelope" aria-hidden="true"></i></span>
+        <span class="ox-osmenu__label">Emails</span>
+      </button>
+
+      <button type="button" class="ox-osmenu__item">
+        <span class="ox-osmenu__badge" aria-label="2 to review">2</span>
+        <span class="ox-osmenu__icon"><i class="fa-solid fa-file-import" aria-hidden="true"></i></span>
+        <span class="ox-osmenu__label">Import of documents</span>
+      </button>
+
+      <button type="button" class="ox-osmenu__item">
+        <span class="ox-osmenu__icon"><i class="fa-solid fa-euro-sign" aria-hidden="true"></i></span>
+        <span class="ox-osmenu__label">Billing</span>
+      </button>
+
+      <button type="button" class="ox-osmenu__item">
+        <span class="ox-osmenu__icon"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></span>
+        <span class="ox-osmenu__label">My activity</span>
+      </button>
+
+      <span class="ox-osmenu__spacer" aria-hidden="true"></span>
+
+      <div class="ox-osmenu__footer">
+        <span class="ox-osmenu__avatar ox-osmenu__avatar--user" aria-label="Bryan Joubert">BJ</span>
+        <span class="ox-osmenu__avatar ox-osmenu__avatar--more" aria-label="37 more users">+37</span>
+      </div>
+    </nav>
+    <div class="placeholder" aria-hidden="true"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     States
+     ============================================================ -->
+<div class="section">
+  <h2>Item states</h2>
+  <div class="row">
+    <div class="cell">
+      <div class="single">
+        <button type="button" class="ox-osmenu__item">
+          <span class="ox-osmenu__icon"><i class="fa-solid fa-user-doctor" aria-hidden="true"></i></span>
+          <span class="ox-osmenu__label">Patient Flow</span>
+        </button>
+      </div>
+      <span class="cap">default</span>
+    </div>
+    <div class="cell">
+      <div class="single">
+        <button type="button" class="ox-osmenu__item" style="background: rgba(255,255,255,0.15);">
+          <span class="ox-osmenu__icon"><i class="fa-solid fa-user-doctor" aria-hidden="true"></i></span>
+          <span class="ox-osmenu__label">Patient Flow</span>
+        </button>
+      </div>
+      <span class="cap">hover · #FFF 15%</span>
+    </div>
+    <div class="cell">
+      <div class="single">
+        <button type="button" class="ox-osmenu__item is-active" aria-current="page">
+          <span class="ox-osmenu__icon"><i class="fa-solid fa-user-doctor" aria-hidden="true"></i></span>
+          <span class="ox-osmenu__label">Patient Flow</span>
+        </button>
+      </div>
+      <span class="cap">active · #FFF 25%</span>
+    </div>
+    <div class="cell">
+      <div class="single">
+        <button type="button" class="ox-osmenu__item">
+          <span class="ox-osmenu__badge">2</span>
+          <span class="ox-osmenu__icon"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i></span>
+          <span class="ox-osmenu__label">Patient Messaging</span>
+        </button>
+      </div>
+      <span class="cap">with badge</span>
+    </div>
+    <div class="cell">
+      <div class="single">
+        <button type="button" class="ox-osmenu__item">
+          <span class="ox-osmenu__new">New</span>
+          <span class="ox-osmenu__icon"><i class="fa-solid fa-comment-medical" aria-hidden="true"></i></span>
+          <span class="ox-osmenu__label">Tele-expertise</span>
+        </button>
+      </div>
+      <span class="cap">with "new" pill</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     Specs
+     ============================================================ -->
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec">
+    <tr><td>Width</td><td>8rem (80px)</td></tr>
+    <tr><td>Background</td><td>#00264C — deep navy chrome</td></tr>
+    <tr><td>Hover</td><td>background overlay <code>rgba(255, 255, 255, 0.15)</code></td></tr>
+    <tr><td>Active</td><td>background overlay <code>rgba(255, 255, 255, 0.25)</code></td></tr>
+    <tr><td>Item</td><td>icon + label, vertically stacked, full-width (no radius), 1.2rem 0.4rem padding, 0.6rem gap</td></tr>
+    <tr><td>Icon</td><td>FontAwesome solid · 2.2rem · currentColor (white)</td></tr>
+    <tr><td>Label</td><td>Roboto 1.1rem / 1.25, regular, white, balanced wrap</td></tr>
+    <tr><td>Badge</td><td>1.8rem yellow (#F5B400) circle · top: 0.6rem · right: 0.8rem · navy text</td></tr>
+    <tr><td>"New" pill</td><td>yellow (#F5B400) · 0.4rem radius · top-right of cell</td></tr>
+    <tr><td>Brand</td><td>"D" mark · Doctolib-Bold 4rem · 6.4rem cap height</td></tr>
+    <tr><td>Footer</td><td>4rem avatars · user identity + overflow count</td></tr>
+    <tr><td>Transition</td><td>background-color 150ms ease-out</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

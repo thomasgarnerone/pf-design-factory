@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · PatientFileHeader</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=13">
+<style>
+body{padding:3.2rem;max-width:128rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+.section > h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:74rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:74rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+
+.stage{padding:2.4rem;background:var(--oxygen-color-semantic-neutral-subtle-weaker);border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:1.2rem}
+
+/* Recorder selection */
+.recorder{display:inline-flex;align-items:center;gap:.6rem;font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);padding:0 0 1.2rem;margin-left:1.2rem}
+.recorder b{color:var(--oxygen-color-semantic-neutral-prominent-strong);font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;padding:.2rem .4rem;border-radius:.4rem}
+.recorder b:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.recorder svg{width:1.4rem;height:1.4rem}
+
+/* Header card */
+.pfh{background:var(--oxygen-color-primitive-white);border-radius:1.2rem;padding:1.6rem 2rem}
+.pfh__top{display:flex;align-items:center;gap:1.2rem;justify-content:space-between}
+.pfh__title-row{display:flex;align-items:center;gap:1.2rem;min-width:0;flex-wrap:wrap}
+.pfh__title{font:var(--oxygen-font-semantic-title-xl-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0;line-height:1.15;padding:0 .8rem 0 0}
+.pfh__actions{display:flex;align-items:center;gap:.8rem;flex-shrink:0}
+.pfh__meta{display:flex;align-items:center;flex-wrap:wrap;column-gap:.4rem;row-gap:.2rem;padding:.6rem .8rem 0;color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular)}
+.pfh__meta .vdiv{display:inline-block;width:.1rem;height:1.6rem;background:var(--oxygen-color-semantic-neutral-subtle-strong);margin:0 .8rem}
+.pfh__meta .il-edit{display:inline-flex;align-items:center;gap:.4rem;color:var(--oxygen-color-semantic-neutral-prominent-weak);cursor:pointer;padding:.2rem .4rem;border-radius:.4rem}
+.pfh__meta .il-edit:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.pfh__meta .il-edit svg{width:1.3rem;height:1.3rem}
+
+/* Tag */
+.tag{display:inline-flex;align-items:center;padding:.2rem .8rem;border-radius:.6rem;font:var(--oxygen-font-semantic-body-s-bold);line-height:1}
+.tag-neutral{background:var(--oxygen-color-semantic-neutral-subtle-weak);color:var(--oxygen-color-semantic-neutral-prominent-base)}
+.tag-success{background:var(--oxygen-color-semantic-positive-subtle-weak);color:var(--oxygen-color-semantic-positive-prominent-strong)}
+.tag-warn{background:var(--oxygen-color-semantic-warning-subtle-weak);color:var(--oxygen-color-semantic-warning-prominent-strong)}
+.tag-purple{background:var(--oxygen-color-semantic-alternative2-subtle-weak,#EFE4FB);color:#5B2A99}
+
+/* Status pill */
+.pill{display:inline-flex;align-items:center;gap:.2rem;background:var(--oxygen-color-semantic-neutral-subtle-weaker);border-radius:.6rem;padding:.2rem;color:var(--oxygen-color-semantic-neutral-prominent-base)}
+.pill .seg{display:inline-flex;align-items:center;border-radius:.4rem;padding:0 .2rem;height:2.4rem}
+.pill .seg svg{width:1.4rem;height:1.4rem;padding:0 .3rem;box-sizing:content-box}
+.pill .seg.danger{background:var(--oxygen-color-semantic-danger-prominent-base);color:#fff}
+.pill .seg.warn{background:var(--oxygen-color-semantic-warning-subtle-weak);color:var(--oxygen-color-semantic-warning-prominent-strong)}
+.pill .seg.positive{color:var(--oxygen-color-semantic-positive-prominent-base)}
+.pill .seg.attribute{color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+.pill .chev{width:2.4rem;height:2.4rem;display:inline-flex;align-items:center;justify-content:center;border-radius:.4rem;cursor:pointer;color:var(--oxygen-color-semantic-neutral-prominent-strong);background:transparent;border:none}
+.pill .chev:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.pill .chev svg{width:1.2rem;height:1.2rem}
+
+/* Contact button */
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:3.6rem;height:3.6rem;border-radius:.8rem;background:transparent;border:.1rem solid var(--oxygen-color-semantic-brand-prominent-base);color:var(--oxygen-color-semantic-brand-prominent-base);cursor:pointer}
+.icon-btn:hover{background:var(--oxygen-color-semantic-brand-subtle-weak)}
+.icon-btn svg{width:1.8rem;height:1.8rem}
+
+/* Skeleton */
+.sk{background:var(--oxygen-color-semantic-neutral-subtle-weak);border-radius:.6rem;animation:sk 1.6s ease-in-out infinite}
+@keyframes sk{0%,100%{opacity:.6}50%{opacity:1}}
+</style></head>
+<body>
+<h1>PatientFileHeader</h1>
+<p class="lede">Identity surface for the patient file. Renders the patient's name, demographics, statuses, contact information and the active recorder selector. Contact info is editable inline; statuses condense into a pill that opens a popover with grouped detail.</p>
+<div class="note"><b>One header per patient file.</b> Internally it composes <code>RecorderSelection</code>, <code>StatusesPill</code>, <code>Tag</code>, <code>ContactButton</code> and <code>ContactInformationButton</code>. Loads via <code>usePatient(patientId)</code>; renders <code>PatientFileHeaderLoading</code> while pending.</p>
+
+<div class="section"><h2>Default · with recorder selector</h2>
+<div class="stage">
+  <span class="recorder">
+    Editing as
+    <b>Dr. Élodie Müller
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </b>
+  </span>
+  <div class="pfh">
+    <div class="pfh__top">
+      <div class="pfh__title-row">
+        <h2 class="pfh__title">Dr. Marina Lefèvre</h2>
+        <span class="tag tag-neutral">Privat</span>
+        <div class="pill">
+          <span class="seg positive" title="Insurance card read">
+            <svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><rect x="2" y="8" width="20" height="3" fill="white"/></svg>
+          </span>
+          <span class="seg attribute" title="Has Doctolib account">
+            <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M9 8v8l6-4z" fill="white"/></svg>
+          </span>
+          <button class="chev" type="button" aria-label="See all statuses"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        </div>
+      </div>
+      <div class="pfh__actions">
+        <button class="icon-btn" aria-label="Contact patient" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="pfh__meta">
+      <span>Born Lefèvre</span>
+      <span class="vdiv"></span>
+      <span>Female</span>
+      <span class="vdiv"></span>
+      <span>04/12/1986 (39 y/o)</span>
+      <span class="vdiv"></span>
+      <span class="il-edit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        +33 6 24 88 14 02
+      </span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>Danger statuses · card not read · booking blocked</h2>
+<div class="stage">
+  <div class="pfh">
+    <div class="pfh__top">
+      <div class="pfh__title-row">
+        <h2 class="pfh__title">Hugo Bertrand</h2>
+        <div class="pill">
+          <span class="seg danger">
+            <svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><rect x="2" y="8" width="20" height="3" fill="white"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="11" r="4"/><rect x="5" y="14" width="14" height="7" rx="2"/><path d="M9 11V8a3 3 0 0 1 6 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </span>
+          <button class="chev" type="button" aria-label="See all statuses"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        </div>
+      </div>
+      <div class="pfh__actions">
+        <button class="icon-btn" aria-label="Contact patient" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="pfh__meta">
+      <span>Male</span>
+      <span class="vdiv"></span>
+      <span>22/03/1972 (53 y/o)</span>
+      <span class="vdiv"></span>
+      <span class="il-edit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        Add contact information
+      </span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>Relative Doctolib account</h2>
+<div class="stage">
+  <div class="pfh">
+    <div class="pfh__top">
+      <div class="pfh__title-row">
+        <h2 class="pfh__title">Léa Garnier</h2>
+        <div class="pill">
+          <span class="seg attribute" title="Relative Doctolib account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="3"/><circle cx="16" cy="11" r="2.4"/><path d="M3 19a6 6 0 0 1 12 0M14 19a4.5 4.5 0 0 1 7 0"/></svg>
+          </span>
+          <button class="chev" type="button" aria-label="See all statuses"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        </div>
+      </div>
+      <div class="pfh__actions">
+        <button class="icon-btn" aria-label="Contact patient" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="pfh__meta">
+      <span>Female</span>
+      <span class="vdiv"></span>
+      <span>11/07/2018 (7 y/o)</span>
+      <span class="vdiv"></span>
+      <span class="il-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg> +33 6 14 02 88 02</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>Loading skeleton</h2>
+<div class="stage">
+  <div class="pfh">
+    <div class="pfh__top">
+      <div class="pfh__title-row">
+        <div class="sk" style="width:32rem;height:3.6rem"></div>
+        <div class="sk" style="width:8rem;height:2.4rem"></div>
+      </div>
+      <div class="pfh__actions"><div class="sk" style="width:3.6rem;height:3.6rem;border-radius:.8rem"></div></div>
+    </div>
+    <div class="pfh__meta" style="margin-top:.4rem">
+      <div class="sk" style="width:36rem;height:1.6rem"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>Anatomy</h2>
+<table class="spec">
+<tr><td>RecorderSelection</td><td>"Editing as Dr. X" · popover with searchable list</td></tr>
+<tr><td>Heading h1</td><td>academicTitle + firstName + lastName · Title/XL/Bold</td></tr>
+<tr><td>Tag</td><td>Insurance sector (e.g. "Privat") · color from sector</td></tr>
+<tr><td>StatusesPill</td><td>icons grouped by severity: danger → warning → positive → attribute · chevron opens popover</td></tr>
+<tr><td>ContactButton</td><td>IconButton (Message) · brand outlined · opens popover with all contact channels</td></tr>
+<tr><td>Meta row</td><td>maidenName · gender · birth date + age · main contact (mobile) — separated by vertical dividers</td></tr>
+<tr><td>ContactInformationButton</td><td>InlineButton with mobile number (or "+ Add contact info") · opens edit form popover</td></tr>
+</table></div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Source</td><td>packages/pro-patient-file/src/components/PatientFileHeader/</td></tr>
+<tr><td>Props</td><td>patientId: string</td></tr>
+<tr><td>Data</td><td>usePatient(patientId) · usePatientStatuses() · useRecorderSelection()</td></tr>
+<tr><td>Loading</td><td>&lt;PatientFileHeaderLoading&gt; replaces the entire header</td></tr>
+<tr><td>Error</td><td>"Error loading patient: {message}"</td></tr>
+<tr><td>Status severities</td><td>danger · warning · positive · attribute</td></tr>
+<tr><td>Tag colors</td><td>error/neutral/primary/purple/success/teal/warning/yellow-020 · white</td></tr>
+<tr><td>i18n</td><td>useTranslation() · keys under patient-file.header.*</td></tr>
+</table></div>
+
+</body></html>

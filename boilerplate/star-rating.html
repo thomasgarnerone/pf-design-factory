@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Star rating</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=12">
+<style>
+body{padding:3.2rem;max-width:112rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:0.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.ox-starrating{display:inline-flex;gap:.4rem}.ox-starrating__btn{background:none;border:0;padding:.4rem;cursor:pointer;border-radius:.4rem;color:var(--oxygen-color-semantic-neutral-prominent-weak)}.ox-starrating__btn:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}.ox-starrating__btn--filled{color:var(--oxygen-color-semantic-warning-prominent-base)}.ox-starrating__btn--filled svg{fill:currentColor}.ox-starrating__btn:not(.ox-starrating__btn--filled) svg{stroke:currentColor}
+</style></head>
+<body>
+<h1>Star rating</h1>
+<p class="lede">Visual rating scale from 0 to 5. Readonly by default for review displays; interactive variant for collecting ratings.</p>
+<div class="note"><b>From Oxygen core.</b> <code>inputs/StarRating/StarRating.tsx</code> — renders a radio group with star glyphs, supports half-steps in readonly mode.</div>
+
+<div class="section"><h2>Readonly — rating display</h2>
+<div style="display:flex;flex-direction:column;gap:1.6rem">
+<div style="display:flex;align-items:center;gap:1.2rem"><div style="display:flex;gap:.2rem"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg></div><span style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)">5.0</span><span style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)">(214 reviews)</span></div>
+<div style="display:flex;align-items:center;gap:1.2rem"><div style="display:flex;gap:.2rem"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24"><defs><linearGradient id="hs"><stop offset="50%" stop-color="var(--oxygen-color-semantic-warning-prominent-base)"/><stop offset="50%" stop-color="transparent"/></linearGradient></defs><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z" fill="url(#hs)" stroke="var(--oxygen-color-semantic-warning-prominent-base)" stroke-width="1.2" stroke-linejoin="round"/></svg></div><span style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)">4.5</span><span style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)">(89 reviews)</span></div>
+<div style="display:flex;align-items:center;gap:1.2rem"><div style="display:flex;gap:.2rem"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--oxygen-color-semantic-neutral-prominent-weak)" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--oxygen-color-semantic-neutral-prominent-weak)" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg></div><span style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)">3.0</span><span style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)">(12 reviews)</span></div>
+</div></div>
+
+<div class="section"><h2>Small size</h2>
+<div style="display:flex;align-items:center;gap:.8rem">
+<div style="display:flex;gap:.1rem">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg>
+</div>
+<span style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-stronger)">4.8 · 1,204 avis</span>
+</div></div>
+
+<div class="section"><h2>Interactive — input</h2>
+<div class="ox-card ox-card--elevated" style="padding:2rem;max-width:44rem">
+<div style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin-bottom:.4rem">How was your visit with Dr Rousseau?</div>
+<div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-base);margin-bottom:1.6rem">Your feedback helps other patients choose a practitioner.</div>
+<div class="ox-starrating">
+<button type="button" aria-label="1 star" class="ox-starrating__btn ox-starrating__btn--filled"><svg width="32" height="32" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg></button>
+<button type="button" aria-label="2 stars" class="ox-starrating__btn ox-starrating__btn--filled"><svg width="32" height="32" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg></button>
+<button type="button" aria-label="3 stars" class="ox-starrating__btn ox-starrating__btn--filled"><svg width="32" height="32" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg></button>
+<button type="button" aria-label="4 stars" class="ox-starrating__btn ox-starrating__btn--filled"><svg width="32" height="32" viewBox="0 0 24 24" fill="var(--oxygen-color-semantic-warning-prominent-base)"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg></button>
+<button type="button" aria-label="5 stars" class="ox-starrating__btn"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--oxygen-color-semantic-neutral-prominent-weak)" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2l2.93 6.91L22 9.79l-5.27 4.84L18.18 22 12 18.31 5.82 22l1.45-7.37L2 9.79l7.07-.88z"/></svg></button>
+</div>
+<div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-top:.8rem">4 out of 5 — Very good</div>
+</div></div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Icon</td><td>solid/star (filled), regular/star (empty)</td></tr>
+<tr><td>Fill color</td><td>var(--oxygen-color-semantic-warning-prominent-base) — amber</td></tr>
+<tr><td>Sizes</td><td>small 16px · medium 24px · large 32px</td></tr>
+<tr><td>Supports halves</td><td>Yes (readonly only) via linear-gradient fill at 50%</td></tr>
+<tr><td>Interactive hit target</td><td>44×44 px minimum</td></tr>
+<tr><td>Source</td><td>inputs/StarRating/StarRating.tsx</td></tr>
+</table></div>
+</body></html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Carousel · PaginationDots</title>
+<link rel="stylesheet" href="_base.css?v=4"><link rel="stylesheet" href="_components.css?v=12">
+<style>body{padding:3.2rem;max-width:112rem}h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2rem}.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:0.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}</style></head><body><h1>Carousel · PaginationDots</h1><p class="lede">Horizontal scrollers for images, cards, and onboarding screens, with standalone pagination dots.</p><div class="note"><b>From Oxygen core.</b> Used for onboarding tours, doctor listings, and image galleries. Pagination dots are also exposed standalone for custom sliders.</div>
+<div class="section"><h2>Image carousel</h2>
+<div style="max-width:72rem;position:relative;border-radius:1.6rem;overflow:hidden;background:#EEF2F7">
+<div style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1E293B,#334155);color:white;font:var(--oxygen-font-semantic-title-m-regular)">Slide 2 of 5 · clinic photo placeholder</div>
+<button style="position:absolute;left:1.6rem;top:50%;transform:translateY(-50%);width:4.4rem;height:4.4rem;background:white;border:none;border-radius:99rem;cursor:pointer;box-shadow:0 .2rem .6rem rgba(0,0,0,.16);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+<button style="position:absolute;right:1.6rem;top:50%;transform:translateY(-50%);width:4.4rem;height:4.4rem;background:white;border:none;border-radius:99rem;cursor:pointer;box-shadow:0 .2rem .6rem rgba(0,0,0,.16);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
+<div style="position:absolute;bottom:1.6rem;left:50%;transform:translateX(-50%);display:flex;gap:.6rem;background:rgba(0,0,0,.4);backdrop-filter:blur(.8rem);padding:.8rem 1.2rem;border-radius:99rem">
+<div style="width:.8rem;height:.8rem;background:rgba(255,255,255,.5);border-radius:99rem;transition:width .2s"></div><div style="width:2.4rem;height:.8rem;background:white;border-radius:99rem;transition:width .2s"></div><div style="width:.8rem;height:.8rem;background:rgba(255,255,255,.5);border-radius:99rem;transition:width .2s"></div><div style="width:.8rem;height:.8rem;background:rgba(255,255,255,.5);border-radius:99rem;transition:width .2s"></div><div style="width:.8rem;height:.8rem;background:rgba(255,255,255,.5);border-radius:99rem;transition:width .2s"></div>
+</div>
+</div></div>
+
+<div class="section"><h2>Card carousel · multi-item</h2>
+<div style="position:relative">
+<div style="display:flex;gap:1.6rem;overflow-x:auto;padding:.4rem 0 1.2rem;scrollbar-width:thin">
+
+<div class="ox-card ox-card--outlined" style="flex:0 0 28rem;padding:1.6rem;display:flex;gap:1.2rem">
+<div style="width:5.6rem;height:5.6rem;border-radius:99rem;background:linear-gradient(135deg,#CBD5E1,#94A3B8);flex-shrink:0"></div>
+<div style="flex:1"><div style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin-bottom:.2rem">Dr. Leroy </div><div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-bottom:.8rem"> Dermatologist</div><div style="display:flex;align-items:center;gap:.4rem;color:#D97706;font:var(--oxygen-font-semantic-body-s-bold)">★ 4.8</div></div>
+</div>
+<div class="ox-card ox-card--outlined" style="flex:0 0 28rem;padding:1.6rem;display:flex;gap:1.2rem">
+<div style="width:5.6rem;height:5.6rem;border-radius:99rem;background:linear-gradient(135deg,#CBD5E1,#94A3B8);flex-shrink:0"></div>
+<div style="flex:1"><div style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin-bottom:.2rem">Dr. Martin </div><div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-bottom:.8rem"> GP</div><div style="display:flex;align-items:center;gap:.4rem;color:#D97706;font:var(--oxygen-font-semantic-body-s-bold)">★ 4.8</div></div>
+</div>
+<div class="ox-card ox-card--outlined" style="flex:0 0 28rem;padding:1.6rem;display:flex;gap:1.2rem">
+<div style="width:5.6rem;height:5.6rem;border-radius:99rem;background:linear-gradient(135deg,#CBD5E1,#94A3B8);flex-shrink:0"></div>
+<div style="flex:1"><div style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin-bottom:.2rem">Dr. Nguyen </div><div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-bottom:.8rem"> Pediatrician</div><div style="display:flex;align-items:center;gap:.4rem;color:#D97706;font:var(--oxygen-font-semantic-body-s-bold)">★ 4.8</div></div>
+</div>
+<div class="ox-card ox-card--outlined" style="flex:0 0 28rem;padding:1.6rem;display:flex;gap:1.2rem">
+<div style="width:5.6rem;height:5.6rem;border-radius:99rem;background:linear-gradient(135deg,#CBD5E1,#94A3B8);flex-shrink:0"></div>
+<div style="flex:1"><div style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin-bottom:.2rem">Dr. Dubois </div><div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-bottom:.8rem"> Cardiologist</div><div style="display:flex;align-items:center;gap:.4rem;color:#D97706;font:var(--oxygen-font-semantic-body-s-bold)">★ 4.8</div></div>
+</div>
+<div class="ox-card ox-card--outlined" style="flex:0 0 28rem;padding:1.6rem;display:flex;gap:1.2rem">
+<div style="width:5.6rem;height:5.6rem;border-radius:99rem;background:linear-gradient(135deg,#CBD5E1,#94A3B8);flex-shrink:0"></div>
+<div style="flex:1"><div style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin-bottom:.2rem">Dr. Ahmed </div><div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-bottom:.8rem"> Psychiatrist</div><div style="display:flex;align-items:center;gap:.4rem;color:#D97706;font:var(--oxygen-font-semantic-body-s-bold)">★ 4.8</div></div>
+</div>
+</div>
+<div style="display:flex;justify-content:center;gap:.6rem;margin-top:1.6rem">
+<div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-brand-prominent-base);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-neutral-prominent-weaker);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-neutral-prominent-weaker);border-radius:99rem"></div>
+</div>
+</div></div>
+
+<div class="section"><h2>PaginationDots · standalone</h2>
+<div style="display:flex;flex-direction:column;gap:2rem">
+<div><div style="font:var(--oxygen-font-semantic-body-xs-bold);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-bottom:.8rem;text-transform:uppercase;letter-spacing:.04em">Default</div><div style="display:flex;gap:.6rem"><div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-neutral-prominent-weaker);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-neutral-prominent-weaker);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-brand-prominent-base);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-neutral-prominent-weaker);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-neutral-prominent-weaker);border-radius:99rem"></div></div></div>
+<div><div style="font:var(--oxygen-font-semantic-body-xs-bold);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-bottom:.8rem;text-transform:uppercase;letter-spacing:.04em">Growing active dot</div><div style="display:flex;gap:.6rem"><div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-neutral-prominent-weaker);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-neutral-prominent-weaker);border-radius:99rem"></div><div style="width:2.4rem;height:.8rem;background:var(--oxygen-color-semantic-brand-prominent-base);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-neutral-prominent-weaker);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:var(--oxygen-color-semantic-neutral-prominent-weaker);border-radius:99rem"></div></div></div>
+<div><div style="font:var(--oxygen-font-semantic-body-xs-bold);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-bottom:.8rem;text-transform:uppercase;letter-spacing:.04em">On image · light</div><div style="display:inline-flex;gap:.6rem;background:rgba(0,0,0,.4);padding:.8rem 1.2rem;border-radius:99rem"><div style="width:.8rem;height:.8rem;background:rgba(255,255,255,.5);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:white;border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:rgba(255,255,255,.5);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:rgba(255,255,255,.5);border-radius:99rem"></div><div style="width:.8rem;height:.8rem;background:rgba(255,255,255,.5);border-radius:99rem"></div></div></div>
+</div></div>
+
+<div class="section"><h2>Specs</h2><table class="spec">
+<tr><td>Carousel</td><td>Auto-play optional · swipe / drag on touch · keyboard arrows · ARIA live region</td></tr>
+<tr><td>Dots</td><td>Clickable · grow-active · max 8 before switching to counter style (3 / 12)</td></tr>
+<tr><td>Source</td><td>layout/Carousel · navigation/PaginationDots</td></tr></table></div></body></html>

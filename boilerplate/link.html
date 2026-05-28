@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Oxygen · Link</title>
+  <link rel="stylesheet" href="_base.css?v=4">
+  <link rel="stylesheet" href="_components.css?v=5">
+  <style>
+    body { padding: 3.2rem; max-width: 96rem; }
+    h2 { font: var(--oxygen-font-semantic-title-s-bold); margin: 0 0 1.2rem; color: var(--oxygen-color-semantic-neutral-prominent-strong); text-transform: uppercase; letter-spacing: 0.04em; }
+    .section { margin-bottom: 4rem; }
+    .grid { display: grid; grid-template-columns: 12rem repeat(4, minmax(14rem, 1fr)); gap: 1.2rem 1.6rem; align-items: center; }
+    .head { font: var(--oxygen-font-semantic-body-xs-bold); color: var(--oxygen-color-semantic-neutral-prominent-weak); text-transform: uppercase; letter-spacing: 0.04em; }
+    .lead { font: var(--oxygen-font-semantic-body-xs-bold); color: var(--oxygen-color-semantic-neutral-prominent-weak); }
+    .inverted-row { background: var(--oxygen-color-semantic-brand-prominent-strong); padding: 1.2rem; border-radius: 0.8rem; display: flex; gap: 1.6rem; align-items: center; }
+    .spec { font: var(--oxygen-font-semantic-body-xs-regular); color: var(--oxygen-color-semantic-neutral-prominent-base); font-family: 'JetBrains Mono', ui-monospace, monospace; }
+    .prose { font: var(--oxygen-font-semantic-body-m-regular); color: var(--oxygen-color-semantic-neutral-prominent-strong); max-width: 56rem; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <h2>Variants · default state</h2>
+  <div class="grid">
+    <div class="lead"></div>
+    <div class="head">brand</div>
+    <div class="head">neutral</div>
+    <div class="head">danger</div>
+    <div class="head">inverted</div>
+
+    <div class="lead">default</div>
+    <a class="ox-link ox-link--brand" href="#">Read the privacy policy</a>
+    <a class="ox-link ox-link--neutral" href="#">View details</a>
+    <a class="ox-link ox-link--danger" href="#">Delete account</a>
+    <div class="inverted-row"><a class="ox-link ox-link--inverted" href="#">Back to top</a></div>
+
+    <div class="lead">with icon</div>
+    <a class="ox-link ox-link--brand" href="#">
+      Open in new tab
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M10 2a.5.5 0 0 0 0 1h2.3L7.1 8.2a.5.5 0 1 0 .7.7L13 3.7V6a.5.5 0 0 0 1 0V2zM3 4h4a.5.5 0 0 0 0-1H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V9a.5.5 0 1 0-1 0v4H3z"/></svg>
+    </a>
+    <a class="ox-link ox-link--neutral" href="#">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M2.5 7.5 6 11l7.5-7.5L14 4 6 12 2 8z"/></svg>
+      All clinics
+    </a>
+    <a class="ox-link ox-link--danger" href="#">Unsubscribe</a>
+    <div class="inverted-row"><a class="ox-link ox-link--inverted" href="#">Learn more →</a></div>
+
+    <div class="lead">no underline</div>
+    <a class="ox-link ox-link--brand ox-link--hideUnderline" href="#">Help center</a>
+    <a class="ox-link ox-link--neutral ox-link--hideUnderline" href="#">Settings</a>
+    <a class="ox-link ox-link--danger ox-link--hideUnderline" href="#">Report</a>
+    <div class="inverted-row"><a class="ox-link ox-link--inverted ox-link--hideUnderline" href="#">Dashboard</a></div>
+
+    <div class="lead">disabled</div>
+    <a class="ox-link ox-link--brand" aria-disabled="true">Export data (Pro only)</a>
+    <a class="ox-link ox-link--neutral" aria-disabled="true">Archive</a>
+    <a class="ox-link ox-link--danger" aria-disabled="true">Delete</a>
+    <div></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Inline in prose</h2>
+  <p class="prose">
+    By booking you agree to our <a class="ox-link ox-link--brand" href="#">Terms of Service</a> and confirm that you have read the <a class="ox-link ox-link--brand" href="#">Privacy policy</a>. If this is your first visit, please review our <a class="ox-link ox-link--brand" href="#">health data charter</a> before your appointment.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec" style="border-collapse:collapse">
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Underline</td><td>default yes, removable with hideUnderline (reappears on hover/focus)</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Gap (icon)</td><td>0.4rem (xxsmall)</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Brand color</td><td>blue-600 default · blue-700 hover · blue-800 pressed/visited</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Danger color</td><td>red-600 default · red-700 hover</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Source</td><td>packages/core/src/navigation/Link/Link.module.scss</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

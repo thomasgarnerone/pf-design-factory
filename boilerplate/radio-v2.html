@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Radio (v2)</title>
+<link rel="stylesheet" href="_base.css?v=4"><link rel="stylesheet" href="_components.css?v=12">
+<style>body{padding:3.2rem;max-width:112rem;font-family:Roboto,sans-serif}h1{font:700 2.8rem/1.2 Montserrat,sans-serif;color:#192634;margin:0 0 .6rem}h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:#4B739B;margin:0 0 1.4rem;font-weight:600;padding-bottom:.6rem;border-bottom:0.1rem solid #E4EDF6}.lede{color:#3A5978;font-size:1.4rem;line-height:1.5;margin:0 0 3rem;max-width:72rem}.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}.spec{font-family:'Roboto Mono',monospace;font-size:1.1rem;border-collapse:collapse;color:#3A5978}.spec td{padding:.4rem 2rem .4rem 0;vertical-align:top}.spec td:first-child{color:#6B91B8}</style></head><body><h1>Radio (v2)</h1><p class="lede">Updated Radio — beta v2 rewrite with new focus-ring and variants.</p><style>
+.rv2{display:inline-flex;align-items:flex-start;gap:.8rem;cursor:pointer;padding:.6rem}
+.rv2 input{position:absolute;opacity:0;pointer-events:none}
+.rv2 .dot{width:2rem;height:2rem;border-radius:50%;border:0.1rem solid #6B91B8;background:#fff;flex:none;display:flex;align-items:center;justify-content:center;margin-top:.1rem;transition:all .13s}
+.rv2 input:checked + .dot{border:.6rem solid #107ACA;background:#fff}
+.rv2:hover .dot{border-color:#107ACA;box-shadow:0 0 0 .4rem #E7F4FD}
+.rv2 .lbl{font-size:1.4rem;color:#192634}
+.rv2 .hint{font-size:1.2rem;color:#3A5978;margin-top:.2rem}
+.rv2.err .dot{border-color:#DB3B21}
+.rv2.err input:checked + .dot{border-color:#DB3B21}
+.rv2[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
+.rv2.card{border:0.1rem solid #C9D9E8;border-radius:.8rem;padding:1.2rem 1.6rem;min-width:22rem}
+.rv2.card:hover{border-color:#107ACA;background:#F7FAFE}
+.rv2.card:has(input:checked){border-color:#107ACA;background:#E7F4FD}
+.rv2.stacked{border:0.1rem solid #C9D9E8;padding:1.2rem 1.6rem;margin:0;display:flex;align-items:flex-start;gap:.8rem;cursor:pointer;width:100%;box-sizing:border-box}
+.rv2.stacked:first-of-type{border-radius:.8rem .8rem 0 0}
+.rv2.stacked:last-of-type{border-radius:0 0 .8rem .8rem;border-top:none}
+.rv2.stacked:not(:first-of-type):not(:last-of-type){border-top:none}
+.rv2.stacked:has(input:checked){background:#F7FAFE;border-color:#107ACA;z-index:1;position:relative}
+.rv2.stacked:has(input:checked) + .rv2.stacked{border-top:0.1rem solid #107ACA}
+.rv2.stacked.h{flex:1}
+.stacked-row{display:flex;flex-direction:row;margin:0}
+.stacked-row .rv2.stacked{width:auto}
+.stacked-row .rv2.stacked:first-of-type{border-radius:.8rem 0 0 .8rem}
+.stacked-row .rv2.stacked:last-of-type{border-radius:0 .8rem .8rem 0;border-top:0.1rem solid #C9D9E8;border-left:none}
+.stacked-row .rv2.stacked:not(:first-of-type):not(:last-of-type){border-top:0.1rem solid #C9D9E8;border-left:none}
+.stacked-row .rv2.stacked:has(input:checked) + .rv2.stacked{border-left:0.1rem solid #107ACA;border-top:0.1rem solid #C9D9E8}
+</style>
+<div class="section"><h2>Default</h2>
+<div style="display:flex;flex-direction:column;gap:.6rem">
+<label class="rv2"><input type="radio" name="a" checked><span class="dot"></span><span><span class="lbl">Morning (8am – 12pm)</span></span></label>
+<label class="rv2"><input type="radio" name="a"><span class="dot"></span><span><span class="lbl">Afternoon (1pm – 5pm)</span></span></label>
+<label class="rv2"><input type="radio" name="a"><span class="dot"></span><span><span class="lbl">Evening (5pm – 8pm)</span><div class="hint">Late appointments fill up fast</div></span></label>
+</div></div>
+<div class="section"><h2>Horizontal · default</h2>
+<div style="display:flex;flex-direction:row;flex-wrap:wrap;gap:1.6rem;align-items:center">
+<label class="rv2"><input type="radio" name="h" checked><span class="dot"></span><span class="lbl">Morning</span></label>
+<label class="rv2"><input type="radio" name="h"><span class="dot"></span><span class="lbl">Afternoon</span></label>
+<label class="rv2"><input type="radio" name="h"><span class="dot"></span><span class="lbl">Evening</span></label>
+<label class="rv2"><input type="radio" name="h"><span class="dot"></span><span class="lbl">Any time</span></label>
+</div></div>
+<div class="section"><h2>Horizontal · card</h2>
+<div style="display:flex;flex-direction:row;gap:.8rem;flex-wrap:wrap">
+<label class="rv2 card"><input type="radio" name="hc" checked><span class="dot"></span><span><span class="lbl">Standard</span><div class="hint">30 minutes</div></span></label>
+<label class="rv2 card"><input type="radio" name="hc"><span class="dot"></span><span><span class="lbl">Extended</span><div class="hint">60 minutes</div></span></label>
+<label class="rv2 card"><input type="radio" name="hc"><span class="dot"></span><span><span class="lbl">Follow-up</span><div class="hint">15 minutes</div></span></label>
+</div></div>
+<div class="section"><h2>Horizontal · stacked (segmented)</h2>
+<div class="stacked-row" style="max-width:64rem">
+<label class="rv2 stacked h"><input type="radio" name="hs" checked><span class="dot"></span><span><span class="lbl">Credit card</span><div class="hint">Visa · MC · Amex</div></span></label>
+<label class="rv2 stacked h"><input type="radio" name="hs"><span class="dot"></span><span><span class="lbl">Bank transfer</span><div class="hint">SEPA · 2–3 days</div></span></label>
+<label class="rv2 stacked h"><input type="radio" name="hs"><span class="dot"></span><span><span class="lbl">Pay on site</span><div class="hint">Cash or card</div></span></label>
+</div></div>
+<div class="section"><h2>Card variant</h2>
+<div style="display:flex;gap:.8rem;flex-wrap:wrap">
+<label class="rv2 card"><input type="radio" name="b" checked><span class="dot"></span><span><span class="lbl">Standard</span><div class="hint">30 minutes</div></span></label>
+<label class="rv2 card"><input type="radio" name="b"><span class="dot"></span><span><span class="lbl">Extended</span><div class="hint">60 minutes</div></span></label>
+<label class="rv2 card"><input type="radio" name="b"><span class="dot"></span><span><span class="lbl">Follow-up</span><div class="hint">15 minutes</div></span></label>
+</div></div>
+<div class="section"><h2>Stacked variant</h2>
+<div style="display:flex;flex-direction:column;margin:0;max-width:48rem">
+<label class="rv2 stacked"><input type="radio" name="s" checked><span class="dot"></span><span><span class="lbl">Credit card</span><div class="hint">Visa, Mastercard, Amex</div></span></label>
+<label class="rv2 stacked"><input type="radio" name="s"><span class="dot"></span><span><span class="lbl">Bank transfer</span><div class="hint">SEPA · 2–3 business days</div></span></label>
+<label class="rv2 stacked"><input type="radio" name="s"><span class="dot"></span><span><span class="lbl">Pay on site</span><div class="hint">Cash or card at the practice</div></span></label>
+</div></div>
+<div class="section"><h2>States</h2>
+<div style="display:flex;flex-direction:column;gap:.6rem;max-width:36rem">
+<label class="rv2 err"><input type="radio" name="c"><span class="dot"></span><span class="lbl">Error state</span></label>
+<label class="rv2" aria-disabled="true"><input type="radio" name="d" disabled checked><span class="dot"></span><span class="lbl">Disabled (selected)</span></label>
+<label class="rv2" aria-disabled="true"><input type="radio" name="d" disabled><span class="dot"></span><span class="lbl">Disabled</span></label>
+</div></div>
+<div class="section"><h2>Specs</h2><table class="spec"><tr><td>Status</td><td>v2 · beta API</td></tr><tr><td>Dot</td><td>2rem · border collapses to .6rem on check</td></tr><tr><td>Variants</td><td>default · card · stacked</td></tr><tr><td>Horizontal prop</td><td>applies to all 3 variants · row layout</td></tr><tr><td>Source</td><td>v2/Radio.tsx · v2/Radio.module.scss</td></tr></table></div></body></html>

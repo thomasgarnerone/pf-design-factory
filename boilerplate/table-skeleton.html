@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Table skeleton loader</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=13">
+<style>
+body{padding:3.2rem;max-width:112rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:0.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+@keyframes sk{0%,100%{background-color:var(--oxygen-color-semantic-neutral-subtle-weak)}50%{background-color:var(--oxygen-color-semantic-neutral-subtle-strong)}}.ox-skel,.ox-skel-dot,.ox-skel-pill{display:inline-block;background-color:var(--oxygen-color-semantic-neutral-subtle-weak);animation:sk 1.4s ease-in-out infinite;border-radius:.4rem;height:1.2rem;vertical-align:middle}.ox-skel-dot{width:2.4rem;height:2.4rem;border-radius:50%}.ox-skel-pill{width:8rem;height:2rem;border-radius:999px}.ox-table{width:100%;border-collapse:collapse;font:var(--oxygen-font-semantic-body-s-regular)}.ox-table th{font:var(--oxygen-font-semantic-body-xs-bold);text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-weak);text-align:left;padding:1rem 1.6rem;background:var(--oxygen-color-semantic-neutral-subtle-weakest);border-bottom:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong)}.ox-table td{padding:1.4rem 1.6rem;border-bottom:.1rem solid var(--oxygen-color-semantic-neutral-subtle-weak)}.ox-table tr:last-child td{border-bottom:0}
+</style></head>
+<body>
+<h1>Table skeleton loader</h1>
+<p class="lede">Placeholder rows shown while table data is loading. Preserves layout to avoid content jumps on arrival.</p>
+<div class="note"><b>From Oxygen core.</b> <code>data/TableSkeletonLoader/TableSkeletonLoader.tsx</code> — pairs with Table. Render instead of rows while <code>isLoading</code> is true.</div>
+
+<div class="section"><h2>Loading state</h2>
+<div class="ox-card ox-card--outlined" style="padding:0;overflow:hidden">
+<table class="ox-table">
+<thead><tr><th>Patient</th><th>Date</th><th>Reason</th><th>Status</th><th></th></tr></thead>
+<tbody>
+<tr>
+<td><div style="display:flex;align-items:center;gap:1.2rem"><span class="ox-skel-dot"></span><span class="ox-skel" style="width:10rem"></span></div></td>
+<td><span class="ox-skel" style="width:8rem"></span></td>
+<td><span class="ox-skel" style="width:12rem"></span></td>
+<td><span class="ox-skel-pill"></span></td>
+<td style="text-align:right"><span class="ox-skel" style="width:2.4rem;height:2.4rem;border-radius:.4rem;display:inline-block"></span></td>
+</tr><tr>
+<td><div style="display:flex;align-items:center;gap:1.2rem"><span class="ox-skel-dot"></span><span class="ox-skel" style="width:12rem"></span></div></td>
+<td><span class="ox-skel" style="width:8rem"></span></td>
+<td><span class="ox-skel" style="width:15rem"></span></td>
+<td><span class="ox-skel-pill"></span></td>
+<td style="text-align:right"><span class="ox-skel" style="width:2.4rem;height:2.4rem;border-radius:.4rem;display:inline-block"></span></td>
+</tr><tr>
+<td><div style="display:flex;align-items:center;gap:1.2rem"><span class="ox-skel-dot"></span><span class="ox-skel" style="width:14rem"></span></div></td>
+<td><span class="ox-skel" style="width:8rem"></span></td>
+<td><span class="ox-skel" style="width:18rem"></span></td>
+<td><span class="ox-skel-pill"></span></td>
+<td style="text-align:right"><span class="ox-skel" style="width:2.4rem;height:2.4rem;border-radius:.4rem;display:inline-block"></span></td>
+</tr><tr>
+<td><div style="display:flex;align-items:center;gap:1.2rem"><span class="ox-skel-dot"></span><span class="ox-skel" style="width:10rem"></span></div></td>
+<td><span class="ox-skel" style="width:8rem"></span></td>
+<td><span class="ox-skel" style="width:13rem"></span></td>
+<td><span class="ox-skel-pill"></span></td>
+<td style="text-align:right"><span class="ox-skel" style="width:2.4rem;height:2.4rem;border-radius:.4rem;display:inline-block"></span></td>
+</tr><tr>
+<td><div style="display:flex;align-items:center;gap:1.2rem"><span class="ox-skel-dot"></span><span class="ox-skel" style="width:12rem"></span></div></td>
+<td><span class="ox-skel" style="width:8rem"></span></td>
+<td><span class="ox-skel" style="width:16rem"></span></td>
+<td><span class="ox-skel-pill"></span></td>
+<td style="text-align:right"><span class="ox-skel" style="width:2.4rem;height:2.4rem;border-radius:.4rem;display:inline-block"></span></td>
+</tr><tr>
+<td><div style="display:flex;align-items:center;gap:1.2rem"><span class="ox-skel-dot"></span><span class="ox-skel" style="width:14rem"></span></div></td>
+<td><span class="ox-skel" style="width:8rem"></span></td>
+<td><span class="ox-skel" style="width:19rem"></span></td>
+<td><span class="ox-skel-pill"></span></td>
+<td style="text-align:right"><span class="ox-skel" style="width:2.4rem;height:2.4rem;border-radius:.4rem;display:inline-block"></span></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Rows</td><td>default 5 · configurable via <code>rowCount</code></td></tr>
+<tr><td>Color</td><td>neutral-subtle-weak (base) · neutral-subtle-strong (shimmer)</td></tr>
+<tr><td>Animation</td><td>1.4s ease-in-out infinite · pulsating opacity</td></tr>
+<tr><td>Width</td><td>randomized per cell (60%–95%) to feel organic</td></tr>
+<tr><td>Source</td><td>data/TableSkeletonLoader/TableSkeletonLoader.tsx</td></tr>
+</table></div>
+</body></html>

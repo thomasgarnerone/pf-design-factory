@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · RadioGroup (v2)</title>
+<link rel="stylesheet" href="_base.css?v=4"><link rel="stylesheet" href="_components.css?v=12">
+<style>body{padding:3.2rem;max-width:112rem;font-family:Roboto,sans-serif}h1{font:700 2.8rem/1.2 Montserrat,sans-serif;color:#192634;margin:0 0 .6rem}h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:#4B739B;margin:0 0 1.4rem;font-weight:600;padding-bottom:.6rem;border-bottom:0.1rem solid #E4EDF6}.lede{color:#3A5978;font-size:1.4rem;line-height:1.5;margin:0 0 3rem;max-width:72rem}.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}.spec{font-family:'Roboto Mono',monospace;font-size:1.1rem;border-collapse:collapse;color:#3A5978}.spec td{padding:.4rem 2rem .4rem 0;vertical-align:top}.spec td:first-child{color:#6B91B8}</style></head><body><h1>RadioGroup (v2)</h1><p class="lede">Fieldset wrapper that groups Radio v2 items with a shared label, hint, and message.</p><style>
+.rv2{display:inline-flex;align-items:flex-start;gap:.8rem;cursor:pointer;padding:.6rem}
+.rv2 input{position:absolute;opacity:0;pointer-events:none}
+.rv2 .dot{width:2rem;height:2rem;border-radius:50%;border:0.1rem solid #6B91B8;background:#fff;flex:none;margin-top:.1rem}
+.rv2 input:checked + .dot{border:.6rem solid #107ACA}
+.rv2 .lbl{font-size:1.4rem;color:#192634}
+.rv2.card{border:0.1rem solid #C9D9E8;border-radius:.8rem;padding:1.2rem 1.6rem;min-width:20rem}
+.rv2.card:has(input:checked){border-color:#107ACA;background:#E7F4FD}
+.rv2.stacked{border:0.1rem solid #C9D9E8;padding:1.2rem 1.6rem;margin:0}
+.rv2.stacked:first-child{border-radius:.8rem .8rem 0 0}
+.rv2.stacked:last-child{border-radius:0 0 .8rem .8rem;border-top:none}
+.rv2.stacked:not(:first-child):not(:last-child){border-top:none}
+.rv2.stacked:has(input:checked){background:#F7FAFE;border-color:#107ACA;z-index:1;position:relative}
+.fs{border:0;padding:0;margin:0 0 2.4rem;max-width:48rem}
+.fs legend{font:600 1.4rem/1.3 Roboto;color:#192634;margin-bottom:.4rem;padding:0}
+.fs .hint{font-size:1.2rem;color:#3A5978;margin-bottom:1rem}
+.fs .msg{font-size:1.2rem;color:#DB3B21;margin-top:.6rem}
+</style>
+<div class="section"><h2>Default · horizontal</h2>
+<fieldset class="fs">
+<legend>Preferred time</legend>
+<div class="hint">Select one option</div>
+<div style="display:flex;gap:1.6rem;flex-wrap:wrap">
+<label class="rv2"><input type="radio" name="g1" checked><span class="dot"></span><span class="lbl">Morning</span></label>
+<label class="rv2"><input type="radio" name="g1"><span class="dot"></span><span class="lbl">Afternoon</span></label>
+<label class="rv2"><input type="radio" name="g1"><span class="dot"></span><span class="lbl">Evening</span></label>
+</div></fieldset></div>
+<div class="section"><h2>Card · vertical</h2>
+<fieldset class="fs">
+<legend>Appointment type <span style="color:#DB3B21">*</span></legend>
+<div style="display:flex;flex-direction:column;gap:.8rem">
+<label class="rv2 card"><input type="radio" name="g2" checked><span class="dot"></span><span class="lbl">Standard consultation · 30 min</span></label>
+<label class="rv2 card"><input type="radio" name="g2"><span class="dot"></span><span class="lbl">Extended consultation · 60 min</span></label>
+<label class="rv2 card"><input type="radio" name="g2"><span class="dot"></span><span class="lbl">Follow-up · 15 min</span></label>
+</div></fieldset></div>
+<div class="section"><h2>Stacked · with error</h2>
+<fieldset class="fs">
+<legend>Payment method</legend>
+<div style="display:flex;flex-direction:column;margin:0">
+<label class="rv2 stacked"><input type="radio" name="g3"><span class="dot"></span><span class="lbl">Credit card</span></label>
+<label class="rv2 stacked"><input type="radio" name="g3"><span class="dot"></span><span class="lbl">Bank transfer</span></label>
+<label class="rv2 stacked"><input type="radio" name="g3"><span class="dot"></span><span class="lbl">Cash</span></label>
+</div>
+<div class="msg">Please select a payment method</div>
+</fieldset></div>
+<div class="section"><h2>Specs</h2><table class="spec"><tr><td>Wrapper</td><td>fieldset + legend</td></tr><tr><td>Orientations</td><td>horizontal · vertical</td></tr><tr><td>Variants</td><td>default · stacked · card</td></tr><tr><td>Source</td><td>v2/RadioGroup.tsx · RadioGroup.module.scss</td></tr></table></div></body></html>

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Oxygen · Table</title>
+  <link rel="stylesheet" href="_base.css?v=4">
+  <link rel="stylesheet" href="_components.css?v=2026-04-27-xs">
+  <style>
+    body { padding: 3.2rem; max-width: 120rem; }
+    h2 { font: var(--oxygen-font-semantic-title-s-bold); margin: 0 0 1.2rem; color: var(--oxygen-color-semantic-neutral-prominent-strong); text-transform: uppercase; letter-spacing: 0.04em; }
+    .section { margin-bottom: 4.8rem; }
+    .card { background: #fff; border: 0.1rem solid var(--oxygen-color-primitive-gray-200); border-radius: 0.8rem; overflow: hidden; }
+    .spec { font: var(--oxygen-font-semantic-body-xs-regular); color: var(--oxygen-color-semantic-neutral-prominent-base); font-family: 'JetBrains Mono', ui-monospace, monospace; }
+    .pill {
+      display: inline-flex; align-items: center; padding: 0.2rem 0.8rem; border-radius: 99rem;
+      font: var(--oxygen-font-semantic-body-xs-bold);
+      white-space: nowrap;
+    }
+    .pill--pos { background: var(--oxygen-color-semantic-positive-subtle-weak); color: var(--oxygen-color-semantic-positive-prominent-strong); }
+    .pill--warn{ background: var(--oxygen-color-semantic-warning-subtle-weak); color: var(--oxygen-color-semantic-warning-prominent-strong); }
+    .pill--info{ background: var(--oxygen-color-semantic-informative-subtle-weak); color: var(--oxygen-color-semantic-informative-prominent-strong); }
+    .pill--danger{ background: var(--oxygen-color-semantic-danger-subtle-weak); color: var(--oxygen-color-semantic-danger-prominent-base); }
+    .avatar {
+      width: 3.2rem; height: 3.2rem; border-radius: 50%;
+      background: var(--oxygen-color-semantic-brand-subtle-base);
+      color: var(--oxygen-color-semantic-brand-prominent-strong);
+      display: inline-flex; align-items: center; justify-content: center;
+      font: var(--oxygen-font-semantic-body-s-bold);
+      margin-right: 1.2rem; vertical-align: middle;
+    }
+    .meta { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 1.6rem; border-bottom: 0.1rem solid var(--oxygen-color-primitive-gray-200); }
+    .meta .title { font: var(--oxygen-font-semantic-body-m-bold); color: var(--oxygen-color-semantic-neutral-prominent-stronger); }
+    .meta .search { display: flex; align-items: center; gap: 0.8rem; }
+    .search input { border: 0.1rem solid var(--oxygen-color-primitive-gray-300); border-radius: 0.4rem; padding: 0.4rem 0.8rem; font: var(--oxygen-font-semantic-body-s-regular); width: 22rem; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <h2>Medium size — with hover & selection</h2>
+  <div class="card">
+    <div class="meta">
+      <div class="title">Upcoming appointments · 24</div>
+      <div class="search">
+        <input placeholder="Search patient, practitioner…"/>
+        <button class="ox-button ox-button--variant-outlined ox-button--ui-neutral ox-button--size-small"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Filters</span></span></button>
+      </div>
+    </div>
+    <table class="ox-table ox-table--size-medium">
+      <thead>
+        <tr>
+          <th style="width: 4rem;">
+            <label class="ox-checkbox-wrap is-indeterminate">
+              <input type="checkbox"/>
+              <span class="ox-checkbox"><svg viewBox="0 0 16 16"><rect x="3.5" y="7.3" width="9" height="1.4" rx="0.7"/></svg></span>
+            </label>
+          </th>
+          <th class="ox-table__head-cell--sortable">Patient <span class="ox-table__sort-caret"><svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M8 4 4 8h8z"/></svg></span></th>
+          <th>Practitioner</th>
+          <th class="ox-table__head-cell--sortable">Date <span class="ox-table__sort-caret"><svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12 4 8h8z"/></svg></span></th>
+          <th>Type</th>
+          <th>Status</th>
+          <th style="width: 8rem;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="ox-table__row--hover ox-table__row--selected">
+          <td>
+            <label class="ox-checkbox-wrap">
+              <input type="checkbox" checked/>
+              <span class="ox-checkbox"><svg viewBox="0 0 16 16"><path d="M6.5 10.2 3.8 7.5l-1 1L6.5 12.2 13 5.7l-1-1z"/></svg></span>
+            </label>
+          </td>
+          <td><span class="avatar">MD</span>Marie Dubois</td>
+          <td>Dr. Camille Roux</td>
+          <td>Tue 12 May · 10:30</td>
+          <td>Cardiology</td>
+          <td><span class="pill pill--info">Confirmed</span></td>
+          <td><a class="ox-link ox-link--brand ox-link--hideUnderline" href="#">View</a></td>
+        </tr>
+        <tr class="ox-table__row--hover">
+          <td>
+            <label class="ox-checkbox-wrap">
+              <input type="checkbox"/>
+              <span class="ox-checkbox"><svg viewBox="0 0 16 16"><path d="M6.5 10.2 3.8 7.5l-1 1L6.5 12.2 13 5.7l-1-1z"/></svg></span>
+            </label>
+          </td>
+          <td><span class="avatar" style="background:#FEEEE6;color:#AD421F">TL</span>Thomas Leroy</td>
+          <td>Dr. Julien Petit</td>
+          <td>Tue 12 May · 11:00</td>
+          <td>General</td>
+          <td><span class="pill pill--pos">Checked in</span></td>
+          <td><a class="ox-link ox-link--brand ox-link--hideUnderline" href="#">View</a></td>
+        </tr>
+        <tr class="ox-table__row--hover">
+          <td>
+            <label class="ox-checkbox-wrap">
+              <input type="checkbox"/>
+              <span class="ox-checkbox"><svg viewBox="0 0 16 16"><path d="M6.5 10.2 3.8 7.5l-1 1L6.5 12.2 13 5.7l-1-1z"/></svg></span>
+            </label>
+          </td>
+          <td><span class="avatar" style="background:#F9E5FF;color:#7333CC">SC</span>Sophie Chen</td>
+          <td>Dr. Camille Roux</td>
+          <td>Wed 13 May · 09:15</td>
+          <td>Cardiology</td>
+          <td><span class="pill pill--warn">Awaiting confirm</span></td>
+          <td><a class="ox-link ox-link--brand ox-link--hideUnderline" href="#">View</a></td>
+        </tr>
+        <tr class="ox-table__row--hover">
+          <td>
+            <label class="ox-checkbox-wrap">
+              <input type="checkbox"/>
+              <span class="ox-checkbox"><svg viewBox="0 0 16 16"><path d="M6.5 10.2 3.8 7.5l-1 1L6.5 12.2 13 5.7l-1-1z"/></svg></span>
+            </label>
+          </td>
+          <td><span class="avatar" style="background:#DEFCCF;color:#32730D">PA</span>Pierre Arnaud</td>
+          <td>Dr. Camille Roux</td>
+          <td>Wed 13 May · 14:30</td>
+          <td>Cardiology</td>
+          <td><span class="pill pill--danger">No-show</span></td>
+          <td><a class="ox-link ox-link--brand ox-link--hideUnderline" href="#">View</a></td>
+        </tr>
+        <tr class="ox-table__row--hover">
+          <td>
+            <label class="ox-checkbox-wrap">
+              <input type="checkbox"/>
+              <span class="ox-checkbox"><svg viewBox="0 0 16 16"><path d="M6.5 10.2 3.8 7.5l-1 1L6.5 12.2 13 5.7l-1-1z"/></svg></span>
+            </label>
+          </td>
+          <td><span class="avatar" style="background:#E5F9FF;color:#007AB3">NB</span>Nour Benali</td>
+          <td>Dr. Camille Roux</td>
+          <td>Thu 14 May · 08:45</td>
+          <td>Cardiology</td>
+          <td><span class="pill pill--info">Confirmed</span></td>
+          <td><a class="ox-link ox-link--brand ox-link--hideUnderline" href="#">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>XSmall size — dense list, no dividers</h2>
+  <div class="card" style="padding:0.8rem 1.2rem">
+    <table class="ox-table ox-table--size-xsmall">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Label</th>
+          <th>Tariff</th>
+          <th class="ox-table__cell--right">Qty</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>C</td><td>Consultation</td><td>€26.50</td><td class="ox-table__cell--right">1</td></tr>
+        <tr><td>CCAM HBQK002</td><td>ECG</td><td>€13.52</td><td class="ox-table__cell--right">1</td></tr>
+        <tr><td>MCS</td><td>Majoration coordination</td><td>€5.00</td><td class="ox-table__cell--right">1</td></tr>
+        <tr><td>F</td><td>Frais de déplacement</td><td>€3.50</td><td class="ox-table__cell--right">2</td></tr>
+        <tr><td>MD</td><td>Majoration dimanche</td><td>€19.06</td><td class="ox-table__cell--right">1</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Small size — compact read-only</h2>
+  <div class="card">
+    <table class="ox-table ox-table--size-small">
+      <thead>
+        <tr>
+          <th>Prescription</th>
+          <th>Dosage</th>
+          <th>Frequency</th>
+          <th class="ox-table__cell--right">Refills</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Amoxicilline 500mg</td><td>1 capsule</td><td>3x/day — 7 days</td><td class="ox-table__cell--right">0</td></tr>
+        <tr><td>Ibuprofène 200mg</td><td>1 tablet</td><td>As needed</td><td class="ox-table__cell--right">2</td></tr>
+        <tr><td>Paracétamol 500mg</td><td>1 tablet</td><td>Up to 4x/day</td><td class="ox-table__cell--right">—</td></tr>
+        <tr><td>Ventoline 100µg</td><td>2 puffs</td><td>At onset</td><td class="ox-table__cell--right">5</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec" style="border-collapse:collapse">
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Sizes</td><td>xsmall (24px row, no dividers), small (8×16), medium (16×16) padding</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Border</td><td>bottom 0.1rem neutral-subtle-base between rows · xsmall omits row dividers for dense embedded lists</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Hover</td><td>surface brand-base bg + 1px brand blue top/bottom inset</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Selected</td><td>brand-subtle-weak bg</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Type</td><td>head body-s-bold, cells body-s-regular</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Source</td><td>packages/core/src/dataDisplay/Table/Table.scss</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

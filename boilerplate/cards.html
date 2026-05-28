@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="_base.css">
+  <title>Cards</title>
+  <style>
+    /* ---------- Card shell (mirrors packages/core/src/dataDisplay/Card/v2/private/Card.module.scss) ---------- */
+    .card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* 5 displays — each pairs a radius token with a padding scale. */
+    .card--xsmall {
+      border-radius: var(--oxygen-scale-semantic-radius-small);
+      padding: var(--oxygen-scale-semantic-padding-small) var(--oxygen-scale-semantic-padding-medium);
+    }
+    .card--small {
+      border-radius: var(--oxygen-scale-semantic-radius-small);
+      padding: var(--oxygen-scale-semantic-padding-medium) var(--oxygen-scale-semantic-padding-large);
+    }
+    .card--medium {
+      border-radius: var(--oxygen-scale-semantic-radius-medium);
+      padding: var(--oxygen-scale-semantic-padding-large) var(--oxygen-scale-semantic-padding-xlarge);
+    }
+    .card--large {
+      border-radius: var(--oxygen-scale-semantic-radius-large);
+      padding: var(--oxygen-scale-semantic-padding-xlarge) var(--oxygen-scale-semantic-padding-xxlarge);
+    }
+    .card--xlarge {
+      border-radius: var(--oxygen-scale-semantic-radius-xlarge);
+      padding: var(--oxygen-scale-semantic-padding-xxlarge) var(--oxygen-scale-semantic-padding-xxxlarge);
+    }
+
+    /* ---------- CardElevated ---------- */
+    .CardElevated {
+      background: var(--oxygen-color-component-surface-background-main-base-default);
+      box-shadow:
+        0 0.1rem 0.4rem 0 var(--oxygen-color-primitive-blue-opacity-16),
+        0 0 0.1rem 0 var(--oxygen-color-primitive-blue-opacity-10);
+    }
+
+    /* ---------- CardOutlined ---------- */
+    .CardOutlined {
+      border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+      background: var(--oxygen-color-component-surface-background-main-base-default);
+    }
+
+    /* ---------- CardSolid — 6 sub-variants ---------- */
+    .CardSolid--default    { background: var(--oxygen-color-component-surface-background-main-base-default);    color: var(--oxygen-color-semantic-common-prominent); border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-weak); }
+    .CardSolid--neutral    { background: var(--oxygen-color-semantic-neutral-subtle-weak);    color: var(--oxygen-color-semantic-common-prominent); }
+    .CardSolid--brand      { background: var(--oxygen-color-semantic-brand-subtle-weak);      color: var(--oxygen-color-semantic-common-prominent); }
+    .CardSolid--informative{ background: var(--oxygen-color-semantic-informative-subtle-base);color: var(--oxygen-color-semantic-common-prominent); }
+    .CardSolid--teal       { background: var(--oxygen-color-semantic-positive-subtle-base);   color: var(--oxygen-color-semantic-common-prominent); }
+    .CardSolid--inverted   { background: var(--oxygen-color-primitive-blue-800);              color: var(--oxygen-color-primitive-white); }
+
+    /* ---------- Preview layout ---------- */
+    .page { max-width: 112rem; margin: 0 auto; }
+    h1 { font: var(--oxygen-font-semantic-title-l-bold); margin-bottom: 0.4rem; }
+    .sub { color: var(--oxygen-color-semantic-common-weak); margin-bottom: 3.2rem; font-size: 1.3rem; max-width: 72rem; }
+    section { margin-bottom: 4.8rem; }
+    .sect-title { font: var(--oxygen-font-semantic-title-s-bold); margin-bottom: 0.4rem; }
+    .sect-desc { color: var(--oxygen-color-semantic-common-weak); font-size: 1.3rem; margin-bottom: 2rem; max-width: 72rem; }
+    .grid-variants { display: grid; gap: 1.6rem; grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr)); }
+
+    /* Displays row */
+    .displays-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.6rem;
+      align-items: stretch;
+    }
+    @media (max-width: 960px) {
+      .displays-row { grid-template-columns: repeat(2, 1fr); }
+    }
+    .display-cell { display: flex; flex-direction: column; gap: 0.8rem; }
+    .display-label {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 1.1rem;
+      color: var(--oxygen-color-semantic-common-weak);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .display-label b { color: var(--oxygen-color-semantic-common-prominent); font-weight: 600; }
+    .display-cell .filler {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--oxygen-color-semantic-common-weak);
+      font-size: 1.1rem;
+      min-height: 6rem;
+    }
+
+    /* sample card contents */
+    .card-eyebrow { font-size: 1.2rem; color: var(--oxygen-color-semantic-common-weak); margin-bottom: 0.4rem; }
+    .card-title   { font: var(--oxygen-font-semantic-title-xs-bold); margin-bottom: 0.2rem; }
+    .card-meta    { font-size: 1.3rem; color: var(--oxygen-color-semantic-common-weak); margin-bottom: 1.2rem; }
+    .CardSolid--inverted .card-eyebrow,
+    .CardSolid--inverted .card-meta { color: var(--oxygen-color-primitive-blue-200); }
+
+    .variant-tag { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1rem; color: var(--oxygen-color-semantic-common-weak); margin-bottom: 0.8rem; }
+    code { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.92em; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <h1>Cards</h1>
+  <p class="sub">Three surface styles from <code>dataDisplay/Card/v2</code> — <b>CardElevated</b>, <b>CardOutlined</b>, <b>CardSolid</b>. Each accepts a <code>display</code> prop that pairs a radius token with a padding scale.</p>
+
+  <section>
+    <div class="sect-title">Displays</div>
+    <div class="sect-desc">Five sizes — <code>xsmall</code> · <code>small</code> · <code>medium</code> · <code>large</code> · <code>xlarge</code>. Each step increases both <b>padding</b> (S → XXXL) and <b>corner radius</b> (S → XL). Shown on <code>CardOutlined</code> so both the radius and the internal breathing room are visible.</div>
+    <div class="displays-row">
+      <div class="display-cell">
+        <div class="display-label"><b>xsmall</b><span>radius S</span></div>
+        <div class="card card--xsmall CardOutlined"><div class="filler">content</div></div>
+        <div class="display-label"><span>padding S / M</span></div>
+      </div>
+      <div class="display-cell">
+        <div class="display-label"><b>small</b><span>radius S</span></div>
+        <div class="card card--small CardOutlined"><div class="filler">content</div></div>
+        <div class="display-label"><span>padding M / L</span></div>
+      </div>
+      <div class="display-cell">
+        <div class="display-label"><b>medium</b><span>radius M</span></div>
+        <div class="card card--medium CardOutlined"><div class="filler">content</div></div>
+        <div class="display-label"><span>padding L / XL</span></div>
+      </div>
+      <div class="display-cell">
+        <div class="display-label"><b>large</b><span>radius L</span></div>
+        <div class="card card--large CardOutlined"><div class="filler">content</div></div>
+        <div class="display-label"><span>padding XL / XXL</span></div>
+      </div>
+      <div class="display-cell">
+        <div class="display-label"><b>xlarge</b><span>radius XL</span></div>
+        <div class="card card--xlarge CardOutlined"><div class="filler">content</div></div>
+        <div class="display-label"><span>padding XXL / XXXL</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sect-title">CardElevated</div>
+    <div class="sect-desc">White surface lifted by a blue-tinted shadow. For independent content that should read as a discrete object.</div>
+    <div class="grid-variants">
+      <div class="card card--small CardElevated">
+        <div class="variant-tag">CardElevated · display="small"</div>
+        <div class="card-eyebrow">Tue 22 April · 14:30</div>
+        <div class="card-title">Dr Claire Leclerc</div>
+        <div class="card-meta">General practitioner · Paris 11e</div>
+        <div style="display:flex;gap:0.8rem">
+          <span style="display:inline-flex;padding:0.3rem 0.9rem;border-radius:99.9rem;font-size:1.2rem;font-weight:600;background:var(--oxygen-color-semantic-positive-subtle-base);color:var(--oxygen-color-semantic-positive-prominent-strong)">Confirmed</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sect-title">CardOutlined</div>
+    <div class="sect-desc">White surface with a <code>neutral-subtle</code> 1px border. For dense layouts or repeating items where elevation would feel noisy.</div>
+    <div class="grid-variants">
+      <div class="card card--small CardOutlined">
+        <div class="variant-tag">CardOutlined · display="small"</div>
+        <div class="card-eyebrow">Thu 24 April · 09:00</div>
+        <div class="card-title">Dr Ahmed Nasser</div>
+        <div class="card-meta">Cardiologist · Clichy</div>
+        <div style="display:flex;gap:0.8rem">
+          <span style="display:inline-flex;padding:0.3rem 0.9rem;border-radius:99.9rem;font-size:1.2rem;font-weight:600;background:var(--oxygen-color-semantic-informative-subtle-base);color:var(--oxygen-color-semantic-informative-prominent-strong)">Video visit</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sect-title">CardSolid</div>
+    <div class="sect-desc">Flat tinted surface. Six color variants convey context: <code>default</code>, <code>neutral</code>, <code>brand</code>, <code>informative</code>, <code>teal</code>, <code>inverted</code>.</div>
+    <div class="grid-variants">
+      <div class="card card--small CardSolid--default">
+        <div class="variant-tag">CardSolid · default</div>
+        <div class="card-title">Booking confirmed</div>
+        <div class="card-meta">The default surface. Use when context is neutral.</div>
+      </div>
+      <div class="card card--small CardSolid--neutral">
+        <div class="variant-tag">CardSolid · neutral</div>
+        <div class="card-title">Reminder</div>
+        <div class="card-meta">Secondary surface for grouped, non-urgent content.</div>
+      </div>
+      <div class="card card--small CardSolid--brand">
+        <div class="variant-tag">CardSolid · brand</div>
+        <div class="card-title">Your next visit</div>
+        <div class="card-meta">Brand tint for booking-flow hero cards.</div>
+      </div>
+      <div class="card card--small CardSolid--informative">
+        <div class="variant-tag">CardSolid · informative</div>
+        <div class="card-title">New feature</div>
+        <div class="card-meta">Informational tint — softer than a full Alert.</div>
+      </div>
+      <div class="card card--small CardSolid--teal">
+        <div class="variant-tag">CardSolid · teal</div>
+        <div class="card-title">Prescription ready</div>
+        <div class="card-meta">Positive tint for success confirmations.</div>
+      </div>
+      <div class="card card--small CardSolid--inverted">
+        <div class="variant-tag" style="color:var(--oxygen-color-primitive-blue-200)">CardSolid · inverted</div>
+        <div class="card-title">Doctolib Pro</div>
+        <div class="card-meta">Inverted surface for marketing promos and footer-adjacent emphasis.</div>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

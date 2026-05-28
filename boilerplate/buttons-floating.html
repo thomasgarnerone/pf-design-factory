@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<title>ButtonFloating — Oxygen actions/ButtonFloating</title>
+<style>
+/* ====================================================================
+   1:1 reproduction of packages/core/src/actions/ButtonFloating/ButtonFloating.tsx
+   + ButtonFloating.scss
+
+   From the TSX: ButtonFloating wraps <Button> with hardcoded props:
+     size    = 'medium'
+     uiStyle = 'primary'  (v1 Button — maps to brand in v2)
+   Exposed props: icon (required), children (label string),
+                  isSROnlyLabel, plus standard Button props
+                  EXCEPT size/uiStyle/disabled/aria-disabled (Omit'd).
+
+   ButtonFloating is always solid + brand + medium. It is used for
+   prominent, self-contained actions — typically floating over content
+   with elevation (hence the name).
+   ==================================================================== */
+
+.fab {
+  position: relative;
+  display: inline-flex;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  font-family: Roboto, sans-serif;
+  font: 700 1.4rem/2rem Roboto, sans-serif;
+  /* Oxygen elevation recipe — the "floating" in ButtonFloating */
+  box-shadow:
+    0 0.4rem 0.8rem 0 rgba(5,43,71,0.08),
+    0 0.1rem 0.4rem 0 rgba(5,43,71,0.10);
+  transition: box-shadow 0.2s;
+}
+.fab:hover  { box-shadow: 0 0.6rem 1.2rem 0 rgba(5,43,71,0.12), 0 0.2rem 0.4rem 0 rgba(5,43,71,0.10); }
+.fab:active { box-shadow: 0 0.2rem 0.4rem 0 rgba(5,43,71,0.10); }
+.fab:focus-visible {
+  outline: 0.2rem solid transparent;
+  box-shadow:
+    0 0 0 0.2rem #E7F4FD,
+    0 0 0 0.4rem #107ACA;
+}
+
+.fab .inner {
+  border-radius: inherit;
+  display: inline-flex;
+  min-height: 4rem;
+  padding: 0.7rem 1.6rem 0.7rem 1.2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  background: #107ACA;
+  color: #FFFFFF;
+  transition: background-color 0.15s;
+}
+.fab:hover .inner  { background: #004080; }
+.fab:active .inner { background: #004080; }
+.fab .inner svg { width: 1.6rem; height: 1.6rem; fill: currentColor; flex-shrink: 0; }
+
+/* sr-only label variant */
+.fab.sr-only-label .inner {
+  padding: 0.7rem;
+  min-width: 4rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+.fab.sr-only-label .label-text { position: absolute; width: 1px; height: 1px; clip: rect(0 0 0 0); overflow: hidden; }
+
+/* ---- preview chrome ---- */
+body { padding: 2.4rem 2.8rem; font-family: Roboto, sans-serif; background: #FFFFFF; color: #192634; }
+.header { font: 700 1.1rem/1.4 Montserrat, sans-serif; color: #3A5978; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem; }
+.legend { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1.1rem; color: #3A5978; line-height: 1.6; margin-bottom: 2rem; max-width: 96rem; }
+.legend code { background: #F1F7FE; padding: 0.1rem 0.4rem; border-radius: 0.3rem; color: #004080; }
+.legend b { color: #192634; }
+.section + .section { margin-top: 2.8rem; }
+.section-title { font: 700 1.1rem/1.4 Montserrat, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: #4B739B; margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 0.1rem solid #E4EDF6; }
+.row { display: grid; grid-template-columns: 18rem 1fr; column-gap: 2rem; row-gap: 1.2rem; align-items: center; margin-bottom: 1rem; }
+.row-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1.1rem; color: #4B739B; }
+.row-items { display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap; }
+.caption { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1rem; color: #6B91B8; }
+
+.surface {
+  position: relative;
+  background: linear-gradient(180deg, #F1F7FE 0%, #E4EDF6 100%);
+  padding: 2rem;
+  border-radius: 1rem;
+  min-height: 14rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  max-width: 40rem;
+}
+.surface .hint { position: absolute; top: 1rem; left: 1.2rem; font-family: 'JetBrains Mono',monospace; font-size: 1rem; color: #4B739B; }
+</style>
+</head>
+<body>
+
+<div class="header">actions / ButtonFloating</div>
+<p class="legend">
+  <b>&lt;ButtonFloating /&gt;</b> · 1:1 reproduction of
+  <code>packages/core/src/actions/ButtonFloating/ButtonFloating.tsx</code>.
+  Always renders <code>solid · brand · medium</code> — <code>size</code>,
+  <code>uiStyle</code>, <code>disabled</code> and <code>aria-disabled</code>
+  are Omit'd from the prop surface. Requires <code>icon</code> and
+  <code>children: string</code>. Supports <code>isSROnlyLabel</code> for
+  icon-only rendering (label still read by screen readers).
+  The "floating" is elevation — the component visually lifts off the surface.
+</p>
+
+<!-- default -->
+<section class="section">
+  <div class="section-title">default · solid · brand · medium <span style="font-weight:400;text-transform:none;color:#6B91B8">· the only variant</span></div>
+
+  <div class="row">
+    <div class="row-label">with label</div>
+    <div class="row-items">
+      <button class="fab">
+        <span class="inner">
+          <svg viewBox="0 0 16 16"><path d="M8 2a6 6 0 100 12A6 6 0 008 2zm-.75 3.25a.75.75 0 011.5 0V7.5h2.75a.75.75 0 010 1.5H8.75v2.75a.75.75 0 01-1.5 0V9H4.5a.75.75 0 010-1.5h2.75V5.25z"/></svg>
+          New appointment
+        </span>
+      </button>
+      <button class="fab">
+        <span class="inner">
+          <svg viewBox="0 0 16 16"><path d="M2.5 3a.5.5 0 01.5-.5h10a.5.5 0 01.5.5v2a.5.5 0 01-.15.35L9 9.7V13a.5.5 0 01-.78.42l-2-1.4A.5.5 0 016 11.6V9.7L2.65 5.35A.5.5 0 012.5 5V3z"/></svg>
+          Filter
+        </span>
+      </button>
+      <span class="caption">min-h 4rem · radius 1.2rem · elevation · solid-brand</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">isSROnlyLabel</div>
+    <div class="row-items">
+      <button class="fab sr-only-label">
+        <span class="inner">
+          <svg viewBox="0 0 16 16"><path d="M8 2a6 6 0 100 12A6 6 0 008 2zm-.75 3.25a.75.75 0 011.5 0V7.5h2.75a.75.75 0 010 1.5H8.75v2.75a.75.75 0 01-1.5 0V9H4.5a.75.75 0 010-1.5h2.75V5.25z"/></svg>
+          <span class="label-text">New appointment</span>
+        </span>
+      </button>
+      <span class="caption">square (aspect 1) · label sr-only · still announced by AT</span>
+    </div>
+  </div>
+</section>
+
+<!-- in context -->
+<section class="section">
+  <div class="section-title">in context · floating over a surface</div>
+
+  <div class="row">
+    <div class="row-label">typical usage</div>
+    <div class="row-items">
+      <div class="surface">
+        <span class="hint">// list / content area</span>
+        <button class="fab">
+          <span class="inner">
+            <svg viewBox="0 0 16 16"><path d="M8 2a6 6 0 100 12A6 6 0 008 2zm-.75 3.25a.75.75 0 011.5 0V7.5h2.75a.75.75 0 010 1.5H8.75v2.75a.75.75 0 01-1.5 0V9H4.5a.75.75 0 010-1.5h2.75V5.25z"/></svg>
+            New appointment
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

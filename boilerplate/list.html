@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · List</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=12">
+<style>
+body{padding:3.2rem;max-width:112rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:0.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.ox-list{list-style:none;margin:0;padding:0;background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:.8rem;overflow:hidden}.ox-list__item{display:flex;align-items:center;gap:1.2rem;padding:1.2rem 1.6rem;font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-stronger);border-bottom:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong)}.ox-list__item:last-child{border-bottom:0}.ox-list__item--two{align-items:flex-start}.ox-list__leading{flex:none;width:3.2rem;height:3.2rem;border-radius:.8rem;display:grid;place-items:center;font-size:1.2rem}.ox-list__avatar{background:var(--oxygen-color-semantic-brand-subtle-weak);color:var(--oxygen-color-semantic-brand-prominent-base);width:4rem;height:4rem;font:var(--oxygen-font-semantic-body-s-bold)}.ox-list__content{flex:1;min-width:0}.ox-list__title{font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)}.ox-list__desc{font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-base);margin-top:.2rem}.ox-list__meta{flex:none;font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)}.ox-list__chev{flex:none;color:var(--oxygen-color-semantic-neutral-prominent-weak);transition:transform .12s}.ox-list--interactive .ox-list__item{cursor:pointer;transition:background .12s}.ox-list--interactive .ox-list__item:hover{background:var(--oxygen-color-semantic-neutral-subtle-weakest)}.ox-list--interactive .ox-list__item:hover .ox-list__chev{transform:translateX(.2rem);color:var(--oxygen-color-semantic-brand-prominent-base)}
+</style></head>
+<body>
+<h1>List</h1>
+<p class="lede">Vertical stack of items with optional leading media, primary/secondary text, and trailing meta. Supports interactive rows (with chevron).</p>
+<div class="note"><b>From Oxygen core.</b> <code>layout/List/List.tsx</code> — use for settings menus, patient lists, notifications. For tabular data use Table. For selectable cards use Card selectable.</div>
+
+<div class="section"><h2>Basic list — single-line</h2>
+<div style="max-width:44rem">
+<ul class="ox-list">
+<li class="ox-list__item"><span>Patient file</span></li>
+<li class="ox-list__item"><span>Prescriptions</span></li>
+<li class="ox-list__item"><span>Documents</span></li>
+<li class="ox-list__item"><span>Invoices</span></li>
+<li class="ox-list__item"><span>Messages</span></li>
+</ul>
+</div></div>
+
+<div class="section"><h2>Two-line with leading icon & meta</h2>
+<div style="max-width:56rem">
+<ul class="ox-list">
+<li class="ox-list__item ox-list__item--two">
+<span class="ox-list__leading" style="background:#DBF2FA;color:#004C6B"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M5 1a.5.5 0 01.5.5V2h5v-.5a.5.5 0 011 0V2h1.5A1.5 1.5 0 0114.5 3.5v10A1.5 1.5 0 0113 15H3a1.5 1.5 0 01-1.5-1.5v-10A1.5 1.5 0 013 2h1.5v-.5A.5.5 0 015 1zm8.5 4.5h-11v8a.5.5 0 00.5.5h10a.5.5 0 00.5-.5v-8z"/></svg></span>
+<div class="ox-list__content"><div class="ox-list__title">Annual check-up</div><div class="ox-list__desc">Tuesday 14 October · 10:00</div></div>
+<div class="ox-list__meta">2 days</div>
+</li>
+<li class="ox-list__item ox-list__item--two">
+<span class="ox-list__leading" style="background:#E6F7EE;color:#0F7A3E"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M13.5 6.5a5 5 0 01-5 5h-1a5 5 0 01-5-5v-2A5 5 0 017.5 0h1a5 5 0 015 4.5v2zM8 8a3 3 0 003-3V4a3 3 0 00-6 0v1a3 3 0 003 3z"/></svg></span>
+<div class="ox-list__content"><div class="ox-list__title">Prescription renewed</div><div class="ox-list__desc">Amlodipine 5mg · 30 days</div></div>
+<div class="ox-list__meta">Yesterday</div>
+</li>
+<li class="ox-list__item ox-list__item--two">
+<span class="ox-list__leading" style="background:#FDE9D9;color:#9A4A00"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM7 5a1 1 0 012 0v4a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z"/></svg></span>
+<div class="ox-list__content"><div class="ox-list__title">Lab result awaiting review</div><div class="ox-list__desc">Marie Leroy · Blood panel</div></div>
+<div class="ox-list__meta">3 h</div>
+</li>
+</ul>
+</div></div>
+
+<div class="section"><h2>Interactive (with chevron)</h2>
+<div style="max-width:56rem">
+<ul class="ox-list ox-list--interactive">
+<li class="ox-list__item ox-list__item--two"><span class="ox-list__leading ox-list__avatar">ML</span><div class="ox-list__content"><div class="ox-list__title">Marie Leroy</div><div class="ox-list__desc">Next: 14 Oct 10:00</div></div><svg class="ox-list__chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 3l5 5-5 5"/></svg></li>
+<li class="ox-list__item ox-list__item--two"><span class="ox-list__leading ox-list__avatar">PD</span><div class="ox-list__content"><div class="ox-list__title">Paul Dubois</div><div class="ox-list__desc">Next: 16 Oct 14:30</div></div><svg class="ox-list__chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 3l5 5-5 5"/></svg></li>
+<li class="ox-list__item ox-list__item--two"><span class="ox-list__leading ox-list__avatar">AB</span><div class="ox-list__content"><div class="ox-list__title">Alice Bernard</div><div class="ox-list__desc">Next: 18 Oct 09:15</div></div><svg class="ox-list__chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 3l5 5-5 5"/></svg></li>
+</ul>
+</div></div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Item height</td><td>48px (single-line) · 64px (two-line)</td></tr>
+<tr><td>Padding</td><td>1.6rem horizontal · 1.2rem vertical</td></tr>
+<tr><td>Divider</td><td>1px border-bottom (inside padding) · last child none</td></tr>
+<tr><td>Leading size</td><td>32×32 (icon) · 40×40 (avatar)</td></tr>
+<tr><td>Interactive hover</td><td>background: neutral-subtle-weakest · chevron shifts 2px right</td></tr>
+<tr><td>Source</td><td>layout/List/List.tsx + ListItem.tsx</td></tr>
+</table></div>
+</body></html>

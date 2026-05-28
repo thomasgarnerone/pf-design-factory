@@ -1,0 +1,45 @@
+/* Base for all preview cards.
+   Loads Oxygen tokens and sets default body typography to match
+   packages/core/src/style/base_style.css (Roboto, body-m). */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@600;700&display=swap');
+@import url('_tokens.css');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Oxygen uses 62.5% html font-size so 1rem = 10px. */
+html { font-size: 62.5%; }
+
+body {
+  font: var(--oxygen-font-semantic-body-m-regular);
+  color: var(--oxygen-color-semantic-common-prominent);
+  background: var(--oxygen-color-primitive-white);
+  padding: 2rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Small helpers used across cards. */
+.mono {
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-size: 1.1rem;
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+}
+.row  { display: flex; gap: 1.6rem; align-items: flex-start; flex-wrap: wrap; }
+.col  { display: flex; flex-direction: column; gap: 1.2rem; }
+.stack { display: flex; flex-direction: column; gap: 0.8rem; }
+.label {
+  font: var(--oxygen-font-semantic-body-xs-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.swatch {
+  border-radius: var(--oxygen-scale-semantic-radius-medium);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0.8rem; min-height: 6.4rem;
+}
+.swatch-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 1.1rem; font-weight: 600;
+}

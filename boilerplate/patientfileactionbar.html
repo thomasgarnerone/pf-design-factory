@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · PatientFileActionBar</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=13">
+<style>
+body{padding:3.2rem;max-width:120rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+.section > h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+
+/* Workspace shell */
+.demo-shell{display:flex;gap:0;border-radius:1.2rem;overflow:hidden;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);background:var(--oxygen-color-semantic-neutral-subtle-weaker);height:62rem}
+.action-bar{height:100%;overflow-y:auto;width:30rem;min-width:25rem;padding:1.6rem;background:var(--oxygen-color-semantic-neutral-subtle-weak);border-right:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);display:flex;flex-direction:column;gap:1.2rem}
+.demo-stage{flex:1;padding:2.4rem;display:flex;align-items:center;justify-content:center;color:var(--oxygen-color-semantic-neutral-prominent-weak);font-family:'JetBrains Mono',monospace;font-size:1.2rem}
+
+/* Card */
+.pcard{background:var(--oxygen-color-primitive-white);border-radius:var(--oxygen-scale-semantic-radius-large,1.2rem);padding:1.2rem;display:flex;flex-direction:column;gap:.4rem}
+.pcard__head{display:flex;align-items:center;gap:.8rem;padding:.4rem .4rem .8rem}
+.pcard__title{font:var(--oxygen-font-semantic-body-s-bold);color:var(--oxygen-color-semantic-neutral-prominent-strong);text-transform:uppercase;letter-spacing:.04em;flex:1}
+.pcard__count{font:var(--oxygen-font-semantic-body-xs-bold);background:var(--oxygen-color-semantic-neutral-subtle-base);color:var(--oxygen-color-semantic-neutral-prominent-strong);border-radius:99rem;min-width:1.8rem;height:1.8rem;padding:0 .5rem;display:inline-flex;align-items:center;justify-content:center}
+.pcard__count.is-danger{background:var(--oxygen-color-semantic-danger-prominent-base);color:#fff}
+.pcard__row{display:flex;align-items:center;gap:1rem;padding:.7rem .6rem;border-radius:.6rem;cursor:pointer;font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+.pcard__row:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.pcard__row svg{width:1.6rem;height:1.6rem;flex-shrink:0;color:var(--oxygen-color-semantic-neutral-prominent-base)}
+.pcard__row .meta{margin-left:auto;font:var(--oxygen-font-semantic-body-xs-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.pill{display:inline-flex;align-items:center;padding:.1rem .6rem;border-radius:.4rem;font:var(--oxygen-font-semantic-body-xs-bold);text-transform:uppercase;letter-spacing:.04em}
+.pill.warn{background:var(--oxygen-color-semantic-warning-subtle-weak);color:var(--oxygen-color-semantic-warning-prominent-strong)}
+.pill.success{background:var(--oxygen-color-semantic-positive-subtle-weak);color:var(--oxygen-color-semantic-positive-prominent-strong)}
+.pcard__cta{display:flex;align-items:center;gap:.8rem;padding:.7rem .6rem;border-radius:.6rem;color:var(--oxygen-color-semantic-brand-prominent-base);font:var(--oxygen-font-semantic-body-m-bold);cursor:pointer;background:transparent;border:none;text-align:left}
+.pcard__cta:hover{background:var(--oxygen-color-semantic-brand-subtle-weak)}
+.pcard__cta svg{width:1.6rem;height:1.6rem}
+.pcard.is-flow{background:linear-gradient(135deg,#E5F4ED,#F1F8FA);}
+.pcard.is-flow .pcard__row{background:rgba(255,255,255,.55)}
+.pcard.is-flow .pcard__row:hover{background:rgba(255,255,255,.85)}
+.pcard__inj{padding:.4rem .6rem;font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--oxygen-color-semantic-neutral-prominent-weak);border:.1rem dashed var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:.4rem;text-align:center}
+</style></head>
+<body>
+<h1>PatientFileActionBar</h1>
+<p class="lede">Pre-composed <code>&lt;ActionBar&gt;</code> for the patient file workspace. Wires together the eight contextual cards every patient file needs — flow, documents, billing, treatment, bookings, care cooperation, patient actions — plus a feature-host injection slot for product-line extensions.</p>
+<div class="note"><b>Composition, not a new component.</b> This is just an <code>&lt;ActionBar&gt;</code> with a fixed set of children imported from <code>@doctolib/pro-patient-file-v2-sdk</code>, <code>@doctolib/pro-financial-os-sdk</code>, and the <code>useFeatureHost</code> injection point <code>clinical:patient-file:action-bar</code>. Use this in the patient file shell; use plain <code>ActionBar</code> for any other workspace.</p>
+
+<div class="section"><h2>Live · in a patient file shell</h2>
+<div class="demo-shell">
+  <aside class="action-bar" role="navigation" aria-label="Patient file action bar">
+
+    <div class="pcard is-flow">
+      <div class="pcard__head"><span class="pcard__title">Patient flow</span></div>
+      <button class="pcard__row" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Waiting room
+        <span class="meta">14 min</span>
+      </button>
+      <button class="pcard__cta" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Start consultation
+      </button>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard__head">
+        <span class="pcard__title">Documents to sign</span>
+        <span class="pcard__count is-danger">2</span>
+      </div>
+      <button class="pcard__row" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        Care plan v3
+        <span class="pill warn">Pending</span>
+      </button>
+      <button class="pcard__row" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+        Consent form
+        <span class="pill warn">Pending</span>
+      </button>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard__head"><span class="pcard__title">Billing</span></div>
+      <button class="pcard__row" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        New invoice
+      </button>
+      <button class="pcard__row" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Payments <span class="meta">€ 240,00</span>
+      </button>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard__head">
+        <span class="pcard__title">Documents</span>
+        <span class="pcard__count">12</span>
+      </div>
+      <button class="pcard__row" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Upload
+      </button>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard__head"><span class="pcard__title">Treatment program</span></div>
+      <button class="pcard__row" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></svg>
+        Active program <span class="pill success">Week 4</span>
+      </button>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard__head"><span class="pcard__title">Bookings</span></div>
+      <button class="pcard__row" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Schedule appointment
+      </button>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard__head"><span class="pcard__title">Care cooperation</span></div>
+      <button class="pcard__row" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Refer to colleague
+      </button>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard__head"><span class="pcard__title">Patient actions</span></div>
+      <button class="pcard__row" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Send message
+      </button>
+      <button class="pcard__row" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c2.39 0 4.68.94 6.36 2.64"/></svg>
+        Mark as resolved
+      </button>
+    </div>
+
+    <div class="pcard__inj">// injections.getContentsFor('action-bar')</div>
+
+  </aside>
+  <div class="demo-stage">/* patient file content */</div>
+</div>
+</div>
+
+<div class="section"><h2>Composition map</h2>
+<table class="spec">
+<tr><td>1</td><td>&lt;PatientFlowCard&gt;</td><td>Live consultation state · waiting room timer · Start CTA</td></tr>
+<tr><td>2</td><td>&lt;DocumentsToSignCard&gt;</td><td>Pending signatures with danger count</td></tr>
+<tr><td>3</td><td>&lt;DeBilling.PatientFileActionBarGroup&gt;</td><td>DE-billing financial actions (recorder-scoped)</td></tr>
+<tr><td>4</td><td>&lt;DocumentsCard&gt;</td><td>Document library shortcuts</td></tr>
+<tr><td>5</td><td>&lt;TreatmentProgramActionsCard&gt;</td><td>Active program tracker (recorder-scoped)</td></tr>
+<tr><td>6</td><td>&lt;BookingActionsCard&gt;</td><td>Appointment booking shortcuts</td></tr>
+<tr><td>7</td><td>&lt;CareCooperationActionsCard&gt;</td><td>Referrals · external care team</td></tr>
+<tr><td>8</td><td>&lt;PatientActionsCard&gt;</td><td>Patient-targeted actions (message, mark, …)</td></tr>
+<tr><td>★</td><td>injections.getContentsFor('action-bar')</td><td>Feature-host injection slot</td></tr>
+</table></div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Source</td><td>packages/pro-patient-file/src/components/PatientFileActionBar.tsx</td></tr>
+<tr><td>Props</td><td>patientId: string · recorderId: number</td></tr>
+<tr><td>Wraps</td><td>&lt;ActionBar&gt; from @doctolib/global-ux/ActionBar</td></tr>
+<tr><td>Feature host</td><td>name: clinical:patient-file:action-bar · feature: clinical · injectionPoints: ['action-bar']</td></tr>
+<tr><td>Use when</td><td>Building the patient file workspace shell. Not for other surfaces.</td></tr>
+<tr><td>Story</td><td>&lt;Workspace actionBar={…}&gt; with &lt;StoryRouter&gt; (memory router)</td></tr>
+</table></div>
+
+</body></html>

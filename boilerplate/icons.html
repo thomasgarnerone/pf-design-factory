@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<title>Icons — Oxygen</title>
+<style>
+  :root{
+    --ink: #192634;
+    --body: #3A5978;
+    --hint: #6B91B8;
+    --line: #E4EDF6;
+    --line-2: #C9D9E8;
+    --blue: #107ACA;
+    --mono: 'Roboto Mono', ui-monospace, monospace;
+  }
+  body {
+    padding: 2.8rem 3.2rem;
+    font-family: Roboto, sans-serif;
+    color: var(--ink);
+    background: #F7FAFE;
+  }
+  .wrap { max-width: 138rem; }
+
+  .page-title {
+    font: 700 2.8rem/1.2 Montserrat, sans-serif;
+    margin: 0 0 0.4rem;
+  }
+  .page-sub {
+    font: 400 1.4rem/1.5 Roboto, sans-serif;
+    color: var(--body);
+    max-width: 92rem;
+    margin: 0 0 1.6rem;
+  }
+
+  .callout {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding: 1.2rem 1.4rem;
+    border-radius: 0.6rem;
+    background: #E7F6EE;
+    border: 1px solid #8FCDA9;
+    font: 400 1.25rem/1.5 Roboto, sans-serif;
+    color: #1F4D2F;
+    margin: 0 0 2.4rem;
+    max-width: 92rem;
+  }
+  .callout .dot {
+    flex: 0 0 auto;
+    width: 0.9rem; height: 0.9rem;
+    border-radius: 999px;
+    background: #2E8854;
+    margin-top: 0.5rem;
+  }
+  .callout b { color: #143822; }
+  .callout code {
+    font-family: var(--mono);
+    background: #CFE9DA;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.3rem;
+    color: #143822;
+  }
+
+  /* --- controls bar --- */
+  .controls {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 0.6rem;
+    margin: 0 0 2rem;
+    position: sticky;
+    top: 1rem;
+    z-index: 10;
+    box-shadow: 0 1px 2px rgba(5,43,71,0.04);
+  }
+  .search {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--line-2);
+    border-radius: 0.4rem;
+    background: #F7FAFE;
+    min-width: 20rem;
+  }
+  .search:focus-within { border-color: var(--blue); box-shadow: 0 0 0 0.2rem #107aca33; background:#fff; }
+  .search svg { width: 1.4rem; height: 1.4rem; color: var(--hint); flex: 0 0 auto; }
+  .search input {
+    flex: 1 1 auto;
+    border: 0; outline: 0; background: transparent;
+    font: 400 1.3rem/1.4 Roboto, sans-serif;
+    color: var(--ink);
+  }
+  .search input::placeholder { color: var(--hint); }
+
+  .seg {
+    display: inline-flex;
+    border: 1px solid var(--line-2);
+    border-radius: 0.4rem;
+    overflow: hidden;
+    background: #F7FAFE;
+  }
+  .seg button {
+    border: 0; background: transparent;
+    padding: 0.55rem 1rem;
+    font: 500 1.2rem/1 Roboto, sans-serif;
+    color: var(--body); cursor: pointer;
+  }
+  .seg button + button { border-left: 1px solid var(--line-2); }
+  .seg button.active { background: var(--blue); color: #fff; }
+  .seg button:hover:not(.active) { background: #E9F2FB; }
+
+  .count {
+    font: 500 1.2rem/1 var(--mono);
+    color: var(--hint);
+    padding: 0 0.4rem;
+    white-space: nowrap;
+  }
+
+  /* --- category sections --- */
+  .cat-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    margin: 3.2rem 0 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .cat-head:first-of-type { margin-top: 0; }
+  .cat-head h3 {
+    font: 600 1.15rem/1.4 Roboto, sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4B739B;
+    margin: 0;
+  }
+  .cat-head .cnt {
+    font: 500 1.1rem/1 var(--mono);
+    color: var(--hint);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: 0.8rem;
+  }
+
+  .cell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1.4rem 0.8rem 1rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+  }
+  .cell:hover {
+    border-color: var(--blue);
+    box-shadow: 0 2px 8px rgba(16,122,202,0.12);
+  }
+  .cell.copied {
+    border-color: #2E8854;
+    background: #F1FAF5;
+  }
+  .cell svg {
+    width: 2rem; height: 2rem;
+    color: var(--ink);
+    fill: currentColor;
+  }
+  .cell .name {
+    font: 500 1.05rem/1.25 Roboto, sans-serif;
+    color: var(--body);
+    text-align: center;
+    word-break: break-word;
+    max-width: 100%;
+  }
+  .cell .variant {
+    position: absolute;
+    top: 0.35rem; right: 0.4rem;
+    font: 500 0.85rem/1 var(--mono);
+    color: var(--hint);
+    letter-spacing: 0.05em;
+  }
+  .cell .copied-flag {
+    position: absolute;
+    inset: auto 0 -1.8rem 0;
+    text-align: center;
+    font: 500 1rem/1 Roboto, sans-serif;
+    color: #2E8854;
+    opacity: 0;
+    transition: opacity 120ms ease;
+  }
+  .cell.copied .copied-flag { opacity: 1; }
+
+  .empty {
+    padding: 4rem 2rem;
+    text-align: center;
+    font: 400 1.3rem/1.5 Roboto, sans-serif;
+    color: var(--hint);
+    background: #fff;
+    border: 1px dashed var(--line-2);
+    border-radius: 0.6rem;
+  }
+
+  .loading { padding: 2rem; color: var(--hint); font-family: var(--mono); font-size: 1.2rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1 class="page-title">Icons</h1>
+  <p class="page-sub">Curated Oxygen icon set — 128 of the most-used icons from the full <code>@doctolib/icons</code> package of 1,109. Each available in Regular and Solid weight.</p>
+
+  <div class="callout" role="note">
+    <span class="dot" aria-hidden="true"></span>
+    <div>
+      <b>Usage.</b> Import directly from the icons package — e.g. <code>import { CalendarRegularIcon } from '@doctolib/icons'</code>.
+      Icons are <code>currentColor</code>-aware (16×16 viewBox), so set colour via CSS. The full catalogue of 1,109 lives
+      in <code>packages/icons/src/generated-components/</code>; this explorer covers the ~12% seen most in real Oxygen UI.
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="search">
+      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-.76 3.273a4.75 4.75 0 1 1 .77-.78l2.94 2.95a.55.55 0 0 1-.76.79z"/></svg>
+      <input id="q" type="text" placeholder="Search 128 icons (calendar, user-doctor, heart, …)" autofocus>
+    </div>
+
+    <div class="seg" role="tablist" aria-label="Variant">
+      <button data-variant="both" class="active">Both</button>
+      <button data-variant="r">Regular</button>
+      <button data-variant="s">Solid</button>
+    </div>
+
+    <span class="count" id="count">0 / 0</span>
+  </div>
+
+  <div id="content" class="loading">Loading sprite…</div>
+</div>
+
+<script>
+(async () => {
+  const content = document.getElementById('content');
+  const countEl = document.getElementById('count');
+  const q = document.getElementById('q');
+
+  const CAT_LABELS = {
+    nav:     'Navigation & chrome',
+    status:  'Status & feedback',
+    action:  'Common actions',
+    time:    'Calendar & time',
+    comms:   'Communication',
+    media:   'Media & call',
+    files:   'Files & data',
+    people:  'People & patients',
+    medical: 'Medical',
+    misc:    'Miscellaneous'
+  };
+  const CAT_ORDER = ['nav','status','action','time','comms','media','files','people','medical','misc'];
+
+  // Load sprite
+  let sprite;
+  try {
+    const r = await fetch('_icon_sprite.json');
+    sprite = await r.json();
+  } catch (e) {
+    content.textContent = 'Failed to load icon sprite: ' + e.message;
+    return;
+  }
+
+  // Humanize base name
+  const humanize = s => s.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Z])([A-Z][a-z])/g, '$1 $2');
+
+  // Build full flat list [{base, variantKey, variantLabel, viewBox, paths, cat, search}]
+  const flat = [];
+  for (const b of sprite.bases) {
+    if (b.r) flat.push({ base: b.base, v: 'r', vLabel: 'R', viewBox: b.r.viewBox, paths: b.r.paths, cat: b.cat, compName: b.base + 'RegularIcon' });
+    if (b.s) flat.push({ base: b.base, v: 's', vLabel: 'S', viewBox: b.s.viewBox, paths: b.s.paths, cat: b.cat, compName: b.base + 'SolidIcon' });
+  }
+  for (const it of flat) {
+    it.display = humanize(it.base);
+    it.search = (it.base + ' ' + it.display + ' ' + it.compName).toLowerCase();
+  }
+
+  let state = { query: '', variant: 'both' };
+
+  function render() {
+    const qs = state.query.trim().toLowerCase();
+    const filtered = flat.filter(it => {
+      if (state.variant !== 'both' && it.v !== state.variant) return false;
+      if (qs && !it.search.includes(qs)) return false;
+      return true;
+    });
+
+    countEl.textContent = `${filtered.length} / ${flat.length}`;
+
+    if (!filtered.length) {
+      content.innerHTML = '<div class="empty">No icons match that query.</div>';
+      return;
+    }
+
+    // group by category
+    const byCat = {};
+    for (const it of filtered) (byCat[it.cat] ||= []).push(it);
+
+    let html = '';
+    for (const cat of CAT_ORDER) {
+      const items = byCat[cat];
+      if (!items || !items.length) continue;
+      html += `<div class="cat-head"><h3>${CAT_LABELS[cat]}</h3><span class="cnt">${items.length}</span></div>`;
+      html += '<div class="grid">';
+      for (const it of items) {
+        const svgPaths = it.paths.map(d => `<path d="${d.replace(/"/g,'&quot;')}"/>`).join('');
+        html += `<div class="cell" data-name="${it.compName}" title="${it.compName} — click to copy">
+          <span class="variant">${it.vLabel}</span>
+          <svg viewBox="${it.viewBox}" xmlns="http://www.w3.org/2000/svg">${svgPaths}</svg>
+          <span class="name">${it.display}</span>
+          <span class="copied-flag">copied ✓</span>
+        </div>`;
+      }
+      html += '</div>';
+    }
+    content.className = '';
+    content.innerHTML = html;
+
+    // wire click-to-copy
+    for (const cell of content.querySelectorAll('.cell')) {
+      cell.addEventListener('click', () => {
+        const name = cell.dataset.name;
+        navigator.clipboard.writeText(name).catch(() => {});
+        cell.classList.add('copied');
+        setTimeout(() => cell.classList.remove('copied'), 900);
+      });
+    }
+  }
+
+  q.addEventListener('input', () => { state.query = q.value; render(); });
+  document.querySelectorAll('.seg button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.seg button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      state.variant = b.dataset.variant;
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<title>Corner Radii — Oxygen</title>
+<style>
+  :root{
+    /* Primitives — from packages/tokens/src/tokens.css */
+    --oxygen-scale-primitive-gridUnit-x0_5: 0.4rem;
+    --oxygen-scale-primitive-gridUnit-x1:   0.8rem;
+    --oxygen-scale-primitive-gridUnit-x1_5: 1.2rem;
+    --oxygen-scale-primitive-gridUnit-x2:   1.6rem;
+    --oxygen-scale-primitive-gridUnit-x2_5: 2.0rem;
+    --oxygen-scale-primitive-gridUnit-x3:   2.4rem;
+    --oxygen-scale-primitive-gridUnit-x999: 99.9rem;
+
+    /* Semantic radius aliases — from tokens.css */
+    --oxygen-scale-semantic-radius-xsmall:  var(--oxygen-scale-primitive-gridUnit-x0_5);
+    --oxygen-scale-semantic-radius-small:   var(--oxygen-scale-primitive-gridUnit-x1);
+    --oxygen-scale-semantic-radius-medium:  var(--oxygen-scale-primitive-gridUnit-x1_5);
+    --oxygen-scale-semantic-radius-large:   var(--oxygen-scale-primitive-gridUnit-x2);
+    --oxygen-scale-semantic-radius-xlarge:  var(--oxygen-scale-primitive-gridUnit-x2_5);
+    --oxygen-scale-semantic-radius-xxlarge: var(--oxygen-scale-primitive-gridUnit-x3);
+    --oxygen-scale-semantic-radius-full:    var(--oxygen-scale-primitive-gridUnit-x999);
+
+    --ink: #192634;
+    --body: #3A5978;
+    --hint: #6B91B8;
+    --line: #E4EDF6;
+    --mono: 'Roboto Mono', ui-monospace, monospace;
+  }
+
+  body {
+    padding: 2.8rem 3.2rem;
+    font-family: Roboto, sans-serif;
+    color: var(--ink);
+    background: #F7FAFE;
+  }
+  .wrap { max-width: 118rem; }
+
+  .page-title {
+    font: 700 2.8rem/1.2 Montserrat, sans-serif;
+    margin: 0 0 0.4rem;
+  }
+  .page-sub {
+    font: 400 1.4rem/1.5 Roboto, sans-serif;
+    color: var(--body);
+    max-width: 76rem;
+    margin: 0 0 3.2rem;
+  }
+
+  h3.section {
+    font: 600 1.1rem/1.4 Roboto, sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4B739B;
+    margin: 4rem 0 1.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 0.1rem solid var(--line);
+  }
+  h3.section:first-of-type { margin-top: 0; }
+
+  /* confirmed-in-code callout */
+  .callout {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding: 1.2rem 1.4rem;
+    border-radius: 0.6rem;
+    background: #E7F6EE;
+    border: 1px solid #8FCDA9;
+    font: 400 1.25rem/1.5 Roboto, sans-serif;
+    color: #1F4D2F;
+    margin: 0 0 3rem;
+    max-width: 92rem;
+  }
+  .callout .dot {
+    flex: 0 0 auto;
+    width: 0.9rem; height: 0.9rem;
+    border-radius: 999px;
+    background: #2E8854;
+    margin-top: 0.5rem;
+  }
+  .callout b { color: #143822; }
+  .callout code {
+    font-family: var(--mono);
+    background: #CFE9DA;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.3rem;
+    color: #143822;
+  }
+
+  /* compare strip */
+  .compare-strip {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1.4rem;
+    padding: 4rem 2.4rem 4.4rem;
+    margin: 0 0 1rem;
+    background:
+      linear-gradient(#F7FAFE, #F7FAFE),
+      repeating-linear-gradient(0deg, rgba(25,38,52,0.04) 0 1px, transparent 1px 16px);
+    background-blend-mode: multiply;
+    border: 1px solid var(--line);
+    border-radius: 0.8rem;
+  }
+  .compare-tile {
+    background: #107ACA;
+    color: #fff;
+    height: 9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 700 1.3rem/1 Montserrat, sans-serif;
+    letter-spacing: 0.03em;
+    position: relative;
+  }
+  .compare-tile::before {
+    content: attr(data-step);
+    position: absolute;
+    top: -2.4rem; left: 50%; transform: translateX(-50%);
+    font: 600 0.9rem/1 var(--mono);
+    color: var(--hint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .compare-tile::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: -2.6rem; left: 50%; transform: translateX(-50%);
+    font: 400 1.1rem/1.3 var(--mono);
+    color: var(--body);
+    white-space: nowrap;
+  }
+  .compare-strip .compare-tile:nth-child(1) { border-radius: var(--oxygen-scale-semantic-radius-xsmall);  }
+  .compare-strip .compare-tile:nth-child(2) { border-radius: var(--oxygen-scale-semantic-radius-small);   }
+  .compare-strip .compare-tile:nth-child(3) { border-radius: var(--oxygen-scale-semantic-radius-medium);  }
+  .compare-strip .compare-tile:nth-child(4) { border-radius: var(--oxygen-scale-semantic-radius-large);   }
+  .compare-strip .compare-tile:nth-child(5) { border-radius: var(--oxygen-scale-semantic-radius-xlarge);  }
+  .compare-strip .compare-tile:nth-child(6) { border-radius: var(--oxygen-scale-semantic-radius-xxlarge); }
+  .compare-strip .compare-tile:nth-child(7) { border-radius: var(--oxygen-scale-semantic-radius-full);    }
+
+  /* per-token detail grid */
+  .grid {
+    display: grid;
+    grid-template-columns: 12rem 1fr 22rem 22rem;
+    column-gap: 2.4rem;
+    row-gap: 2.2rem;
+    align-items: center;
+  }
+  .swatch {
+    width: 10rem; height: 7rem;
+    background: #107ACA;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font: 700 1.3rem/1 Montserrat, sans-serif;
+    letter-spacing: 0.04em;
+  }
+  .semantic {
+    font-family: var(--mono);
+    font-size: 1.15rem;
+    line-height: 1.45;
+  }
+  .semantic .tname  { color: #107ACA; font-weight: 500; display: block; }
+  .semantic .tdesc  { color: var(--body); font-family: Roboto, sans-serif; font-size: 1.25rem; margin-top: 0.4rem; }
+  .primitive {
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: var(--hint);
+  }
+  .primitive .arrow { color: #8B5E34; font-style: italic; display:block; margin-bottom: 0.2rem; }
+  .primitive .pname { color: #5C7891; display: block; }
+  .primitive .pval  { color: var(--ink); font-weight: 500; display: block; }
+  .resolved {
+    font-family: var(--mono);
+    font-size: 1.3rem;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .resolved .small {
+    font-size: 1rem; color: var(--hint); font-weight: 400; display: block; margin-top: 0.2rem;
+  }
+
+  .legend {
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    color: var(--body);
+    max-width: 92rem;
+    line-height: 1.6;
+    margin: 0 0 2rem;
+  }
+  .legend b { color: var(--ink); font-weight: 700; font-family: Roboto, sans-serif; }
+  .legend code { background: #fff; border: 1px solid var(--line); padding: 0.1rem 0.4rem; border-radius: 0.3rem; color: #004080; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1 class="page-title">Corner Radii</h1>
+  <p class="page-sub">Seven semantic radius tokens, each aliased onto a grid-unit primitive.</p>
+
+  <div class="callout" role="note">
+    <span class="dot" aria-hidden="true"></span>
+    <div>
+      <b>Codified in the Oxygen codebase.</b> Defined in <code>packages/tokens/src/tokens.css</code> as
+      <code>--oxygen-scale-semantic-radius-*</code> — seven tokens, each aliased onto the
+      <code>--oxygen-scale-primitive-gridUnit-*</code> scale. Always reference the semantic name;
+      never hard-code a radius value.
+    </div>
+  </div>
+
+  <h3 class="section">At a glance</h3>
+  <p class="legend">Seven tokens on identical swatches, in order. Scan left→right to see the scale.</p>
+  <div class="compare-strip">
+    <div class="compare-tile" data-step="1" data-label="xsmall">XS</div>
+    <div class="compare-tile" data-step="2" data-label="small">S</div>
+    <div class="compare-tile" data-step="3" data-label="medium">M</div>
+    <div class="compare-tile" data-step="4" data-label="large">L</div>
+    <div class="compare-tile" data-step="5" data-label="xlarge">XL</div>
+    <div class="compare-tile" data-step="6" data-label="xxlarge">2XL</div>
+    <div class="compare-tile" data-step="7" data-label="full">full</div>
+  </div>
+
+  <h3 class="section">Per-token detail</h3>
+  <div class="grid">
+
+    <div class="swatch" style="border-radius: var(--oxygen-scale-semantic-radius-xsmall)">XS</div>
+    <div class="semantic">
+      <span class="tname">--oxygen-scale-semantic-radius-xsmall</span>
+      <span class="tdesc">Tight rounding on small chips, tags, inline flags.</span>
+    </div>
+    <div class="primitive">
+      <span class="arrow">→ alias of</span>
+      <span class="pname">--oxygen-scale-primitive-gridUnit-x0_5</span>
+      <span class="pval">0.4rem</span>
+    </div>
+    <div class="resolved">4 px<span class="small">at 10px base → 0.4rem</span></div>
+
+    <div class="swatch" style="border-radius: var(--oxygen-scale-semantic-radius-small)">S</div>
+    <div class="semantic">
+      <span class="tname">--oxygen-scale-semantic-radius-small</span>
+      <span class="tdesc">Default rounding for buttons, inputs, standard cards — the workhorse.</span>
+    </div>
+    <div class="primitive">
+      <span class="arrow">→ alias of</span>
+      <span class="pname">--oxygen-scale-primitive-gridUnit-x1</span>
+      <span class="pval">0.8rem</span>
+    </div>
+    <div class="resolved">8 px<span class="small">at 10px base → 0.8rem</span></div>
+
+    <div class="swatch" style="border-radius: var(--oxygen-scale-semantic-radius-medium)">M</div>
+    <div class="semantic">
+      <span class="tname">--oxygen-scale-semantic-radius-medium</span>
+      <span class="tdesc">Slightly softer surfaces — elevated cards, inline modules.</span>
+    </div>
+    <div class="primitive">
+      <span class="arrow">→ alias of</span>
+      <span class="pname">--oxygen-scale-primitive-gridUnit-x1_5</span>
+      <span class="pval">1.2rem</span>
+    </div>
+    <div class="resolved">12 px<span class="small">at 10px base → 1.2rem</span></div>
+
+    <div class="swatch" style="border-radius: var(--oxygen-scale-semantic-radius-large)">L</div>
+    <div class="semantic">
+      <span class="tname">--oxygen-scale-semantic-radius-large</span>
+      <span class="tdesc">Hero tiles, feature cards, banner modules.</span>
+    </div>
+    <div class="primitive">
+      <span class="arrow">→ alias of</span>
+      <span class="pname">--oxygen-scale-primitive-gridUnit-x2</span>
+      <span class="pval">1.6rem</span>
+    </div>
+    <div class="resolved">16 px<span class="small">at 10px base → 1.6rem</span></div>
+
+    <div class="swatch" style="border-radius: var(--oxygen-scale-semantic-radius-xlarge)">XL</div>
+    <div class="semantic">
+      <span class="tname">--oxygen-scale-semantic-radius-xlarge</span>
+      <span class="tdesc">Large media surfaces and modal sheets.</span>
+    </div>
+    <div class="primitive">
+      <span class="arrow">→ alias of</span>
+      <span class="pname">--oxygen-scale-primitive-gridUnit-x2_5</span>
+      <span class="pval">2.0rem</span>
+    </div>
+    <div class="resolved">20 px<span class="small">at 10px base → 2.0rem</span></div>
+
+    <div class="swatch" style="border-radius: var(--oxygen-scale-semantic-radius-xxlarge)">2XL</div>
+    <div class="semantic">
+      <span class="tname">--oxygen-scale-semantic-radius-xxlarge</span>
+      <span class="tdesc">Full-screen sheets, bottom drawers on mobile.</span>
+    </div>
+    <div class="primitive">
+      <span class="arrow">→ alias of</span>
+      <span class="pname">--oxygen-scale-primitive-gridUnit-x3</span>
+      <span class="pval">2.4rem</span>
+    </div>
+    <div class="resolved">24 px<span class="small">at 10px base → 2.4rem</span></div>
+
+    <div class="swatch" style="border-radius: var(--oxygen-scale-semantic-radius-full); width:11rem">full</div>
+    <div class="semantic">
+      <span class="tname">--oxygen-scale-semantic-radius-full</span>
+      <span class="tdesc">Pills, avatars, capsule buttons — any surface that should read as "round".</span>
+    </div>
+    <div class="primitive">
+      <span class="arrow">→ alias of</span>
+      <span class="pname">--oxygen-scale-primitive-gridUnit-x999</span>
+      <span class="pval">99.9rem</span>
+    </div>
+    <div class="resolved">999 px<span class="small">effectively infinite — always a capsule</span></div>
+
+  </div>
+
+</div>
+</body>
+</html>

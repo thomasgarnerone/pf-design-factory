@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<title>Pill — Oxygen dataDisplay/Pill</title>
+<style>
+  /* ====================================================================
+     1:1 reproduction of packages/core/src/dataDisplay/Pill/Pill.scss.
+     The scss defines ~50 LOCAL custom properties on .dl-pill that map to
+     semantic tokens; hex values below are resolved from
+     packages/tokens/src/colors/colorsHex.json → light.oxygen-color.semantic.*
+     ==================================================================== */
+
+  .dl-pill {
+    /* ---- text colours ------------------------------------ */
+    --oxygen-LOCAL-pill-neutral-color:  #294056; /* neutral-prominent-strong         */
+    --oxygen-LOCAL-pill-white-color:    #294056; /* neutral-prominent-strong         */
+    --oxygen-LOCAL-pill-primary-color:  #005780; /* informative-prominent-strong     */
+    --oxygen-LOCAL-pill-success-color:  #00806A; /* positive-prominent-base          */
+    --oxygen-LOCAL-pill-warning-color:  #794006; /* warning-prominent-strong         */
+    --oxygen-LOCAL-pill-error-color:    #A30036; /* danger-prominent-strong          */
+    --oxygen-LOCAL-pill-yellow-color:   #792306; /* alternative3-prominent-strong    */
+    --oxygen-LOCAL-pill-teal-color:     #32730D; /* alternative1-prominent-base      */
+    --oxygen-LOCAL-pill-purple-color:   #360679; /* alternative2-prominent-strong    */
+    --oxygen-LOCAL-pill-disabled-color: #A9BFD6; /* mute-prominent-weak              */
+
+    /* ---- resting background (subtle-weak) ---------------- */
+    --oxygen-LOCAL-pill-neutral-background:  #E4EDF6; /* neutral-subtle-weak          */
+    --oxygen-LOCAL-pill-white-background:    #FFFFFF; /* primitive.white              */
+    --oxygen-LOCAL-pill-primary-background:  #E5F9FF; /* informative-subtle-weak      */
+    --oxygen-LOCAL-pill-success-background:  #E8FDF9; /* positive-subtle-weak         */
+    --oxygen-LOCAL-pill-warning-background:  #FFF9E5; /* warning-subtle-weak          */
+    --oxygen-LOCAL-pill-error-background:    #FFF5F6; /* danger-subtle-weak           */
+    --oxygen-LOCAL-pill-yellow-background:   #FEF5F0; /* alternative3-subtle-weak     */
+    --oxygen-LOCAL-pill-teal-background:     #EEFEE7; /* alternative1-subtle-weak     */
+    --oxygen-LOCAL-pill-purple-background:   #FDF5FF; /* alternative2-subtle-weak     */
+    --oxygen-LOCAL-pill-disabled-background: #F1F7FE; /* mute-subtle-weak             */
+
+    /* ---- hover background (subtle-base / -strong) -------- */
+    --oxygen-LOCAL-pill-neutral-background-hover: #C9D9E8; /* neutral-subtle-base          */
+    --oxygen-LOCAL-pill-white-background-hover:   #E4EDF6; /* neutral-subtle-weak          */
+    --oxygen-LOCAL-pill-primary-background-hover: #CCF2FF; /* informative-subtle-base      */
+    --oxygen-LOCAL-pill-success-background-hover: #99FFEE; /* positive-subtle-strong       */
+    --oxygen-LOCAL-pill-warning-background-hover: #FFDD80; /* warning-subtle-strong        */
+    --oxygen-LOCAL-pill-error-background-hover:   #FFCCD0; /* danger-subtle-strong         */
+    --oxygen-LOCAL-pill-yellow-background-hover:  #FEEEE6; /* alternative3-subtle-base     */
+    --oxygen-LOCAL-pill-teal-background-hover:    #BDFA9E; /* alternative1-subtle-strong   */
+    --oxygen-LOCAL-pill-purple-background-hover:  #F9E5FF; /* alternative2-subtle-base     */
+
+    /* ---- active / pressed (subtle-stronger) -------------- */
+    --oxygen-LOCAL-pill-neutral-background-active: #6B91B8; /* neutral-subtle-stronger       */
+    --oxygen-LOCAL-pill-white-background-active:   #A9BFD6; /* neutral-subtle-strong         */
+    --oxygen-LOCAL-pill-primary-background-active: #00BFFF; /* informative-subtle-stronger   */
+    --oxygen-LOCAL-pill-success-background-active: #4DFFE1; /* positive-subtle-stronger      */
+    --oxygen-LOCAL-pill-warning-background-active: #FFCD4D; /* warning-subtle-stronger       */
+    --oxygen-LOCAL-pill-error-background-active:   #FF99A1; /* danger-subtle-stronger        */
+    --oxygen-LOCAL-pill-yellow-background-active:  #FCAB83; /* alternative3-subtle-stronger  */
+    --oxygen-LOCAL-pill-teal-background-active:    #A1E87D; /* alternative1-subtle-stronger  */
+    --oxygen-LOCAL-pill-purple-background-active:  #E599FF; /* alternative2-subtle-stronger  */
+
+    /* ---- selected (prominent-base / -strong) ------------- */
+    --oxygen-LOCAL-pill-selected-neutral-background: #294056; /* neutral-prominent-strong       */
+    --oxygen-LOCAL-pill-selected-white-background:   #294056; /* neutral-prominent-strong       */
+    --oxygen-LOCAL-pill-selected-primary-background: #007AB3; /* informative-prominent-base     */
+    --oxygen-LOCAL-pill-selected-success-background: #004D40; /* positive-prominent-strong      */
+    --oxygen-LOCAL-pill-selected-warning-background: #794006; /* warning-prominent-strong       */
+    --oxygen-LOCAL-pill-selected-error-background:   #A30036; /* danger-prominent-strong        */
+    --oxygen-LOCAL-pill-selected-yellow-background:  #792306; /* alternative3-prominent-strong  */
+    --oxygen-LOCAL-pill-selected-teal-background:    #2E5309; /* alternative1-prominent-strong  */
+    --oxygen-LOCAL-pill-selected-purple-background:  #360679; /* alternative2-prominent-strong  */
+
+    --oxygen-LOCAL-pill-selected-neutral-background-hover: #4B739B; /* neutral-prominent-weak         */
+    --oxygen-LOCAL-pill-selected-white-background-hover:   #4B739B; /* neutral-prominent-weak         */
+    --oxygen-LOCAL-pill-selected-primary-background-hover: #05A1DE; /* informative-prominent-weak     */
+    --oxygen-LOCAL-pill-selected-success-background-hover: #00806A; /* positive-prominent-base        */
+    --oxygen-LOCAL-pill-selected-warning-background-hover: #AA6709; /* warning-prominent-base         */
+    --oxygen-LOCAL-pill-selected-error-background-hover:   #E5004C; /* danger-prominent-base          */
+    --oxygen-LOCAL-pill-selected-yellow-background-hover:  #AD421F; /* alternative3-prominent-base    */
+    --oxygen-LOCAL-pill-selected-teal-background-hover:    #32730D; /* alternative1-prominent-base    */
+    --oxygen-LOCAL-pill-selected-purple-background-hover:  #7333CC; /* alternative2-prominent-base    */
+
+    --oxygen-LOCAL-pill-selected-color: #FFFFFF; /* primitive.white                              */
+    --oxygen-LOCAL-pill-iconWrapper-background: #FFFFFF;           /* primitive.white             */
+    --oxygen-LOCAL-pill-iconWrapper-background-disabled: #C9D9E8;  /* mute-subtle-strong          */
+  }
+
+  /* ==================================================================
+     BASE — .dl-pill wrapper + inner interactive surface
+     ================================================================== */
+  .dl-pill {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    outline: 0.1rem solid transparent; /* High contrast mode */
+  }
+  .dl-pill-surface {
+    display: inline-flex;
+    align-items: center;
+    height: fit-content;
+    border: 0;
+    border-radius: 99.9rem; /* dl-rounded-borders-lg → pill */
+    cursor: default;
+    box-sizing: border-box;
+    font-family: 'Roboto', -apple-system, sans-serif;
+    outline: none;
+  }
+  button.dl-pill-surface { cursor: pointer; }
+
+  /* sizes (dl-pill-{size}) — padding from Pill.scss */
+  .dl-pill-xsmall { padding: 0 0.4rem; }                  /* gridUnit * 0.5 */
+  .dl-pill-small  { padding: 0.4rem 0.8rem; }             /* 0.5g × 1g */
+  .dl-pill-medium { padding: 0.4rem 1.2rem; }             /* 0.5g × 1.5g */
+
+  /* font sizes (Body/S/Regular for medium, Body/XS/Regular otherwise) */
+  .dl-pill-surface.dl-pill-medium .dl-text { font: 400 1.4rem/2.4rem Roboto, sans-serif; }
+  .dl-pill-surface.dl-pill-small  .dl-text,
+  .dl-pill-surface.dl-pill-xsmall .dl-text { font: 400 1.2rem/1.6rem Roboto, sans-serif; }
+
+  /* extra right padding when deletable or right-icon present  */
+  .dl-pill-surface.dl-pill-deletable,
+  .dl-pill-surface.dl-pill-right-icon { padding-right: 3.6rem; }
+  .dl-pill-surface.dl-pill-deletable.dl-pill-small,
+  .dl-pill-surface.dl-pill-right-icon.dl-pill-small { padding-right: 2.4rem; }
+
+  /* left avatar adjustment */
+  .dl-pill-surface.dl-pill-has-avatar { padding-left: 0.4rem; gap: 0.6rem; }
+
+  /* icon / loader spacing (dl-margin-r-4 for small, -8 for medium) */
+  .dl-pill-surface.dl-pill-medium > .dl-icon,
+  .dl-pill-surface.dl-pill-medium > .dl-loader { margin-right: 0.8rem; }
+  .dl-pill-surface.dl-pill-small  > .dl-icon,
+  .dl-pill-surface.dl-pill-small  > .dl-loader { margin-right: 0.4rem; }
+
+  .dl-pill-surface > .dl-icon { display: inline-flex; align-items: center; }
+  .dl-pill-surface > .dl-icon.xxsmall svg { width: 1.2rem; height: 1.2rem; }
+  .dl-pill-surface > .dl-icon.xsmall  svg { width: 1.6rem; height: 1.6rem; }
+  .dl-pill-surface > .dl-icon svg { fill: currentColor; }
+
+  /* ==================================================================
+     COLOUR VARIANTS — base text + bg
+     ================================================================== */
+  .dl-pill-neutral-020 { color: var(--oxygen-LOCAL-pill-neutral-color); background-color: var(--oxygen-LOCAL-pill-neutral-background); }
+  .dl-pill-white       { color: var(--oxygen-LOCAL-pill-white-color);   background-color: var(--oxygen-LOCAL-pill-white-background); }
+  .dl-pill-primary-020 { color: var(--oxygen-LOCAL-pill-primary-color); background-color: var(--oxygen-LOCAL-pill-primary-background); }
+  .dl-pill-success-020 { color: var(--oxygen-LOCAL-pill-success-color); background-color: var(--oxygen-LOCAL-pill-success-background); }
+  .dl-pill-warning-020 { color: var(--oxygen-LOCAL-pill-warning-color); background-color: var(--oxygen-LOCAL-pill-warning-background); }
+  .dl-pill-error-020   { color: var(--oxygen-LOCAL-pill-error-color);   background-color: var(--oxygen-LOCAL-pill-error-background); }
+  .dl-pill-yellow-020  { color: var(--oxygen-LOCAL-pill-yellow-color);  background-color: var(--oxygen-LOCAL-pill-yellow-background); }
+  .dl-pill-teal-020    { color: var(--oxygen-LOCAL-pill-teal-color);    background-color: var(--oxygen-LOCAL-pill-teal-background); }
+  .dl-pill-purple-020  { color: var(--oxygen-LOCAL-pill-purple-color);  background-color: var(--oxygen-LOCAL-pill-purple-background); }
+  .dl-pill-disabled    { color: var(--oxygen-LOCAL-pill-disabled-color);background-color: var(--oxygen-LOCAL-pill-disabled-background); }
+
+  /* ==================================================================
+     INTERACTIVE — onClick present → button, dl-pill-interactive +
+                   dl-pill-clickable classes. box-shadow inset ring.
+     ================================================================== */
+  .dl-pill-clickable.dl-pill-neutral-020 { box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-neutral-background-hover); }
+  .dl-pill-clickable.dl-pill-white       { box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-white-background-hover); }
+  .dl-pill-clickable.dl-pill-primary-020 { box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-primary-background-hover); }
+  .dl-pill-clickable.dl-pill-success-020 { box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-success-background-hover); }
+  .dl-pill-clickable.dl-pill-warning-020 { box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-warning-background-hover); }
+  .dl-pill-clickable.dl-pill-error-020   { box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-error-background-hover); }
+  .dl-pill-clickable.dl-pill-yellow-020  { box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-yellow-background-hover); }
+  .dl-pill-clickable.dl-pill-teal-020    { box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-teal-background-hover); }
+  .dl-pill-clickable.dl-pill-purple-020  { box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-purple-background-hover); }
+
+  .dl-pill-clickable.dl-pill-neutral-020:hover { background-color: var(--oxygen-LOCAL-pill-neutral-background-hover); }
+  .dl-pill-clickable.dl-pill-white:hover       { background-color: var(--oxygen-LOCAL-pill-white-background-hover); }
+  .dl-pill-clickable.dl-pill-primary-020:hover { background-color: var(--oxygen-LOCAL-pill-primary-background-hover); }
+  .dl-pill-clickable.dl-pill-success-020:hover { background-color: var(--oxygen-LOCAL-pill-success-background-hover); }
+  .dl-pill-clickable.dl-pill-warning-020:hover { background-color: var(--oxygen-LOCAL-pill-warning-background-hover); }
+  .dl-pill-clickable.dl-pill-error-020:hover   { background-color: var(--oxygen-LOCAL-pill-error-background-hover); }
+  .dl-pill-clickable.dl-pill-yellow-020:hover  { background-color: var(--oxygen-LOCAL-pill-yellow-background-hover); }
+  .dl-pill-clickable.dl-pill-teal-020:hover    { background-color: var(--oxygen-LOCAL-pill-teal-background-hover); }
+  .dl-pill-clickable.dl-pill-purple-020:hover  { background-color: var(--oxygen-LOCAL-pill-purple-background-hover); }
+
+  .dl-pill-clickable.dl-pill-neutral-020:active { background-color: var(--oxygen-LOCAL-pill-neutral-background-active); }
+  .dl-pill-clickable.dl-pill-white:active       { background-color: var(--oxygen-LOCAL-pill-white-background-active); }
+  .dl-pill-clickable.dl-pill-primary-020:active { background-color: var(--oxygen-LOCAL-pill-primary-background-active); }
+  .dl-pill-clickable.dl-pill-success-020:active { background-color: var(--oxygen-LOCAL-pill-success-background-active); }
+  .dl-pill-clickable.dl-pill-warning-020:active { background-color: var(--oxygen-LOCAL-pill-warning-background-active); }
+  .dl-pill-clickable.dl-pill-error-020:active   { background-color: var(--oxygen-LOCAL-pill-error-background-active); }
+  .dl-pill-clickable.dl-pill-yellow-020:active  { background-color: var(--oxygen-LOCAL-pill-yellow-background-active); }
+  .dl-pill-clickable.dl-pill-teal-020:active    { background-color: var(--oxygen-LOCAL-pill-teal-background-active); }
+  .dl-pill-clickable.dl-pill-purple-020:active  { background-color: var(--oxygen-LOCAL-pill-purple-background-active); }
+
+  .dl-pill-clickable:focus-visible {
+    outline: 0.2rem solid #107ACA;
+    outline-offset: 0.2rem;
+  }
+
+  /* ==================================================================
+     SELECTED — aria-pressed=true, dl-pill-selected
+     ================================================================== */
+  .dl-pill-selected { color: var(--oxygen-LOCAL-pill-selected-color); }
+  .dl-pill-selected.dl-pill-neutral-020 { background-color: var(--oxygen-LOCAL-pill-selected-neutral-background); box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-selected-neutral-background-hover); }
+  .dl-pill-selected.dl-pill-white       { background-color: var(--oxygen-LOCAL-pill-selected-white-background);   box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-selected-white-background-hover); }
+  .dl-pill-selected.dl-pill-primary-020 { background-color: var(--oxygen-LOCAL-pill-selected-primary-background); box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-selected-primary-background-hover); }
+  .dl-pill-selected.dl-pill-success-020 { background-color: var(--oxygen-LOCAL-pill-selected-success-background); box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-selected-success-background-hover); }
+  .dl-pill-selected.dl-pill-warning-020 { background-color: var(--oxygen-LOCAL-pill-selected-warning-background); box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-selected-warning-background-hover); }
+  .dl-pill-selected.dl-pill-error-020   { background-color: var(--oxygen-LOCAL-pill-selected-error-background);   box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-selected-error-background-hover); }
+  .dl-pill-selected.dl-pill-yellow-020  { background-color: var(--oxygen-LOCAL-pill-selected-yellow-background);  box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-selected-yellow-background-hover); }
+  .dl-pill-selected.dl-pill-teal-020    { background-color: var(--oxygen-LOCAL-pill-selected-teal-background);    box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-selected-teal-background-hover); }
+  .dl-pill-selected.dl-pill-purple-020  { background-color: var(--oxygen-LOCAL-pill-selected-purple-background);  box-shadow: inset 0 0 0 0.1rem var(--oxygen-LOCAL-pill-selected-purple-background-hover); }
+
+  /* ==================================================================
+     DELETABLE / RIGHT-ICON BUTTON — the "inner" icon-button that
+     sits absolutely positioned inside the pill
+     ================================================================== */
+  .dl-pill-delete-button,
+  .dl-pill-right-icon-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0.4rem;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 99.9rem;
+  }
+  .dl-pill-delete-button.dl-icon-button-xxsmall,
+  .dl-pill-right-icon-button.dl-icon-button-xxsmall { min-width: 1.6rem; height: 1.6rem; right: 0.4rem; }
+
+  .dl-pill-delete-button .dl-icon-wrapper,
+  .dl-pill-right-icon-button .dl-icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 99.9rem;
+    background-color: var(--oxygen-LOCAL-pill-iconWrapper-background);
+  }
+  .dl-pill-delete-button[disabled] .dl-icon-wrapper,
+  .dl-pill-right-icon-button[disabled] .dl-icon-wrapper {
+    background-color: var(--oxygen-LOCAL-pill-iconWrapper-background-disabled);
+  }
+  .dl-pill-delete-button .dl-icon-wrapper svg,
+  .dl-pill-right-icon-button .dl-icon-wrapper svg { width: 1.4rem; height: 1.4rem; fill: currentColor; }
+  .dl-pill-delete-button.dl-icon-button-xxsmall .dl-icon-wrapper svg,
+  .dl-pill-right-icon-button.dl-icon-button-xxsmall .dl-icon-wrapper svg { width: 1rem; height: 1rem; }
+
+  /* ==================================================================
+     NOTIFICATION badge overlay — pill.tsx mounts a <Badge size=small>
+     with className dl-notification, positioned top-right
+     ================================================================== */
+  .dl-pill .dl-notification {
+    position: absolute;
+    right: -0.4rem;
+    top: -0.4rem;
+    box-shadow: 0 0 0 0.2rem #fff;
+    z-index: 1;
+  }
+
+  /* ==================================================================
+     Notification badge (minimal reproduction of the size=small error Badge)
+     ================================================================== */
+  .dl-notification-badge {
+    display: inline-flex; justify-content: center; align-items: center;
+    padding: 0 0.4rem; height: 2rem; min-width: 2rem;
+    border-radius: 1rem;
+    background: #E5004C; color: #fff;
+    font: 700 1.2rem/1.6rem Roboto, sans-serif;
+  }
+
+  /* ==================================================================
+     Tooltip — Oxygen Tooltip component (dataDisplay/Tooltip).
+     Dark surface, white label, 0.4rem radius, 0.4rem × 0.8rem padding,
+     Body/XS/Regular, appears above the anchor with a 6px arrow.
+     ================================================================== */
+  /* The anchor sits on the inner IconButton (already absolutely positioned
+     inside the pill). We tether the tooltip to that button so it appears
+     centered above it, not above the whole pill. */
+  .dl-pill-delete-button.dl-tooltip-anchor,
+  .dl-pill-right-icon-button.dl-tooltip-anchor { overflow: visible; }
+  .dl-pill-delete-button.dl-tooltip-anchor:hover > .dl-tooltip,
+  .dl-pill-right-icon-button.dl-tooltip-anchor:hover > .dl-tooltip,
+  .dl-pill-delete-button.dl-tooltip-anchor:focus-visible > .dl-tooltip,
+  .dl-pill-right-icon-button.dl-tooltip-anchor:focus-visible > .dl-tooltip,
+  .dl-pill.dl-tooltip-anchor:hover > .dl-tooltip { opacity: 1; transform: translate(-50%, -0.8rem); }
+  .dl-tooltip {
+    position: absolute;
+    bottom: 100%; left: 50%;
+    transform: translate(-50%, -0.4rem);
+    background: #192634;
+    color: #FFFFFF;
+    font: 400 1.2rem/1.6rem Roboto, sans-serif;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.4rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.12s, transform 0.12s;
+    z-index: 10;
+    box-shadow: 0 0.2rem 0.6rem rgba(41,64,86,.18);
+  }
+  .dl-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 0.5rem solid transparent;
+    border-top-color: #192634;
+  }
+  /* pills page: force-shown tooltips for illustration */
+  .dl-tooltip-anchor.is-shown > .dl-tooltip { opacity: 1; transform: translate(-50%, -0.8rem); }
+
+  /* ==================================================================
+     Avatar slot
+     ================================================================== */
+  .dl-pill-avatar {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 99.9rem;
+    background: #D6E4F2;
+    color: #0E4877;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font: 600 1.1rem/1 Roboto, sans-serif;
+    flex: none;
+  }
+
+  /* ==================================================================
+     PAGE CHROME
+     ================================================================== */
+  body { padding: 2.4rem 2.8rem; font-family: 'Roboto', sans-serif; background: #FFFFFF; }
+  .header {
+    font: 600 1.1rem/1.4 Roboto, sans-serif;
+    color: #3A5978;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.6rem;
+  }
+  .legend {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 1.1rem; color: #3A5978; line-height: 1.6;
+    margin-bottom: 2rem; max-width: 96rem;
+  }
+  .legend code { background: #F1F7FE; padding: 0.1rem 0.4rem; border-radius: 0.3rem; color: #004080; }
+  .legend b { color: #192634; }
+
+  .section + .section { margin-top: 2.8rem; }
+  .section-title {
+    font: 600 1.1rem/1.4 Roboto, sans-serif;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: #4B739B;
+    margin-bottom: 1.2rem; padding-bottom: 0.6rem;
+    border-bottom: 0.1rem solid #E4EDF6;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    column-gap: 2rem;
+    row-gap: 1.2rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .row-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 1.1rem; color: #4B739B;
+  }
+  .row-items {
+    display: flex; align-items: center;
+    gap: 1.2rem; flex-wrap: wrap;
+  }
+  .token-caption {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 1rem; color: #6B91B8;
+  }
+
+  /* State matrix — compact grid for the 9×3 colour × state table */
+  .state-grid {
+    display: grid;
+    grid-template-columns: 14rem repeat(4, 1fr);
+    gap: 1rem 1.6rem;
+    align-items: center;
+    max-width: 86rem;
+  }
+  .state-grid .col-head {
+    font: 500 1rem/1.4 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #6B91B8;
+  }
+  .state-grid .row-head {
+    font: 500 1.1rem/1.4 'JetBrains Mono', monospace;
+    color: #3A5978;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">dataDisplay / Pill</div>
+<p class="legend">
+  <b>&lt;Pill /&gt;</b> · recreation of
+  <code>packages/core/src/dataDisplay/Pill/Pill.scss</code> &amp; <code>Pill.tsx</code>.
+  A <b>tag / filter chip / selection chip</b>. Props: <code>color</code> (9),
+  <code>size</code> (3), <code>selected</code>, <code>disabled</code>,
+  <code>iconName</code>, <code>avatar</code>, <code>onDelete</code>,
+  <code>rightIconName + onRightIconClick</code>, <code>notificationCount</code>,
+  <code>loader</code>. When <code>onClick</code> is set it renders as <code>&lt;button&gt;</code>
+  and toggles <code>dl-pill-interactive + dl-pill-clickable</code> — gaining the inset
+  ring + hover / active / focus states from the scss.
+  Label font is <code>Body/S/Regular</code> on <code>medium</code>, else <code>Body/XS/Regular</code>.
+</p>
+
+<!-- =========================================================
+     color — 9 variants from PillColor union
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">color · 9 variants  <span style="font-weight:400;text-transform:none;color:#6B91B8">· default = 'neutral-020'</span></div>
+
+  <div class="row">
+    <div class="row-label">neutral-020 <span style="color:#A9BFD6">(default)</span></div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-neutral-020"><span class="dl-text">General</span></span></span>
+      <span class="token-caption">fg neutral-prominent-strong · bg neutral-subtle-weak</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">primary-020</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-primary-020"><span class="dl-text">Information</span></span></span>
+      <span class="token-caption">fg informative-prominent-strong · bg informative-subtle-weak</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">success-020</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-success-020"><span class="dl-text">Confirmed</span></span></span>
+      <span class="token-caption">fg positive-prominent-base · bg positive-subtle-weak</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">warning-020</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-warning-020"><span class="dl-text">Pending</span></span></span>
+      <span class="token-caption">fg warning-prominent-strong · bg warning-subtle-weak</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">error-020</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-error-020"><span class="dl-text">Cancelled</span></span></span>
+      <span class="token-caption">fg danger-prominent-strong · bg danger-subtle-weak</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">yellow-020</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-yellow-020"><span class="dl-text">Draft</span></span></span>
+      <span class="token-caption">fg alternative3-prominent-strong · bg alternative3-subtle-weak</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">teal-020</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-teal-020"><span class="dl-text">Telehealth</span></span></span>
+      <span class="token-caption">fg alternative1-prominent-base · bg alternative1-subtle-weak</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">purple-020</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-purple-020"><span class="dl-text">Referral</span></span></span>
+      <span class="token-caption">fg alternative2-prominent-strong · bg alternative2-subtle-weak</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">white</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-white"><span class="dl-text">Card chip</span></span></span>
+      <span class="token-caption">fg neutral-prominent-strong · bg white (on surface)</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     size — PillSize = 'xsmall' | 'small' | 'medium'
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">size · xsmall / small / medium  <span style="font-weight:400;text-transform:none;color:#6B91B8">· default = 'medium'. xsmall cannot be clickable or have an icon.</span></div>
+
+  <div class="row">
+    <div class="row-label">medium <span style="color:#A9BFD6">(default)</span></div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-primary-020"><span class="dl-text">Label medium</span></span></span>
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-success-020"><span class="dl-text">Body/S/Regular</span></span></span>
+      <span class="token-caption">padding 0.4 × 1.2rem · 14/24 label</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">small</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-small dl-pill-primary-020"><span class="dl-text">Label small</span></span></span>
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-small dl-pill-warning-020"><span class="dl-text">Body/XS/Regular</span></span></span>
+      <span class="token-caption">padding 0.4 × 0.8rem · 12/16 label</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">xsmall</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-xsmall dl-pill-neutral-020"><span class="dl-text">xs</span></span></span>
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-xsmall dl-pill-teal-020"><span class="dl-text">tag</span></span></span>
+      <span class="token-caption">padding 0 × 0.4rem · 12/16 label · non-interactive only</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     Interactive states — hover / active / focus / selected
+     (static renderings using the same classes the scss switches on)
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">interactive · hover · active · focus · selected  <span style="font-weight:400;text-transform:none;color:#6B91B8">· applied when <code style="font-family:'JetBrains Mono',monospace">onClick</code> is set</span></div>
+
+  <div class="state-grid">
+    <div></div>
+    <div class="col-head">rest</div>
+    <div class="col-head">hover</div>
+    <div class="col-head">active</div>
+    <div class="col-head">selected</div>
+
+    <div class="row-head">primary-020</div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-primary-020 dl-pill-clickable"><span class="dl-text">Filter</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-primary-020 dl-pill-clickable" style="background: var(--oxygen-LOCAL-pill-primary-background-hover)"><span class="dl-text">Filter</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-primary-020 dl-pill-clickable" style="background: var(--oxygen-LOCAL-pill-primary-background-active)"><span class="dl-text">Filter</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-primary-020 dl-pill-selected"><span class="dl-text">Filter</span></button></div>
+
+    <div class="row-head">success-020</div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-success-020 dl-pill-clickable"><span class="dl-text">Confirmed</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-success-020 dl-pill-clickable" style="background: var(--oxygen-LOCAL-pill-success-background-hover)"><span class="dl-text">Confirmed</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-success-020 dl-pill-clickable" style="background: var(--oxygen-LOCAL-pill-success-background-active)"><span class="dl-text">Confirmed</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-success-020 dl-pill-selected"><span class="dl-text">Confirmed</span></button></div>
+
+    <div class="row-head">warning-020</div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-warning-020 dl-pill-clickable"><span class="dl-text">Pending</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-warning-020 dl-pill-clickable" style="background: var(--oxygen-LOCAL-pill-warning-background-hover)"><span class="dl-text">Pending</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-warning-020 dl-pill-clickable" style="background: var(--oxygen-LOCAL-pill-warning-background-active)"><span class="dl-text">Pending</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-warning-020 dl-pill-selected"><span class="dl-text">Pending</span></button></div>
+
+    <div class="row-head">error-020</div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-error-020 dl-pill-clickable"><span class="dl-text">Cancelled</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-error-020 dl-pill-clickable" style="background: var(--oxygen-LOCAL-pill-error-background-hover)"><span class="dl-text">Cancelled</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-error-020 dl-pill-clickable" style="background: var(--oxygen-LOCAL-pill-error-background-active)"><span class="dl-text">Cancelled</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-error-020 dl-pill-selected"><span class="dl-text">Cancelled</span></button></div>
+
+    <div class="row-head">neutral-020</div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-neutral-020 dl-pill-clickable"><span class="dl-text">General</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-neutral-020 dl-pill-clickable" style="background: var(--oxygen-LOCAL-pill-neutral-background-hover)"><span class="dl-text">General</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-neutral-020 dl-pill-clickable" style="background: var(--oxygen-LOCAL-pill-neutral-background-active)"><span class="dl-text">General</span></button></div>
+    <div><button class="dl-pill-surface dl-pill-medium dl-pill-neutral-020 dl-pill-selected"><span class="dl-text">General</span></button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     disabled
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">disabled</div>
+
+  <div class="row">
+    <div class="row-label">disabled</div>
+    <div class="row-items">
+      <button class="dl-pill-surface dl-pill-medium dl-pill-disabled" disabled><span class="dl-text">Unavailable</span></button>
+      <button class="dl-pill-surface dl-pill-small dl-pill-disabled" disabled><span class="dl-text">Unavailable</span></button>
+      <span class="token-caption">colour pair uses mute-prominent-weak · mute-subtle-weak · cursor not-allowed</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     Icon + right icon + deletable
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">iconName · rightIconName + onRightIconClick · onDelete</div>
+
+  <div class="row">
+    <div class="row-label">left icon</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-primary-020">
+        <span class="dl-icon xsmall"><svg viewBox="0 0 16 16"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm.75 3.75v4l2.75 1.5-.5 1-3.25-1.75V4.75h1z"/></svg></span>
+        <span class="dl-text">Video consult</span>
+      </span></span>
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-small dl-pill-success-020">
+        <span class="dl-icon xxsmall"><svg viewBox="0 0 16 16"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg></span>
+        <span class="dl-text">Verified</span>
+      </span></span>
+      <span class="token-caption">margin-right 0.8rem (medium) / 0.4rem (small)</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">right icon</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-primary-020 dl-pill-right-icon">
+        <span class="dl-text">Sort by</span>
+        <button class="dl-pill-right-icon-button" aria-label="Change sort">
+          <span class="dl-icon-wrapper"><svg viewBox="0 0 16 16"><path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 0 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06z"/></svg></span>
+        </button>
+      </span></span>
+      <span class="token-caption">right padding shifts to 3.6rem · inner IconButton in a white circle</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">deletable</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-neutral-020 dl-pill-deletable">
+        <span class="dl-text">Specialty: GP</span>
+        <button class="dl-pill-delete-button" aria-label="Remove filter">
+          <span class="dl-icon-wrapper"><svg viewBox="0 0 16 16"><path d="M4.28 4.28a.75.75 0 0 1 1.06 0L8 6.94l2.66-2.66a.75.75 0 1 1 1.06 1.06L9.06 8l2.66 2.66a.75.75 0 1 1-1.06 1.06L8 9.06l-2.66 2.66a.75.75 0 1 1-1.06-1.06L6.94 8 4.28 5.34a.75.75 0 0 1 0-1.06z"/></svg></span>
+        </button>
+      </span></span>
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-small dl-pill-primary-020 dl-pill-deletable">
+        <span class="dl-text">Paris 14e</span>
+        <button class="dl-pill-delete-button dl-icon-button-xxsmall" aria-label="Remove filter">
+          <span class="dl-icon-wrapper"><svg viewBox="0 0 16 16"><path d="M4.28 4.28a.75.75 0 0 1 1.06 0L8 6.94l2.66-2.66a.75.75 0 1 1 1.06 1.06L9.06 8l2.66 2.66a.75.75 0 1 1-1.06 1.06L8 9.06l-2.66 2.66a.75.75 0 1 1-1.06-1.06L6.94 8 4.28 5.34a.75.75 0 0 1 0-1.06z"/></svg></span>
+        </button>
+      </span></span>
+      <span class="token-caption">xmark-large inside white circle · tooltip = onDeleteTooltip || deleteIconAriaLabel</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     Avatar + notificationCount (embeds Badge size=small)
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">avatar · notificationCount</div>
+
+  <div class="row">
+    <div class="row-label">avatar</div>
+    <div class="row-items">
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-neutral-020 dl-pill-has-avatar">
+        <span class="dl-pill-avatar">MD</span>
+        <span class="dl-text">Dr Marie Dubois</span>
+      </span></span>
+      <span class="dl-pill"><span class="dl-pill-surface dl-pill-medium dl-pill-primary-020 dl-pill-has-avatar">
+        <span class="dl-pill-avatar" style="background:#CCE0F4;color:#004080">JL</span>
+        <span class="dl-text">Jean-Luc Martin</span>
+      </span></span>
+      <span class="token-caption">avatar only on size=medium · padding-left reduces to 0.4rem</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">notificationCount</div>
+    <div class="row-items">
+      <span class="dl-pill">
+        <span class="dl-pill-surface dl-pill-medium dl-pill-neutral-020"><span class="dl-text">Messages</span></span>
+        <span class="dl-notification dl-notification-badge">5</span>
+      </span>
+      <span class="dl-pill">
+        <span class="dl-pill-surface dl-pill-medium dl-pill-primary-020"><span class="dl-text">Appointments</span></span>
+        <span class="dl-notification dl-notification-badge">99+</span>
+      </span>
+      <span class="token-caption">mounts a <code style="font-family:'JetBrains Mono',monospace">&lt;Badge size='small'&gt;</code> absolute top-right</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     Interactive combinations — clickable + notification, + tooltips
+     validatePillUsage allows:   onClick + notificationCount ✓
+                                 onClick + onDelete ✓
+                                 onClick + rightIcon ✓
+                                 tooltip on rightIcon / onDelete ✓
+     validatePillUsage forbids:  rightIcon + notificationCount ✗
+                                 onDelete + rightIcon ✗
+                                 xsmall + onClick ✗ (size restriction)
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">interactive + notificationCount  <span style="font-weight:400;text-transform:none;color:#6B91B8">· onClick sets &lt;button&gt;; badge sits absolute top-right with a 2px white ring</span></div>
+
+  <div class="row">
+    <div class="row-label">clickable + badge</div>
+    <div class="row-items">
+      <span class="dl-pill">
+        <button class="dl-pill-surface dl-pill-medium dl-pill-neutral-020 dl-pill-clickable"><span class="dl-text">Inbox</span></button>
+        <span class="dl-notification dl-notification-badge">3</span>
+      </span>
+      <span class="dl-pill">
+        <button class="dl-pill-surface dl-pill-medium dl-pill-primary-020 dl-pill-clickable"><span class="dl-text">Appointments</span></button>
+        <span class="dl-notification dl-notification-badge">12</span>
+      </span>
+      <span class="dl-pill">
+        <button class="dl-pill-surface dl-pill-medium dl-pill-error-020 dl-pill-clickable"><span class="dl-text">Unpaid invoices</span></button>
+        <span class="dl-notification dl-notification-badge">99+</span>
+      </span>
+      <span class="token-caption">button behaviour + inset ring + hover/active · badge overlays on top-right</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">selected + badge</div>
+    <div class="row-items">
+      <span class="dl-pill">
+        <button class="dl-pill-surface dl-pill-medium dl-pill-primary-020 dl-pill-selected" aria-pressed="true"><span class="dl-text">Messages</span></button>
+        <span class="dl-notification dl-notification-badge">5</span>
+      </span>
+      <span class="dl-pill">
+        <button class="dl-pill-surface dl-pill-medium dl-pill-neutral-020 dl-pill-selected" aria-pressed="true"><span class="dl-text">Tasks</span></button>
+        <span class="dl-notification dl-notification-badge">8</span>
+      </span>
+      <span class="token-caption">aria-pressed=true toggles selected surface · badge still renders</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">with left icon</div>
+    <div class="row-items">
+      <span class="dl-pill">
+        <button class="dl-pill-surface dl-pill-medium dl-pill-primary-020 dl-pill-clickable">
+          <span class="dl-icon xsmall"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 14.4A6.4 6.4 0 1 0 8 1.6a6.4 6.4 0 0 0 0 12.8m0-7.793a1.084 1.084 0 1 1 0-2.168 1.084 1.084 0 0 1 0 2.168m1.135 4.696h-2.27a.31.31 0 0 1-.31-.31v-.619a.31.31 0 0 1 .31-.31h.31v-1.65h-.31a.31.31 0 0 1-.31-.31v-.619a.31.31 0 0 1 .31-.31h1.651a.31.31 0 0 1 .31.31v2.58h.31a.31.31 0 0 1 .31.31v.62a.31.31 0 0 1-.31.31z"/></svg></span>
+          <span class="dl-text">Notifications</span>
+        </button>
+        <span class="dl-notification dl-notification-badge">7</span>
+      </span>
+      <span class="token-caption">iconName + onClick + notificationCount · all three compose</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">tooltip · onDeleteTooltip · rightIconTooltip  <span style="font-weight:400;text-transform:none;color:#6B91B8">· the inner IconButton receives <code style="font-family:'JetBrains Mono',monospace">tooltip</code>, rendering the Oxygen &lt;Tooltip&gt; on hover / focus</span></div>
+
+  <div class="row">
+    <div class="row-label">onDeleteTooltip</div>
+    <div class="row-items">
+      <span class="dl-pill">
+        <span class="dl-pill-surface dl-pill-medium dl-pill-neutral-020 dl-pill-deletable">
+          <span class="dl-text">Specialty: GP</span>
+          <button class="dl-pill-delete-button dl-tooltip-anchor is-shown" aria-label="Remove filter">
+            <span class="dl-icon-wrapper"><svg viewBox="0 0 16 16"><path d="M13.022 11.984a.724.724 0 0 1 0 1.055.73.73 0 0 1-.515.211.74.74 0 0 1-.539-.211L8.028 9.06l-3.943 3.98a.73.73 0 0 1-.515.211.74.74 0 0 1-.538-.211.724.724 0 0 1 0-1.055L6.95 7.98 2.978 4.034a.724.724 0 0 1 0-1.055.72.72 0 0 1 1.054 0l3.995 3.947 3.941-3.947a.72.72 0 0 1 1.054 0 .724.724 0 0 1 0 1.055L9.08 8.004z"/></svg></span>
+            <span class="dl-tooltip">Remove filter</span>
+          </button>
+        </span>
+      </span>
+      <span class="dl-pill">
+        <span class="dl-pill-surface dl-pill-medium dl-pill-primary-020 dl-pill-deletable">
+          <span class="dl-text">Paris 14e</span>
+          <button class="dl-pill-delete-button dl-tooltip-anchor" aria-label="Remove filter">
+            <span class="dl-icon-wrapper"><svg viewBox="0 0 16 16"><path d="M13.022 11.984a.724.724 0 0 1 0 1.055.73.73 0 0 1-.515.211.74.74 0 0 1-.539-.211L8.028 9.06l-3.943 3.98a.73.73 0 0 1-.515.211.74.74 0 0 1-.538-.211.724.724 0 0 1 0-1.055L6.95 7.98 2.978 4.034a.724.724 0 0 1 0-1.055.72.72 0 0 1 1.054 0l3.995 3.947 3.941-3.947a.72.72 0 0 1 1.054 0 .724.724 0 0 1 0 1.055L9.08 8.004z"/></svg></span>
+            <span class="dl-tooltip">Clear location</span>
+          </button>
+        </span>
+      </span>
+      <span class="token-caption">hover / focus inner button → tooltip · falls back to deleteIconAriaLabel / i18n &ldquo;Delete&rdquo;</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">rightIconTooltip</div>
+    <div class="row-items">
+      <span class="dl-pill">
+        <span class="dl-pill-surface dl-pill-medium dl-pill-primary-020 dl-pill-right-icon">
+          <span class="dl-text">Sort by date</span>
+          <button class="dl-pill-right-icon-button dl-tooltip-anchor is-shown" aria-label="Change sort">
+            <span class="dl-icon-wrapper"><svg viewBox="0 0 16 16"><path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 0 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06z"/></svg></span>
+            <span class="dl-tooltip">Change sort order</span>
+          </button>
+        </span>
+      </span>
+      <span class="dl-pill">
+        <span class="dl-pill-surface dl-pill-medium dl-pill-warning-020 dl-pill-right-icon">
+          <span class="dl-text">Draft · edit</span>
+          <button class="dl-pill-right-icon-button dl-tooltip-anchor" aria-label="Edit draft">
+            <span class="dl-icon-wrapper"><svg viewBox="0 0 16 16"><path d="M11.3 2.2a1 1 0 0 1 1.4 0l1.1 1.1a1 1 0 0 1 0 1.4L6 12.5l-3 .5.5-3L11.3 2.2z"/></svg></span>
+            <span class="dl-tooltip">Open in editor</span>
+          </button>
+        </span>
+      </span>
+      <span class="token-caption">rightIconTooltip || rightIconAriaLabel · required when onRightIconClick is set</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">whole pill tooltip</div>
+    <div class="row-items">
+      <span class="dl-pill dl-tooltip-anchor">
+        <button class="dl-pill-surface dl-pill-medium dl-pill-neutral-020 dl-pill-clickable">
+          <span class="dl-text">Dr M. Dubois</span>
+        </button>
+        <span class="dl-tooltip">General practitioner · Paris 14e</span>
+      </span>
+      <span class="token-caption">wrap the pill in a Tooltip when the label is truncated (ellipsis) or needs context</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     Constraints — validatePillUsage() from Pill.tsx
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">constraints  <span style="font-weight:400;text-transform:none;color:#6B91B8">· emitted by <code style="font-family:'JetBrains Mono',monospace">validatePillUsage()</code></span></div>
+  <ul style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.1rem;color:#3A5978;line-height:1.9;list-style:none;padding:0;margin:0">
+    <li>✗ <b style="color:#192634">xsmall + clickable</b> — xsmall cannot be interactive</li>
+    <li>✗ <b style="color:#192634">xsmall + iconName</b> — xsmall cannot have a left icon</li>
+    <li>✗ <b style="color:#192634">avatar + iconName</b> — mutually exclusive</li>
+    <li>✗ <b style="color:#192634">avatar on size ≠ medium</b> — avatar only valid on medium</li>
+    <li>✗ <b style="color:#192634">onDelete + rightIconName</b> — only one right-side action</li>
+    <li>✗ <b style="color:#192634">rightIcon + notificationCount</b> — badge replaces the right-side slot</li>
+    <li>✗ <b style="color:#192634">notificationCount on size ≠ medium</b> — only medium supports the badge</li>
+    <li>✗ <b style="color:#192634">rightIconName without rightIconAriaLabel</b> — aria-label required</li>
+    <li>✓ <b style="color:#192634">onClick + notificationCount</b> — button pill with badge ✓</li>
+    <li>✓ <b style="color:#192634">onClick + onDelete</b> — clickable pill with delete ✓</li>
+    <li>✓ <b style="color:#192634">onDeleteTooltip / rightIconTooltip</b> — tooltip on inner IconButton ✓</li>
+  </ul>
+</section>
+
+<!-- =========================================================
+     Specs
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">specs</div>
+  <table style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.1rem;color:#3A5978;border-collapse:collapse">
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">radius</td><td>99.9rem · dl-rounded-borders-lg (capsule)</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">padding xsmall</td><td>0 × 0.4rem (gridUnit × 0.5)</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">padding small</td><td>0.4rem × 0.8rem (0.5g × 1g)</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">padding medium</td><td>0.4rem × 1.2rem (0.5g × 1.5g)</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">label font</td><td>Body/S/Regular (medium) · Body/XS/Regular (small, xsmall)</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">clickable ring</td><td>box-shadow inset 0 0 0 0.1rem $hover</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">focus-visible</td><td>outline 0.2rem #107ACA · offset 0.2rem</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">deletable padding-r</td><td>3.6rem medium · 2.4rem small</td></tr>
+  </table>
+</section>
+
+</body>
+</html>

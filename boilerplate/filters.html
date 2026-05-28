@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Filters</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=12">
+<style>
+body{padding:3.2rem;max-width:128rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:0.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.ox-fpill{display:inline-flex;align-items:center;gap:.6rem;background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:999px;padding:.6rem 1.2rem;font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-stronger);cursor:pointer}.ox-fpill:hover{border-color:var(--oxygen-color-semantic-neutral-prominent-weaker)}.ox-fpill--active{background:var(--oxygen-color-semantic-brand-subtle-weakest);border-color:var(--oxygen-color-semantic-brand-subtle-strong);color:var(--oxygen-color-semantic-brand-prominent-stronger);font-weight:600}.ox-fpill--open{background:var(--oxygen-color-semantic-neutral-subtle-weak);border-color:var(--oxygen-color-semantic-neutral-prominent-weaker)}
+.ox-fpop{position:absolute;top:calc(100% + .6rem);left:0;background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:1rem;box-shadow:var(--oxygen-shadow-floating);width:28rem;z-index:10}.ox-fpop__search{display:flex;gap:.8rem;align-items:center;padding:1rem 1.2rem;border-bottom:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);color:var(--oxygen-color-semantic-neutral-prominent-weak)}.ox-fpop__row{display:flex;align-items:center;gap:.8rem;padding:.8rem 1.2rem;cursor:pointer;font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-stronger)}.ox-fpop__row:hover{background:var(--oxygen-color-semantic-neutral-subtle-weakest)}
+.ox-cbox{display:inline-flex;align-items:center;cursor:pointer}.ox-cbox input{position:absolute;opacity:0}.ox-cbox__box{width:1.6rem;height:1.6rem;border-radius:.3rem;border:.15rem solid var(--oxygen-color-semantic-neutral-prominent-weaker);background:white;display:grid;place-items:center}.ox-cbox__box--on{background:var(--oxygen-color-semantic-brand-prominent-base);border-color:var(--oxygen-color-semantic-brand-prominent-base)}
+.ox-seg{display:inline-flex;background:var(--oxygen-color-semantic-neutral-subtle-weak);border-radius:.8rem;padding:.3rem;gap:.2rem}.ox-seg__btn{background:none;border:0;padding:.7rem 1.4rem;border-radius:.6rem;font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-strong);cursor:pointer;display:inline-flex;align-items:center;gap:.6rem}.ox-seg__btn--on{background:white;color:var(--oxygen-color-semantic-neutral-prominent-stronger);font-weight:600;box-shadow:0 .1rem .2rem rgba(25,36,70,.06)}.ox-seg__count{display:inline-block;font-size:1.1rem;padding:.1rem .6rem;background:var(--oxygen-color-semantic-neutral-subtle-weak);border-radius:999px;color:var(--oxygen-color-semantic-neutral-prominent-weak)}.ox-seg__btn--on .ox-seg__count{background:var(--oxygen-color-semantic-brand-subtle-weak);color:var(--oxygen-color-semantic-brand-prominent-stronger)}
+</style></head>
+<body>
+<h1>Filters</h1>
+<p class="lede">Horizontal bar of filter pills with dropdown popovers for selection. Segmented filters for small exclusive sets.</p>
+<div class="note"><b>From Oxygen core.</b> <code>data/Filters/Filters.tsx</code>. Use pills when dimensions are independent (multi-select, date ranges). Use a segmented control when one value must always be active.</div>
+
+<div class="section"><h2>Filter bar — pills</h2>
+<div style="display:flex;flex-wrap:wrap;gap:.8rem;align-items:center">
+<button class="ox-fpill ox-fpill--active">Type · Consultation <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+<button class="ox-fpill ox-fpill--active">Praticien · Dr Rousseau, Dr Martin <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+<button class="ox-fpill ox-fpill--active">Période · 1–31 Oct <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+<button class="ox-fpill">Statut <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg></button>
+<button class="ox-fpill">Patient <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg></button>
+<span style="flex:1"></span>
+<button class="ox-button ox-button--variant-outlined ox-button--ui-neutral ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Reset all</span></span></button>
+</div>
+</div>
+
+<div class="section"><h2>Open popover — multi-select filter</h2>
+<div style="position:relative;display:inline-block">
+<button class="ox-fpill ox-fpill--open">Statut <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg></button>
+<div class="ox-fpop">
+<div class="ox-fpop__search">
+<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3" stroke-linecap="round"/></svg>
+<input type="text" placeholder="Search status" style="flex:1;border:0;outline:0;background:none;font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-stronger)">
+</div>
+<div style="padding:.4rem 0;max-height:24rem;overflow:auto">
+
+<label class="ox-fpop__row"><span class="ox-cbox"><input type="checkbox" checked><span class="ox-cbox__box ox-cbox__box--on"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5 7-7"/></svg></span></span><span style="flex:1">Confirmé</span><span style="color:var(--oxygen-color-semantic-neutral-prominent-weak);font:var(--oxygen-font-semantic-body-xs-regular)">28</span></label>
+
+<label class="ox-fpop__row"><span class="ox-cbox"><input type="checkbox" checked><span class="ox-cbox__box ox-cbox__box--on"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5 7-7"/></svg></span></span><span style="flex:1">En attente</span><span style="color:var(--oxygen-color-semantic-neutral-prominent-weak);font:var(--oxygen-font-semantic-body-xs-regular)">14</span></label>
+
+<label class="ox-fpop__row"><span class="ox-cbox"><input type="checkbox" ><span class="ox-cbox__box "></span></span><span style="flex:1">Téléconsultation</span><span style="color:var(--oxygen-color-semantic-neutral-prominent-weak);font:var(--oxygen-font-semantic-body-xs-regular)">9</span></label>
+
+<label class="ox-fpop__row"><span class="ox-cbox"><input type="checkbox" ><span class="ox-cbox__box "></span></span><span style="flex:1">Annulé</span><span style="color:var(--oxygen-color-semantic-neutral-prominent-weak);font:var(--oxygen-font-semantic-body-xs-regular)">3</span></label>
+
+<label class="ox-fpop__row"><span class="ox-cbox"><input type="checkbox" ><span class="ox-cbox__box "></span></span><span style="flex:1">Non-présenté</span><span style="color:var(--oxygen-color-semantic-neutral-prominent-weak);font:var(--oxygen-font-semantic-body-xs-regular)">2</span></label>
+
+</div>
+<div style="padding:.8rem 1.2rem;border-top:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);display:flex;gap:.8rem;justify-content:flex-end">
+<button class="ox-button ox-button--variant-outlined ox-button--ui-neutral ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Cancel</span></span></button>
+<button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Apply</span></span></button>
+</div>
+</div>
+</div>
+<div style="height:18rem"></div>
+</div>
+
+<div class="section"><h2>Segmented / toggle filter</h2>
+<div class="ox-seg">
+<button class="ox-seg__btn ox-seg__btn--on">All <span class="ox-seg__count">142</span></button>
+<button class="ox-seg__btn">Upcoming <span class="ox-seg__count">48</span></button>
+<button class="ox-seg__btn">Past <span class="ox-seg__count">86</span></button>
+<button class="ox-seg__btn">Cancelled <span class="ox-seg__count">8</span></button>
+</div>
+</div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Pill — inactive</td><td>white bg · 1px neutral border · chevron</td></tr>
+<tr><td>Pill — active</td><td>brand-subtle-weak bg · brand-subtle-strong border · X to clear</td></tr>
+<tr><td>Popover width</td><td>min 280px, max 420px</td></tr>
+<tr><td>Search threshold</td><td>Show search when &gt; 8 options</td></tr>
+<tr><td>Apply model</td><td>Staged: changes visible on Apply. Cancel reverts.</td></tr>
+<tr><td>Source</td><td>data/Filters/Filters.tsx · FilterPill · FilterPopover</td></tr>
+</table></div>
+</body></html>

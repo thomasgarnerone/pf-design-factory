@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Oxygen · Modal</title>
+  <link rel="stylesheet" href="_base.css?v=4">
+  <link rel="stylesheet" href="_components.css?v=5">
+  <style>
+    body { padding: 3.2rem; max-width: 120rem; background: var(--oxygen-color-primitive-gray-100); }
+    h2 { font: var(--oxygen-font-semantic-title-s-bold); margin: 0 0 1.2rem; color: var(--oxygen-color-semantic-neutral-prominent-strong); text-transform: uppercase; letter-spacing: 0.04em; }
+    .section { margin-bottom: 3.2rem; }
+    .spec { font: var(--oxygen-font-semantic-body-xs-regular); color: var(--oxygen-color-semantic-neutral-prominent-base); font-family: 'JetBrains Mono', ui-monospace, monospace; }
+    .close {
+      width: 3.2rem; height: 3.2rem; border: 0; background: transparent; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--oxygen-color-primitive-gray-700);
+    }
+    .close:hover { background: var(--oxygen-color-primitive-gray-100); }
+    .row-form { display: flex; flex-direction: column; gap: 1.6rem; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <h2>Small — confirm destructive action</h2>
+  <div class="ox-modal-demo">
+    <div class="ox-modal-backdrop">
+      <div class="ox-modal ox-modal--small">
+        <div class="ox-modal__header">
+          Cancel this appointment?
+          <button class="close ox-modal__close" aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 4.7 7.3 8 4 11.3l.7.7L8 8.7 11.3 12l.7-.7L8.7 8 12 4.7 11.3 4 8 7.3 4.7 4z"/></svg>
+          </button>
+        </div>
+        <div class="ox-modal__body">
+          This will release Marie's 14:30 slot on Tuesday. She'll get an email with the cancellation and can rebook if she chooses.
+        </div>
+        <div class="ox-modal__footer">
+          <button class="ox-button ox-button--variant-outlined ox-button--ui-neutral ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Keep appointment</span></span></button>
+          <button class="ox-button ox-button--variant-solid ox-button--ui-danger ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Cancel appointment</span></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Medium — with form body</h2>
+  <div class="ox-modal-demo">
+    <div class="ox-modal-backdrop">
+      <div class="ox-modal ox-modal--medium">
+        <div class="ox-modal__header">
+          Reschedule appointment
+          <button class="close ox-modal__close" aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 4.7 7.3 8 4 11.3l.7.7L8 8.7 11.3 12l.7-.7L8.7 8 12 4.7 11.3 4 8 7.3 4.7 4z"/></svg>
+          </button>
+        </div>
+        <div class="ox-modal__body row-form">
+          <div class="ox-field ox-field--block">
+            <label class="ox-field__label">New date<span class="ox-field__required">*</span></label>
+            <input class="ox-input" type="date" value="2026-05-12"/>
+          </div>
+          <div class="ox-field ox-field--block">
+            <label class="ox-field__label">Time slot</label>
+            <select class="ox-input ox-select">
+              <option>09:00</option><option selected>10:30</option><option>14:00</option><option>16:15</option>
+            </select>
+          </div>
+          <div class="ox-field ox-field--block">
+            <label class="ox-field__label">Note to practitioner <span class="ox-field__optional">(optional)</span></label>
+            <textarea class="ox-input ox-textarea" rows="3" placeholder="Anything they should know before the visit?"></textarea>
+          </div>
+          <label class="ox-checkbox-wrap">
+            <input type="checkbox" checked/>
+            <span class="ox-checkbox"><svg viewBox="0 0 16 16"><path d="M6.5 10.2 3.8 7.5l-1 1L6.5 12.2 13 5.7l-1-1z"/></svg></span>
+            <span>Send confirmation SMS to the patient</span>
+          </label>
+        </div>
+        <div class="ox-modal__footer">
+          <button class="ox-button ox-button--variant-outlined ox-button--ui-neutral ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Cancel</span></span></button>
+          <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Confirm reschedule</span></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec" style="border-collapse:collapse">
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Widths</td><td>small 448 · medium 672 · large 896 px</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Padding</td><td>3.2rem (32px)</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Radius</td><td>0.8rem (8px)</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Backdrop</td><td>gray-800 @ 64% · z-index 10001</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Header</td><td>title-l-bold · centered · close top-right</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Footer</td><td>right-aligned actions · gap 0.8rem</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Source</td><td>packages/core/src/overlays/Modal/Modal.scss</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Oxygen · Textarea</title>
+  <link rel="stylesheet" href="_base.css?v=4">
+  <link rel="stylesheet" href="_components.css?v=5">
+  <style>
+    body { padding: 3.2rem; max-width: 96rem; }
+    h2 { font: var(--oxygen-font-semantic-title-s-bold); margin: 0 0 1.2rem; color: var(--oxygen-color-semantic-neutral-prominent-strong); text-transform: uppercase; letter-spacing: 0.04em; }
+    .section { margin-bottom: 4rem; }
+    .row { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .ox-field { width: 36rem; }
+    .spec { font: var(--oxygen-font-semantic-body-xs-regular); color: var(--oxygen-color-semantic-neutral-prominent-base); font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <h2>Default</h2>
+  <div class="row">
+    <div class="ox-field">
+      <label class="ox-field__label">Reason for visit</label>
+      <textarea class="ox-input ox-textarea" rows="4" placeholder="Briefly describe the symptom — the practitioner will see this before the appointment."></textarea>
+      <span class="ox-field__hint">Optional. 500 characters max.</span>
+    </div>
+
+    <div class="ox-field">
+      <label class="ox-field__label">Medical notes</label>
+      <textarea class="ox-input ox-textarea" rows="4">Patient reports recurring headaches in the occipital region, onset two weeks ago. No nausea. No loss of vision. Seeking neurologist referral.</textarea>
+      <span class="ox-field__hint">Visible only to the practitioner.</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>States</h2>
+  <div class="row">
+    <div class="ox-field">
+      <label class="ox-field__label">Focus</label>
+      <textarea class="ox-input ox-textarea" rows="3" style="border-color:var(--oxygen-color-forms-global-border-focus); outline: 0.2rem solid var(--oxygen-color-semantic-brand-prominent-base); outline-offset: 0.2rem;"></textarea>
+    </div>
+
+    <div class="ox-field">
+      <label class="ox-field__label">Error<span class="ox-field__required">*</span></label>
+      <textarea class="ox-input ox-textarea is-error" rows="3">too</textarea>
+      <span class="ox-field__message ox-field__message--danger">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 3a1 1 0 0 1 1 1v4a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 8.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+        Please describe the issue in at least 20 characters.
+      </span>
+    </div>
+
+    <div class="ox-field">
+      <label class="ox-field__label">Disabled</label>
+      <textarea class="ox-input ox-textarea" rows="3" disabled>You can add notes once the appointment is confirmed.</textarea>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>With character counter</h2>
+  <div class="row">
+    <div class="ox-field">
+      <label class="ox-field__label">Message to practitioner</label>
+      <textarea class="ox-input ox-textarea" rows="5">I've been experiencing recurring migraines, usually in the afternoon. Could you help me figure out the cause?</textarea>
+      <div style="display:flex; justify-content: space-between;">
+        <span class="ox-field__hint">Your practitioner will read this before the visit.</span>
+        <span class="ox-field__hint">118 / 500</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec" style="border-collapse:collapse">
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Min height</td><td>8rem (80px)</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Padding</td><td>0.8rem 1.6rem — same as InputText</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Line-height</td><td>2rem · regular Roboto</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Resize</td><td>vertical only</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Source</td><td>packages/core/src/forms/Textarea/Textarea.scss</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

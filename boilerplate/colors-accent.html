@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Oxygen — Color System</title>
+<link rel="stylesheet" href="_base.css">
+<style>
+  :root{
+    --ink:       #192634;
+    --ink-soft:  #294056;
+    --body:      #3A5978;
+    --hint:      #4B739B;
+    --line:      #E4EDF6;
+    --line-2:    #C9D9E8;
+    --page:      #F1F7FE;
+    --brand:     #107ACA;
+    --brand-600: #045FAE;
+    --brand-700: #004080;
+    --brand-050: #E7F4FD;
+    --brand-100: #D0E9FB;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  body{ padding: 3.2rem 3.6rem 6rem; background:#fff; color:var(--ink); }
+
+  /* ---------- page header ---------- */
+  .page-header{ max-width: 92rem; margin-bottom: 2rem; }
+  .eyebrow{
+    font: 500 1.1rem/1 var(--mono);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--brand); margin-bottom: 0.8rem;
+  }
+  h1{
+    font: 600 3.2rem/1.1 Roboto, system-ui, sans-serif;
+    color: var(--ink); margin: 0 0 1.2rem; letter-spacing: -0.01em;
+  }
+  .deck{
+    font: 400 1.4rem/1.55 Roboto, system-ui, sans-serif;
+    color: var(--body); max-width: 78rem;
+  }
+  .deck b{ color: var(--ink); font-weight: 600; }
+  .deck code{ font: 500 1.2rem/1 var(--mono); background: var(--page); color: var(--brand-600); padding: 0.15rem 0.4rem; border-radius: 0.3rem; }
+
+  /* ---------- architecture explainer ---------- */
+  .arch{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+    margin: 2.4rem 0 3.2rem; max-width: 120rem;
+  }
+  .arch-tier{
+    position: relative;
+    border: 1px solid var(--line); border-radius: 0.8rem;
+    padding: 1.4rem 1.6rem 1.6rem; background: #fff;
+  }
+  .arch-tier::before{
+    content: attr(data-step);
+    position: absolute; top: -1.2rem; left: 1.4rem;
+    font: 600 1.05rem/1 var(--mono); letter-spacing: 0.08em;
+    background: var(--ink); color: #fff;
+    padding: 0.4rem 0.7rem; border-radius: 0.3rem;
+  }
+  .arch-tier h3{
+    font: 600 1.5rem/1 Roboto, sans-serif; margin: 0 0 0.6rem;
+    color: var(--ink);
+  }
+  .arch-tier .ex{
+    font: 500 1.05rem/1.3 var(--mono); color: var(--brand-600);
+    background: var(--brand-050); padding: 0.5rem 0.7rem; border-radius: 0.4rem;
+    margin-top: 0.8rem; word-break: break-all;
+  }
+  .arch-tier p{
+    font: 400 1.2rem/1.55 Roboto, sans-serif; color: var(--body); margin: 0;
+  }
+  .arch-flow{
+    margin-top: 0.8rem; font: 500 1.05rem/1 var(--mono);
+    color: var(--hint); display:flex; justify-content:center;
+  }
+
+  /* ---------- tab filter ---------- */
+  .tabs{
+    display: flex; gap: 0.4rem; padding: 0.4rem;
+    background: var(--page); border-radius: 0.8rem;
+    width: fit-content; margin-bottom: 2.4rem;
+    border: 1px solid var(--line);
+  }
+  .tab{
+    appearance: none; border: 0; cursor: pointer;
+    font: 500 1.25rem/1 Roboto, sans-serif;
+    color: var(--hint); background: transparent;
+    padding: 0.9rem 1.4rem; border-radius: 0.5rem;
+    display: flex; align-items: center; gap: 0.7rem;
+    transition: background .15s, color .15s;
+  }
+  .tab .count{
+    font: 500 1rem/1 var(--mono);
+    padding: 0.2rem 0.5rem; border-radius: 0.3rem;
+    background: var(--line); color: var(--hint);
+  }
+  .tab:hover{ color: var(--ink-soft); }
+  .tab[aria-selected="true"]{
+    background: #fff; color: var(--ink);
+    box-shadow: 0 1px 2px rgba(25,38,52,.08), 0 0 0 1px var(--line-2);
+  }
+  .tab[aria-selected="true"] .count{ background: var(--brand-050); color: var(--brand-600); }
+
+  .panel{ display: none; }
+  .panel.active{ display: block; }
+
+  /* ---------- tier intro banners ---------- */
+  .tier-intro{
+    border-left: 3px solid var(--brand);
+    background: var(--brand-050);
+    padding: 1.4rem 1.6rem; border-radius: 0 0.6rem 0.6rem 0;
+    margin-bottom: 2.4rem; max-width: 112rem;
+  }
+  .tier-intro h2{
+    font: 600 1.6rem/1 Roboto, sans-serif; margin: 0 0 0.6rem;
+    color: var(--brand-700);
+  }
+  .tier-intro p{
+    font: 400 1.25rem/1.5 Roboto, sans-serif; color: var(--ink-soft);
+    margin: 0; max-width: 90rem;
+  }
+  .tier-intro p + p{ margin-top: 0.6rem; }
+  .tier-intro b{ color: var(--ink); font-weight: 600; }
+  .tier-intro code{ font: 500 1.1rem/1 var(--mono); color: var(--brand-600); background: #fff; padding: 0.15rem 0.4rem; border-radius: 0.3rem; }
+
+  /* ---------- section heads ---------- */
+  .sec-head{
+    display: flex; align-items: baseline; gap: 1rem;
+    padding-bottom: 0.6rem; border-bottom: 1px solid var(--line);
+    margin: 2.4rem 0 1rem;
+  }
+  .sec-head h3{
+    font: 600 1.5rem/1 Roboto, sans-serif;
+    margin: 0; color: var(--ink); text-transform: capitalize;
+  }
+  .sec-head .pill{
+    font: 500 0.95rem/1 var(--mono); letter-spacing: 0.04em;
+    background: var(--page); color: var(--hint);
+    padding: 0.3rem 0.55rem; border-radius: 0.3rem;
+  }
+  .sec-head .meaning{
+    font: 400 1.15rem/1.4 Roboto, sans-serif; color: var(--body);
+    margin-left: auto; max-width: 60rem; text-align: right;
+  }
+
+  /* ---------- primitives scale ---------- */
+  .scale{
+    display: grid; grid-template-columns: repeat(8, 1fr);
+    gap: 0.5rem;
+  }
+  .scale.w9{ grid-template-columns: 7rem repeat(9, 1fr); }
+  .scale .label-cell{
+    display: flex; align-items: center;
+    font: 500 1.15rem/1 var(--mono); color: var(--ink-soft);
+  }
+  .step{
+    border-radius: 0.4rem; padding: 0.8rem 0.9rem;
+    min-height: 7.2rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    font: 500 1.05rem/1 var(--mono);
+  }
+  .step.bordered{ box-shadow: inset 0 0 0 1px var(--line); }
+  .step .n{ font-weight: 700; letter-spacing: 0.03em; }
+  .step .hex{ opacity: 0.82; font-size: 0.95rem; }
+
+  /* ---------- semantic family grid ---------- */
+  .sem{ display: grid; grid-template-columns: 8rem repeat(4, 1fr); gap: 0.5rem 0.6rem; margin-bottom: 0.5rem; }
+  .sem .rowlabel{
+    display: flex; align-items: center;
+    font: 500 1.1rem/1 var(--mono); color: var(--ink-soft);
+  }
+  .sem .cell{
+    border-radius: 0.4rem; padding: 0.8rem 1rem; min-height: 6.4rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    font: 500 1.05rem/1 var(--mono);
+  }
+  .sem .cell .step-name{ font-weight: 700; letter-spacing: 0.02em; }
+  .sem .cell .hex{ opacity: 0.82; }
+
+  /* ---------- component tier ---------- */
+  .comp-block{
+    border: 1px solid var(--line); border-radius: 0.8rem;
+    padding: 1.6rem 1.8rem; margin-bottom: 1.6rem; background: #fff;
+    display: grid; grid-template-columns: 24rem 1fr; gap: 2rem;
+  }
+  .comp-block h4{ font: 600 1.5rem/1 Roboto, sans-serif; margin: 0 0 0.6rem; color: var(--ink); }
+  .comp-block p{ font: 400 1.2rem/1.5 Roboto, sans-serif; color: var(--body); margin: 0; }
+  .comp-block code{ font: 500 1.05rem/1 var(--mono); color: var(--brand-600); background: var(--brand-050); padding: 0.15rem 0.4rem; border-radius: 0.3rem; word-break: break-all; }
+
+  .comp-demo{ display: flex; flex-direction: column; gap: 1.2rem; }
+  .comp-row{ display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; }
+
+  /* demo: solid buttons */
+  .btn{
+    font: 500 1.25rem/1 Roboto, sans-serif;
+    padding: 1rem 1.4rem; border-radius: 0.5rem; border: 0; cursor: default;
+  }
+  .btn-solid-brand{ background: #107ACA; color: #fff; }
+  .btn-solid-brand-hover{ background: #045FAE; color: #fff; }
+  .btn-solid-brand-pressed{ background: #004080; color: #fff; }
+  .btn-solid-disabled{ background: #E4EDF6; color: #6B91B8; }
+  .btn-outline-brand{ background: #fff; color: #107ACA; box-shadow: inset 0 0 0 1px #A0D2F8; }
+  .btn-outline-brand-hover{ background: #E7F4FD; color: #045FAE; box-shadow: inset 0 0 0 1px #A0D2F8; }
+  .btn-outline-brand-pressed{ background: #D0E9FB; color: #004080; box-shadow: inset 0 0 0 1px #D0E9FB; }
+
+  /* demo: alerts */
+  .alert{
+    display: flex; gap: 1rem; padding: 1rem 1.2rem; border-radius: 0.5rem;
+    font: 500 1.2rem/1.3 Roboto, sans-serif;
+    align-items: center; min-width: 28rem;
+  }
+  .alert .dot{ width: 0.9rem; height: 0.9rem; border-radius: 50%; flex-shrink: 0; }
+  .alert-informative{ background: #E5F9FF; color: #005780; box-shadow: inset 0 0 0 1px #75DDFF; }
+  .alert-positive  { background: #E8FDF9; color: #00806A; box-shadow: inset 0 0 0 1px #99FFEE; }
+  .alert-warning   { background: #FFF9E5; color: #794006; box-shadow: inset 0 0 0 1px #FFDD80; }
+  .alert-danger    { background: #FFF5F6; color: #A30036; box-shadow: inset 0 0 0 1px #FFCCD0; }
+
+  /* demo: pills */
+  .pill-demo{
+    display: inline-flex; align-items: center; padding: 0.5rem 1rem;
+    border-radius: 999px; font: 500 1.15rem/1 Roboto, sans-serif;
+  }
+  .pill-neutral   { background: #E4EDF6; color: #294056; }
+  .pill-brand     { background: #E7F4FD; color: #005780; }
+  .pill-positive  { background: #E8FDF9; color: #00806A; }
+  .pill-warning   { background: #FFF9E5; color: #794006; }
+  .pill-danger    { background: #FFF5F6; color: #A30036; }
+  .pill-alt1      { background: #EEFEE7; color: #32730D; }
+  .pill-alt2      { background: #FDF5FF; color: #360679; }
+  .pill-alt3      { background: #FEF5F0; color: #792306; }
+
+  /* chain visual */
+  .chain{
+    font: 400 1.1rem/1.5 Roboto, sans-serif; color: var(--hint);
+    display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center;
+    margin-top: 0.8rem;
+  }
+  .chain code{ font: 500 1rem/1 var(--mono); color: var(--ink-soft); background: var(--page); padding: 0.25rem 0.5rem; border-radius: 0.3rem; }
+  .chain-arrow{ color: var(--line-2); font-weight: 700; }
+
+  /* ---------- component family map ---------- */
+  .fam-grid{
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.6rem;
+    max-width: 112rem; margin: 0 0 1.6rem;
+  }
+  .fam{
+    border: 1px solid var(--line); border-radius: 0.6rem;
+    padding: 1rem 1.1rem; background: #fff;
+    position: relative;
+  }
+  .fam[data-role="shown"]{
+    border-color: var(--brand); background: var(--brand-050);
+    box-shadow: 0 0 0 1px var(--brand);
+  }
+  .fam[data-role="shown"]::after{
+    content: "shown below";
+    position: absolute; top: -0.7rem; right: 0.7rem;
+    font: 600 0.85rem/1 var(--mono); letter-spacing: 0.04em;
+    background: var(--brand); color: #fff;
+    padding: 0.25rem 0.5rem; border-radius: 0.25rem;
+    text-transform: uppercase;
+  }
+  .fam h5{
+    font: 600 1.2rem/1 var(--mono); margin: 0 0 0.4rem;
+    color: var(--ink); letter-spacing: 0.02em;
+  }
+  .fam p{
+    font: 400 1.05rem/1.35 Roboto, sans-serif;
+    color: var(--body); margin: 0;
+  }
+
+  .illus-label{
+    display: flex; align-items: center; gap: 0.8rem;
+    padding: 0.8rem 1.1rem; margin: 0 0 1.6rem;
+    background: #fff; border: 1px dashed var(--line-2);
+    border-radius: 0.5rem; max-width: 112rem;
+    font: 500 1.15rem/1 Roboto, sans-serif; color: var(--hint);
+  }
+  .illus-label::before{
+    content: "↓"; color: var(--brand); font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="eyebrow">Oxygen · Color system</div>
+  <h1>One palette, three tiers.</h1>
+  <p class="deck">
+    Oxygen colors are organised as a <b>three-tier token pipeline</b>: <code>primitive → semantic → component</code>. Each tier makes different promises about what can change, and for whom. This page is the canonical reference for all three — filter by tier to see what lives there and how it's meant to be used.
+  </p>
+</div>
+
+<!-- ARCHITECTURE MAP -->
+<div class="arch">
+  <div class="arch-tier" data-step="01">
+    <h3>Primitives</h3>
+    <p>Raw hues on a non-linear 100 → 800 scale. Named by color, not role. <b>Never referenced directly</b> in product code — they are the material, not the API.</p>
+    <div class="ex">oxygen-core-blue-500<br>· #107ACA</div>
+  </div>
+  <div class="arch-tier" data-step="02">
+    <h3>Semantic</h3>
+    <p>Role-bearing names (brand, danger, positive…) composed from primitives. This is the layer <b>designers and most engineers consume</b>. Swapping a primitive cascades here automatically.</p>
+    <div class="ex">oxygen-color-semantic-<br>brand-prominent-weak</div>
+  </div>
+  <div class="arch-tier" data-step="03">
+    <h3>Component</h3>
+    <p>Part-specific aliases (<i>button.solid.brand.background.hover</i>). Lets a single component re-skin without touching its CSS. <b>Built on top of semantic</b> — almost never on primitives.</p>
+    <div class="ex">oxygen-color-component-<br>action-buttonPrimary-brand-<br>background-default</div>
+  </div>
+</div>
+
+<!-- TAB FILTER -->
+<div class="tabs" role="tablist" aria-label="Color tier filter">
+  <button class="tab" role="tab" aria-selected="true"  data-panel="primitives">Primitives <span class="count">10</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="semantic">Semantic <span class="count">10</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="component">Component <span class="count">10</span></button>
+</div>
+
+<!-- =========================================================== -->
+<!-- PRIMITIVES                                                   -->
+<!-- =========================================================== -->
+<section class="panel active" id="panel-primitives" role="tabpanel">
+
+  <div class="tier-intro">
+    <h2>Primitives — the raw material</h2>
+    <p>Ten primitive hues, each with an 8-step ramp on the <code>100 → 800</code> scale (gray adds a 250 half-step) scale (lower is lighter). The <b>500 step</b> is the canonical mid-tone; ramps are perceptually tuned so <code>040</code> can safely carry <code>130</code> text.</p>
+    <p>Primitives are defined in <code>packages/core/src/style/tokens/color.scss</code> under the <code>[data-theme='doctolib2023']</code> block (exposed as <code>--oxygen-core-&lt;hue&gt;-&lt;step&gt;</code>). They exist to give the semantic tier something concrete to reference — when a designer needs a darker blue for brand-prominent-strong, they don't pick a new hex, they pick the next step down the ramp.</p>
+  </div>
+
+  <!-- BLUE -->
+  <div class="sec-head"><h3>blue</h3><span class="pill">brand</span>
+    <span class="meaning">The signature Doctolib hue. Used for primary actions, focus, links, brand surfaces.</span></div>
+  <div class="scale">
+    <div class="step bordered" style="background:#E7F4FD;color:#045FAE"><span class="n">100</span><span class="hex">#E7F4FD</span></div>
+    <div class="step" style="background:#D0E9FB;color:#045FAE"><span class="n">200</span><span class="hex">#D0E9FB</span></div>
+    <div class="step" style="background:#A0D2F8;color:#004080"><span class="n">300</span><span class="hex">#A0D2F8</span></div>
+    <div class="step" style="background:#5AB0F2;color:#00264C"><span class="n">400</span><span class="hex">#5AB0F2</span></div>
+    <div class="step" style="background:#107ACA;color:#fff"><span class="n">500</span><span class="hex">#107ACA</span></div>
+    <div class="step" style="background:#045FAE;color:#fff"><span class="n">600</span><span class="hex">#045FAE</span></div>
+    <div class="step" style="background:#004080;color:#fff"><span class="n">700</span><span class="hex">#004080</span></div>
+    <div class="step" style="background:#00264C;color:#fff"><span class="n">800</span><span class="hex">#00264C</span></div>
+  </div>
+
+  <!-- SKY -->
+  <div class="sec-head"><h3>sky</h3><span class="pill">informative</span>
+    <span class="meaning">A cooler, cyan-leaning blue for informational states — distinct from brand so "info" never reads as an action.</span></div>
+  <div class="scale">
+    <div class="step bordered" style="background:#E5F9FF;color:#005780"><span class="n">100</span><span class="hex">#E5F9FF</span></div>
+    <div class="step" style="background:#CCF2FF;color:#005780"><span class="n">200</span><span class="hex">#CCF2FF</span></div>
+    <div class="step" style="background:#75DDFF;color:#00344C"><span class="n">300</span><span class="hex">#75DDFF</span></div>
+    <div class="step" style="background:#00BFFF;color:#00344C"><span class="n">400</span><span class="hex">#00BFFF</span></div>
+    <div class="step" style="background:#05A1DE;color:#fff"><span class="n">500</span><span class="hex">#05A1DE</span></div>
+    <div class="step" style="background:#007AB3;color:#fff"><span class="n">600</span><span class="hex">#007AB3</span></div>
+    <div class="step" style="background:#005780;color:#fff"><span class="n">700</span><span class="hex">#005780</span></div>
+    <div class="step" style="background:#00344C;color:#fff"><span class="n">800</span><span class="hex">#00344C</span></div>
+  </div>
+
+  <!-- GRAY -->
+  <div class="sec-head"><h3>gray</h3><span class="pill">neutral · mute · disabled</span>
+    <span class="meaning">Blue-tinted navy scale — not warm gray. Powers body text, borders, dividers, disabled states.</span></div>
+  <div class="scale w9">
+    <div class="label-cell">steps</div>
+    <div class="step bordered" style="background:#F1F7FE;color:#192634"><span class="n">100</span><span class="hex">#F1F7FE</span></div>
+    <div class="step" style="background:#E4EDF6;color:#192634"><span class="n">200</span><span class="hex">#E4EDF6</span></div>
+    <div class="step" style="background:#C9D9E8;color:#192634"><span class="n">250</span><span class="hex">#C9D9E8</span></div>
+    <div class="step" style="background:#A9BFD6;color:#192634"><span class="n">300</span><span class="hex">#A9BFD6</span></div>
+    <div class="step" style="background:#6B91B8;color:#fff"><span class="n">400</span><span class="hex">#6B91B8</span></div>
+    <div class="step" style="background:#4B739B;color:#fff"><span class="n">500</span><span class="hex">#4B739B</span></div>
+    <div class="step" style="background:#3A5978;color:#fff"><span class="n">600</span><span class="hex">#3A5978</span></div>
+    <div class="step" style="background:#294056;color:#fff"><span class="n">700</span><span class="hex">#294056</span></div>
+    <div class="step" style="background:#192634;color:#fff"><span class="n">800</span><span class="hex">#192634</span></div>
+  </div>
+
+  <!-- WHITE / BLACK -->
+  <div class="sec-head"><h3>white &amp; black</h3><span class="pill">anchors</span>
+    <span class="meaning">Pure anchors at either end of the ramp. <code style="font-family:var(--mono)">white</code> is the canonical page base; <code style="font-family:var(--mono)">black</code> is reserved for common-prominent and high-contrast ink.</span></div>
+  <div class="scale">
+    <div class="step bordered" style="background:#FFFFFF;color:#192634"><span class="n">white</span><span class="hex">#FFFFFF</span></div>
+    <div class="step" style="background:#0D1721;color:#fff"><span class="n">black</span><span class="hex">#0D1721</span></div>
+    <div class="step" style="background:transparent;box-shadow:inset 0 0 0 1px var(--line);color:var(--hint);font-size:1rem;line-height:1.3;padding:0.8rem"><span class="n">white.opacity</span><span class="hex">/15 /25 /35<br>/50 /70 /90</span></div>
+    <div class="step" style="background:#192634E6;color:#fff;font-size:1rem;line-height:1.3;padding:0.8rem"><span class="n">gray.opacity</span><span class="hex">/15 /25 /35<br>/50 /70 /90</span></div>
+    <div class="step" style="background:transparent"></div>
+    <div class="step" style="background:transparent"></div>
+    <div class="step" style="background:transparent"></div>
+    <div class="step" style="background:transparent"></div>
+  </div>
+
+  <!-- ACCENT HUES -->
+  <div class="sec-head"><h3>red</h3><span class="pill">danger</span>
+    <span class="meaning">Destructive actions, form errors, critical alerts.</span></div>
+  <div class="scale">
+    <div class="step bordered" style="background:#FFF5F6;color:#A30036"><span class="n">100</span><span class="hex">#FFF5F6</span></div>
+    <div class="step" style="background:#FFE5E8;color:#A30036"><span class="n">200</span><span class="hex">#FFE5E8</span></div>
+    <div class="step" style="background:#FFCCD0;color:#660022"><span class="n">300</span><span class="hex">#FFCCD0</span></div>
+    <div class="step" style="background:#FF99A1;color:#660022"><span class="n">400</span><span class="hex">#FF99A1</span></div>
+    <div class="step" style="background:#FF4773;color:#fff"><span class="n">500</span><span class="hex">#FF4773</span></div>
+    <div class="step" style="background:#E5004C;color:#fff"><span class="n">600</span><span class="hex">#E5004C</span></div>
+    <div class="step" style="background:#A30036;color:#fff"><span class="n">700</span><span class="hex">#A30036</span></div>
+    <div class="step" style="background:#660022;color:#fff"><span class="n">800</span><span class="hex">#660022</span></div>
+  </div>
+
+  <div class="sec-head"><h3>teal</h3><span class="pill">positive</span>
+    <span class="meaning">Success, confirmation, completed states.</span></div>
+  <div class="scale">
+    <div class="step bordered" style="background:#E8FDF9;color:#00806A"><span class="n">100</span><span class="hex">#E8FDF9</span></div>
+    <div class="step" style="background:#D1FAF3;color:#00806A"><span class="n">200</span><span class="hex">#D1FAF3</span></div>
+    <div class="step" style="background:#99FFEE;color:#004D40"><span class="n">300</span><span class="hex">#99FFEE</span></div>
+    <div class="step" style="background:#4DFFE1;color:#004D40"><span class="n">400</span><span class="hex">#4DFFE1</span></div>
+    <div class="step" style="background:#00E5BF;color:#00332A"><span class="n">500</span><span class="hex">#00E5BF</span></div>
+    <div class="step" style="background:#00806A;color:#fff"><span class="n">600</span><span class="hex">#00806A</span></div>
+    <div class="step" style="background:#004D40;color:#fff"><span class="n">700</span><span class="hex">#004D40</span></div>
+    <div class="step" style="background:#00332A;color:#fff"><span class="n">800</span><span class="hex">#00332A</span></div>
+  </div>
+
+  <div class="sec-head"><h3>yellow</h3><span class="pill">warning</span>
+    <span class="meaning">Caution, approaching limits, expiring content.</span></div>
+  <div class="scale">
+    <div class="step bordered" style="background:#FFF9E5;color:#794006"><span class="n">100</span><span class="hex">#FFF9E5</span></div>
+    <div class="step" style="background:#FFECB2;color:#794006"><span class="n">200</span><span class="hex">#FFECB2</span></div>
+    <div class="step" style="background:#FFDD80;color:#492704"><span class="n">300</span><span class="hex">#FFDD80</span></div>
+    <div class="step" style="background:#FFCD4D;color:#492704"><span class="n">400</span><span class="hex">#FFCD4D</span></div>
+    <div class="step" style="background:#FFBA1A;color:#492704"><span class="n">500</span><span class="hex">#FFBA1A</span></div>
+    <div class="step" style="background:#AA6709;color:#fff"><span class="n">600</span><span class="hex">#AA6709</span></div>
+    <div class="step" style="background:#794006;color:#fff"><span class="n">700</span><span class="hex">#794006</span></div>
+    <div class="step" style="background:#492704;color:#fff"><span class="n">800</span><span class="hex">#492704</span></div>
+  </div>
+
+  <div class="sec-head"><h3>green</h3><span class="pill">alternative1</span>
+    <span class="meaning">Accent hue for categorisation + illustrative content.</span></div>
+  <div class="scale">
+    <div class="step bordered" style="background:#EEFEE7;color:#32730D"><span class="n">100</span><span class="hex">#EEFEE7</span></div>
+    <div class="step" style="background:#DEFCCF;color:#32730D"><span class="n">200</span><span class="hex">#DEFCCF</span></div>
+    <div class="step" style="background:#BDFA9E;color:#2E5309"><span class="n">300</span><span class="hex">#BDFA9E</span></div>
+    <div class="step" style="background:#A1E87D;color:#2E5309"><span class="n">400</span><span class="hex">#A1E87D</span></div>
+    <div class="step" style="background:#79C653;color:#1F3409"><span class="n">500</span><span class="hex">#79C653</span></div>
+    <div class="step" style="background:#32730D;color:#fff"><span class="n">600</span><span class="hex">#32730D</span></div>
+    <div class="step" style="background:#2E5309;color:#fff"><span class="n">700</span><span class="hex">#2E5309</span></div>
+    <div class="step" style="background:#1F3409;color:#fff"><span class="n">800</span><span class="hex">#1F3409</span></div>
+  </div>
+
+  <div class="sec-head"><h3>purple</h3><span class="pill">alternative2</span>
+    <span class="meaning">Accent hue for categorisation + illustrative content.</span></div>
+  <div class="scale">
+    <div class="step bordered" style="background:#FDF5FF;color:#7333CC"><span class="n">100</span><span class="hex">#FDF5FF</span></div>
+    <div class="step" style="background:#F9E5FF;color:#7333CC"><span class="n">200</span><span class="hex">#F9E5FF</span></div>
+    <div class="step" style="background:#F2CCFF;color:#360679"><span class="n">300</span><span class="hex">#F2CCFF</span></div>
+    <div class="step" style="background:#E599FF;color:#360679"><span class="n">400</span><span class="hex">#E599FF</span></div>
+    <div class="step" style="background:#C986F9;color:#20004D"><span class="n">500</span><span class="hex">#C986F9</span></div>
+    <div class="step" style="background:#7333CC;color:#fff"><span class="n">600</span><span class="hex">#7333CC</span></div>
+    <div class="step" style="background:#360679;color:#fff"><span class="n">700</span><span class="hex">#360679</span></div>
+    <div class="step" style="background:#20004D;color:#fff"><span class="n">800</span><span class="hex">#20004D</span></div>
+  </div>
+
+  <div class="sec-head"><h3>orange</h3><span class="pill">alternative3</span>
+    <span class="meaning">Accent hue for categorisation + illustrative content.</span></div>
+  <div class="scale">
+    <div class="step bordered" style="background:#FEF5F0;color:#AD421F"><span class="n">100</span><span class="hex">#FEF5F0</span></div>
+    <div class="step" style="background:#FEEEE6;color:#AD421F"><span class="n">200</span><span class="hex">#FEEEE6</span></div>
+    <div class="step" style="background:#FBCDB6;color:#792306"><span class="n">300</span><span class="hex">#FBCDB6</span></div>
+    <div class="step" style="background:#FCAB83;color:#792306"><span class="n">400</span><span class="hex">#FCAB83</span></div>
+    <div class="step" style="background:#F57B3D;color:#490404"><span class="n">500</span><span class="hex">#F57B3D</span></div>
+    <div class="step" style="background:#AD421F;color:#fff"><span class="n">600</span><span class="hex">#AD421F</span></div>
+    <div class="step" style="background:#792306;color:#fff"><span class="n">700</span><span class="hex">#792306</span></div>
+    <div class="step" style="background:#490404;color:#fff"><span class="n">800</span><span class="hex">#490404</span></div>
+  </div>
+
+</section>
+
+<!-- =========================================================== -->
+<!-- SEMANTIC                                                    -->
+<!-- =========================================================== -->
+<section class="panel" id="panel-semantic" role="tabpanel">
+
+  <div class="tier-intro">
+    <h2>Semantic — role-bearing colors</h2>
+    <p>The pattern is <code>--oxygen-color-semantic-{family}-{prominent|subtle}-{weak|base|strong|stronger}</code>. Every family has two axes of depth: <b>prominent</b> for text / icons / filled controls, <b>subtle</b> for fills / tints / highlights. The weak → stronger ramps are tuned so a <code>subtle-weak</code> background always pairs with a <code>prominent-strong</code> foreground for AA contrast.</p>
+    <p>This is the layer you should reach for 95% of the time. It survives rebrand, theme swap, dark mode — primitives can shift underneath without a single component edit.</p>
+  </div>
+
+  <!-- BRAND -->
+  <div class="sec-head"><h3>brand</h3><span class="pill">blue</span>
+    <span class="meaning">Primary actions, links, focus, brand surfaces.</span></div>
+  <div class="sem">
+    <div class="rowlabel">prominent</div>
+    <div class="cell" style="background:#107ACA;color:#fff"><span class="step-name">weak</span><span class="hex">#107ACA</span></div>
+    <div class="cell" style="background:#045FAE;color:#fff"><span class="step-name">base</span><span class="hex">#045FAE</span></div>
+    <div class="cell" style="background:#004080;color:#fff"><span class="step-name">strong</span><span class="hex">#004080</span></div>
+    <div class="cell" style="background:#00264C;color:#fff"><span class="step-name">stronger</span><span class="hex">#00264C</span></div>
+  </div>
+  <div class="sem">
+    <div class="rowlabel">subtle</div>
+    <div class="cell" style="background:#E7F4FD;color:#045FAE"><span class="step-name">weak</span><span class="hex">#E7F4FD</span></div>
+    <div class="cell" style="background:#D0E9FB;color:#045FAE"><span class="step-name">base</span><span class="hex">#D0E9FB</span></div>
+    <div class="cell" style="background:#A0D2F8;color:#004080"><span class="step-name">strong</span><span class="hex">#A0D2F8</span></div>
+    <div class="cell" style="background:#5AB0F2;color:#00264C"><span class="step-name">stronger</span><span class="hex">#5AB0F2</span></div>
+  </div>
+
+  <!-- INFORMATIVE -->
+  <div class="sec-head"><h3>informative</h3><span class="pill">sky</span>
+    <span class="meaning">Tips, neutral updates, non-critical system messages.</span></div>
+  <div class="sem">
+    <div class="rowlabel">prominent</div>
+    <div class="cell" style="background:#05A1DE;color:#fff"><span class="step-name">weak</span><span class="hex">#05A1DE</span></div>
+    <div class="cell" style="background:#007AB3;color:#fff"><span class="step-name">base</span><span class="hex">#007AB3</span></div>
+    <div class="cell" style="background:#005780;color:#fff"><span class="step-name">strong</span><span class="hex">#005780</span></div>
+    <div class="cell" style="background:#00344C;color:#fff"><span class="step-name">stronger</span><span class="hex">#00344C</span></div>
+  </div>
+  <div class="sem">
+    <div class="rowlabel">subtle</div>
+    <div class="cell" style="background:#E5F9FF;color:#005780"><span class="step-name">weak</span><span class="hex">#E5F9FF</span></div>
+    <div class="cell" style="background:#CCF2FF;color:#005780"><span class="step-name">base</span><span class="hex">#CCF2FF</span></div>
+    <div class="cell" style="background:#75DDFF;color:#00344C"><span class="step-name">strong</span><span class="hex">#75DDFF</span></div>
+    <div class="cell" style="background:#00BFFF;color:#00344C"><span class="step-name">stronger</span><span class="hex">#00BFFF</span></div>
+  </div>
+
+  <!-- POSITIVE -->
+  <div class="sec-head"><h3>positive</h3><span class="pill">teal</span>
+    <span class="meaning">Success, confirmation, completed states.</span></div>
+  <div class="sem">
+    <div class="rowlabel">prominent</div>
+    <div class="cell" style="background:#00E5BF;color:#00332A"><span class="step-name">weak</span><span class="hex">#00E5BF</span></div>
+    <div class="cell" style="background:#00806A;color:#fff"><span class="step-name">base</span><span class="hex">#00806A</span></div>
+    <div class="cell" style="background:#004D40;color:#fff"><span class="step-name">strong</span><span class="hex">#004D40</span></div>
+    <div class="cell" style="background:#00332A;color:#fff"><span class="step-name">stronger</span><span class="hex">#00332A</span></div>
+  </div>
+  <div class="sem">
+    <div class="rowlabel">subtle</div>
+    <div class="cell" style="background:#E8FDF9;color:#00806A"><span class="step-name">weak</span><span class="hex">#E8FDF9</span></div>
+    <div class="cell" style="background:#D1FAF3;color:#00806A"><span class="step-name">base</span><span class="hex">#D1FAF3</span></div>
+    <div class="cell" style="background:#99FFEE;color:#004D40"><span class="step-name">strong</span><span class="hex">#99FFEE</span></div>
+    <div class="cell" style="background:#4DFFE1;color:#004D40"><span class="step-name">stronger</span><span class="hex">#4DFFE1</span></div>
+  </div>
+
+  <!-- WARNING -->
+  <div class="sec-head"><h3>warning</h3><span class="pill">yellow</span>
+    <span class="meaning">Caution, approaching limits, expiring content.</span></div>
+  <div class="sem">
+    <div class="rowlabel">prominent</div>
+    <div class="cell" style="background:#FFBA1A;color:#492704"><span class="step-name">weak</span><span class="hex">#FFBA1A</span></div>
+    <div class="cell" style="background:#AA6709;color:#fff"><span class="step-name">base</span><span class="hex">#AA6709</span></div>
+    <div class="cell" style="background:#794006;color:#fff"><span class="step-name">strong</span><span class="hex">#794006</span></div>
+    <div class="cell" style="background:#492704;color:#fff"><span class="step-name">stronger</span><span class="hex">#492704</span></div>
+  </div>
+  <div class="sem">
+    <div class="rowlabel">subtle</div>
+    <div class="cell" style="background:#FFF9E5;color:#794006"><span class="step-name">weak</span><span class="hex">#FFF9E5</span></div>
+    <div class="cell" style="background:#FFECB2;color:#794006"><span class="step-name">base</span><span class="hex">#FFECB2</span></div>
+    <div class="cell" style="background:#FFDD80;color:#492704"><span class="step-name">strong</span><span class="hex">#FFDD80</span></div>
+    <div class="cell" style="background:#FFCD4D;color:#492704"><span class="step-name">stronger</span><span class="hex">#FFCD4D</span></div>
+  </div>
+
+  <!-- DANGER -->
+  <div class="sec-head"><h3>danger</h3><span class="pill">red</span>
+    <span class="meaning">Destructive actions, form errors, critical alerts.</span></div>
+  <div class="sem">
+    <div class="rowlabel">prominent</div>
+    <div class="cell" style="background:#FF4773;color:#fff"><span class="step-name">weak</span><span class="hex">#FF4773</span></div>
+    <div class="cell" style="background:#E5004C;color:#fff"><span class="step-name">base</span><span class="hex">#E5004C</span></div>
+    <div class="cell" style="background:#A30036;color:#fff"><span class="step-name">strong</span><span class="hex">#A30036</span></div>
+    <div class="cell" style="background:#660022;color:#fff"><span class="step-name">stronger</span><span class="hex">#660022</span></div>
+  </div>
+  <div class="sem">
+    <div class="rowlabel">subtle</div>
+    <div class="cell" style="background:#FFF5F6;color:#A30036"><span class="step-name">weak</span><span class="hex">#FFF5F6</span></div>
+    <div class="cell" style="background:#FFE5E8;color:#A30036"><span class="step-name">base</span><span class="hex">#FFE5E8</span></div>
+    <div class="cell" style="background:#FFCCD0;color:#660022"><span class="step-name">strong</span><span class="hex">#FFCCD0</span></div>
+    <div class="cell" style="background:#FF99A1;color:#660022"><span class="step-name">stronger</span><span class="hex">#FF99A1</span></div>
+  </div>
+
+  <!-- NEUTRAL -->
+  <div class="sec-head"><h3>neutral</h3><span class="pill">gray</span>
+    <span class="meaning">Body text, icons, default borders — the workhorse scale.</span></div>
+  <div class="sem">
+    <div class="rowlabel">prominent</div>
+    <div class="cell" style="background:#4B739B;color:#fff"><span class="step-name">weak</span><span class="hex">#4B739B</span></div>
+    <div class="cell" style="background:#3A5978;color:#fff"><span class="step-name">base</span><span class="hex">#3A5978</span></div>
+    <div class="cell" style="background:#294056;color:#fff"><span class="step-name">strong</span><span class="hex">#294056</span></div>
+    <div class="cell" style="background:#192634;color:#fff"><span class="step-name">stronger</span><span class="hex">#192634</span></div>
+  </div>
+  <div class="sem">
+    <div class="rowlabel">subtle</div>
+    <div class="cell" style="background:#F1F7FE;color:#3A5978;box-shadow:inset 0 0 0 1px #E4EDF6"><span class="step-name">weaker</span><span class="hex">#F1F7FE</span></div>
+    <div class="cell" style="background:#E4EDF6;color:#3A5978"><span class="step-name">weak</span><span class="hex">#E4EDF6</span></div>
+    <div class="cell" style="background:#C9D9E8;color:#294056"><span class="step-name">base</span><span class="hex">#C9D9E8</span></div>
+    <div class="cell" style="background:#A9BFD6;color:#192634"><span class="step-name">strong</span><span class="hex">#A9BFD6</span></div>
+  </div>
+
+  <!-- MUTE -->
+  <div class="sec-head"><h3>mute</h3><span class="pill">gray</span>
+    <span class="meaning">Disabled / inactive surfaces — softer than neutral, optimised for non-interactive content.</span></div>
+  <div class="sem">
+    <div class="rowlabel">prominent</div>
+    <div class="cell" style="background:#A9BFD6;color:#192634"><span class="step-name">weak</span><span class="hex">#A9BFD6</span></div>
+    <div class="cell" style="background:#6B91B8;color:#fff"><span class="step-name">base</span><span class="hex">#6B91B8</span></div>
+    <div class="cell" style="background:#4B739B;color:#fff"><span class="step-name">strong</span><span class="hex">#4B739B</span></div>
+    <div class="cell" style="background:transparent"></div>
+  </div>
+  <div class="sem">
+    <div class="rowlabel">subtle</div>
+    <div class="cell" style="background:#F1F7FE;color:#4B739B;box-shadow:inset 0 0 0 1px #E4EDF6"><span class="step-name">weak</span><span class="hex">#F1F7FE</span></div>
+    <div class="cell" style="background:#E4EDF6;color:#4B739B"><span class="step-name">base</span><span class="hex">#E4EDF6</span></div>
+    <div class="cell" style="background:#C9D9E8;color:#294056"><span class="step-name">strong</span><span class="hex">#C9D9E8</span></div>
+    <div class="cell" style="background:transparent"></div>
+  </div>
+
+  <!-- ALTERNATIVES -->
+  <div class="sec-head"><h3>alternative1</h3><span class="pill">green</span>
+    <span class="meaning">Accent — categorisation, avatars, tags, illustrations.</span></div>
+  <div class="sem">
+    <div class="rowlabel">prominent</div>
+    <div class="cell" style="background:#79C653;color:#1F3409"><span class="step-name">weak</span><span class="hex">#79C653</span></div>
+    <div class="cell" style="background:#32730D;color:#fff"><span class="step-name">base</span><span class="hex">#32730D</span></div>
+    <div class="cell" style="background:#2E5309;color:#fff"><span class="step-name">strong</span><span class="hex">#2E5309</span></div>
+    <div class="cell" style="background:#1F3409;color:#fff"><span class="step-name">stronger</span><span class="hex">#1F3409</span></div>
+  </div>
+  <div class="sem">
+    <div class="rowlabel">subtle</div>
+    <div class="cell" style="background:#EEFEE7;color:#32730D"><span class="step-name">weak</span><span class="hex">#EEFEE7</span></div>
+    <div class="cell" style="background:#DEFCCF;color:#32730D"><span class="step-name">base</span><span class="hex">#DEFCCF</span></div>
+    <div class="cell" style="background:#BDFA9E;color:#2E5309"><span class="step-name">strong</span><span class="hex">#BDFA9E</span></div>
+    <div class="cell" style="background:#A1E87D;color:#2E5309"><span class="step-name">stronger</span><span class="hex">#A1E87D</span></div>
+  </div>
+
+  <div class="sec-head"><h3>alternative2</h3><span class="pill">purple</span>
+    <span class="meaning">Accent — categorisation, avatars, tags, illustrations.</span></div>
+  <div class="sem">
+    <div class="rowlabel">prominent</div>
+    <div class="cell" style="background:#C986F9;color:#20004D"><span class="step-name">weak</span><span class="hex">#C986F9</span></div>
+    <div class="cell" style="background:#7333CC;color:#fff"><span class="step-name">base</span><span class="hex">#7333CC</span></div>
+    <div class="cell" style="background:#360679;color:#fff"><span class="step-name">strong</span><span class="hex">#360679</span></div>
+    <div class="cell" style="background:#20004D;color:#fff"><span class="step-name">stronger</span><span class="hex">#20004D</span></div>
+  </div>
+  <div class="sem">
+    <div class="rowlabel">subtle</div>
+    <div class="cell" style="background:#FDF5FF;color:#7333CC"><span class="step-name">weak</span><span class="hex">#FDF5FF</span></div>
+    <div class="cell" style="background:#F9E5FF;color:#7333CC"><span class="step-name">base</span><span class="hex">#F9E5FF</span></div>
+    <div class="cell" style="background:#F2CCFF;color:#360679"><span class="step-name">strong</span><span class="hex">#F2CCFF</span></div>
+    <div class="cell" style="background:#E599FF;color:#360679"><span class="step-name">stronger</span><span class="hex">#E599FF</span></div>
+  </div>
+
+  <div class="sec-head"><h3>alternative3</h3><span class="pill">orange</span>
+    <span class="meaning">Accent — categorisation, avatars, tags, illustrations.</span></div>
+  <div class="sem">
+    <div class="rowlabel">prominent</div>
+    <div class="cell" style="background:#F57B3D;color:#490404"><span class="step-name">weak</span><span class="hex">#F57B3D</span></div>
+    <div class="cell" style="background:#AD421F;color:#fff"><span class="step-name">base</span><span class="hex">#AD421F</span></div>
+    <div class="cell" style="background:#792306;color:#fff"><span class="step-name">strong</span><span class="hex">#792306</span></div>
+    <div class="cell" style="background:#490404;color:#fff"><span class="step-name">stronger</span><span class="hex">#490404</span></div>
+  </div>
+  <div class="sem">
+    <div class="rowlabel">subtle</div>
+    <div class="cell" style="background:#FEF5F0;color:#AD421F"><span class="step-name">weak</span><span class="hex">#FEF5F0</span></div>
+    <div class="cell" style="background:#FEEEE6;color:#AD421F"><span class="step-name">base</span><span class="hex">#FEEEE6</span></div>
+    <div class="cell" style="background:#FBCDB6;color:#792306"><span class="step-name">strong</span><span class="hex">#FBCDB6</span></div>
+    <div class="cell" style="background:#FCAB83;color:#792306"><span class="step-name">stronger</span><span class="hex">#FCAB83</span></div>
+  </div>
+
+</section>
+
+<!-- =========================================================== -->
+<!-- COMPONENT                                                   -->
+<!-- =========================================================== -->
+<section class="panel" id="panel-component" role="tabpanel">
+
+  <div class="tier-intro">
+    <h2>Component — part-specific aliases</h2>
+    <p>Component tokens name a specific <b>part</b> of a specific <b>component</b> in a specific <b>state</b>: <code>action.buttonPrimary.brand.background.default</code>, <code>indicator.alert.background.positive</code>, <code>surface.background.main.base.hover</code>. They're thin aliases on top of semantic tokens — never on primitives directly — which lets a single component re-skin (for example, the <b>vision</b> marketing theme) without touching its CSS.</p>
+    <p>Oxygen ships <b>ten component families</b> in this tier: <code>action</code>, <code>form</code>, <code>indicator</code>, <code>surface</code>, <code>text</code>, <code>navigation</code>, <code>collection</code>, <code>layout</code>, <code>overlay</code>, <code>visualAsset</code>. Each expands into dozens of part-level tokens (a single <code>button</code> alone contains ~40 states across solid / outlined / ghost × brand / neutral / danger). The three examples below are <b>illustrative</b>, not exhaustive — they're chosen because they show the most common binding patterns: <i>state-driven</i> (action.button), <i>tone-driven</i> (indicator.alert), and <i>variant-driven</i> (indicator.pill).</p>
+  </div>
+
+  <!-- Component family map -->
+  <div class="fam-grid">
+    <div class="fam" data-role="shown"><h5>action</h5><p>buttons, links, dropdowns, floating toolbars — anything clickable</p></div>
+    <div class="fam"><h5>form</h5><p>inputs, checkboxes, radios, toggles, sliders, selectable cards</p></div>
+    <div class="fam" data-role="shown"><h5>indicator</h5><p>alerts, pills, badges, spinners, progress bars, steppers, toasts</p></div>
+    <div class="fam"><h5>surface</h5><p>page backgrounds and borders at every elevation</p></div>
+    <div class="fam"><h5>text</h5><p>body, header, minor text, selection highlights</p></div>
+    <div class="fam"><h5>navigation</h5><p>tabs, pagination, sidebar menu, segmented control</p></div>
+    <div class="fam"><h5>collection</h5><p>list items, table rows and cells</p></div>
+    <div class="fam"><h5>layout</h5><p>accordion, carousel, collapsible card, divider, story layout</p></div>
+    <div class="fam"><h5>overlay</h5><p>modal backdrop, drag-and-drop targets</p></div>
+    <div class="fam"><h5>visualAsset</h5><p>avatar, icon, logo tinting</p></div>
+  </div>
+
+  <!-- Illustrative label -->
+  <div class="illus-label">
+    <span>Three illustrative bindings below — not an exhaustive list</span>
+  </div>
+
+  <!-- BUTTON -->
+  <div class="comp-block">
+    <div>
+      <h4>action · button</h4>
+      <p>Solid and outlined buttons across brand / neutral / danger, each with default / hover / pressed / disabled states. The solid-brand path is the most visible:</p>
+      <div class="chain">
+        <code>oxygen-core-blue-500</code><span class="chain-arrow">→</span>
+        <code>semantic.brand.prominent.weak</code><span class="chain-arrow">→</span>
+        <code>action.buttonPrimary.brand.background.default</code>
+      </div>
+    </div>
+    <div class="comp-demo">
+      <div class="comp-row">
+        <button class="btn btn-solid-brand">Default</button>
+        <button class="btn btn-solid-brand-hover">Hover</button>
+        <button class="btn btn-solid-brand-pressed">Pressed</button>
+        <button class="btn btn-solid-disabled">Disabled</button>
+      </div>
+      <div class="comp-row">
+        <button class="btn btn-outline-brand">Outlined default</button>
+        <button class="btn btn-outline-brand-hover">Outlined hover</button>
+        <button class="btn btn-outline-brand-pressed">Outlined pressed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALERT -->
+  <div class="comp-block">
+    <div>
+      <h4>indicator · alert</h4>
+      <p>Inline feedback banners keyed by tone. Each tone binds <b>three</b> semantic token pairs: background (subtle-weak), border (subtle-strong), label + icon (prominent-strong).</p>
+      <div class="chain">
+        <code>semantic.positive.subtle.weak</code><span class="chain-arrow">·</span>
+        <code>semantic.positive.subtle.strong</code><span class="chain-arrow">·</span>
+        <code>semantic.positive.prominent.base</code>
+      </div>
+    </div>
+    <div class="comp-demo">
+      <div class="comp-row">
+        <div class="alert alert-informative"><span class="dot" style="background:#007AB3"></span>Informative — tips and neutral updates</div>
+        <div class="alert alert-positive"><span class="dot" style="background:#00806A"></span>Positive — action completed</div>
+      </div>
+      <div class="comp-row">
+        <div class="alert alert-warning"><span class="dot" style="background:#AA6709"></span>Warning — approaching a limit</div>
+        <div class="alert alert-danger"><span class="dot" style="background:#A30036"></span>Danger — action required</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILL -->
+  <div class="comp-block">
+    <div>
+      <h4>indicator · pill</h4>
+      <p>Pills categorise or label content. Every color variant pulls from the <i>same</i> semantic ramp — background from <code>subtle.weak</code>, label from <code>prominent.strong</code> — so an accent pill (alternative1–3) composes exactly like a tonal one.</p>
+      <div class="chain">
+        <code>semantic.{family}.subtle.weak</code><span class="chain-arrow">→</span>background
+        <span class="chain-arrow">·</span>
+        <code>semantic.{family}.prominent.strong</code><span class="chain-arrow">→</span>label
+      </div>
+    </div>
+    <div class="comp-demo">
+      <div class="comp-row">
+        <span class="pill-demo pill-neutral">Neutral</span>
+        <span class="pill-demo pill-brand">Brand</span>
+        <span class="pill-demo pill-positive">Positive</span>
+        <span class="pill-demo pill-warning">Warning</span>
+        <span class="pill-demo pill-danger">Danger</span>
+      </div>
+      <div class="comp-row">
+        <span class="pill-demo pill-alt1">alt1 · green</span>
+        <span class="pill-demo pill-alt2">alt2 · purple</span>
+        <span class="pill-demo pill-alt3">alt3 · orange</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  // Tab filter — preserve selection across reloads
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  const LS_KEY = 'oxygen-color-tab';
+
+  function activate(name){
+    tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.panel === name));
+    panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+    try { localStorage.setItem(LS_KEY, name); } catch(_){}
+  }
+
+  tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.panel)));
+
+  let initial = 'primitives';
+  try { const saved = localStorage.getItem(LS_KEY); if (saved) initial = saved; } catch(_){}
+  activate(initial);
+</script>
+</body>
+</html>

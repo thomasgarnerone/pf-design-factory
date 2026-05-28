@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Date picker</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=11">
+<style>
+body{padding:3.2rem;max-width:96rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#794006;background:#FFF9E5;border-left:0.3rem solid var(--oxygen-color-primitive-yellow-500);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.row{display:flex;gap:2.4rem;flex-wrap:wrap}
+</style></head>
+<body>
+
+<h1>Date picker</h1>
+<p class="lede">Calendar grid for picking a booking slot. Today is outlined, selected day filled with brand, unavailable days struck through. Month nav in the header, weekday initials bolded above the grid.</p>
+
+<div class="note"><b>Not yet in Oxygen core.</b> Calendar styling derived from the token system — brand-prominent-base for selection, neutral-subtle for separators — so it lines up with every other component in the kit.</div>
+
+<div class="section">
+  <h2>Default — October 2025, Tue 14 selected</h2>
+  <div class="row">
+    <div class="ox-datepicker">
+      <header class="ox-datepicker__header">
+        <button class="ox-datepicker__nav" aria-label="Previous month">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg>
+        </button>
+        <span class="ox-datepicker__title">October 2025</span>
+        <button class="ox-datepicker__nav" aria-label="Next month">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3.5 4.5 4.5L6 12.5"/></svg>
+        </button>
+      </header>
+      <div class="ox-datepicker__weekdays"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+      <div class="ox-datepicker__grid" id="grid-a"></div>
+    </div>
+
+    <div class="ox-datepicker">
+      <header class="ox-datepicker__header">
+        <button class="ox-datepicker__nav" aria-label="Previous month">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg>
+        </button>
+        <span class="ox-datepicker__title">November 2025</span>
+        <button class="ox-datepicker__nav" aria-label="Next month">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3.5 4.5 4.5L6 12.5"/></svg>
+        </button>
+      </header>
+      <div class="ox-datepicker__weekdays"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+      <div class="ox-datepicker__grid" id="grid-b"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>States</h2>
+  <div class="row" style="align-items:center">
+    <div style="display:flex;gap:1.6rem;align-items:center"><button class="ox-datepicker__day" style="width:3.2rem">14</button><span style="font-size:1.2rem;color:var(--oxygen-color-semantic-neutral-prominent-base)">default</span></div>
+    <div style="display:flex;gap:1.6rem;align-items:center"><button class="ox-datepicker__day ox-datepicker__day--today" style="width:3.2rem">20</button><span style="font-size:1.2rem;color:var(--oxygen-color-semantic-neutral-prominent-base)">today</span></div>
+    <div style="display:flex;gap:1.6rem;align-items:center"><button class="ox-datepicker__day ox-datepicker__day--selected" style="width:3.2rem">14</button><span style="font-size:1.2rem;color:var(--oxygen-color-semantic-neutral-prominent-base)">selected</span></div>
+    <div style="display:flex;gap:1.6rem;align-items:center"><button class="ox-datepicker__day" disabled style="width:3.2rem">7</button><span style="font-size:1.2rem;color:var(--oxygen-color-semantic-neutral-prominent-base)">disabled</span></div>
+    <div style="display:flex;gap:1.6rem;align-items:center"><button class="ox-datepicker__day ox-datepicker__day--outside" style="width:3.2rem">29</button><span style="font-size:1.2rem;color:var(--oxygen-color-semantic-neutral-prominent-base)">outside month</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec">
+    <tr><td>Container</td><td>32rem wide · 1.6rem padding · medium radius · card shadow</td></tr>
+    <tr><td>Today</td><td>1 px brand outline</td></tr>
+    <tr><td>Selected</td><td>brand-prominent-base fill · white label · bold</td></tr>
+    <tr><td>Disabled</td><td>neutral-prominent-weak · strike-through · not-allowed</td></tr>
+    <tr><td>Hover</td><td>brand-subtle-weak bg</td></tr>
+  </table>
+</div>
+
+<script>
+function renderMonth(gridId, year, month, selectedDay, today, disabled){
+  const grid = document.getElementById(gridId);
+  const first = new Date(year, month, 1);
+  const prevLast = new Date(year, month, 0).getDate();
+  // Mon=0 Sun=6
+  const offset = (first.getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const cells = [];
+  for(let i = offset - 1; i >= 0; i--){
+    const d = prevLast - i;
+    cells.push(`<button class="ox-datepicker__day ox-datepicker__day--outside" tabindex="-1">${d}</button>`);
+  }
+  for(let d = 1; d <= daysInMonth; d++){
+    const cls = ['ox-datepicker__day'];
+    if(d === selectedDay) cls.push('ox-datepicker__day--selected');
+    else if(d === today) cls.push('ox-datepicker__day--today');
+    const dis = disabled.includes(d) ? 'disabled' : '';
+    cells.push(`<button class="${cls.join(' ')}" ${dis}>${d}</button>`);
+  }
+  const trail = (7 - (cells.length % 7)) % 7;
+  for(let d = 1; d <= trail; d++){
+    cells.push(`<button class="ox-datepicker__day ox-datepicker__day--outside" tabindex="-1">${d}</button>`);
+  }
+  grid.innerHTML = cells.join('');
+}
+renderMonth('grid-a', 2025, 9, 14, 20, [4, 5, 11, 12, 18, 19, 25, 26]); // weekends disabled
+renderMonth('grid-b', 2025, 10, null, null, [1, 2, 8, 9, 15, 16, 22, 23, 29, 30]);
+</script>
+
+</body></html>

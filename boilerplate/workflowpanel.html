@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · WorkflowPanel</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=13">
+<style>
+body{padding:3.2rem;max-width:128rem;background:var(--oxygen-color-semantic-neutral-subtle-weaker);min-height:100vh}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+.section > h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+
+/* Workspace mock - shows panel sticking next to main content */
+.workspace{display:grid;grid-template-columns:1fr 40rem;gap:2.4rem;align-items:start;min-height:62rem}
+.workspace--comfort{grid-template-columns:1fr 56rem}
+.workspace--drawer{grid-template-columns:1fr;position:relative}
+.workspace__main{background:white;border-radius:1.6rem;padding:2.4rem;min-height:62rem;color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);display:flex;flex-direction:column;gap:1.6rem}
+.workspace__main h3{margin:0;font:var(--oxygen-font-semantic-title-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)}
+.placeholder{background:repeating-linear-gradient(45deg,var(--oxygen-color-semantic-neutral-subtle-weak),var(--oxygen-color-semantic-neutral-subtle-weak) 1rem,var(--oxygen-color-semantic-neutral-subtle-base) 1rem,var(--oxygen-color-semantic-neutral-subtle-base) 1.6rem);border-radius:1.2rem;height:8rem;display:flex;align-items:center;justify-content:center;color:var(--oxygen-color-semantic-neutral-prominent-weak);font-family:'JetBrains Mono',monospace;font-size:1.2rem}
+
+/* Workflow Panel itself */
+.wp{background:white;border-radius:1.6rem;padding:1.6rem;height:62rem;min-width:32rem;display:flex;flex-direction:column;gap:.8rem;box-shadow:0 .2rem .8rem rgba(25,38,52,.04);position:sticky;top:2.4rem}
+.wp__header{display:flex;align-items:center;justify-content:space-between;gap:.4rem}
+.wp__head-left{display:flex;align-items:center;gap:0;min-width:0}
+.wp__title{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0;padding:0 .8rem;line-height:1.3}
+.wp__head-right{display:flex;align-items:center;gap:.4rem;flex-shrink:0}
+.wp__hbtn{width:3.2rem;height:3.2rem;border:none;background:transparent;border-radius:50%;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+.wp__hbtn:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.wp__body{flex-grow:1;overflow-y:auto;padding:.8rem;background:linear-gradient(white,transparent) center top/100% 4rem no-repeat,linear-gradient(transparent,white) center bottom/100% 4rem no-repeat,radial-gradient(farthest-side at 50% 0%,rgba(0,0,0,.08),transparent) center top/100% 1.4rem no-repeat,radial-gradient(farthest-side at 50% 100%,rgba(0,0,0,.08),transparent) center bottom/100% 1.4rem no-repeat;background-attachment:local,local,scroll,scroll}
+.wp__body p{margin:0 0 1.2rem;color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular)}
+.wp__body label{display:block;font:var(--oxygen-font-semantic-body-s-bold);margin:0 0 .6rem;color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+.wp__body input,.wp__body select,.wp__body textarea{width:100%;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:.8rem;padding:1rem 1.2rem;font:var(--oxygen-font-semantic-body-m-regular);background:white;outline:none;margin-bottom:1.6rem}
+.wp__body textarea{min-height:10rem;resize:vertical}
+.wp__body input:focus,.wp__body select:focus,.wp__body textarea:focus{border-color:var(--oxygen-color-semantic-brand-prominent-base);box-shadow:0 0 0 .2rem var(--oxygen-color-semantic-brand-subtle-weak)}
+.wp__footer{display:flex;justify-content:flex-end;align-items:center;gap:1.2rem;padding-top:.8rem}
+
+/* Drawer (mobile) */
+.drawer-bg{position:fixed;inset:0;background:rgba(15,23,32,.4);z-index:50;display:none}
+.drawer-bg.is-open{display:block}
+.drawer{position:fixed;left:0;right:0;bottom:0;height:90%;background:white;border-radius:1.6rem 1.6rem 0 0;padding:1.6rem;display:none;flex-direction:column;gap:.8rem;z-index:60;box-shadow:0 -.4rem 2rem rgba(0,0,0,.15);transform:translateY(100%);transition:transform .25s ease}
+.drawer.is-open{display:flex;transform:translateY(0)}
+.drawer .wp__body{padding-bottom:1.6rem}
+
+/* Modal close-confirm */
+.modal-bg{position:fixed;inset:0;background:rgba(15,23,32,.45);z-index:80;display:none;align-items:center;justify-content:center}
+.modal-bg.is-open{display:flex}
+.modal{background:white;border-radius:1.2rem;padding:2.4rem;max-width:42rem;display:flex;flex-direction:column;gap:1.6rem;box-shadow:0 1.6rem 4.8rem rgba(0,0,0,.25)}
+.modal h3{margin:0;font:var(--oxygen-font-semantic-title-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)}
+.modal p{margin:0;color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular)}
+.modal__actions{display:flex;justify-content:flex-end;gap:1rem}
+
+/* Tooltip */
+[data-tooltip]{position:relative}
+[data-tooltip]:hover::after{content:attr(data-tooltip);position:absolute;top:calc(100% + .4rem);right:0;background:var(--oxygen-color-primitive-gray-800);color:white;font:var(--oxygen-font-semantic-body-xs-regular);padding:.4rem .8rem;border-radius:.4rem;white-space:nowrap;z-index:30;pointer-events:none}
+
+/* Action dropdown */
+.dd{position:relative}
+.dd__menu{position:absolute;right:0;top:calc(100% + .4rem);background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:.8rem;box-shadow:0 .8rem 2.4rem rgba(25,38,52,.12);min-width:20rem;padding:.4rem;z-index:30;display:none}
+.dd.is-open .dd__menu{display:block}
+.dd__item{display:flex;align-items:center;gap:.8rem;padding:.8rem 1rem;border-radius:.4rem;cursor:pointer;font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-strong);background:transparent;border:none;width:100%;text-align:left}
+.dd__item:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+
+.toast{position:fixed;bottom:2.4rem;left:50%;transform:translateX(-50%);background:var(--oxygen-color-primitive-gray-800);color:white;padding:1rem 1.6rem;border-radius:.8rem;font:var(--oxygen-font-semantic-body-s-regular);opacity:0;transition:opacity .2s;pointer-events:none;z-index:9999}
+.toast.is-show{opacity:1}
+</style></head>
+<body>
+<h1>WorkflowPanel</h1>
+<p class="lede">A temporary focus panel that sits beside main content. Header has title + optional step-back, actions overflow + comfort-mode + close. Footer has cancel / optional alternative / confirm. Switches to drawer at md/lg breakpoints; protects unsaved changes via a CloseDialog.</p>
+<div class="note"><b>Layout contract.</b> Sticky to the right at lg (≥1024px) using <code>--workspace-size</code>; in comfort mode it expands to ½ workspace; below md it becomes a bottom/right drawer.</div>
+
+<div class="section"><h2>Default · all features (header actions + alternative button + step-back)</h2>
+<div class="workspace" id="ws-1">
+  <div class="workspace__main">
+    <h3>Patient · Marie Leroy</h3>
+    <div class="placeholder">main workspace content</div>
+    <div class="placeholder">main workspace content</div>
+  </div>
+  <aside class="wp" data-wp>
+    <div class="wp__header">
+      <div class="wp__head-left">
+        <button class="wp__hbtn" type="button" data-tooltip="Back" data-act="Back" aria-label="Back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+        <h2 class="wp__title">Schedule appointment</h2>
+      </div>
+      <div class="wp__head-right">
+        <div class="dd">
+          <button class="wp__hbtn" type="button" data-tooltip="More actions" data-toggle="dd" aria-label="More"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg></button>
+          <div class="dd__menu">
+            <button class="dd__item" type="button" data-act="Duplicate">Duplicate workflow</button>
+            <button class="dd__item" type="button" data-act="Reset form">Reset form</button>
+            <button class="dd__item" type="button" data-act="Print">Print preview</button>
+          </div>
+        </div>
+        <button class="wp__hbtn" type="button" data-tooltip="Expand" data-toggle="comfort" data-target="ws-1" aria-label="Toggle comfort mode"><svg class="ico-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+        <button class="wp__hbtn" type="button" data-tooltip="Close" data-close aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+    </div>
+    <div class="wp__body">
+      <label>Type of appointment</label>
+      <select data-track><option>First consultation</option><option>Follow-up</option><option>Annual check-up</option></select>
+      <label>Date</label>
+      <input type="date" value="2026-05-14" data-track>
+      <label>Notes for patient</label>
+      <textarea placeholder="Optional notes..." data-track></textarea>
+    </div>
+    <div class="wp__footer">
+      <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-medium" type="button" data-close><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Cancel</span></span></button>
+      <button class="ox-button ox-button--variant-outlined ox-button--ui-neutral ox-button--size-medium" type="button" data-act="Save as draft"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Save as draft</span></span></button>
+      <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" type="button" data-act="Schedule"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Schedule</span></span></button>
+    </div>
+  </aside>
+</div>
+</div>
+
+<div class="section"><h2>Minimal · cancel + confirm only</h2>
+<div class="workspace">
+  <div class="workspace__main">
+    <h3>Quick edit</h3>
+    <div class="placeholder">main workspace content</div>
+  </div>
+  <aside class="wp" data-wp style="height:36rem">
+    <div class="wp__header">
+      <div class="wp__head-left"><h2 class="wp__title">Edit phone number</h2></div>
+      <div class="wp__head-right">
+        <button class="wp__hbtn" type="button" data-tooltip="Close" data-close aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+    </div>
+    <div class="wp__body">
+      <label>Phone</label>
+      <input type="tel" value="+33 6 12 34 56 78">
+    </div>
+    <div class="wp__footer">
+      <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-medium" type="button" data-close><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Cancel</span></span></button>
+      <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" type="button" data-act="Save"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Save</span></span></button>
+    </div>
+  </aside>
+</div>
+</div>
+
+<div class="section"><h2>Loading state · confirm spinner</h2>
+<div class="workspace">
+  <div class="workspace__main"><h3>Submission in progress</h3><div class="placeholder">main workspace content</div></div>
+  <aside class="wp" data-wp style="height:36rem">
+    <div class="wp__header">
+      <div class="wp__head-left"><h2 class="wp__title">Refer to specialist</h2></div>
+      <div class="wp__head-right"><button class="wp__hbtn" type="button" data-tooltip="Close" data-close aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    </div>
+    <div class="wp__body">
+      <p>Submitting referral request to Dr. Lemoine…</p>
+    </div>
+    <div class="wp__footer">
+      <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-medium" type="button" disabled><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Cancel</span></span></button>
+      <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" type="button" disabled>
+        <span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper" style="display:inline-flex;align-items:center;gap:.6rem">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 2a10 10 0 0 1 10 10" style="opacity:.7"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur=".9s" repeatCount="indefinite"/></path></svg>
+        Submitting…</span></span>
+      </button>
+    </div>
+  </aside>
+</div>
+</div>
+
+<div class="section"><h2>Drawer mode · viewport ≤ md (open it)</h2>
+<button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-medium" type="button" id="open-drawer" style="align-self:flex-start"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Open as drawer</span></span></button>
+<div class="drawer-bg" id="drawer-bg"></div>
+<aside class="drawer wp" id="drawer" data-wp>
+  <div class="wp__header">
+    <div class="wp__head-left"><h2 class="wp__title">Schedule appointment</h2></div>
+    <div class="wp__head-right">
+      <button class="wp__hbtn" type="button" data-tooltip="Close" data-close-drawer aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+  </div>
+  <div class="wp__body">
+    <p>The drawer takes 90% height on mobile and slides up from the bottom; on tablets it slides from the right at 90% width. Tap outside to dismiss.</p>
+    <label>Type</label>
+    <select><option>First consultation</option><option>Follow-up</option></select>
+    <label>Date</label>
+    <input type="date" value="2026-05-14">
+  </div>
+  <div class="wp__footer">
+    <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-medium" type="button" data-close-drawer><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Cancel</span></span></button>
+    <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" type="button" data-act="Schedule"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Schedule</span></span></button>
+  </div>
+</aside>
+</div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Source</td><td>packages/global-ux/src/components/WorkflowPanel/WorkflowPanel.tsx</td></tr>
+<tr><td>Required</td><td>label · confirmButton · children</td></tr>
+<tr><td>Header</td><td>stepBack? · title (Title/L/Bold) · actions[] (overflow MoreActions) · comfortMode toggle (≥lg) · close (×)</td></tr>
+<tr><td>Footer</td><td>cancelButton (transparent) · alternativeButton? (outlined) · confirmButton (solid brand)</td></tr>
+<tr><td>confirmButton</td><td>{ label, icon?, isLoading?, loadingLabel? } + (formId | onClick) — XOR</td></tr>
+<tr><td>Layout</td><td>≥lg: sticky width = workspace × 1/2 · ≥xl: 1/3 (1/2 in comfort) · ≤md: drawer</td></tr>
+<tr><td>Drawer position</td><td>≤sm: bottom · md: right · lg comfort: right</td></tr>
+<tr><td>Comfort mode</td><td>persisted in localStorage as gux:workflows:&lt;name&gt;:comfort-mode</td></tr>
+<tr><td>Unsaved changes</td><td>hasUnsavedChanges → CloseDialog blocks navigation/close</td></tr>
+<tr><td>Telemetry</td><td>workflow_panel_step_back__clicked · _action__clicked · _more_actions__displayed · _comfort_mode__interacted · _alternative_button__clicked · _confirm_button__clicked</td></tr>
+</table></div>
+
+<div class="modal-bg" id="confirm-close">
+  <div class="modal">
+    <h3>Discard unsaved changes?</h3>
+    <p>You have unsaved changes in this workflow. Closing now will lose them.</p>
+    <div class="modal__actions">
+      <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-medium" type="button" data-confirm-no><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Keep editing</span></span></button>
+      <button class="ox-button ox-button--variant-solid ox-button--ui-danger ox-button--size-medium" type="button" data-confirm-yes><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Discard</span></span></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+const toast=document.getElementById('toast');
+function showToast(t){toast.textContent=t;toast.classList.add('is-show');clearTimeout(showToast._t);showToast._t=setTimeout(()=>toast.classList.remove('is-show'),1400)}
+document.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();showToast(b.dataset.act+' clicked');document.querySelectorAll('.dd.is-open').forEach(d=>d.classList.remove('is-open'))}));
+document.querySelectorAll('[data-toggle="dd"]').forEach(t=>t.addEventListener('click',e=>{e.stopPropagation();const dd=t.closest('.dd');document.querySelectorAll('.dd.is-open').forEach(d=>{if(d!==dd)d.classList.remove('is-open')});dd.classList.toggle('is-open')}));
+document.addEventListener('click',()=>document.querySelectorAll('.dd.is-open').forEach(d=>d.classList.remove('is-open')));
+
+/* Comfort mode */
+document.querySelectorAll('[data-toggle="comfort"]').forEach(b=>b.addEventListener('click',()=>{
+  const w=document.getElementById(b.dataset.target);
+  w.classList.toggle('workspace--comfort');
+  showToast('Comfort mode '+(w.classList.contains('workspace--comfort')?'on':'off'));
+}));
+
+/* Unsaved changes flagging */
+const dirty=new WeakSet();
+document.querySelectorAll('[data-track]').forEach(el=>el.addEventListener('input',()=>dirty.add(el.closest('[data-wp]'))));
+
+/* Close behaviour */
+let pendingPanel=null;
+const modal=document.getElementById('confirm-close');
+function reallyClose(panel){panel.style.opacity='.4';panel.style.pointerEvents='none';showToast('Workflow closed');setTimeout(()=>{panel.style.opacity='';panel.style.pointerEvents=''},1200)}
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>{
+  const panel=b.closest('[data-wp]');
+  const isDirty=[...panel.querySelectorAll('[data-track]')].some(el=>dirty.has(panel));
+  if(isDirty){pendingPanel=panel;modal.classList.add('is-open')}
+  else reallyClose(panel);
+}));
+document.querySelector('[data-confirm-no]').addEventListener('click',()=>{modal.classList.remove('is-open');pendingPanel=null});
+document.querySelector('[data-confirm-yes]').addEventListener('click',()=>{modal.classList.remove('is-open');if(pendingPanel){dirty.delete(pendingPanel);reallyClose(pendingPanel);pendingPanel=null}});
+
+/* Drawer */
+const drawer=document.getElementById('drawer');const drawerBg=document.getElementById('drawer-bg');
+document.getElementById('open-drawer').addEventListener('click',()=>{drawer.classList.add('is-open');drawerBg.classList.add('is-open')});
+function closeDrawer(){drawer.classList.remove('is-open');drawerBg.classList.remove('is-open')}
+drawerBg.addEventListener('click',closeDrawer);
+document.querySelectorAll('[data-close-drawer]').forEach(b=>b.addEventListener('click',closeDrawer));
+</script>
+</body></html>

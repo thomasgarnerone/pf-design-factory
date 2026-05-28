@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · InlineButton</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=13">
+<style>
+body{padding:3.2rem;max-width:112rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.row{display:flex;flex-wrap:wrap;gap:2.4rem;align-items:center}
+.col{display:flex;flex-direction:column;gap:.8rem;align-items:flex-start}
+.col-title{font:var(--oxygen-font-semantic-body-xs-bold);text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-weak);margin:0 0 .4rem}
+
+/* InlineButton — port of InlineButton.module.css */
+.ox-inline-button{align-items:center;border-radius:.4rem;display:inline-flex;padding-right:.4rem;cursor:pointer;color:inherit;font:inherit;background:transparent;border:none;transition:background .12s}
+.ox-inline-button:hover{background-color:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.ox-inline-button:focus-visible{outline:none;box-shadow:0 0 0 .2rem var(--oxygen-color-semantic-brand-subtle-weak),0 0 0 .3rem var(--oxygen-color-semantic-brand-prominent-base)}
+.ox-inline-button.is-icon-end{flex-direction:row-reverse;padding-left:.4rem;padding-right:0}
+.ox-inline-button .ox-inline-button__icon{display:inline-flex;align-items:center;justify-content:center;width:2.4rem;height:2.4rem;border-radius:50%;flex-shrink:0;color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+.ox-inline-button:hover .ox-inline-button__icon{background:var(--oxygen-color-semantic-neutral-subtle-base)}
+.ox-inline-button .ox-inline-button__label{padding:0 .2rem}
+
+/* Font variants */
+.font-body-s{font:var(--oxygen-font-semantic-body-s-regular)}
+.font-body-m{font:var(--oxygen-font-semantic-body-m-regular)}
+.font-title-s{font:var(--oxygen-font-semantic-title-s-bold)}
+.font-title-l{font:var(--oxygen-font-semantic-title-l-bold)}
+.font-title-xl{font:var(--oxygen-font-semantic-title-xl-bold)}
+
+/* Color variants */
+.color-body-default{color:var(--oxygen-color-semantic-neutral-prominent-stronger)}
+.color-body-weak{color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+.color-body-weaker{color:var(--oxygen-color-semantic-neutral-prominent-base)}
+.color-header-default{color:var(--oxygen-color-semantic-neutral-prominent-stronger)}
+.color-header-weak{color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+.color-header-weaker{color:var(--oxygen-color-semantic-neutral-prominent-base)}
+.color-minor-default{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.color-minor-weak{color:var(--oxygen-color-semantic-neutral-prominent-weaker)}
+
+/* InlineButton.Text — non-editable variant */
+.ox-inline-button-text{padding:0 .8rem;color:inherit;font:inherit;display:inline-flex;align-items:center;height:2.4rem}
+
+.demo-card{padding:2.4rem;background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:1.2rem;max-width:48rem}
+.demo-row{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0;border-bottom:.1rem solid var(--oxygen-color-semantic-neutral-subtle-base)}
+.demo-row:last-child{border-bottom:none}
+.demo-row .key{font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);min-width:14rem}
+</style>
+</head>
+<body>
+<h1>InlineButton</h1>
+<p class="lede">Editable text affordance — pairs an extra-small icon button with an inline label that inherits typography from its container. Used for inline-edit patterns and add-something prompts.</p>
+<div class="note"><b>Inherits font &amp; color by default.</b> The label takes the surrounding text styles unless overridden via <code>font</code> / <code>color</code>. The icon button is always <code>xsmall · transparent · neutral</code>.</div>
+
+<div class="section"><h2>Default · pencil + label</h2>
+<div class="row">
+  <button class="ox-inline-button" type="button" aria-label="Add name">
+    <span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"/></svg></span>
+    <span class="ox-inline-button__label">Name</span>
+  </button>
+  <button class="ox-inline-button" type="button" aria-label="Edit name">
+    <span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+    <span class="ox-inline-button__label">Marie Leroy</span>
+  </button>
+</div>
+</div>
+
+<div class="section"><h2>Icon position · start vs end</h2>
+<div class="row">
+  <div class="col">
+    <span class="col-title">start (default)</span>
+    <button class="ox-inline-button" type="button">
+      <span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span>
+      <span class="ox-inline-button__label">Add allergy</span>
+    </button>
+  </div>
+  <div class="col">
+    <span class="col-title">end</span>
+    <button class="ox-inline-button is-icon-end" type="button">
+      <span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+      <span class="ox-inline-button__label">Marie Leroy</span>
+    </button>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>Font · all allowed variants</h2>
+<p style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin:0">Available: <code>inherit</code>, <code>Body/S/Regular</code>, <code>Body/M/Regular</code>, <code>Title/S/Bold</code>, <code>Title/L/Bold</code>, <code>Title/XL/Bold</code>. Body/Bold and Title/XXL/Title/XXXL are explicitly forbidden in the type signature.</p>
+<div class="col" style="gap:.4rem">
+  <button class="ox-inline-button font-body-s" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span><span class="ox-inline-button__label">Body/S/Regular</span></button>
+  <button class="ox-inline-button font-body-m" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span><span class="ox-inline-button__label">Body/M/Regular</span></button>
+  <button class="ox-inline-button font-title-s" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span><span class="ox-inline-button__label">Title/S/Bold</span></button>
+  <button class="ox-inline-button font-title-l" type="button"><span class="ox-inline-button__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span><span class="ox-inline-button__label">Title/L/Bold</span></button>
+  <button class="ox-inline-button font-title-xl" type="button"><span class="ox-inline-button__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span><span class="ox-inline-button__label">Title/XL/Bold</span></button>
+</div>
+</div>
+
+<div class="section"><h2>Color · semantic text tokens</h2>
+<div class="col" style="gap:.4rem">
+  <button class="ox-inline-button color-body-default" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span><span class="ox-inline-button__label">shared/text/bodyText/default</span></button>
+  <button class="ox-inline-button color-body-weak" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span><span class="ox-inline-button__label">shared/text/bodyText/weak</span></button>
+  <button class="ox-inline-button color-body-weaker" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span><span class="ox-inline-button__label">shared/text/bodyText/weaker</span></button>
+  <button class="ox-inline-button color-minor-default" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span><span class="ox-inline-button__label">shared/text/minorText/default</span></button>
+  <button class="ox-inline-button color-minor-weak" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span><span class="ox-inline-button__label">shared/text/minorText/weak</span></button>
+</div>
+</div>
+
+<div class="section"><h2>InlineButton.Text · non-editable counterpart</h2>
+<p style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin:0">Same vertical rhythm as <code>InlineButton</code>, no icon affordance — useful when a row of edit/non-edit fields needs to align.</p>
+<div class="col">
+  <button class="ox-inline-button" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><span class="ox-inline-button__label">John Doe</span></button>
+  <span class="ox-inline-button-text">John Doe (not editable)</span>
+</div>
+</div>
+
+<div class="section"><h2>In context · inline-editable patient field</h2>
+<div class="demo-card">
+  <div class="demo-row"><span class="key">Patient name</span><button class="ox-inline-button" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><span class="ox-inline-button__label">Marie Leroy</span></button></div>
+  <div class="demo-row"><span class="key">Date of birth</span><button class="ox-inline-button" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><span class="ox-inline-button__label">14 March 1982</span></button></div>
+  <div class="demo-row"><span class="key">Allergies</span><button class="ox-inline-button" type="button"><span class="ox-inline-button__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span><span class="ox-inline-button__label">Add</span></button></div>
+  <div class="demo-row"><span class="key">Insurance ID</span><span class="ox-inline-button-text">FR-2 84 03 75 218 094 51</span></div>
+</div>
+</div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Source</td><td>packages/global-ux/src/components/InlineButton/InlineButton.tsx</td></tr>
+<tr><td>Composition</td><td>&lt;div&gt; → &lt;IconButton size="xsmall" variant="transparent" uiStyle="neutral" /&gt; + &lt;Span&gt;</td></tr>
+<tr><td>iconPosition</td><td>start (default) | end</td></tr>
+<tr><td>color</td><td>inherit (default) | shared/text/bodyText/* | shared/text/headerText/* | shared/text/minorText/*</td></tr>
+<tr><td>font</td><td>inherit (default) | Body/S/Regular | Body/M/Regular | Title/S/Bold | Title/L/Bold | Title/XL/Bold</td></tr>
+<tr><td>required</td><td>icon · label · onClick · tooltip</td></tr>
+<tr><td>Sub-component</td><td>InlineButton.Text — same rhythm, no icon, no interaction</td></tr>
+</table></div>
+</body></html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Oxygen · Tooltip</title>
+  <link rel="stylesheet" href="_base.css?v=4">
+  <link rel="stylesheet" href="_components.css?v=13">
+  <style>
+    body { padding: 4.8rem; max-width: 96rem; }
+    h2 { font: var(--oxygen-font-semantic-title-s-bold); margin: 0 0 1.2rem; color: var(--oxygen-color-semantic-neutral-prominent-strong); text-transform: uppercase; letter-spacing: 0.04em; }
+    .section { margin-bottom: 6.4rem; }
+    .row { display: flex; gap: 4rem; flex-wrap: wrap; align-items: flex-start; padding-top: 4rem; }
+    .trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1.2rem;
+      border: 0.1rem solid var(--oxygen-color-primitive-gray-300);
+      border-radius: 0.4rem;
+      background: var(--oxygen-color-primitive-white);
+      font: var(--oxygen-font-semantic-body-s-regular);
+      color: var(--oxygen-color-semantic-neutral-prominent-strong);
+    }
+    .spec { font: var(--oxygen-font-semantic-body-xs-regular); color: var(--oxygen-color-semantic-neutral-prominent-base); font-family: 'JetBrains Mono', ui-monospace, monospace; }
+    .icon-btn {
+      width: 3.2rem; height: 3.2rem; border: 0.1rem solid var(--oxygen-color-primitive-gray-300); border-radius: 50%; background: #fff; display: inline-flex; align-items: center; justify-content: center; color: var(--oxygen-color-primitive-gray-700);
+    }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <h2>Placements</h2>
+  <div class="row">
+    <div class="ox-tooltip-demo">
+      <span class="ox-tooltip">Save the current record</span>
+      <button class="trigger">Top (default)</button>
+    </div>
+    <div class="ox-tooltip-demo tt-bottom">
+      <span class="ox-tooltip">Creates a new draft appointment</span>
+      <button class="trigger">Bottom</button>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Typical use — icon button affordance</h2>
+  <div class="row">
+    <div class="ox-tooltip-demo">
+      <span class="ox-tooltip">Edit</span>
+      <span class="icon-btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 2a1.5 1.5 0 0 1 1.06 2.56l-1 1-2.12-2.12 1-1A1.5 1.5 0 0 1 12.5 2M9.53 4.26l2.12 2.12L5.5 12.5l-2.5.38.38-2.5z"/></svg></span>
+    </div>
+    <div class="ox-tooltip-demo">
+      <span class="ox-tooltip">Duplicate</span>
+      <span class="icon-btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11 2H5a1 1 0 0 0-1 1v1H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zM3 5h8v8H3zm10 8h-1V5a1 1 0 0 0-1-1H5V3h8z"/></svg></span>
+    </div>
+    <div class="ox-tooltip-demo">
+      <span class="ox-tooltip">Archive — moves to trash after 30 days</span>
+      <span class="icon-btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3 6h10v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm3 2a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zM2 3h12a.5.5 0 0 1 .5.5V5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V3.5A.5.5 0 0 1 2 3"/></svg></span>
+    </div>
+    <div class="ox-tooltip-demo">
+      <span class="ox-tooltip">Delete permanently</span>
+      <span class="icon-btn" style="color:var(--oxygen-color-semantic-danger-prominent-base)"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M6 2.5A.5.5 0 0 1 6.5 2h3a.5.5 0 0 1 .5.5V3h3a.5.5 0 0 1 0 1h-.54l-.73 9.09A1 1 0 0 1 10.73 14H5.27a1 1 0 0 1-1-.91L3.55 4H3a.5.5 0 1 1 0-1h3zM5 4l.71 9h4.58l.71-9z"/></svg></span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Rich content — long label</h2>
+  <div class="row">
+    <div class="ox-tooltip-demo">
+      <span class="ox-tooltip">Tooltips wrap multi-line strings on <code>\n</code> and at the soft 32rem cap. Oxygen's Tooltip.scss imposes no <code>max-width</code> — content drives the width. white-space is pre-line so explicit line breaks are preserved.</span>
+      <button class="trigger">Hover for long copy</button>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec" style="border-collapse:collapse">
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Padding</td><td>padding-small · padding-medium (0.4rem 0.8rem)</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Typography</td><td>body-xs-regular · 12/16</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Background</td><td>tooltip-background = neutral-prominent-stronger</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Radius</td><td>xsmall · 4px</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Width</td><td>content-driven · <code>white-space: pre-line</code> wraps multi-line strings</td></tr>
+    <tr><td style="padding:0.4rem 2.4rem 0.4rem 0">Source</td><td>packages/core/src/overlays/Tooltip/Tooltip.scss · wraps inlined/Tooltip (Bootstrap-style)</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

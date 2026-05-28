@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · SidebarMenu</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=12">
+<style>
+  body{padding:3.2rem;max-width:120rem;font-family:Roboto,sans-serif}
+  h1{font:700 2.8rem/1.2 Montserrat,sans-serif;color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .6rem}
+  h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.4rem;font-weight:600;padding-bottom:.6rem;border-bottom:0.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong)}
+  .lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font-size:1.4rem;line-height:1.5;margin:0 0 3rem;max-width:72rem}
+  .section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}
+  .spec{font-family:'JetBrains Mono','Roboto Mono',monospace;font-size:1.1rem;border-collapse:collapse;color:var(--oxygen-color-semantic-neutral-prominent-base)}
+  .spec td{padding:.4rem 2rem .4rem 0;vertical-align:top}
+  .spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+
+  /* ---------- SidebarMenu ---------- */
+  .ox-sb{
+    width:26rem;
+    flex-shrink:0;
+    background:var(--oxygen-color-component-navigation-sidebarMenu-background-default,#fff);
+    border-right:0.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+    padding:1.2rem .8rem;
+    display:flex;flex-direction:column;gap:.4rem;
+  }
+  .ox-sb__group-label{
+    font-size:1.1rem;
+    color:var(--oxygen-color-semantic-neutral-prominent-weak);
+    text-transform:uppercase;letter-spacing:.08em;font-weight:600;
+    padding:1.2rem 1.2rem .4rem;
+  }
+  .ox-sb__group-label:first-child{padding-top:.4rem}
+
+  /* level-1 row (button so it can toggle) */
+  .ox-sb__item{
+    display:flex;align-items:center;gap:1rem;
+    width:100%;
+    padding:.9rem 1.2rem;
+    border-radius:.6rem;
+    border:0;background:transparent;
+    text-align:left;cursor:pointer;
+    color:var(--oxygen-color-semantic-neutral-prominent-stronger);
+    font:500 1.4rem/1.2 Roboto,sans-serif;
+    text-decoration:none;
+    position:relative;
+    transition:background-color .12s ease;
+  }
+  .ox-sb__item:hover{
+    background:var(--oxygen-color-semantic-neutral-subtle-weak);
+  }
+  .ox-sb__item:focus-visible{
+    outline:0.2rem solid var(--oxygen-color-semantic-brand-prominent-weak);
+    outline-offset:-0.2rem;
+  }
+  .ox-sb__item .ox-icon{
+    width:1.6rem;height:1.6rem;flex-shrink:0;
+    color:var(--oxygen-color-component-navigation-sidebarMenu-icon,var(--oxygen-color-semantic-neutral-prominent-base));
+  }
+  .ox-sb__item .ox-sb__chevron{
+    width:1.2rem;height:1.2rem;margin-left:auto;
+    color:var(--oxygen-color-semantic-neutral-prominent-weak);
+    transition:transform .18s ease;
+  }
+  .ox-sb__item .ox-sb__badge{
+    margin-left:auto;
+    background:var(--oxygen-color-semantic-danger-prominent-base,#DB3B21);
+    color:#fff;
+    font:600 1.1rem/1 Roboto,sans-serif;
+    padding:.2rem .6rem;border-radius:99rem;
+    min-width:1.8rem;text-align:center;
+  }
+
+  /* expanded state */
+  .ox-sb__item[aria-expanded="true"] .ox-sb__chevron{transform:rotate(90deg)}
+
+  /* selected state — subtle grey fill + left border accent */
+  .ox-sb__item[aria-current="page"]{
+    background:var(--oxygen-color-semantic-neutral-subtle-base,#EEF2F6);
+    color:var(--oxygen-color-semantic-neutral-prominent-stronger);
+    font-weight:600;
+  }
+  .ox-sb__item[aria-current="page"]::before{
+    content:"";position:absolute;left:0;top:.6rem;bottom:.6rem;width:.3rem;
+    border-radius:0 .2rem .2rem 0;
+    background:var(--oxygen-color-component-navigation-sidebarMenu-border-selected,#107ACA);
+  }
+  .ox-sb__item[aria-current="page"] .ox-icon{
+    color:var(--oxygen-color-semantic-brand-prominent-weak,#107ACA);
+  }
+
+  /* level-2 list */
+  .ox-sb__sublist{
+    display:none;
+    flex-direction:column;
+    padding:.2rem 0 .4rem 3.6rem;
+    gap:.1rem;
+    position:relative;
+  }
+  .ox-sb__item[aria-expanded="true"] + .ox-sb__sublist{display:flex}
+
+  .ox-sb__sub{
+    display:flex;align-items:center;gap:.8rem;
+    padding:.7rem 1.2rem;
+    border-radius:.5rem;
+    text-decoration:none;
+    color:var(--oxygen-color-semantic-neutral-prominent-base);
+    font:400 1.3rem/1.2 Roboto,sans-serif;
+    transition:background-color .12s ease, color .12s ease;
+  }
+  .ox-sb__sub:hover{
+    background:var(--oxygen-color-semantic-neutral-subtle-weak);
+    color:var(--oxygen-color-semantic-neutral-prominent-stronger);
+  }
+  .ox-sb__sub[aria-current="page"]{
+    color:var(--oxygen-color-semantic-neutral-prominent-stronger);
+    background:var(--oxygen-color-semantic-neutral-subtle-base,#EEF2F6);
+    font-weight:600;
+  }
+  .ox-sb__sub-bullet{
+    width:.4rem;height:.4rem;border-radius:99rem;
+    background:var(--oxygen-color-semantic-neutral-prominent-weak);
+    flex-shrink:0;
+  }
+  .ox-sb__sub[aria-current="page"] .ox-sb__sub-bullet{
+    background:var(--oxygen-color-semantic-brand-prominent-weak,#107ACA);
+  }
+
+  /* divider/footer */
+  .ox-sb__divider{
+    height:.1rem;background:var(--oxygen-color-semantic-neutral-subtle-strong);
+    margin:.8rem 1rem;
+  }
+
+  /* shell */
+  .ox-shell{
+    display:flex;
+    border:0.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+    border-radius:1.2rem;overflow:hidden;
+    max-width:100rem;height:56rem;
+    background:var(--oxygen-color-primitive-white,#fff);
+  }
+  .ox-shell__main{
+    flex:1;padding:2.4rem;
+    background:var(--oxygen-color-primitive-white,#fff);
+    color:var(--oxygen-color-semantic-neutral-prominent-base);
+    font-size:1.3rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>SidebarMenu</h1>
+<p class="lede">Vertical navigation with collapsible second-level items. Level 1 rows expose a chevron when they have children; activating a child highlights both the parent row and the child link. Surface uses neutral tokens — selected state combines a subtle neutral fill with the brand left-border indicator.</p>
+
+<!-- Inline icon sprite (kept tiny — only the icons used in this preview) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-house" viewBox="0 0 16 16"><path fill="currentColor" d="M14.54 7.39a.59.59 0 0 1 .07.798.584.584 0 0 1-.797.07l-.563-.492v4.359A1.866 1.866 0 0 1 11.375 14h-6.75a1.85 1.85 0 0 1-1.875-1.875v-4.36l-.586.493a.584.584 0 0 1-.797-.07.584.584 0 0 1 .07-.797l6.188-5.25a.6.6 0 0 1 .727 0zm-9.915 5.485H5.75V9.313c0-.516.398-.938.938-.938h2.625a.94.94 0 0 1 .937.938v3.562h1.125c.398 0 .75-.328.75-.75v-5.32L8 3.313 3.875 6.805v5.32c0 .422.328.75.75.75m2.25 0h2.25V9.5h-2.25z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 16 16"><path fill="currentColor" d="M6.313 3.5h3.375v-.937c0-.305.234-.563.562-.563a.57.57 0 0 1 .563.563V3.5h.937c.82 0 1.5.68 1.5 1.5v7.5c0 .844-.68 1.5-1.5 1.5h-7.5a1.48 1.48 0 0 1-1.5-1.5V5c0-.82.656-1.5 1.5-1.5h.938v-.937c0-.305.234-.563.562-.563a.57.57 0 0 1 .563.563zm-2.438 9c0 .21.164.375.375.375h7.5a.385.385 0 0 0 .375-.375v-6h-8.25z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 16 16"><path fill="currentColor" d="M5.75 8c1.64 0 3-1.336 3-3 0-1.64-1.36-3-3-3-1.664 0-3 1.36-3 3 0 1.664 1.336 3 3 3m0-4.875A1.88 1.88 0 0 1 7.625 5 1.866 1.866 0 0 1 5.75 6.875 1.85 1.85 0 0 1 3.875 5c0-1.031.82-1.875 1.875-1.875m1.172 6H4.555C2.305 9.125.5 10.953.5 13.203a.79.79 0 0 0 .797.797h8.883a.81.81 0 0 0 .82-.797 4.08 4.08 0 0 0-4.078-4.078m-5.297 3.75c.164-1.453 1.406-2.625 2.93-2.625h2.367c1.523 0 2.742 1.172 2.93 2.625zM11.727 9.5H9.992a4.8 4.8 0 0 1 1.758 3.703c0 .305-.094.563-.234.797h3.234c.398 0 .75-.328.75-.75 0-2.062-1.687-3.75-3.773-3.75M10.625 8a2.636 2.636 0 0 0 2.625-2.625c0-1.43-1.195-2.625-2.625-2.625-.61 0-1.148.21-1.57.54.258.515.445 1.1.445 1.71a3.64 3.64 0 0 1-.75 2.227c.469.492 1.125.773 1.875.773"/></symbol>
+    <symbol id="i-stethoscope" viewBox="0 0 16 16"><path fill="currentColor" d="M12.5 5c-.844 0-1.5.68-1.5 1.5 0 .61.375 1.148.938 1.383v2.18a2.806 2.806 0 0 1-2.813 2.812 2.794 2.794 0 0 1-2.812-2.672C8.117 9.922 9.5 8.375 9.5 6.5V3.36a.6.6 0 0 0-.328-.516l-1.594-.797a.585.585 0 0 0-.75.281.555.555 0 0 0 .258.75l1.289.633V6.5A2.636 2.636 0 0 1 5.75 9.125 2.62 2.62 0 0 1 3.125 6.5V3.71l1.266-.632a.555.555 0 0 0 .257-.75.555.555 0 0 0-.75-.258l-1.593.797A.55.55 0 0 0 2 3.36V6.5a3.715 3.715 0 0 0 3.188 3.68A3.94 3.94 0 0 0 9.125 14a3.946 3.946 0 0 0 3.938-3.937V7.906c.539-.234.937-.773.937-1.406 0-.82-.68-1.5-1.5-1.5m0 1.875a.37.37 0 0 1-.375-.375c0-.188.164-.375.375-.375.188 0 .375.187.375.375 0 .21-.187.375-.375.375"/></symbol>
+    <symbol id="i-envelope" viewBox="0 0 16 16"><path fill="currentColor" d="M12.5 3.5h-9C2.656 3.5 2 4.18 2 5v6c0 .844.656 1.5 1.5 1.5h9c.82 0 1.5-.656 1.5-1.5V5c0-.82-.68-1.5-1.5-1.5m-9 1.125h9c.188 0 .375.188.375.375v.54L8.961 8.772c-.54.446-1.406.446-1.945 0L3.125 5.54V5c0-.187.164-.375.375-.375m9 6.75h-9A.37.37 0 0 1 3.125 11V6.992l3.188 2.672A2.68 2.68 0 0 0 8 10.25c.61 0 1.195-.21 1.664-.586l3.211-2.672V11c0 .21-.187.375-.375.375"/></symbol>
+    <symbol id="i-chartline" viewBox="0 0 16 16"><path fill="currentColor" d="M3.125 11.563c0 .328.234.562.563.562h9.75a.57.57 0 0 1 .562.563.555.555 0 0 1-.562.562h-9.75A1.68 1.68 0 0 1 2 11.563v-8.25c0-.305.234-.563.563-.563a.57.57 0 0 1 .562.563zm6.75-2.415a.513.513 0 0 1-.773 0L7.227 7.297 5.375 9.148a.513.513 0 0 1-.773 0c-.235-.21-.235-.562 0-.796l2.25-2.25a.55.55 0 0 1 .375-.165.56.56 0 0 1 .398.165L9.5 7.977l2.79-2.813c.21-.21.562-.21.773 0 .234.234.234.586 0 .797z"/></symbol>
+    <symbol id="i-eurosign" viewBox="0 0 16 16"><path fill="currentColor" d="M4.813 7.625a.54.54 0 0 1-.563-.562c0-.305.234-.563.563-.563h.773a5.25 5.25 0 0 1 5.039-3.75h.563a.57.57 0 0 1 .562.563.555.555 0 0 1-.562.562h-.563A4.18 4.18 0 0 0 6.758 6.5h3.68a.57.57 0 0 1 .562.563.555.555 0 0 1-.562.562H6.5v.75h3.938a.57.57 0 0 1 .562.563.555.555 0 0 1-.562.562h-3.68a4.14 4.14 0 0 0 3.867 2.625h.563a.57.57 0 0 1 .562.563.555.555 0 0 1-.562.562h-.563a5.224 5.224 0 0 1-5.04-3.75h-.772a.54.54 0 0 1-.563-.562c0-.305.234-.563.563-.563h.562v-.75z"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 16 16"><path fill="currentColor" d="M5.75 8c0-1.242.984-2.25 2.25-2.25a2.25 2.25 0 0 1 0 4.5A2.236 2.236 0 0 1 5.75 8M8 6.875c-.633 0-1.125.516-1.125 1.125A1.11 1.11 0 0 0 8 9.125c.61 0 1.125-.492 1.125-1.125A1.14 1.14 0 0 0 8 6.875M8.867 2c.516 0 .961.375 1.078.867l.188.774c.21.093.398.21.562.328l.774-.235c.492-.14 1.031.07 1.289.516l.867 1.523a1.106 1.106 0 0 1-.211 1.36l-.562.539c0 .117.023.234.023.328 0 .117-.024.234-.024.328l.563.563c.375.351.469.914.211 1.359l-.867 1.523a1.136 1.136 0 0 1-1.29.516l-.773-.234a3.2 3.2 0 0 1-.562.328l-.188.773A1.105 1.105 0 0 1 8.867 14H7.11c-.515 0-.96-.352-1.078-.844l-.187-.773a3.2 3.2 0 0 1-.563-.328l-.773.234a1.136 1.136 0 0 1-1.29-.516l-.866-1.523a1.106 1.106 0 0 1 .21-1.36l.563-.562v-.656l-.563-.54a1.106 1.106 0 0 1-.21-1.359L3.22 4.25a1.136 1.136 0 0 1 1.289-.516l.773.235c.164-.117.352-.235.563-.328l.187-.774A1.126 1.126 0 0 1 7.11 2zM6.805 4.438l-.258.117a3.1 3.1 0 0 0-.82.468l-.235.188-1.289-.399-.867 1.524.96.914-.023.281c-.023.164-.023.328-.023.469 0 .164 0 .328.023.492l.024.281-.961.915.867 1.523 1.29-.399.234.188c.234.188.515.352.82.469l.258.117.304 1.289h1.758l.305-1.29.258-.116a3.1 3.1 0 0 0 .82-.469l.234-.187 1.29.398.867-1.524-.961-.914.023-.28A3.4 3.4 0 0 0 11.75 8c0-.14-.024-.305-.047-.469l-.023-.281.96-.914-.867-1.524-1.289.399-.234-.188a3.1 3.1 0 0 0-.82-.468l-.258-.117-.305-1.313H7.11z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 16 16"><path fill="currentColor" d="M8 14.2A6.2 6.2 0 1 0 8 1.8a6.2 6.2 0 0 0 0 12.4M8 13c-2.763 0-5-2.236-5-5 0-2.762 2.237-5 5-5s5 2.237 5 5-2.236 5-5 5m0-6.35a1.05 1.05 0 1 0 0-2.1 1.05 1.05 0 0 0 0 2.1m1.1 4.55a.3.3 0 0 0 .3-.3v-.6a.3.3 0 0 0-.3-.3h-.3V7.5a.3.3 0 0 0-.3-.3H6.9a.3.3 0 0 0-.3.3v.6a.3.3 0 0 0 .3.3h.3V10h-.3a.3.3 0 0 0-.3.3v.6a.3.3 0 0 0 .3.3z"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 16 16"><path fill="currentColor" d="m6.226 3.169 4.29 4.476c.116.141.187.282.187.422s-.047.258-.141.375L6.273 12.92c-.234.234-.586.234-.797.023-.234-.21-.234-.562-.023-.797l3.89-4.078-3.937-4.125a.56.56 0 0 1 .023-.797c.235-.21.586-.21.797.024"/></symbol>
+  </defs>
+</svg>
+
+<div class="section">
+  <h2>Default — with expanded second level</h2>
+  <div class="ox-shell">
+    <nav class="ox-sb" aria-label="Primary">
+      <div class="ox-sb__group-label">Practice</div>
+
+      <button type="button" class="ox-sb__item">
+        <svg class="ox-icon" aria-hidden="true"><use href="#i-house"/></svg>
+        Dashboard
+      </button>
+
+      <!-- Level-1 with expanded children, child active -->
+      <button type="button" class="ox-sb__item" aria-expanded="true" aria-controls="sub-schedule">
+        <svg class="ox-icon" aria-hidden="true"><use href="#i-calendar"/></svg>
+        Schedule
+        <svg class="ox-sb__chevron" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+      <div class="ox-sb__sublist" id="sub-schedule" role="group">
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>Day view</a>
+        <a class="ox-sb__sub" href="#" aria-current="page"><span class="ox-sb__sub-bullet"></span>Week view</a>
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>Waiting list</a>
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>Time off</a>
+      </div>
+
+      <!-- Level-1 with collapsed children -->
+      <button type="button" class="ox-sb__item" aria-expanded="false" aria-controls="sub-patients">
+        <svg class="ox-icon" aria-hidden="true"><use href="#i-users"/></svg>
+        Patients
+        <svg class="ox-sb__chevron" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+      <div class="ox-sb__sublist" id="sub-patients" role="group">
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>All patients</a>
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>Recent visits</a>
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>Family groups</a>
+      </div>
+
+      <!-- Level-1 with collapsed children -->
+      <button type="button" class="ox-sb__item" aria-expanded="false" aria-controls="sub-care">
+        <svg class="ox-icon" aria-hidden="true"><use href="#i-stethoscope"/></svg>
+        Care team
+        <svg class="ox-sb__chevron" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+      <div class="ox-sb__sublist" id="sub-care" role="group">
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>Practitioners</a>
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>Locations</a>
+      </div>
+
+      <!-- Leaf with badge -->
+      <a class="ox-sb__item" href="#" role="link">
+        <svg class="ox-icon" aria-hidden="true"><use href="#i-envelope"/></svg>
+        Inbox
+        <span class="ox-sb__badge">3</span>
+      </a>
+
+      <a class="ox-sb__item" href="#">
+        <svg class="ox-icon" aria-hidden="true"><use href="#i-chartline"/></svg>
+        Reports
+      </a>
+
+      <div class="ox-sb__group-label">Business</div>
+
+      <a class="ox-sb__item" href="#">
+        <svg class="ox-icon" aria-hidden="true"><use href="#i-eurosign"/></svg>
+        Billing
+      </a>
+
+      <button type="button" class="ox-sb__item" aria-expanded="false" aria-controls="sub-settings">
+        <svg class="ox-icon" aria-hidden="true"><use href="#i-gear"/></svg>
+        Settings
+        <svg class="ox-sb__chevron" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+      <div class="ox-sb__sublist" id="sub-settings" role="group">
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>Profile</a>
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>Team & roles</a>
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>Integrations</a>
+        <a class="ox-sb__sub" href="#"><span class="ox-sb__sub-bullet"></span>Billing plan</a>
+      </div>
+
+      <div class="ox-sb__divider"></div>
+
+      <a class="ox-sb__item" href="#">
+        <svg class="ox-icon" aria-hidden="true"><use href="#i-info"/></svg>
+        Help &amp; support
+      </a>
+    </nav>
+    <main class="ox-shell__main">Schedule · Week view</main>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec">
+    <tr><td>Width</td><td>26rem (260px) default</td></tr>
+    <tr><td>Surface</td><td>neutral · sidebarMenu-background-default</td></tr>
+    <tr><td>Level 1 height</td><td>4rem · .9rem 1.2rem padding · .6rem radius</td></tr>
+    <tr><td>Level 2 height</td><td>3.4rem · indented to icon column · 1px guide rail</td></tr>
+    <tr><td>Selected (L1)</td><td>neutral-subtle-base fill · 3px brand left-border · semibold</td></tr>
+    <tr><td>Selected (L2)</td><td>neutral-subtle-base fill · brand bullet · semibold</td></tr>
+    <tr><td>Chevron</td><td>chevron-right · rotate 90° when aria-expanded="true"</td></tr>
+    <tr><td>Icons</td><td>16px sprite icons · sidebarMenu-icon token</td></tr>
+    <tr><td>Source</td><td>navigation/SidebarMenu.tsx</td></tr>
+  </table>
+</div>
+
+<script>
+  // toggle level-1 expansion
+  document.querySelectorAll('.ox-sb__item[aria-expanded]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+</script>
+</body></html>

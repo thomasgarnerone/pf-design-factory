@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<title>Inputs — InputText (Oxygen)</title>
+<style>
+  /* Reproduction of Oxygen's _Input.scss + _InputField.scss + _InputLabel.scss + _InputMessage
+     using raw primitive / semantic tokens from tokenCSSValues.json. */
+
+  :root {
+    /* field container */
+    --ox-field-gap: 0.4rem;
+    /* input */
+    --ox-input-h: 4rem;
+    --ox-input-h-floating: 5.6rem;
+    --ox-input-radius: 0.4rem;
+    --ox-input-padding-y: 0.8rem;
+    --ox-input-padding-x: 1.6rem;
+    --ox-input-padding-floating: 2.4rem 1.6rem 0.8rem;
+    --ox-input-icon-gutter: 4rem; /* padding when icon present */
+
+    /* colors — pulled 1:1 from oxygen tokens */
+    --ox-bg: #FFFFFF;
+    --ox-bg-disabled: #F1F7FE;          /* mute-subtle-weak */
+    --ox-color: #192634;                /* neutral-prominent-stronger */
+    --ox-color-disabled: #6B91B8;       /* mute-prominent-base */
+    --ox-placeholder: #4B739B;          /* neutral-prominent-weak */
+
+    --ox-border-default: #6B91B8;       /* forms.global.border.default */
+    --ox-border-hover: #107ACA;         /* forms.global.border.hover (brand) */
+    --ox-border-focus: #4B739B;         /* forms.global.border.focus */
+    --ox-border-disabled: #C9D9E8;      /* forms.global.border.disabled */
+    --ox-border-error: #E5004C;         /* forms.global.danger.border.default */
+
+    --ox-hint: #3A5978;                 /* form.global.hint.helper.default (neutral-prominent-base) */
+    --ox-hint-disabled: #6B91B8;
+    --ox-danger: #E5004C;               /* danger-prominent-base */
+    --ox-icon: #294056;                 /* form.global.icon.default (gray-700) */
+
+    /* focus ring: 0.2rem outline + 0.2rem offset, brand blue */
+    --ox-focus-ring: 0 0 0 0.2rem #045FAE;
+  }
+
+  .ox-field {
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--ox-field-gap);
+    max-width: 100%;
+    width: 32rem;
+  }
+
+  .ox-label {
+    font: 500 1.4rem/1.4 Roboto, sans-serif;
+    color: var(--ox-color);
+  }
+  .ox-field.is-disabled .ox-label { color: var(--ox-color-disabled); }
+  .ox-label .req { color: var(--ox-danger); margin-left: 0.2rem; }
+  .ox-label .opt {
+    color: var(--ox-hint);
+    font-weight: 400;
+    margin-left: 0.4rem;
+  }
+
+  .ox-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ox-input {
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--ox-input-h);
+    padding: var(--ox-input-padding-y) var(--ox-input-padding-x);
+    font: 400 1.4rem/1.4 Roboto, sans-serif;
+    color: var(--ox-color);
+    background-color: var(--ox-bg);
+    border: 0.1rem solid var(--ox-border-default);
+    border-radius: var(--ox-input-radius);
+    text-align: start;
+    outline: none;
+    transition: border-color 150ms ease;
+  }
+  .ox-input::placeholder { color: var(--ox-placeholder); }
+  .ox-input:hover { border-color: var(--ox-border-hover); }
+  .ox-input:focus,
+  .ox-input:focus-within {
+    border-color: var(--ox-border-focus);
+    outline: 0.2rem solid #045FAE;
+    outline-offset: 0.2rem;
+  }
+  .ox-input.is-error { border-color: var(--ox-border-error); }
+  .ox-input.is-disabled,
+  .ox-input:disabled {
+    cursor: not-allowed;
+    background-color: var(--ox-bg-disabled);
+    color: var(--ox-color-disabled);
+    border-color: var(--ox-border-disabled);
+  }
+
+  /* icons */
+  .ox-wrapper.has-icon-left  .ox-input { padding-left:  var(--ox-input-icon-gutter); }
+  .ox-wrapper.has-icon-right .ox-input { padding-right: var(--ox-input-icon-gutter); }
+  .ox-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    color: var(--ox-icon);
+  }
+  .ox-icon.left  { left: 1.6rem; }
+  .ox-icon.right { right: 1.6rem; }
+
+  /* floating label variant */
+  .ox-field.is-floating { position: relative; gap: 0; }
+  .ox-field.is-floating .ox-input {
+    height: var(--ox-input-h-floating);
+    padding: var(--ox-input-padding-floating);
+  }
+  .ox-field.is-floating .ox-floating-label {
+    position: absolute;
+    left: 1.6rem;
+    top: 1.8rem;
+    font: 400 1.4rem/1 Roboto, sans-serif;
+    color: var(--ox-placeholder);
+    pointer-events: none;
+    transition: all 150ms ease;
+    background: transparent;
+  }
+  .ox-field.is-floating.is-filled .ox-floating-label,
+  .ox-field.is-floating.is-focused .ox-floating-label {
+    top: 0.8rem;
+    font-size: 1.2rem;
+    color: var(--ox-hint);
+  }
+
+  /* hint + message */
+  .ox-hint {
+    font: 400 1.2rem/1.4 Roboto, sans-serif;
+    color: var(--ox-hint);
+  }
+  .ox-field.is-disabled .ox-hint { color: var(--ox-hint-disabled); }
+  .ox-message {
+    display: flex;
+    align-items: start;
+    gap: 0.4rem;
+    font: 400 1.2rem/1.4 Roboto, sans-serif;
+    color: var(--ox-hint);
+  }
+  .ox-message.is-error {
+    color: var(--ox-danger);
+  }
+  .ox-message svg { flex: none; margin-top: 0.15rem; }
+
+  /* page layout */
+  body { background: #FFFFFF; padding: 2rem; }
+  .section {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.6rem;
+  }
+  .section-title {
+    font: 700 1.3rem/1.4 Montserrat, sans-serif;
+    color: #3A5978;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 1.2rem 0 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="section-title">Default — 40px height, 4px radius</div>
+<div class="section">
+  <!-- rest -->
+  <div class="ox-field">
+    <label class="ox-label" for="ox-1">Full name</label>
+    <div class="ox-wrapper">
+      <input id="ox-1" class="ox-input" placeholder="Marie Dubois"/>
+    </div>
+    <span class="ox-hint">As shown on your health card</span>
+  </div>
+
+  <!-- hover (simulated) -->
+  <div class="ox-field">
+    <label class="ox-label" for="ox-2">Email</label>
+    <div class="ox-wrapper">
+      <input id="ox-2" class="ox-input" value="" placeholder="you@example.fr"
+             style="border-color:#107ACA"/>
+    </div>
+    <span class="ox-hint">Hover — border shifts to brand blue</span>
+  </div>
+
+  <!-- focus -->
+  <div class="ox-field">
+    <label class="ox-label" for="ox-3">Postal code</label>
+    <div class="ox-wrapper">
+      <input id="ox-3" class="ox-input" value="75011"
+             style="border-color:#4B739B;outline:0.2rem solid #045FAE;outline-offset:0.2rem"/>
+    </div>
+    <span class="ox-hint">Focus — 2px outline + 2px offset</span>
+  </div>
+</div>
+
+<div class="section">
+  <!-- error -->
+  <div class="ox-field">
+    <label class="ox-label" for="ox-4">Phone<span class="req">*</span></label>
+    <div class="ox-wrapper">
+      <input id="ox-4" class="ox-input is-error" value="06 12"/>
+    </div>
+    <span class="ox-message is-error">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="#E5004C"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 3a1 1 0 0 1 1 1v4a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 8.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+      Enter a valid 10-digit number.
+    </span>
+  </div>
+
+  <!-- disabled -->
+  <div class="ox-field is-disabled">
+    <label class="ox-label" for="ox-5">Social security <span class="opt">(optional)</span></label>
+    <div class="ox-wrapper">
+      <input id="ox-5" class="ox-input is-disabled" disabled placeholder="1 85 07…"/>
+    </div>
+    <span class="ox-hint">Added after sign-in</span>
+  </div>
+
+  <!-- with icon left -->
+  <div class="ox-field">
+    <label class="ox-label" for="ox-6">Search practitioner</label>
+    <div class="ox-wrapper has-icon-left">
+      <span class="ox-icon left">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="m13.813 13.04-3.141-3.142c.68-.82 1.055-1.875 1.055-3.023C11.727 4.203 9.523 2 6.852 2 4.156 2 2 4.203 2 6.875 2 9.57 4.18 11.75 6.852 11.75c1.125 0 2.18-.375 3.023-1.055l3.14 3.14a.56.56 0 0 0 .422.165.47.47 0 0 0 .376-.164c.234-.211.234-.563 0-.797M3.124 6.874a3.746 3.746 0 0 1 3.75-3.75 3.76 3.76 0 0 1 3.75 3.75 3.746 3.746 0 0 1-3.75 3.75 3.73 3.73 0 0 1-3.75-3.75"/></svg>
+      </span>
+      <input id="ox-6" class="ox-input" placeholder="Dr Dubois, cardiology…"/>
+    </div>
+    <span class="ox-hint">Icon gutter 1.6rem; input padding shifts to 4rem</span>
+  </div>
+</div>
+
+<div class="section-title">Floating label — 56px height</div>
+<div class="section">
+  <!-- empty floating -->
+  <div class="ox-field is-floating">
+    <div class="ox-wrapper">
+      <input id="ox-7" class="ox-input" placeholder=" "/>
+      <label class="ox-floating-label" for="ox-7">First name</label>
+    </div>
+  </div>
+
+  <!-- filled floating -->
+  <div class="ox-field is-floating is-filled">
+    <div class="ox-wrapper">
+      <input id="ox-8" class="ox-input" value="Marie" placeholder=" "/>
+      <label class="ox-floating-label" for="ox-8">First name</label>
+    </div>
+  </div>
+
+  <!-- focused floating -->
+  <div class="ox-field is-floating is-focused">
+    <div class="ox-wrapper">
+      <input id="ox-9" class="ox-input" value="Marie Dubois" placeholder=" "
+             style="border-color:#4B739B;outline:0.2rem solid #045FAE;outline-offset:0.2rem"/>
+      <label class="ox-floating-label" for="ox-9">Full name</label>
+    </div>
+  </div>
+</div>
+
+<div class="section-title">Specs — from <code style="font-family:'JetBrains Mono',monospace">packages/core/src/forms/private/_Input.scss</code></div>
+<table style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.1rem;color:#3A5978;border-collapse:collapse">
+  <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">height</td><td>4rem (40px) / 5.6rem floating</td></tr>
+  <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">radius</td><td>0.4rem (not 0.8 — that's cards)</td></tr>
+  <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">padding</td><td>0.8 1.6rem — or 2.4 1.6 0.8 floating</td></tr>
+  <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">border default</td><td>0.1rem solid #6B91B8 &nbsp;· gray-400</td></tr>
+  <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">border hover</td><td>#107ACA &nbsp;· brand blue-500</td></tr>
+  <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">border focus</td><td>#4B739B &nbsp;· gray-500 + outline ring</td></tr>
+  <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">border error</td><td>#E5004C &nbsp;· danger red-600</td></tr>
+  <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">border disabled</td><td>#C9D9E8 &nbsp;· gray-250 + bg #F1F7FE</td></tr>
+  <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">placeholder</td><td>#4B739B &nbsp;· gray-500</td></tr>
+  <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">hint / helper</td><td>#3A5978 &nbsp;· gray-600</td></tr>
+  <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">field gap</td><td>0.4rem between label / input / message</td></tr>
+</table>
+
+</body>
+</html>

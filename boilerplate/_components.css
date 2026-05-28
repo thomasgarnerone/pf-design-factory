@@ -1,0 +1,3159 @@
+/* ============================================================
+   Oxygen component CSS — faithful HTML/CSS port of the real
+   component SCSS in doctolib/oxygen. Each block names the
+   source file it mirrors. Use the class names as written.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   <Button>
+   Source:
+     packages/core/src/actions/Button/v2/Button.tsx
+     packages/core/src/actions/Button/v2/Button.module.scss
+   Root markup:
+     <button class="ox-button ox-button--variant-{v} ox-button--ui-{ui}
+                    ox-button--size-{s} [ox-button--hasIconStart] [ox-button--isLoading]">
+       <span class="ox-button__innerWrapper">
+         <span class="ox-button__hoverEffect"></span>
+         <span class="ox-button__activeEffect"></span>
+         <span class="ox-button__contentWrapper">{icon}{label}{chevron}</span>
+       </span>
+     </button>
+   Variant/ui combinations valid per Figma:
+     solid:       brand | danger | inverted
+     outlined:    brand | inverted | neutral
+     transparent: brand | danger | inverted | neutral
+   ------------------------------------------------------------ */
+.ox-button {
+  overflow: hidden;
+  border: none;
+  display: inline-flex;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.ox-button:disabled { pointer-events: none; }
+
+.ox-button__innerWrapper {
+  border-radius: inherit;
+  border-style: solid;
+  border-width: 0.1rem;
+  display: inline-flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.ox-button__contentWrapper {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+.ox-button__hoverEffect,
+.ox-button__activeEffect {
+  border-radius: 99999rem;
+  position: absolute;
+  top: -50%; left: -50%;
+  min-width: 100%; min-height: 100%;
+  opacity: 0;
+  aspect-ratio: 1 / 1;
+  pointer-events: none;
+}
+
+/* Sizes */
+.ox-button--size-small {
+  border-radius: 1.2rem; /* radius-medium */
+  font: var(--oxygen-font-semantic-body-s-bold);
+}
+.ox-button--size-small .ox-button__innerWrapper { min-height: 3.2rem; padding-block: 0.3rem; }
+.ox-button--size-small:not(.ox-button--variant-transparent) .ox-button__innerWrapper {
+  padding-inline: 0.8rem;
+}
+.ox-button--size-small.ox-button--hasIconStart:not(.ox-button--variant-transparent) .ox-button__innerWrapper {
+  padding-inline-start: 0.4rem;
+}
+
+.ox-button--size-medium {
+  border-radius: 1.6rem; /* radius-large */
+  font: var(--oxygen-font-semantic-body-m-bold);
+}
+.ox-button--size-medium .ox-button__innerWrapper { min-height: 4rem; }
+.ox-button--size-medium:not(.ox-button--variant-transparent) .ox-button__innerWrapper {
+  padding-block: 0.7rem;
+  padding-inline: 1.2rem;
+}
+.ox-button--size-medium.ox-button--hasIconStart:not(.ox-button--variant-transparent) .ox-button__innerWrapper {
+  padding-inline-start: 0.8rem;
+}
+
+/* ---- variant-solid ---- */
+.ox-button--variant-solid .ox-button__innerWrapper { border-color: transparent; }
+
+/* default bg: brand-prominent-weak (#107ACA) — v2 */
+.ox-button--variant-solid.ox-button--ui-brand:not(:disabled) .ox-button__innerWrapper {
+  background-color: var(--oxygen-color-semantic-brand-prominent-weak);
+  color: var(--oxygen-color-semantic-common-subtle);
+}
+.ox-button--variant-solid.ox-button--ui-brand:hover:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-button--variant-solid.ox-button--ui-brand:active:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-brand-prominent-strong);
+}
+.ox-button--variant-solid.ox-button--ui-brand:disabled .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-neutral-subtle-stronger);
+  color: var(--oxygen-color-semantic-common-subtle);
+}
+
+.ox-button--variant-solid.ox-button--ui-danger:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-danger-prominent-base);
+  color: var(--oxygen-color-semantic-common-subtle);
+}
+.ox-button--variant-solid.ox-button--ui-danger:hover:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-danger-prominent-strong);
+}
+.ox-button--variant-solid.ox-button--ui-danger:active:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-danger-prominent-stronger);
+}
+.ox-button--variant-solid.ox-button--ui-danger:disabled .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-neutral-subtle-stronger);
+  color: var(--oxygen-color-semantic-common-subtle);
+}
+
+.ox-button--variant-solid.ox-button--ui-inverted:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-common-subtle);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-button--variant-solid.ox-button--ui-inverted:hover:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+}
+
+/* ---- variant-outlined ---- */
+.ox-button--variant-outlined.ox-button--ui-brand:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-common-subtle);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+  /* outlined-brand-border-default is LIGHT — brand-subtle-stronger, not the prominent fill */
+  border-color: var(--oxygen-color-semantic-brand-subtle-stronger, var(--oxygen-color-primitive-blue-200));
+}
+.ox-button--variant-outlined.ox-button--ui-brand:hover:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-brand-subtle-weak);
+  /* outlined-brand-border-hover stays light — blends with lifted background */
+  border-color: var(--oxygen-color-semantic-brand-subtle-stronger, var(--oxygen-color-primitive-blue-200));
+}
+.ox-button--variant-outlined.ox-button--ui-brand:active:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-brand-subtle-base);
+}
+.ox-button--variant-outlined.ox-button--ui-brand:disabled .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-common-subtle);
+  color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+  border-color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+}
+
+.ox-button--variant-outlined.ox-button--ui-neutral:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-common-subtle);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  border-color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+}
+.ox-button--variant-outlined.ox-button--ui-neutral:hover:not(:disabled) .ox-button__innerWrapper {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+}
+.ox-button--variant-outlined.ox-button--ui-neutral:disabled .ox-button__innerWrapper {
+  color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+  border-color: var(--oxygen-color-semantic-neutral-subtle-base);
+}
+
+.ox-button--variant-outlined.ox-button--ui-inverted:not(:disabled) .ox-button__innerWrapper {
+  background: transparent;
+  color: var(--oxygen-color-semantic-common-subtle);
+  border-color: var(--oxygen-color-semantic-common-subtle);
+  backdrop-filter: blur(1.2rem);
+}
+
+/* ---- variant-transparent ---- */
+.ox-button--variant-transparent .ox-button__innerWrapper {
+  background: transparent;
+  border-color: transparent;
+  border-width: 0; border-style: none;
+  padding: 0 0.4rem;
+}
+.ox-button--variant-transparent.ox-button--ui-brand:not(:disabled) .ox-button__innerWrapper {
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-button--variant-transparent.ox-button--ui-brand:hover:not(:disabled) .ox-button__innerWrapper {
+  color: var(--oxygen-color-semantic-brand-prominent-strong);
+  text-decoration: underline;
+}
+.ox-button--variant-transparent.ox-button--ui-danger:not(:disabled) .ox-button__innerWrapper {
+  color: var(--oxygen-color-semantic-danger-prominent-base);
+}
+.ox-button--variant-transparent.ox-button--ui-neutral:not(:disabled) .ox-button__innerWrapper {
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+}
+.ox-button--variant-transparent.ox-button--ui-inverted:not(:disabled) .ox-button__innerWrapper {
+  color: var(--oxygen-color-semantic-common-subtle);
+}
+.ox-button--variant-transparent:disabled .ox-button__innerWrapper {
+  color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+}
+
+/* Focus ring — focus.scss: 0.2rem blue-500 outline, 0.2rem white offset */
+.ox-button:focus-visible {
+  outline: 0.2rem solid var(--oxygen-color-semantic-brand-prominent-weak);
+  outline-offset: 0.2rem;
+}
+
+/* ------------------------------------------------------------
+   <IconButton> v2
+   Source:
+     packages/core/src/actions/IconButton/v2/IconButton.tsx
+     packages/core/src/actions/IconButton/v2/IconButton.module.scss
+   A circular/pill button with just an icon. Reuses all Button v2
+   variant×uiStyle palettes — this file only overrides the shape,
+   sizing, icon size, and the neutral hover background Button lacks.
+   Sizes from .module.scss:
+     xsmall = gridUnit-x3 = 2.4rem (24px)
+     small  = gridUnit-x4 = 3.2rem (32px)
+     medium = gridUnit-x5 = 4rem   (40px)
+     large  = 5.4rem (54px)
+   Icon size = size, except large -> medium (=24px glyph).
+   ------------------------------------------------------------ */
+.ox-iconbutton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: 0.1rem solid transparent;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--oxygen-scale-semantic-radius-full);
+  position: relative;
+}
+.ox-iconbutton__innerWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--oxygen-scale-semantic-radius-full);
+  overflow: hidden;
+  border: 0.1rem solid transparent;
+  box-sizing: border-box;
+  transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+.ox-iconbutton svg { display: block; }
+
+.ox-iconbutton--size-xsmall { width: 2.4rem; height: 2.4rem; }
+.ox-iconbutton--size-xsmall svg { width: 1.2rem; height: 1.2rem; }   /* xsmall icon = 12 */
+.ox-iconbutton--size-small  { width: 3.2rem; height: 3.2rem; }
+.ox-iconbutton--size-small svg  { width: 1.6rem; height: 1.6rem; }   /* small icon = 16 */
+.ox-iconbutton--size-medium { width: 4rem;   height: 4rem; }
+.ox-iconbutton--size-medium svg { width: 2rem;   height: 2rem; }     /* medium icon = 20 */
+.ox-iconbutton--size-large  { width: 5.4rem; height: 5.4rem; }
+.ox-iconbutton--size-large svg  { width: 2rem;   height: 2rem; }     /* large uses medium = 20 */
+
+/* ---- variant-solid ---- */
+.ox-iconbutton--variant-solid.ox-iconbutton--ui-brand:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-brand-prominent-weak);
+  color: var(--oxygen-color-semantic-common-subtle);
+}
+.ox-iconbutton--variant-solid.ox-iconbutton--ui-brand:hover:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-iconbutton--variant-solid.ox-iconbutton--ui-brand:active:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-brand-prominent-strong);
+}
+
+.ox-iconbutton--variant-solid.ox-iconbutton--ui-danger:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-danger-prominent-base);
+  color: var(--oxygen-color-semantic-common-subtle);
+}
+.ox-iconbutton--variant-solid.ox-iconbutton--ui-danger:hover:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-danger-prominent-strong);
+}
+
+.ox-iconbutton--variant-solid.ox-iconbutton--ui-inverted:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-common-subtle);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-iconbutton--variant-solid.ox-iconbutton--ui-inverted:hover:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+}
+
+/* ---- variant-outlined ---- */
+.ox-iconbutton--variant-outlined.ox-iconbutton--ui-brand:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-common-subtle);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+  /* outlined-brand-border-default — light blue, not the prominent fill */
+  border-color: var(--oxygen-color-semantic-brand-subtle-stronger, var(--oxygen-color-primitive-blue-200));
+}
+.ox-iconbutton--variant-outlined.ox-iconbutton--ui-brand:hover:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-brand-subtle-weak);
+  /* outlined-brand-border-hover stays light — blends with lifted background */
+  border-color: var(--oxygen-color-semantic-brand-subtle-stronger, var(--oxygen-color-primitive-blue-200));
+}
+.ox-iconbutton--variant-outlined.ox-iconbutton--ui-neutral:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-common-subtle);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  border-color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+}
+.ox-iconbutton--variant-outlined.ox-iconbutton--ui-neutral:hover:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+}
+.ox-iconbutton--variant-outlined.ox-iconbutton--ui-inverted:not(:disabled) .ox-iconbutton__innerWrapper {
+  background: transparent;
+  color: var(--oxygen-color-semantic-common-subtle);
+  border-color: var(--oxygen-color-semantic-common-subtle);
+  backdrop-filter: blur(1.2rem);
+}
+
+/* ---- variant-transparent ----
+   Per Button v2 SCSS: transparent hover has NO background change.
+   Only the icon color changes — to a DARKER shade (prominent-strong).
+*/
+.ox-iconbutton--variant-transparent.ox-iconbutton--ui-brand:not(:disabled) .ox-iconbutton__innerWrapper {
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-iconbutton--variant-transparent.ox-iconbutton--ui-brand:hover:not(:disabled) .ox-iconbutton__innerWrapper {
+  color: var(--oxygen-color-semantic-brand-prominent-strong);
+}
+.ox-iconbutton--variant-transparent.ox-iconbutton--ui-danger:not(:disabled) .ox-iconbutton__innerWrapper {
+  color: var(--oxygen-color-semantic-danger-prominent-base);
+}
+.ox-iconbutton--variant-transparent.ox-iconbutton--ui-danger:hover:not(:disabled) .ox-iconbutton__innerWrapper {
+  color: var(--oxygen-color-semantic-danger-prominent-strong);
+}
+.ox-iconbutton--variant-transparent.ox-iconbutton--ui-neutral:not(:disabled) .ox-iconbutton__innerWrapper {
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+}
+.ox-iconbutton--variant-transparent.ox-iconbutton--ui-neutral:hover:not(:disabled) .ox-iconbutton__innerWrapper {
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger, var(--oxygen-color-primitive-gray-900));
+}
+.ox-iconbutton--variant-transparent.ox-iconbutton--ui-inverted:not(:disabled) .ox-iconbutton__innerWrapper {
+  color: var(--oxygen-color-semantic-common-subtle);
+}
+.ox-iconbutton--variant-transparent.ox-iconbutton--ui-inverted:hover:not(:disabled) .ox-iconbutton__innerWrapper {
+  color: var(--oxygen-color-semantic-neutral-subtle-weak);
+}
+
+/* Disabled — everything dims */
+.ox-iconbutton:disabled { cursor: not-allowed; }
+.ox-iconbutton--variant-solid:disabled .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-neutral-subtle-stronger);
+  color: var(--oxygen-color-semantic-common-subtle);
+}
+.ox-iconbutton--variant-outlined:disabled .ox-iconbutton__innerWrapper {
+  background: var(--oxygen-color-semantic-common-subtle);
+  color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+  border-color: var(--oxygen-color-semantic-neutral-subtle-base);
+}
+.ox-iconbutton--variant-transparent:disabled .ox-iconbutton__innerWrapper {
+  color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+}
+
+/* Loading spinner */
+.ox-iconbutton__spinner {
+  width: 50%; height: 50%;
+  border: 0.2rem solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: ox-iconbutton-spin 0.7s linear infinite;
+  opacity: 0.9;
+}
+@keyframes ox-iconbutton-spin { to { transform: rotate(360deg); } }
+
+/* Focus ring */
+.ox-iconbutton:focus-visible {
+  outline: 0.2rem solid var(--oxygen-color-semantic-brand-prominent-weak);
+  outline-offset: 0.2rem;
+}
+
+
+/* ------------------------------------------------------------
+   <ButtonFloating>
+   Source:
+     packages/core/src/actions/ButtonFloating/ButtonFloating.tsx
+   Fixed-size pill-shaped FAB with strong shadow.
+   ------------------------------------------------------------ */
+.ox-buttonfloating {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  height: 5.6rem;
+  padding: 0 2rem;
+  border: none; cursor: pointer;
+  border-radius: var(--oxygen-scale-semantic-radius-full);
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+  color: var(--oxygen-color-semantic-common-subtle);
+  font: var(--oxygen-font-semantic-body-m-bold);
+  box-shadow:
+    0 0.1rem 0.2rem var(--oxygen-color-primitive-gray-opacity-25),
+    0 0.6rem 1.6rem var(--oxygen-color-primitive-gray-opacity-25);
+}
+.ox-buttonfloating:hover { background: var(--oxygen-color-semantic-brand-prominent-strong); }
+
+/* ------------------------------------------------------------
+   <Badge>
+   Source:
+     packages/core/src/dataDisplay/Badge/Badge.tsx
+     packages/core/src/dataDisplay/Badge/Badge.scss
+   Small count/dot indicator that sits on top of another element.
+   ------------------------------------------------------------ */
+.ox-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6rem;
+  height: 1.6rem;
+  padding: 0 0.4rem;
+  border-radius: var(--oxygen-scale-semantic-radius-full);
+  font: var(--oxygen-font-semantic-body-xs-bold);
+  line-height: 1;
+  background: var(--oxygen-color-semantic-danger-prominent-base);
+  color: var(--oxygen-color-semantic-common-subtle);
+}
+.ox-badge--dot { width: 0.8rem; min-width: 0.8rem; height: 0.8rem; padding: 0; }
+.ox-badge--ui-informative { background: var(--oxygen-color-semantic-informative-prominent-base); }
+.ox-badge--ui-brand       { background: var(--oxygen-color-semantic-brand-prominent-base); }
+.ox-badge--ui-neutral     { background: var(--oxygen-color-semantic-neutral-prominent-strong); }
+
+/* ------------------------------------------------------------
+   <Pill>
+   Source:
+     packages/core/src/dataDisplay/Pill/Pill.tsx
+     packages/core/src/dataDisplay/Pill/Pill.scss
+   A small labeled chip — can be selectable or have a close
+   button. UI styles map to semantic color families.
+   ------------------------------------------------------------ */
+.ox-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2.4rem;
+  padding: 0 0.8rem;
+  border: 0.1rem solid transparent;
+  border-radius: var(--oxygen-scale-semantic-radius-full);
+  font: var(--oxygen-font-semantic-body-xs-bold);
+  background: var(--oxygen-color-semantic-neutral-subtle-base);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+}
+.ox-pill--ui-neutral       { background: var(--oxygen-color-semantic-neutral-subtle-base);      color: var(--oxygen-color-semantic-neutral-prominent-strong); }
+.ox-pill--ui-informative   { background: var(--oxygen-color-semantic-informative-subtle-base);  color: var(--oxygen-color-semantic-informative-prominent-strong); }
+.ox-pill--ui-positive      { background: var(--oxygen-color-semantic-positive-subtle-base);     color: var(--oxygen-color-semantic-positive-prominent-strong); }
+.ox-pill--ui-warning       { background: var(--oxygen-color-semantic-warning-subtle-base);      color: var(--oxygen-color-semantic-warning-prominent-strong); }
+.ox-pill--ui-danger        { background: var(--oxygen-color-semantic-danger-subtle-base);       color: var(--oxygen-color-semantic-danger-prominent-strong); }
+.ox-pill--ui-alternative1  { background: var(--oxygen-color-semantic-alternative1-subtle-base); color: var(--oxygen-color-primitive-green-700); }
+.ox-pill--ui-alternative2  { background: var(--oxygen-color-semantic-alternative2-subtle-base); color: var(--oxygen-color-primitive-purple-700); }
+.ox-pill--ui-alternative3  { background: var(--oxygen-color-semantic-alternative3-subtle-base); color: var(--oxygen-color-primitive-orange-700); }
+.ox-pill--ui-white         { background: var(--oxygen-color-semantic-common-subtle); color: var(--oxygen-color-semantic-neutral-prominent-strong); border-color: var(--oxygen-color-semantic-neutral-subtle-stronger); }
+
+/* ------------------------------------------------------------
+   <CardSolid> / <CardOutlined> / <CardElevated>
+   Source:
+     packages/core/src/dataDisplay/Card/v2/private/Card.module.scss
+     packages/core/src/dataDisplay/Card/v2/CardSolid/CardSolid.module.scss
+     packages/core/src/dataDisplay/Card/v2/CardOutlined/CardOutlined.module.scss
+     packages/core/src/dataDisplay/Card/v2/CardElevated/CardElevated.module.scss
+   ------------------------------------------------------------ */
+.ox-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--oxygen-scale-semantic-radius-large);
+  padding: var(--oxygen-scale-primitive-gridUnit-x3); /* 24px */
+  background: var(--oxygen-color-semantic-common-subtle);
+}
+.ox-card--solid    { background: var(--oxygen-color-semantic-neutral-subtle-weak); }
+.ox-card--outlined { border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-stronger); }
+.ox-card--elevated {
+  box-shadow:
+    0 0.1rem 0.2rem var(--oxygen-color-primitive-gray-opacity-15),
+    0 0.4rem 1.2rem var(--oxygen-color-primitive-gray-opacity-15);
+}
+
+/* ------------------------------------------------------------
+   <AlertBanner> / <AlertCard> / <AlertHint>
+   Source:
+     packages/core/src/indicator/Alert/AlertBanner.tsx
+     packages/core/src/indicator/Alert/AlertCard.tsx
+     packages/core/src/indicator/Alert/AlertHint.tsx
+     packages/core/src/indicator/Alert/private/_Alert.module.scss
+   Internally all three render through _Alert with different
+   shells. UI styles: informative | warning | danger | positive
+   | brand | neutral.
+   ------------------------------------------------------------ */
+.ox-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding: 1.2rem 1.6rem;
+  font: var(--oxygen-font-semantic-body-s-regular);
+}
+.ox-alert__icon { flex: 0 0 auto; line-height: 0; margin-top: 0.2rem; }
+.ox-alert__body { flex: 1 1 auto; display: flex; flex-direction: column; gap: 0.4rem; }
+.ox-alert__title { font: var(--oxygen-font-semantic-body-s-bold); }
+.ox-alert__text  { font: var(--oxygen-font-semantic-body-s-regular); color: var(--oxygen-color-semantic-neutral-prominent-strong); }
+
+/* AlertBanner — full-width, no radius */
+.ox-alert--banner { border-radius: 0; }
+
+/* AlertCard — rounded with border-left accent & subtle bg */
+.ox-alert--card {
+  border-radius: var(--oxygen-scale-semantic-radius-medium);
+  border: 0.1rem solid transparent;
+}
+
+/* AlertHint — inline, transparent, compact */
+.ox-alert--hint {
+  padding: 0.4rem 0;
+  background: transparent;
+  font: var(--oxygen-font-semantic-body-xs-regular);
+}
+
+/* ui styles — backgrounds for banner/card, icon-only for hint */
+.ox-alert--ui-informative.ox-alert--banner,
+.ox-alert--ui-informative.ox-alert--card   { background: var(--oxygen-color-semantic-informative-subtle-base); color: var(--oxygen-color-semantic-informative-prominent-strong); }
+.ox-alert--ui-warning.ox-alert--banner,
+.ox-alert--ui-warning.ox-alert--card       { background: var(--oxygen-color-semantic-warning-subtle-base);     color: var(--oxygen-color-semantic-warning-prominent-strong); }
+.ox-alert--ui-danger.ox-alert--banner,
+.ox-alert--ui-danger.ox-alert--card        { background: var(--oxygen-color-semantic-danger-subtle-base);      color: var(--oxygen-color-semantic-danger-prominent-strong); }
+.ox-alert--ui-positive.ox-alert--banner,
+.ox-alert--ui-positive.ox-alert--card      { background: var(--oxygen-color-semantic-positive-subtle-base);    color: var(--oxygen-color-semantic-positive-prominent-strong); }
+.ox-alert--ui-brand.ox-alert--banner,
+.ox-alert--ui-brand.ox-alert--card         { background: var(--oxygen-color-semantic-brand-subtle-weak);       color: var(--oxygen-color-semantic-brand-prominent-strong); }
+
+.ox-alert--ui-informative.ox-alert--hint { color: var(--oxygen-color-semantic-informative-prominent-base); }
+.ox-alert--ui-warning.ox-alert--hint     { color: var(--oxygen-color-semantic-warning-prominent-base); }
+.ox-alert--ui-danger.ox-alert--hint      { color: var(--oxygen-color-semantic-danger-prominent-base); }
+.ox-alert--ui-positive.ox-alert--hint    { color: var(--oxygen-color-semantic-positive-prominent-base); }
+
+/* ------------------------------------------------------------
+   <Switch>
+   Source:
+     packages/core/src/actions/Switch/Switch.tsx
+     packages/core/src/actions/Switch/Switch.module.scss
+   aria-pressed switch — pill 50×30, thumb 15 circle at offset 6
+   (off) → 22 (on). Uses brand color when on, with a check icon
+   that fades in (opacity tied to :after transform from 1→5/3).
+   Markup:
+     <div class="ox-switch">
+       <button class="ox-switch__button" aria-pressed="true|false">
+         <span class="ox-switch__indicator">
+           <svg class="ox-switch__icon">…</svg>
+         </span>
+         <span class="ox-switch__label">label</span>
+       </button>
+     </div>
+   ------------------------------------------------------------ */
+.ox-switch {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.2rem;
+}
+.ox-switch__button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0; margin: 0;
+  background: none;
+  border: 0;
+  gap: 0.8rem;              /* --oxygen-scale-semantic-padding-medium */
+  font: var(--oxygen-font-semantic-body-s-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  cursor: pointer;
+}
+.ox-switch__button[disabled] {
+  color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+  cursor: not-allowed;
+}
+.ox-switch__button--label-left { flex-direction: row-reverse; }
+
+.ox-switch__indicator {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  width: 4rem;              /* gridUnit-x5 */
+  height: 2.4rem;           /* gridUnit-x3 */
+}
+.ox-switch__indicator::before {
+  content: '';
+  position: relative;
+  display: block;
+  width: 100%; height: 100%;
+  border-radius: var(--oxygen-scale-semantic-radius-full);
+  border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-stronger);
+  background: var(--oxygen-color-semantic-common-subtle);
+  transition: background-color 300ms, border-color 300ms, box-shadow 300ms;
+  box-sizing: border-box;
+}
+.ox-switch__indicator::after {
+  content: '';
+  position: absolute;
+  left: 0.6rem;             /* thumb-offset-off */
+  width: 1.2rem; height: 1.2rem;  /* gridUnit-x1_5 */
+  border-radius: var(--oxygen-scale-semantic-radius-full);
+  background: var(--oxygen-color-semantic-neutral-prominent-weak, #5A6572);
+  transform: scale(1);
+  transition: transform 300ms, left 300ms, background-color 300ms;
+}
+.ox-switch__icon {
+  position: absolute;
+  left: 2rem;               /* gridUnit-x2_5 */
+  width: 1.2rem; height: 1.2rem;
+  opacity: 0;
+  color: var(--oxygen-color-semantic-brand-prominent-weak);
+  z-index: 1;
+  transition: opacity 300ms 0s;
+  pointer-events: none;
+}
+
+/* ON state */
+.ox-switch__button[aria-pressed="true"] .ox-switch__indicator::before {
+  background: var(--oxygen-color-semantic-brand-prominent-weak);
+  border-color: var(--oxygen-color-semantic-brand-prominent-weak);
+}
+.ox-switch__button[aria-pressed="true"] .ox-switch__indicator::after {
+  left: 2.2rem;             /* thumb-offset-on */
+  transform: scale(calc(5 / 3));
+  background: var(--oxygen-color-semantic-common-subtle);
+}
+.ox-switch__button[aria-pressed="true"] .ox-switch__icon {
+  opacity: 1;
+  transition: opacity 300ms 100ms, color 300ms;
+}
+
+/* HOVER (:not focus-visible) — hints the input */
+.ox-switch__button:not([disabled]):hover .ox-switch__indicator::before {
+  border-color: var(--oxygen-color-semantic-brand-prominent-weak);
+}
+.ox-switch__button:not([disabled]):hover .ox-switch__indicator::after {
+  background: var(--oxygen-color-semantic-neutral-prominent-strong);
+}
+.ox-switch__button[aria-pressed="true"]:not([disabled]):hover .ox-switch__indicator::before {
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+  border-color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+
+/* DISABLED */
+.ox-switch__button[disabled] .ox-switch__indicator::before {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+  border-color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+}
+.ox-switch__button[disabled] .ox-switch__indicator::after {
+  background: var(--oxygen-color-semantic-neutral-subtle-stronger);
+}
+.ox-switch__button[disabled][aria-pressed="true"] .ox-switch__indicator::before {
+  background: var(--oxygen-color-semantic-brand-subtle-stronger, #A6C7F6);
+  border-color: var(--oxygen-color-semantic-brand-subtle-stronger, #A6C7F6);
+}
+.ox-switch__button[disabled][aria-pressed="true"] .ox-switch__indicator::after {
+  background: var(--oxygen-color-semantic-common-subtle);
+}
+
+/* Focus */
+.ox-switch__button:focus-visible { outline: none; }
+.ox-switch__button:focus-visible .ox-switch__indicator::before {
+  outline: 0.2rem solid var(--oxygen-color-semantic-brand-prominent-weak);
+  outline-offset: 0.2rem;
+}
+
+/* ------------------------------------------------------------
+   <SegmentedControl>
+   Source:
+     packages/core/src/navigation/SegmentedControl/SegmentedControl.tsx
+     packages/core/src/navigation/SegmentedControl/SegmentedControl.scss
+     packages/core/src/navigation/SegmentedControl/private/_styles.module.scss
+   Pill-shaped container with 0.4rem padding and a neutral-030
+   border. Selected item has dark neutral bg + white text and a
+   check icon that slides in from the left. Hover on unselected
+   swaps the bg to neutral-subtle-weak.
+   Markup:
+     <ul class="ox-segmented">
+       <li class="ox-segmented__itemWrapper">
+         <button class="ox-segmented__item [--selected]">
+           <svg class="ox-segmented__icon">…</svg>
+           <span class="ox-segmented__content">Label</span>
+         </button>
+       </li> …
+     </ul>
+   ------------------------------------------------------------ */
+.ox-segmented {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem;
+  display: inline-flex;
+  gap: 0.4rem;
+  border-radius: var(--oxygen-scale-semantic-radius-full);
+  border: 0.1rem solid var(--oxygen-color-primitive-gray-100, #E5E7EB);
+  background: var(--oxygen-color-semantic-common-subtle);
+}
+.ox-segmented__itemWrapper {
+  list-style-type: none;
+  margin: 0; padding: 0;
+  border-radius: var(--oxygen-scale-semantic-radius-full);
+}
+.ox-segmented__item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 2rem;
+  border-radius: var(--oxygen-scale-semantic-radius-full);
+  border: none;
+  background: var(--oxygen-color-semantic-common-subtle);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  font: var(--oxygen-font-semantic-body-s-regular);
+  cursor: pointer;
+  text-decoration: none;
+  height: 100%;
+}
+.ox-segmented__item:focus { outline: none; }
+.ox-segmented__item:focus-visible {
+  outline: 0.2rem solid var(--oxygen-color-semantic-brand-prominent-weak);
+  outline-offset: 0.2rem;
+}
+.ox-segmented__item:not(.ox-segmented__item--selected):hover {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+}
+.ox-segmented__item--selected,
+.ox-segmented__item--selected:hover,
+.ox-segmented__item--selected:focus {
+  background: var(--oxygen-color-semantic-neutral-prominent-strong);
+  color: var(--oxygen-color-semantic-common-subtle);
+}
+
+.ox-segmented__icon {
+  position: absolute;
+  left: 0.8rem;
+  width: 1.6rem; height: 1.6rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.1s, opacity 0.1s linear;
+}
+.ox-segmented__content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  transform: translateX(0);
+  transition: transform 0.1s 0.1s ease-in-out;
+}
+.ox-segmented__item--selected .ox-segmented__icon {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.1s 0.1s, opacity 0.1s 0.1s linear;
+}
+.ox-segmented__item--selected .ox-segmented__content {
+  transform: translateX(0.8rem);
+  transition: transform 0.1s ease-in-out;
+}
+
+
+/* ============================================================
+   P0 components (forms · overlays · navigation · data display)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   <Heading> / <Paragraph> / <Text> / <Span>
+   Source:
+     packages/core/src/dataDisplay/text/Text/Text.scss
+     packages/core/src/dataDisplay/Heading.tsx
+     packages/core/src/dataDisplay/Paragraph.tsx
+   Typography primitives. Heading uses the Montserrat prominent
+   family; Paragraph/Text default to Roboto subtle. Variants
+   expose the body / title semantic fonts from the tokens file.
+   Markup:
+     <h1 class="ox-heading ox-heading--xxl">…</h1>
+     <p  class="ox-paragraph ox-paragraph--m">…</p>
+     <span class="ox-text ox-text--s ox-text--bold">…</span>
+   ------------------------------------------------------------ */
+.ox-heading {
+  margin: 0;
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  font-family: var(--oxygen-font-primitive-fontFamily-prominent);
+  font-weight: bold;
+}
+.ox-heading--s   { font: var(--oxygen-font-semantic-title-s-bold); }
+.ox-heading--m   { font: var(--oxygen-font-semantic-title-m-bold); }
+.ox-heading--l   { font: var(--oxygen-font-semantic-title-l-bold); }
+.ox-heading--xl  { font: var(--oxygen-font-semantic-title-xl-bold); }
+.ox-heading--xxl { font: var(--oxygen-font-semantic-title-xxl-bold); }
+.ox-heading--xxxl{ font: var(--oxygen-font-semantic-title-xxxl-bold); }
+
+.ox-paragraph,
+.ox-text {
+  margin: 0;
+  font-weight: var(--oxygen-font-primitive-fontWeight-regular, 400);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  font-family: var(--oxygen-font-primitive-fontFamily-subtle);
+}
+.ox-text--xs { font: var(--oxygen-font-semantic-body-xs-regular); }
+.ox-text--s  { font: var(--oxygen-font-semantic-body-s-regular); }
+.ox-text--m  { font: var(--oxygen-font-semantic-body-m-regular); }
+.ox-text--bold { font-weight: bold; }
+.ox-text--muted   { color: var(--oxygen-color-semantic-neutral-prominent-base); }
+.ox-text--subtle  { color: var(--oxygen-color-semantic-neutral-prominent-weak); }
+.ox-text--danger  { color: var(--oxygen-color-semantic-danger-prominent-base); }
+.ox-text--positive{ color: var(--oxygen-color-semantic-positive-prominent-base); }
+.ox-text--brand   { color: var(--oxygen-color-semantic-brand-prominent-base); }
+
+/* ------------------------------------------------------------
+   <Field> wrapper (shared by Input/Textarea/Select)
+   Source:
+     packages/core/src/forms/private/InputField/_InputField.scss
+     packages/core/src/forms/private/InputLabel/_InputLabel.scss
+     packages/core/src/forms/private/InputHint/_InputHint.module.scss
+     packages/core/src/forms/private/InputMessage/_InputMessage.module.scss
+   ------------------------------------------------------------ */
+.ox-field {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--oxygen-scale-semantic-gap-xxsmall);
+  max-width: 100%;
+}
+.ox-field--block { display: flex; width: 100%; }
+
+.ox-field__label {
+  font: var(--oxygen-font-semantic-body-s-bold);
+  color: var(--oxygen-color-component-form-global-label-default);
+  text-align: left;
+}
+.ox-field.is-disabled .ox-field__label {
+  color: var(--oxygen-color-component-form-global-label-disabled);
+}
+.ox-field__required { color: var(--oxygen-color-semantic-danger-prominent-base); margin-left: 0.2rem; }
+.ox-field__optional { color: var(--oxygen-color-component-form-global-hint-helper-default); font-weight: 400; margin-left: 0.4rem; }
+
+.ox-field__hint {
+  font: var(--oxygen-font-semantic-body-s-regular);
+  color: var(--oxygen-color-component-form-global-hint-helper-default);
+}
+.ox-field__message {
+  display: flex; align-items: flex-start; gap: 0.4rem;
+  font: var(--oxygen-font-semantic-body-xs-regular);
+  color: var(--oxygen-color-component-form-global-hint-warning-text);
+}
+.ox-field__message--danger { color: var(--oxygen-color-component-form-global-hint-danger-text); }
+.ox-field__message svg { flex: none; margin-top: 0.15rem; }
+
+/* ------------------------------------------------------------
+   <InputText> (shared input chrome)
+   Source:
+     packages/core/src/forms/private/_Input.scss
+   ------------------------------------------------------------ */
+.ox-input-wrapper { position: relative; display: flex; flex-direction: column; }
+.ox-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 4rem;
+  padding: 0.8rem 1.6rem;
+  font: var(--oxygen-font-semantic-body-s-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  background: var(--oxygen-color-primitive-white);
+  border: 0.1rem solid var(--oxygen-color-forms-global-border-default);
+  border-radius: 0.4rem;
+  outline: none;
+  text-align: start;
+  transition: border-color 120ms ease;
+}
+.ox-input::placeholder { color: var(--oxygen-color-semantic-neutral-prominent-weak); }
+.ox-input:hover { border-color: var(--oxygen-color-forms-global-border-hover); }
+.ox-input:focus {
+  border-color: var(--oxygen-color-forms-global-border-focus);
+  outline: 0.2rem solid var(--oxygen-color-semantic-brand-prominent-base);
+  outline-offset: 0.2rem;
+}
+.ox-input.is-error,
+.ox-input[aria-invalid="true"] {
+  border-color: var(--oxygen-color-forms-global-danger-border-default);
+}
+.ox-input:disabled,
+.ox-input.is-disabled {
+  cursor: not-allowed;
+  background: var(--oxygen-color-primitive-gray-100);
+  color: var(--oxygen-color-primitive-gray-400);
+  border-color: var(--oxygen-color-forms-global-border-disabled);
+}
+
+.ox-input-wrapper.has-icon-left  .ox-input { padding-left:  4rem; }
+.ox-input-wrapper.has-icon-right .ox-input { padding-right: 4rem; }
+.ox-input-wrapper__icon {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  display: flex; color: var(--oxygen-color-primitive-gray-700);
+  pointer-events: none;
+}
+.ox-input-wrapper__icon--left  { left: 1.6rem; }
+.ox-input-wrapper__icon--right { right: 1.6rem; }
+
+/* Textarea inherits input chrome but is multi-line */
+.ox-textarea {
+  height: auto;
+  min-height: 8rem;
+  padding: 0.8rem 1.6rem;
+  resize: vertical;
+  line-height: 2rem;
+  font: var(--oxygen-font-semantic-body-s-regular);
+}
+
+/* ------------------------------------------------------------
+   <Select>
+   Source: packages/core/src/forms/Select/Select.scss
+   A native <select> styled as an Input with a chevron overlay.
+   ------------------------------------------------------------ */
+.ox-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path fill='%23294056' d='M3.47 6.03a.75.75 0 0 1 1.06 0L8 9.5l3.47-3.47a.75.75 0 1 1 1.06 1.06l-4 4a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 0-1.06z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 1.2rem center;
+  padding-right: 4rem !important;
+  cursor: pointer;
+}
+.ox-select:disabled { cursor: not-allowed; opacity: 1; }
+
+/* ------------------------------------------------------------
+   <Checkbox>
+   Source:
+     packages/core/src/forms/Checkbox/Checkbox.scss
+     packages/core/src/forms/Checkbox/Checkbox.tsx
+   A 16×16 square with 4px radius. Uses brand-500 fill when
+   checked, with a white check glyph. Wrapped in a label row.
+   ------------------------------------------------------------ */
+.ox-checkbox-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  min-height: 2.4rem;
+  cursor: pointer;
+  user-select: none;
+  font: var(--oxygen-font-semantic-body-s-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+}
+.ox-checkbox-wrap input[type="checkbox"] {
+  position: absolute;
+  opacity: 0.01;
+  width: 1.6rem; height: 1.6rem;
+  margin: 0; padding: 0;
+  cursor: pointer;
+}
+.ox-checkbox {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-top: 0.4rem; /* align with first line of label */
+  border: 0.1rem solid var(--oxygen-color-forms-checkbox-brand-border-unchecked-default);
+  border-radius: 0.4rem;
+  background: var(--oxygen-color-primitive-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 100ms, border-color 100ms;
+}
+.ox-checkbox svg { display: none; width: 1.4rem; height: 1.4rem; fill: #fff; }
+.ox-checkbox-wrap:hover .ox-checkbox {
+  border-color: var(--oxygen-color-forms-checkbox-brand-border-unchecked-hover);
+}
+.ox-checkbox-wrap input:checked ~ .ox-checkbox,
+.ox-checkbox-wrap.is-indeterminate .ox-checkbox {
+  background: var(--oxygen-color-forms-checkbox-brand-background-checked-default);
+  border-color: transparent;
+}
+.ox-checkbox-wrap input:checked ~ .ox-checkbox svg,
+.ox-checkbox-wrap.is-indeterminate .ox-checkbox svg { display: block; }
+.ox-checkbox-wrap input:focus-visible ~ .ox-checkbox {
+  outline: 0.2rem solid var(--oxygen-color-semantic-brand-prominent-base);
+  outline-offset: 0.2rem;
+}
+.ox-checkbox-wrap.is-error .ox-checkbox {
+  border-color: var(--oxygen-color-semantic-danger-prominent-base);
+}
+.ox-checkbox-wrap.is-error input:checked ~ .ox-checkbox {
+  background: var(--oxygen-color-semantic-danger-prominent-base);
+}
+.ox-checkbox-wrap.is-disabled,
+.ox-checkbox-wrap[data-disabled] {
+  cursor: not-allowed;
+  color: var(--oxygen-color-primitive-gray-400);
+}
+.ox-checkbox-wrap.is-disabled .ox-checkbox {
+  background: var(--oxygen-color-forms-checkbox-brand-background-unchecked-disabled);
+  border-color: var(--oxygen-color-forms-checkbox-brand-border-unchecked-disabled);
+}
+.ox-checkbox-wrap.is-disabled input:checked ~ .ox-checkbox {
+  background: var(--oxygen-color-forms-checkbox-brand-background-checked-disabled);
+}
+
+/* ------------------------------------------------------------
+   <Radio> / <RadioGroup>
+   Source:
+     packages/core/src/forms/Radio/Radio.module.scss
+     packages/core/src/forms/RadioGroup/RadioGroup.module.scss
+   20×20 circle. When checked, fills with a 6px ring (via
+   border-width 6px) in brand blue.
+   ------------------------------------------------------------ */
+.ox-radio-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  cursor: pointer;
+  user-select: none;
+  font: var(--oxygen-font-semantic-body-m-regular);
+  color: var(--oxygen-color-component-form-_value-brand-default);
+}
+.ox-radio-wrap input[type="radio"] {
+  position: absolute;
+  opacity: 0.01;
+  width: 2rem; height: 2rem;
+  margin: 0;
+  cursor: pointer;
+}
+.ox-radio {
+  position: relative;
+  flex-shrink: 0;
+  width: 2rem; height: 2rem;
+  margin-top: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.ox-radio::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 99999rem;
+  box-sizing: border-box;
+  background: var(--oxygen-color-primitive-white);
+  border: 0.1rem solid var(--oxygen-color-primitive-gray-400);
+  transition:
+    background 130ms linear,
+    border-color 130ms linear,
+    border-width 130ms linear;
+}
+.ox-radio-wrap:hover .ox-radio::before {
+  border-color: var(--oxygen-color-component-form-_field-brand-border-hover);
+}
+.ox-radio-wrap input:checked ~ .ox-radio::before {
+  border-width: 0.6rem;
+  border-color: var(--oxygen-color-component-form-_control-on-brand-border-default);
+}
+.ox-radio-wrap input:focus-visible ~ .ox-radio::before {
+  outline: 0.2rem solid var(--oxygen-color-semantic-brand-prominent-base);
+  outline-offset: 0.2rem;
+}
+.ox-radio-wrap.is-disabled,
+.ox-radio-wrap[data-disabled] {
+  cursor: not-allowed;
+  color: var(--oxygen-color-component-form-_value-brand-disabled);
+  pointer-events: none;
+}
+.ox-radio-wrap.is-disabled .ox-radio::before {
+  border-color: var(--oxygen-color-component-form-_field-brand-border-disabled);
+}
+.ox-radio-wrap.is-error .ox-radio::before {
+  border-color: var(--oxygen-color-component-form-_field-danger-border-default);
+}
+.ox-radio__label {
+  color: inherit;
+  font: var(--oxygen-font-semantic-body-m-regular);
+}
+.ox-radio__description {
+  display: block;
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  font: var(--oxygen-font-semantic-body-s-regular);
+}
+
+.ox-radio-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.ox-radio-group--horizontal { flex-direction: row; gap: 2.4rem; }
+
+/* Card variant (variant-card) — full border around the row */
+.ox-radio-wrap.is-card {
+  border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-stronger);
+  border-radius: 0.8rem;
+  padding: 1.6rem;
+  transition: border-color 130ms linear, background 130ms linear;
+}
+.ox-radio-wrap.is-card:hover {
+  border-color: var(--oxygen-color-component-form-_field-brand-border-hover);
+  background: var(--oxygen-color-component-surface-background-brand-base-default);
+}
+
+/* ------------------------------------------------------------
+   <Link>
+   Source:
+     packages/core/src/navigation/Link/Link.tsx
+     packages/core/src/navigation/Link/Link.module.scss
+   ------------------------------------------------------------ */
+.ox-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--oxygen-scale-semantic-gap-xxsmall);
+  text-decoration: underline;
+  font: inherit;
+  cursor: pointer;
+}
+.ox-link--hideUnderline { text-decoration: none; }
+.ox-link--hideUnderline:hover,
+.ox-link--hideUnderline:focus { text-decoration: underline; }
+
+.ox-link--brand    { color: var(--oxygen-color-navigation-link-brand-label-default); }
+.ox-link--brand:hover    { color: var(--oxygen-color-navigation-link-brand-label-hover); }
+.ox-link--brand:active,
+.ox-link--brand:visited  { color: var(--oxygen-color-navigation-link-brand-label-pressed); }
+.ox-link--neutral  { color: var(--oxygen-color-navigation-link-neutral-text-default); }
+.ox-link--neutral:hover  { color: var(--oxygen-color-navigation-link-neutral-text-hover); }
+.ox-link--neutral:active,
+.ox-link--neutral:visited{ color: var(--oxygen-color-navigation-link-neutral-text-pressed); }
+.ox-link--danger   { color: var(--oxygen-color-navigation-link-danger-label-default); }
+.ox-link--danger:hover   { color: var(--oxygen-color-navigation-link-danger-label-hover); }
+.ox-link--inverted { color: var(--oxygen-color-navigation-link-inverted-label-default); }
+.ox-link--inherit  { color: inherit; }
+.ox-link[aria-disabled="true"] {
+  color: var(--oxygen-color-navigation-link-brand-label-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------
+   <Tooltip>
+   Source:
+     packages/core/src/feedbacks/Tooltip/Tooltip.module.scss
+   ------------------------------------------------------------ */
+.ox-tooltip {
+  display: inline-block;
+  padding: var(--oxygen-scale-semantic-padding-small) var(--oxygen-scale-semantic-padding-medium);
+  font: var(--oxygen-font-semantic-body-xs-regular);
+  color: var(--oxygen-color-feedback-tooltip-text);
+  background: var(--oxygen-color-feedback-tooltip-background);
+  border-radius: var(--oxygen-scale-semantic-radius-xsmall);
+  white-space: pre-line;
+  pointer-events: none;
+  /* Oxygen's Tooltip.scss imposes no max-width — content drives sizing.
+     We provide a generous soft cap so long strings wrap rather than overflow. */
+  max-width: 32rem;
+}
+.ox-tooltip-demo {
+  position: relative;
+  display: inline-flex;
+}
+.ox-tooltip-demo .ox-tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.8rem);
+  left: 50%;
+  transform: translateX(-50%);
+}
+.ox-tooltip-demo .ox-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 0.4rem solid transparent;
+  border-top-color: var(--oxygen-color-feedback-tooltip-background);
+}
+/* placement variants */
+.ox-tooltip-demo.tt-bottom .ox-tooltip {
+  bottom: auto; top: calc(100% + 0.8rem);
+}
+.ox-tooltip-demo.tt-bottom .ox-tooltip::after {
+  top: auto; bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: var(--oxygen-color-feedback-tooltip-background);
+}
+
+/* ------------------------------------------------------------
+   <Modal>
+   Source:
+     packages/core/src/overlays/Modal/Modal.scss
+     packages/core/src/overlays/ModalBody/ModalBody.scss
+     packages/core/src/overlays/ModalFooter/ModalFooter.scss
+   ------------------------------------------------------------ */
+.ox-modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(25, 38, 52, 0.64); /* gray-800 @ 40% */
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.6rem;
+  z-index: 10001;
+}
+.ox-modal {
+  background: var(--oxygen-color-primitive-white);
+  border-radius: 0.8rem;
+  box-shadow:
+    0 0.2rem 0.4rem var(--oxygen-color-primitive-gray-opacity-25),
+    0 1.2rem 2.4rem var(--oxygen-color-primitive-gray-opacity-35);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 3.2rem);
+  overflow: hidden;
+}
+.ox-modal--small  { width: 44.8rem; padding: 3.2rem; }
+.ox-modal--medium { width: 67.2rem; padding: 3.2rem; }
+.ox-modal--large  { width: 89.6rem; padding: 3.2rem; }
+.ox-modal__header {
+  margin: 0 0 2.4rem;
+  font: var(--oxygen-font-semantic-title-l-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  text-align: center;
+  display: flex; justify-content: center; align-items: center;
+  position: relative;
+}
+.ox-modal__close {
+  position: absolute; top: -0.8rem; right: -0.8rem;
+}
+.ox-modal__body {
+  font: var(--oxygen-font-semantic-body-m-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  overflow-y: auto;
+}
+.ox-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 2.4rem;
+}
+/* demo: static rendering, not fixed */
+.ox-modal-demo {
+  position: relative;
+  background: rgba(25, 38, 52, 0.12);
+  padding: 4.8rem;
+  border-radius: 1.6rem;
+}
+.ox-modal-demo .ox-modal-backdrop {
+  position: relative;
+  inset: auto;
+  padding: 0;
+  background: transparent;
+}
+
+/* ------------------------------------------------------------
+   <Dropdown> / <DropdownItem>
+   Source:
+     packages/core/src/actions/Dropdown/Dropdown.scss
+     packages/core/src/actions/Dropdown/DropdownItem.tsx
+   ------------------------------------------------------------ */
+.ox-dropdown {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 20rem;
+  padding: 0.4rem 0;
+  background: var(--oxygen-color-primitive-white);
+  border-radius: 0.8rem;
+  box-shadow:
+    0 0.2rem 0.4rem var(--oxygen-color-primitive-gray-opacity-15),
+    0 0.8rem 1.6rem var(--oxygen-color-primitive-gray-opacity-15);
+  z-index: 1000;
+}
+.ox-dropdown__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  min-height: 4rem;
+  padding: 0.8rem 1.6rem;
+  background: transparent;
+  border: none;
+  font: var(--oxygen-font-semantic-body-s-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  text-align: start;
+  width: 100%;
+  cursor: pointer;
+  text-decoration: none;
+}
+.ox-dropdown__item__left {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  min-width: 0;
+}
+.ox-dropdown__item__icon {
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  flex: none;
+  display: inline-flex;
+}
+.ox-dropdown__item:hover:not(.ox-dropdown__item--danger, .ox-dropdown__item--disabled) {
+  background: var(--oxygen-color-semantic-brand-subtle-weak);
+}
+.ox-dropdown__item--danger {
+  color: var(--oxygen-color-semantic-danger-prominent-base);
+}
+.ox-dropdown__item--danger:hover {
+  background: var(--oxygen-color-semantic-danger-subtle-weak);
+}
+.ox-dropdown__item--disabled {
+  color: var(--oxygen-color-primitive-gray-400);
+  cursor: not-allowed;
+}
+.ox-dropdown__separator {
+  height: 0.1rem;
+  margin: 0.4rem 0;
+  background: var(--oxygen-color-primitive-gray-200);
+  border: 0;
+}
+.ox-dropdown__label {
+  padding: 0.4rem 1.6rem;
+  font: var(--oxygen-font-semantic-body-xs-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ------------------------------------------------------------
+   <Table>
+   Source:
+     packages/core/src/dataDisplay/Table/Table.scss
+     packages/core/src/dataDisplay/Table/Table.tsx
+   ------------------------------------------------------------ */
+.ox-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--oxygen-color-primitive-white);
+  border-radius: 0.8rem;
+  font-size: var(--oxygen-font-primitive-fontSize-small);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  overflow: hidden;
+}
+.ox-table thead th {
+  font: var(--oxygen-font-semantic-body-s-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  text-align: left;
+  vertical-align: middle;
+}
+.ox-table--size-xsmall th,
+.ox-table--size-xsmall td { padding: 0 0.8rem; height: 2.4rem; line-height: 2rem; }
+.ox-table--size-small th,
+.ox-table--size-small td { padding: 0.8rem 1.6rem; border-bottom: 0.1rem solid var(--oxygen-color-component-surface-border-neutral-base-default); }
+.ox-table--size-medium th,
+.ox-table--size-medium td { padding: 1.6rem; border-bottom: 0.1rem solid var(--oxygen-color-component-surface-border-neutral-base-default); }
+
+.ox-table__row--hover { cursor: pointer; transition: background 120ms ease; }
+.ox-table__row--hover:hover {
+  background: var(--oxygen-color-component-surface-background-brand-base-default);
+  box-shadow:
+    inset 0 0.1rem 0 var(--oxygen-color-component-collection-table-border-hover),
+    inset 0 -0.1rem 0 var(--oxygen-color-component-collection-table-border-hover);
+}
+.ox-table__row--selected {
+  background: var(--oxygen-color-semantic-brand-subtle-weak);
+}
+.ox-table__cell--right  { text-align: right; }
+.ox-table__cell--center { text-align: center; }
+
+.ox-table__head-cell--sortable {
+  cursor: pointer;
+  user-select: none;
+}
+.ox-table__sort-caret {
+  display: inline-flex;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+
+/* Sticky head */
+.ox-table--sticky thead th {
+  position: sticky; top: 0;
+  background: var(--oxygen-color-primitive-white);
+  z-index: 10;
+  box-shadow: inset 0 -0.1rem 0 var(--oxygen-color-component-surface-border-neutral-base-default);
+}
+
+
+/* ============================================================
+   P1 components (nav · feedback · layout)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   <Avatar>
+   Source: packages/core/src/dataDisplay/Avatar/Avatar.{tsx,scss}
+   Sizes: xxsmall=16 xsmall=24 small=32 medium=40 large=48
+   Palette from Avatar.scss — dark-* uses white text.
+   ------------------------------------------------------------ */
+.ox-avatar { display: inline-flex; align-items: center; position: relative; }
+.ox-avatar__circle {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  text-transform: uppercase;
+  font-weight: var(--oxygen-font-primitive-fontWeight-bold);
+  overflow: hidden;
+  background: var(--oxygen-color-primitive-gray-200);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+}
+.ox-avatar__circle img { width: 100%; height: 100%; object-fit: cover; }
+.ox-avatar--bordered .ox-avatar__circle { box-shadow: inset 0 0 0 0.2rem var(--oxygen-color-primitive-white); border: 0.2rem solid var(--oxygen-color-primitive-white); }
+.ox-avatar--xxsmall .ox-avatar__circle { width: 1.6rem; height: 1.6rem; font-size: 0.9rem; }
+.ox-avatar--xsmall .ox-avatar__circle  { width: 2.4rem; height: 2.4rem; font-size: 1rem; }
+.ox-avatar--small .ox-avatar__circle   { width: 3.2rem; height: 3.2rem; font-size: 1.2rem; }
+.ox-avatar--medium .ox-avatar__circle  { width: 4rem;   height: 4rem;   font-size: 1.4rem; }
+.ox-avatar--large .ox-avatar__circle   { width: 4.8rem; height: 4.8rem; font-size: 1.6rem; }
+/* base (dark) palette = white text */
+.ox-avatar--dark-primary .ox-avatar__circle { background: var(--oxygen-color-primitive-blue-500); color: #fff; }
+.ox-avatar--dark-red .ox-avatar__circle     { background: var(--oxygen-color-primitive-red-600); color: #fff; }
+.ox-avatar--dark-purple .ox-avatar__circle  { background: var(--oxygen-color-primitive-purple-600); color: #fff; }
+.ox-avatar--dark-yellow .ox-avatar__circle  { background: var(--oxygen-color-primitive-yellow-500); color: #fff; }
+.ox-avatar--dark-orange .ox-avatar__circle  { background: var(--oxygen-color-primitive-orange-600); color: #fff; }
+.ox-avatar--dark-teal .ox-avatar__circle    { background: var(--oxygen-color-primitive-teal-600); color: #fff; }
+.ox-avatar--dark-neutral .ox-avatar__circle { background: var(--oxygen-color-primitive-gray-700); color: #fff; }
+.ox-avatar--dark-success .ox-avatar__circle { background: var(--oxygen-color-primitive-green-600); color: #fff; }
+/* inverted (light) palette = dark text */
+.ox-avatar--primary .ox-avatar__circle { background: var(--oxygen-color-primitive-blue-100); color: var(--oxygen-color-primitive-blue-800, #003a7a); }
+.ox-avatar--red .ox-avatar__circle     { background: var(--oxygen-color-primitive-red-100); color: var(--oxygen-color-primitive-red-700); }
+.ox-avatar--purple .ox-avatar__circle  { background: var(--oxygen-color-primitive-purple-100); color: var(--oxygen-color-primitive-purple-700); }
+.ox-avatar--yellow .ox-avatar__circle  { background: var(--oxygen-color-primitive-yellow-100); color: var(--oxygen-color-primitive-yellow-700, #7A4A00); }
+.ox-avatar--orange .ox-avatar__circle  { background: var(--oxygen-color-primitive-orange-100); color: var(--oxygen-color-primitive-orange-700); }
+.ox-avatar--teal .ox-avatar__circle    { background: var(--oxygen-color-primitive-teal-100); color: var(--oxygen-color-primitive-teal-700); }
+.ox-avatar--neutral .ox-avatar__circle { background: var(--oxygen-color-primitive-gray-200); color: var(--oxygen-color-primitive-gray-800, #1c3040); }
+.ox-avatar--success .ox-avatar__circle { background: var(--oxygen-color-primitive-green-100); color: var(--oxygen-color-primitive-green-700); }
+
+.ox-avatar__status {
+  position: absolute; right: -0.1rem; bottom: -0.1rem;
+  border-radius: 50%;
+  background: var(--oxygen-color-semantic-positive-prominent-base);
+  border: 0.2rem solid #fff;
+}
+.ox-avatar--small .ox-avatar__status,
+.ox-avatar--medium .ox-avatar__status,
+.ox-avatar--large .ox-avatar__status { width: 1.2rem; height: 1.2rem; }
+.ox-avatar--xsmall .ox-avatar__status { width: 0.8rem; height: 0.8rem; }
+.ox-avatar__status--unavailable { background: var(--oxygen-color-semantic-danger-prominent-base); }
+.ox-avatar__status--disabled    { background: var(--oxygen-color-semantic-neutral-prominent-base); }
+
+/* ------------------------------------------------------------
+   <Tabs> v2
+   Source: packages/core/src/navigation/Tabs/v2/Tabs.module.scss
+   Tab list row with an underline under the selected tab.
+   ------------------------------------------------------------ */
+.ox-tabs { display: flex; flex-direction: column; width: 100%; }
+.ox-tabs__list {
+  display: flex; list-style: none; margin: 0; padding: 0;
+  background: var(--oxygen-color-primitive-white);
+}
+.ox-tabs__tab { display: flex; flex: 1; margin: 0; padding: 0; list-style: none; }
+.ox-tabs__button {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  min-width: max-content;
+  padding: 1.2rem 1.6rem;
+  flex: 1;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  font: var(--oxygen-font-semantic-body-s-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+}
+.ox-tabs__button::before {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+}
+.ox-tabs__button:hover { color: var(--oxygen-color-semantic-brand-prominent-base); }
+.ox-tabs__button[aria-current="true"] { color: var(--oxygen-color-semantic-brand-prominent-base); }
+.ox-tabs__button[aria-current="true"]::before {
+  height: 0.2rem;
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-tabs__panel {
+  box-shadow: 0 -0.1rem 0 var(--oxygen-color-semantic-neutral-subtle-base);
+  padding: 2rem 0.4rem;
+}
+.ox-tabs--alignStart .ox-tabs__list { width: fit-content; }
+.ox-tabs--alignStart .ox-tabs__button { padding-inline: 2.4rem; }
+
+/* ------------------------------------------------------------
+   <Stepper>
+   Source: packages/core/src/navigation/Stepper/Stepper.{tsx,module.scss}
+   Horizontal step indicator with numbered circles and connecting
+   lines. Steps: todo | current | done.
+   ------------------------------------------------------------ */
+.ox-stepper {
+  display: flex; align-items: center;
+  list-style: none; margin: 0; padding: 0;
+  gap: 0.8rem;
+}
+.ox-stepper__item {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  flex: 1;
+  padding: 0.4rem 0.8rem;
+  border-radius: 1.6rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+.ox-stepper__item:hover { background: var(--oxygen-color-primitive-gray-100); }
+.ox-stepper__circle {
+  flex: none;
+  width: 2.4rem; height: 2.4rem;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font: var(--oxygen-font-semantic-body-s-bold);
+  background: var(--oxygen-color-primitive-white);
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-stronger);
+}
+.ox-stepper__label {
+  font: var(--oxygen-font-semantic-body-s-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+}
+.ox-stepper__item--current .ox-stepper__circle {
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+  color: #fff;
+  border-color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-stepper__item--current .ox-stepper__label {
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  font: var(--oxygen-font-semantic-body-s-bold);
+}
+.ox-stepper__item--done .ox-stepper__circle {
+  background: var(--oxygen-color-semantic-positive-prominent-base);
+  color: #fff;
+  border-color: var(--oxygen-color-semantic-positive-prominent-base);
+}
+.ox-stepper__item--done .ox-stepper__label { color: var(--oxygen-color-semantic-neutral-prominent-strong); }
+.ox-stepper__connector {
+  flex: 1;
+  height: 0.1rem;
+  background: var(--oxygen-color-semantic-neutral-subtle-stronger);
+  min-width: 2.4rem;
+}
+
+/* ------------------------------------------------------------
+   <Pagination>
+   Source: packages/core/src/navigation/Pagination/Pagination.{tsx,scss}
+   ------------------------------------------------------------ */
+.ox-pagination { display: inline-flex; align-items: center; }
+.ox-pagination__infos {
+  margin-right: 0.8rem;
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  font: var(--oxygen-font-semantic-body-s-regular);
+}
+.ox-pagination__buttons {
+  display: inline-flex; gap: 0.8rem;
+  list-style: none; margin: 0; padding: 0;
+}
+.ox-pagination__btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 3.2rem; height: 3.2rem;
+  border-radius: 0.4rem;
+  border: none;
+  background: var(--oxygen-color-primitive-white);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  font: var(--oxygen-font-semantic-body-s-regular);
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+}
+.ox-pagination__btn--nav {
+  border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+  font-size: 1.4rem;
+}
+.ox-pagination__btn--nav:hover:not(:disabled) {
+  border-color: var(--oxygen-color-semantic-brand-prominent-base);
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+  color: #fff;
+}
+.ox-pagination__btn:hover:not(:disabled):not(.ox-pagination__btn--active) {
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+  color: #fff;
+}
+.ox-pagination__btn--active {
+  background: var(--oxygen-color-semantic-brand-prominent-weak);
+  color: #fff;
+  font-weight: var(--oxygen-font-primitive-fontWeight-bold);
+}
+.ox-pagination__btn:disabled {
+  cursor: not-allowed;
+  background: var(--oxygen-color-semantic-mute-subtle-weak, var(--oxygen-color-primitive-gray-100));
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+}
+.ox-pagination__ellipsis {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 3.2rem; height: 3.2rem;
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  font-size: 1.4rem;
+}
+
+/* ------------------------------------------------------------
+   <Accordion> / <AccordionItem>
+   Source: packages/core/src/dataDisplay/Accordion/Accordion.{tsx,scss}
+   ------------------------------------------------------------ */
+.ox-accordion { display: flex; flex-direction: column; }
+.ox-accordion__item { padding: 1.6rem 0; border-bottom: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-stronger); }
+.ox-accordion__item:last-child { border-bottom: 0; }
+.ox-accordion__title {
+  display: flex; align-items: center;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  font: var(--oxygen-font-semantic-body-m-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  transition: color 100ms;
+}
+.ox-accordion__title:hover { color: var(--oxygen-color-semantic-brand-prominent-base); }
+.ox-accordion__chevron {
+  margin-right: 1.2rem;
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  transition: transform 0.3s;
+}
+.ox-accordion__item--open .ox-accordion__chevron { transform: rotate(-180deg); }
+.ox-accordion__item--open .ox-accordion__title { color: var(--oxygen-color-semantic-brand-prominent-base); }
+.ox-accordion__content {
+  margin-top: 0.8rem;
+  padding-left: 3.2rem;
+  font: var(--oxygen-font-semantic-body-s-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+}
+.ox-accordion__item:not(.ox-accordion__item--open) .ox-accordion__content { display: none; }
+
+/* ------------------------------------------------------------
+   <Toast>
+   Source: packages/core/src/feedbacks/Toast.mdx + @doctolib/toast
+   uiStyle: info | warning | success | error | loading
+   ------------------------------------------------------------ */
+.ox-toast {
+  display: flex; align-items: flex-start;
+  gap: 1.2rem;
+  min-width: 32rem; max-width: 44.8rem;
+  padding: 1.2rem 1.6rem;
+  background: var(--oxygen-color-primitive-white);
+  border-radius: 0.8rem;
+  box-shadow:
+    0 0.2rem 0.4rem var(--oxygen-color-primitive-gray-opacity-15),
+    0 0.8rem 2rem var(--oxygen-color-primitive-gray-opacity-25);
+  border-left: 0.4rem solid var(--oxygen-color-semantic-informative-prominent-base);
+  font: var(--oxygen-font-semantic-body-s-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+}
+.ox-toast__icon { flex: 0 0 auto; margin-top: 0.1rem; color: var(--oxygen-color-semantic-informative-prominent-base); }
+.ox-toast__body { flex: 1 1 auto; display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+.ox-toast__title { font: var(--oxygen-font-semantic-body-s-bold); }
+.ox-toast__message { color: var(--oxygen-color-semantic-neutral-prominent-strong); }
+.ox-toast__actions { display: flex; gap: 1.2rem; margin-top: 0.4rem; }
+.ox-toast__action {
+  background: none; border: 0; padding: 0;
+  font: var(--oxygen-font-semantic-body-s-bold);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+  cursor: pointer;
+  text-decoration: underline;
+}
+.ox-toast__close {
+  background: none; border: 0; padding: 0.4rem;
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  cursor: pointer; flex: 0 0 auto;
+}
+.ox-toast--success { border-left-color: var(--oxygen-color-semantic-positive-prominent-base); }
+.ox-toast--success .ox-toast__icon { color: var(--oxygen-color-semantic-positive-prominent-base); }
+.ox-toast--warning { border-left-color: var(--oxygen-color-semantic-warning-prominent-base); }
+.ox-toast--warning .ox-toast__icon { color: var(--oxygen-color-semantic-warning-prominent-base); }
+.ox-toast--error { border-left-color: var(--oxygen-color-semantic-danger-prominent-base); }
+.ox-toast--error .ox-toast__icon { color: var(--oxygen-color-semantic-danger-prominent-base); }
+.ox-toast--loading { border-left-color: var(--oxygen-color-semantic-brand-prominent-base); }
+.ox-toast--loading .ox-toast__icon { color: var(--oxygen-color-semantic-brand-prominent-base); }
+
+/* ------------------------------------------------------------
+   <SpinnerLoader>
+   Source: packages/core/src/feedbacks/SpinnerLoader/SpinnerLoader.{tsx,scss}
+   Uses stroke-dasharray rotation animation.
+   ------------------------------------------------------------ */
+.ox-spinner {
+  display: inline-flex; align-items: center; justify-content: center;
+  animation: ox-spinner-rotate 1.4s linear infinite;
+}
+.ox-spinner svg circle { fill: none; stroke-width: 2; stroke-linecap: round; transform-origin: center; }
+.ox-spinner svg .ox-spinner-path { animation: ox-spinner-dash 1.4s ease-in-out infinite; }
+.ox-spinner--xsmall svg { width: 1.2rem; height: 1.2rem; }
+.ox-spinner--small svg  { width: 1.6rem; height: 1.6rem; }
+.ox-spinner--medium svg { width: 2rem;   height: 2rem; }
+.ox-spinner--large svg  { width: 3.2rem; height: 3.2rem; }
+.ox-spinner--blue    .ox-spinner-path { stroke: var(--oxygen-color-semantic-brand-prominent-weak); }
+.ox-spinner--white   .ox-spinner-path { stroke: var(--oxygen-color-primitive-white); }
+.ox-spinner--neutral .ox-spinner-path { stroke: var(--oxygen-color-semantic-neutral-prominent-strong); }
+.ox-spinner--danger  .ox-spinner-path { stroke: var(--oxygen-color-semantic-danger-prominent-base); }
+@keyframes ox-spinner-rotate { 0% { transform: rotate(0); } 100% { transform: rotate(270deg); } }
+@keyframes ox-spinner-dash {
+  0%   { stroke-dasharray: 50; stroke-dashoffset: 50; }
+  50%  { stroke-dasharray: 50; stroke-dashoffset: 12.5; transform: rotate(135deg); }
+  100% { stroke-dasharray: 50; stroke-dashoffset: 50; transform: rotate(450deg); }
+}
+
+/* ------------------------------------------------------------
+   <SkeletonLoader>
+   Source: packages/core/src/feedbacks/SkeletonLoader/SkeletonLoader.{tsx,module.scss}
+   Pulse animation between neutral-subtle-base (light) and neutral-subtle-stronger (darker).
+   ------------------------------------------------------------ */
+.ox-skeleton {
+  background: var(--oxygen-color-semantic-neutral-subtle-base);
+  animation: ox-skeleton-pulse 2s ease-in-out 0.5s infinite alternate;
+}
+@keyframes ox-skeleton-pulse {
+  from { background: var(--oxygen-color-semantic-neutral-subtle-base); }
+  to   { background: var(--oxygen-color-semantic-neutral-subtle-stronger); }
+}
+.ox-skeleton--circle { border-radius: 50%; }
+.ox-skeleton--pill   { border-radius: 20% / 50%; }
+.ox-skeleton--rect   { border-radius: 0.4rem; }
+.ox-skeleton--circle.ox-skeleton--xxs { width: 1.6rem; height: 1.6rem; }
+.ox-skeleton--circle.ox-skeleton--xs  { width: 2.4rem; height: 2.4rem; }
+.ox-skeleton--circle.ox-skeleton--sm  { width: 3.2rem; height: 3.2rem; }
+.ox-skeleton--circle.ox-skeleton--md  { width: 4rem;   height: 4rem; }
+.ox-skeleton--circle.ox-skeleton--lg  { width: 4.8rem; height: 4.8rem; }
+.ox-skeleton--pill.ox-skeleton--xs { width: 4.8rem; height: 2.4rem; }
+.ox-skeleton--pill.ox-skeleton--sm { width: 6.4rem; height: 3.2rem; }
+.ox-skeleton--pill.ox-skeleton--md { width: 8rem;   height: 4rem; }
+.ox-skeleton--rect.ox-skeleton--xs  { height: 1.6rem; }
+.ox-skeleton--rect.ox-skeleton--sm  { height: 2.4rem; }
+.ox-skeleton--rect.ox-skeleton--md  { height: 2.4rem; }
+.ox-skeleton--rect.ox-skeleton--l   { height: 2.4rem; }
+.ox-skeleton--rect.ox-skeleton--xl  { height: 3.2rem; }
+.ox-skeleton--rect.ox-skeleton--xxl { height: 4rem; }
+
+/* ------------------------------------------------------------
+   <EmptyState>
+   Source: packages/core/src/feedbacks/EmptyState/EmptyState.{tsx,scss}
+   Centered column: illustration · title · message · actions.
+   ------------------------------------------------------------ */
+.ox-emptystate {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 3.2rem 1.6rem;
+}
+.ox-emptystate__content {
+  width: 100%; max-width: 58rem;
+  display: flex; flex-direction: column; align-items: center;
+}
+.ox-emptystate__illustration {
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 1.6rem;
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-emptystate__illustration--120 { width: 12rem; height: 12rem; }
+.ox-emptystate__illustration--80  { width: 8rem;  height: 8rem; }
+.ox-emptystate__illustration--64  { width: 6.4rem; height: 6.4rem; }
+.ox-emptystate__title {
+  font: var(--oxygen-font-semantic-title-l-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  margin-bottom: 0.8rem;
+}
+.ox-emptystate__message {
+  font: var(--oxygen-font-semantic-body-m-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  margin-bottom: 1.6rem;
+}
+.ox-emptystate__actions { display: inline-flex; flex-direction: column; gap: 0.8rem; align-items: center; }
+
+/* ------------------------------------------------------------
+   <Divider>
+   Source: packages/core/src/dataDisplay/Divider/Divider.{tsx,module.scss}
+   uiStyles: white | neutral-030 | neutral-130 | warning-090
+   ------------------------------------------------------------ */
+.ox-divider {
+  border: 0;
+  flex-shrink: 0;
+  height: 0.1rem;
+  margin: 0;
+  background: transparent;
+  border-top: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+}
+.ox-divider--margin { margin: 1.6rem 0; }
+.ox-divider--vertical {
+  height: auto;
+  width: 0.1rem;
+  min-height: 100%;
+  border-top: 0;
+  border-left: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+  margin: 0 1.6rem;
+}
+.ox-divider--white      { border-color: var(--oxygen-color-primitive-white); }
+.ox-divider--neutral-030{ border-color: var(--oxygen-color-semantic-neutral-subtle-base); }
+.ox-divider--neutral-130{ border-color: var(--oxygen-color-semantic-neutral-prominent-base); }
+.ox-divider--warning-090{ border-color: var(--oxygen-color-semantic-warning-prominent-weak); }
+
+/* ------------------------------------------------------------
+   <ProgressBar>
+   See full definition further below — single source of truth.
+   ------------------------------------------------------------ */
+
+/* ------------------------------------------------------------
+   <Avatar>
+   Source:
+     packages/core/src/dataDisplay/Avatar/Avatar.{tsx,scss}
+   Root markup (initials or icon):
+     <div class="dl-avatar dl-avatar-{size}">
+       <div class="dl-position-relative">
+         <div class="dl-avatar-circle dl-avatar-{color} [dl-avatar-bordered]">INITIALS</div>
+         <span class="right-icon availability-status-badge availability-status-badge-{status}"></span>
+       </div>
+     </div>
+   Sizes: xxsmall 16 | xsmall 24 | small 32 | medium 40 | large 48
+   Palettes: 16 (8 hues × {base, inverted})
+   ------------------------------------------------------------ */
+.dl-avatar {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.4rem;
+  --dl-border: var(--oxygen-color-primitive-white);
+  --dl-status-border: var(--oxygen-color-semantic-common-subtle);
+  --dl-status-bg: var(--oxygen-color-semantic-positive-prominent-base);
+  --dl-status-bg-disabled: var(--oxygen-color-semantic-neutral-prominent-base);
+  --dl-status-bg-unavailable: var(--oxygen-color-semantic-danger-prominent-base);
+}
+.dl-position-relative { position: relative; display: inline-block; }
+.dl-avatar .dl-avatar-circle {
+  border-radius: 50%;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--oxygen-font-primitive-fontWeight-bold, 700);
+  outline: 0.1rem solid transparent;
+  overflow: hidden;
+}
+.dl-avatar-bordered { border: 0.2rem solid var(--dl-border); }
+
+.dl-avatar-xxsmall .dl-avatar-circle { width: 1.6rem; height: 1.6rem; font-size: 0.9rem; }
+.dl-avatar-xsmall  .dl-avatar-circle { width: 2.4rem; height: 2.4rem; font-size: 1.0rem; }
+.dl-avatar-small   .dl-avatar-circle { width: 3.2rem; height: 3.2rem; font-size: 1.2rem; }
+.dl-avatar-medium  .dl-avatar-circle { width: 4.0rem; height: 4.0rem; font-size: 1.6rem; }
+.dl-avatar-large   .dl-avatar-circle { width: 4.8rem; height: 4.8rem; font-size: 2.0rem; }
+
+/* Palette — base (dark bg, white text) */
+.dl-avatar-dark-primary { background: var(--oxygen-color-primitive-blue-600);    color: var(--oxygen-color-primitive-white); }
+.dl-avatar-dark-red     { background: var(--oxygen-color-primitive-red-600);     color: var(--oxygen-color-primitive-white); }
+.dl-avatar-dark-purple  { background: var(--oxygen-color-primitive-purple-600);  color: var(--oxygen-color-primitive-white); }
+.dl-avatar-dark-yellow  { background: var(--oxygen-color-primitive-yellow-600);  color: var(--oxygen-color-primitive-white); }
+.dl-avatar-dark-orange  { background: var(--oxygen-color-primitive-orange-600);  color: var(--oxygen-color-primitive-white); }
+.dl-avatar-dark-teal    { background: var(--oxygen-color-primitive-teal-600);    color: var(--oxygen-color-primitive-white); }
+.dl-avatar-dark-success { background: var(--oxygen-color-primitive-green-600);   color: var(--oxygen-color-primitive-white); }
+.dl-avatar-dark-neutral { background: var(--oxygen-color-primitive-gray-600);    color: var(--oxygen-color-primitive-white); }
+
+/* Palette — inverted (medium-tone bg, deep navy text) */
+.dl-avatar .dl-avatar-circle.dl-avatar-primary { background: var(--oxygen-color-primitive-blue-500);    color: var(--oxygen-color-primitive-blue-800); }
+.dl-avatar .dl-avatar-circle.dl-avatar-red     { background: var(--oxygen-color-primitive-red-400);     color: var(--oxygen-color-primitive-blue-800); }
+.dl-avatar .dl-avatar-circle.dl-avatar-purple  { background: var(--oxygen-color-primitive-purple-400);  color: var(--oxygen-color-primitive-blue-800); }
+.dl-avatar .dl-avatar-circle.dl-avatar-yellow  { background: var(--oxygen-color-primitive-yellow-500);  color: var(--oxygen-color-primitive-blue-800); }
+.dl-avatar .dl-avatar-circle.dl-avatar-orange  { background: var(--oxygen-color-primitive-orange-400);  color: var(--oxygen-color-primitive-blue-800); }
+.dl-avatar .dl-avatar-circle.dl-avatar-teal    { background: var(--oxygen-color-primitive-teal-500);    color: var(--oxygen-color-primitive-blue-800); }
+.dl-avatar .dl-avatar-circle.dl-avatar-success { background: var(--oxygen-color-primitive-green-400);   color: var(--oxygen-color-primitive-blue-800); }
+.dl-avatar .dl-avatar-circle.dl-avatar-neutral { background: var(--oxygen-color-primitive-gray-400);    color: var(--oxygen-color-primitive-blue-800); }
+
+/* Availability status badge */
+.right-icon {
+  position: absolute;
+  right: 0; bottom: 0;
+}
+.dl-avatar-xxsmall .right-icon { right: -0.3rem; bottom: -0.3rem; }
+.dl-avatar-xsmall  .right-icon { right: -0.2rem; bottom: -0.2rem; }
+.dl-avatar-small   .right-icon { right: -0.1rem; bottom: -0.1rem; }
+.dl-avatar-large   .right-icon { right:  0.1rem; bottom:  0.1rem; }
+
+.availability-status-badge {
+  display: inline-block;
+  width: 1.2rem; height: 1.2rem;
+  border-radius: 50%;
+  border: 0.2rem solid var(--dl-status-border);
+  box-sizing: border-box;
+}
+.availability-status-badge-available    { background: var(--dl-status-bg); }
+.availability-status-badge-unavailable  { background: var(--dl-status-bg-unavailable); }
+.availability-status-badge-disabled     { background: var(--dl-status-bg-disabled); }
+
+/* ------------------------------------------------------------
+   <Tabs v2>
+   Source: packages/core/src/navigation/Tabs/v2/Tabs.{tsx,module.scss}
+   Root markup:
+     <div class="ox-tabs">
+       <ul class="ox-tabs__list" role="tablist">
+         <li class="ox-tabs__tab">
+           <button aria-current="true|false">Label</button>
+         </li>
+       </ul>
+       <div class="ox-tabs__panel">{children}</div>
+     </div>
+   ------------------------------------------------------------ */
+.ox-tabs { display: flex; flex-direction: column; width: 100%; }
+.ox-tabs__list {
+  display: flex; flex-direction: row; margin: 0; padding: 0;
+  list-style: none;
+  background: transparent;
+}
+.ox-tabs__tab { display: flex; flex: 1; margin: 0; padding: 0; list-style: none; }
+.ox-tabs__tab button {
+  cursor: pointer;
+  position: relative;
+  width: 100%; height: 100%;
+  min-width: max-content;
+  padding: 1.2rem 1.6rem;
+  flex: 1 0;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  font: var(--oxygen-font-semantic-body-s-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+}
+.ox-tabs__tab button::before {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+}
+.ox-tabs__tab button:hover { color: var(--oxygen-color-semantic-brand-prominent-base); }
+.ox-tabs__tab button[aria-current="true"] {
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-tabs__tab button[aria-current="true"]::before {
+  height: 0.3rem;
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-tabs__panel {
+  box-shadow: 0 -0.1rem 0 var(--oxygen-color-semantic-neutral-subtle-base);
+  flex-grow: 1; width: 100%;
+  padding: 2.4rem 0.4rem;
+}
+.ox-tabs--start .ox-tabs__list { width: fit-content; }
+.ox-tabs--stretch .ox-tabs__list { width: 100%; }
+
+/* ------------------------------------------------------------
+   <Stepper>
+   Source: packages/core/src/navigation/Stepper/Stepper.{tsx,module.scss}
+   Root markup:
+     <div class="ox-stepper">
+       <div class="ox-step ox-step--done|active|inactive">
+         <span class="ox-step__badge">1</span>
+         <span class="ox-step__label">Label</span>
+       </div>
+       <svg class="ox-step__sep">chevron</svg>
+       ...
+     </div>
+   ------------------------------------------------------------ */
+.ox-stepper { display: flex; align-items: center; gap: 0.8rem; }
+.ox-step { display: inline-flex; align-items: center; gap: 0.8rem; padding: 0.4rem; border-radius: 0.8rem; background: transparent; border: 0; cursor: default; }
+.ox-step--clickable { cursor: pointer; }
+.ox-step--clickable:hover { background: var(--oxygen-color-semantic-neutral-subtle-base); }
+.ox-step__badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2rem; height: 2rem; border-radius: 50%;
+  font: var(--oxygen-font-semantic-body-xs-bold); font-size: 1.1rem;
+}
+.ox-step--active .ox-step__badge { background: var(--oxygen-color-semantic-brand-subtle-base); color: var(--oxygen-color-semantic-brand-prominent-strong); }
+.ox-step--active .ox-step__label { color: var(--oxygen-color-semantic-neutral-prominent-stronger); }
+.ox-step--inactive .ox-step__badge { background: var(--oxygen-color-semantic-neutral-subtle-base); color: var(--oxygen-color-semantic-neutral-prominent-weak); }
+.ox-step--inactive .ox-step__label { color: var(--oxygen-color-semantic-neutral-prominent-weak); }
+.ox-step--done .ox-step__badge { background: var(--oxygen-color-semantic-positive-prominent-base); color: var(--oxygen-color-primitive-white); }
+.ox-step--done .ox-step__label { color: var(--oxygen-color-semantic-neutral-prominent-stronger); }
+.ox-step__label { font: var(--oxygen-font-semantic-body-s-bold); }
+.ox-step__sep { color: var(--oxygen-color-semantic-neutral-prominent-weak); flex-shrink: 0; }
+
+/* ------------------------------------------------------------
+   <Pagination>
+   Source: packages/core/src/navigation/Pagination/Pagination.{tsx,scss}
+   Root markup:
+     <nav class="dl-pagination">
+       <div class="dl-pagination-infos">1–10 of 42</div>
+       <ul class="dl-pagination-buttons">
+         <li><button class="dl-pagination-button">prev</button></li>
+         <li><button class="dl-pagination-button dl-pagination-button-page-number [active]">1</button></li>
+         <li class="dl-pagination-ellipsis">…</li>
+         ...
+       </ul>
+     </nav>
+   ------------------------------------------------------------ */
+.dl-pagination { display: flex; align-items: center; justify-content: center; gap: 0.8rem; }
+.dl-pagination-infos {
+  margin-right: 0.8rem;
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  font: var(--oxygen-font-semantic-body-s-regular);
+}
+.dl-pagination-buttons { display: flex; list-style: none; margin: 0; padding: 0; }
+.dl-pagination-buttons li:not(:last-child) { margin-right: 0.8rem; }
+.dl-pagination-ellipsis,
+.dl-pagination-button {
+  display: flex; justify-content: center; align-items: center;
+  width: 3.2rem; height: 3.2rem;
+}
+.dl-pagination-ellipsis {
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+}
+.dl-pagination-button {
+  text-decoration: none;
+  border-radius: 0.4rem;
+  border: none; padding: 0;
+  background: var(--oxygen-color-primitive-white);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  font: var(--oxygen-font-semantic-body-s-regular);
+  cursor: pointer;
+}
+.dl-pagination-button:not(.dl-pagination-button-page-number) {
+  border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+}
+.dl-pagination-button:not(.dl-pagination-button-page-number):hover {
+  border-color: var(--oxygen-color-semantic-brand-prominent-base);
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+  color: var(--oxygen-color-primitive-white);
+}
+.dl-pagination-button.dl-pagination-button-page-number:hover {
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+  color: var(--oxygen-color-primitive-white);
+}
+.dl-pagination-button.active {
+  background: var(--oxygen-color-semantic-brand-prominent-weak);
+  color: var(--oxygen-color-primitive-white);
+  font-weight: var(--oxygen-font-primitive-fontWeight-bold, 700);
+  cursor: default;
+}
+.dl-pagination-button.disabled,
+.dl-pagination-button:disabled {
+  background: var(--oxygen-color-semantic-neutral-subtle-base);
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  cursor: not-allowed;
+  border-color: var(--oxygen-color-semantic-neutral-subtle-base);
+}
+
+/* ------------------------------------------------------------
+   <Accordion>
+   Source: packages/core/src/dataDisplay/Accordion/Accordion.{tsx,scss}
+   Root markup:
+     <div class="dl-accordion">
+       <div class="dl-accordion-item [dl-accordion-item-opened]">
+         <button class="dl-accordion-item-title">
+           <svg class="dl-icon dl-accordion-item-title-icon">chevron-down</svg>
+           <span>Title</span>
+         </button>
+         <div class="dl-accordion-item-content">{children}</div>
+       </div>
+     </div>
+   ------------------------------------------------------------ */
+.dl-accordion { display: flex; flex-direction: column; }
+.dl-accordion-item {
+  padding: 1.6rem 0;
+  border-bottom: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+}
+.dl-accordion-item-title {
+  display: flex; align-items: center;
+  cursor: pointer; user-select: none;
+  background: none; border: none; outline: none;
+  padding: 0; width: 100%;
+  text-align: left;
+  font: var(--oxygen-font-semantic-title-s-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  transition: color 100ms;
+}
+.dl-accordion-item-title:hover { color: var(--oxygen-color-semantic-brand-prominent-base); }
+.dl-accordion-item-title .dl-icon {
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  fill: currentColor;
+  transition: transform 300ms, color 100ms;
+  margin-right: 0.8rem;
+  width: 2rem; height: 2rem; flex-shrink: 0;
+}
+.dl-accordion-item-title:hover .dl-icon { color: var(--oxygen-color-semantic-brand-prominent-base); }
+.dl-accordion-item-opened .dl-accordion-item-title .dl-icon { transform: rotate(-180deg); }
+.dl-accordion-item-content {
+  margin-top: 1.2rem;
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  font: var(--oxygen-font-semantic-body-m-regular);
+  padding-left: 2.8rem;
+}
+.dl-accordion-item:not(.dl-accordion-item-opened) .dl-accordion-item-content { display: none; }
+
+/* ------------------------------------------------------------
+   <SpinnerLoader>
+   Source: packages/core/src/feedbacks/SpinnerLoader/SpinnerLoader.{tsx,scss}
+   Root markup:
+     <div class="dl-spinner-container">
+       <svg class="dl-spinner-loader">
+         <circle class="dl-path dl-path-{color} dl-path-{size}" ...>
+       </svg>
+     </div>
+   Sizes: xsmall 8 · small 12 · medium 16 · large 24  (stroke-width 2)
+   ------------------------------------------------------------ */
+.dl-spinner-container {
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.dl-spinner-loader {
+  animation: dl-rotator 1.4s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dl-spinner-loader { animation-duration: 0s; }
+}
+.dl-spinner-loader .dl-path {
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  fill: none;
+  stroke-linecap: round;
+}
+.dl-spinner-loader .dl-path-blue    { stroke: var(--oxygen-color-semantic-brand-prominent-weak); }
+.dl-spinner-loader .dl-path-white   { stroke: var(--oxygen-color-primitive-white); }
+.dl-spinner-loader .dl-path-neutral { stroke: var(--oxygen-color-semantic-neutral-prominent-strong); }
+.dl-spinner-loader .dl-path-danger  { stroke: var(--oxygen-color-semantic-danger-prominent-base); }
+.dl-spinner-loader .dl-path-xsmall { stroke-dasharray: 20; animation: dl-dash-x 1.4s ease-in-out infinite; }
+.dl-spinner-loader .dl-path-small  { stroke-dasharray: 35; animation: dl-dash-s 1.4s ease-in-out infinite; }
+.dl-spinner-loader .dl-path-medium { stroke-dasharray: 50; animation: dl-dash-m 1.4s ease-in-out infinite; }
+.dl-spinner-loader .dl-path-large  { stroke-dasharray: 70; animation: dl-dash-l 1.4s ease-in-out infinite; }
+@keyframes dl-rotator { to { transform: rotate(270deg); } }
+@keyframes dl-dash-x { 0%{stroke-dashoffset:20} 50%{stroke-dashoffset:5;transform:rotate(135deg)} 100%{stroke-dashoffset:20;transform:rotate(450deg)} }
+@keyframes dl-dash-s { 0%{stroke-dashoffset:35} 50%{stroke-dashoffset:8.75;transform:rotate(135deg)} 100%{stroke-dashoffset:35;transform:rotate(450deg)} }
+@keyframes dl-dash-m { 0%{stroke-dashoffset:50} 50%{stroke-dashoffset:12.5;transform:rotate(135deg)} 100%{stroke-dashoffset:50;transform:rotate(450deg)} }
+@keyframes dl-dash-l { 0%{stroke-dashoffset:70} 50%{stroke-dashoffset:17.5;transform:rotate(135deg)} 100%{stroke-dashoffset:70;transform:rotate(450deg)} }
+
+/* ------------------------------------------------------------
+   <SkeletonLoader>
+   Source: packages/core/src/feedbacks/SkeletonLoader/SkeletonLoader.module.scss
+   Root markup:
+     <div class="ox-skel ox-skel--{shape} ox-skel--size-{size}" [style="width:…"]></div>
+   Shapes: circle | pill | rectangle
+   ------------------------------------------------------------ */
+.ox-skel {
+  display: block;
+  background: var(--oxygen-color-semantic-neutral-subtle-stronger);
+  outline: 0.1rem solid transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ox-skel { animation: ox-skel-pulse 2s ease-in-out 0.5s infinite alternate; }
+}
+@keyframes ox-skel-pulse {
+  from { background: var(--oxygen-color-semantic-neutral-subtle-base); }
+  to   { background: var(--oxygen-color-semantic-neutral-subtle-stronger); }
+}
+.ox-skel--circle { border-radius: 9999px; }
+.ox-skel--circle.ox-skel--size-xxsmall { width: 1.6rem; height: 1.6rem; }
+.ox-skel--circle.ox-skel--size-xsmall  { width: 2.4rem; height: 2.4rem; }
+.ox-skel--circle.ox-skel--size-small   { width: 3.2rem; height: 3.2rem; }
+.ox-skel--circle.ox-skel--size-medium  { width: 4.0rem; height: 4.0rem; }
+.ox-skel--circle.ox-skel--size-large   { width: 4.8rem; height: 4.8rem; }
+
+.ox-skel--pill { border-radius: 20% / 50%; }
+.ox-skel--pill.ox-skel--size-xsmall { width: 4.8rem; height: 2.4rem; }
+.ox-skel--pill.ox-skel--size-small  { width: 6.4rem; height: 3.2rem; }
+.ox-skel--pill.ox-skel--size-medium { width: 8.0rem; height: 4.0rem; }
+
+.ox-skel--rect { border-radius: 0.4rem; width: 100%; }
+.ox-skel--rect.ox-skel--h-xs  { height: 1.6rem; }
+.ox-skel--rect.ox-skel--h-s   { height: 2.4rem; }
+.ox-skel--rect.ox-skel--h-m   { height: 2.4rem; }
+.ox-skel--rect.ox-skel--h-l   { height: 2.4rem; }
+.ox-skel--rect.ox-skel--h-xl  { height: 3.2rem; }
+.ox-skel--rect.ox-skel--h-xxl { height: 4.0rem; }
+.ox-skel--rect.ox-skel--h-xxxl{ height: 4.8rem; }
+
+/* ------------------------------------------------------------
+   <EmptyState>
+   Source: packages/core/src/feedbacks/EmptyState/EmptyState.{tsx,scss}
+   Root markup:
+     <div class="dl-emptystate">
+       <div class="dl-emptystate-content">
+         <img / svg illustration />
+         <h3 class="dl-emptystate__title">Title</h3>
+         <p class="dl-emptystate__desc">Description</p>
+         <button class="ox-button …">CTA</button>
+       </div>
+     </div>
+   ------------------------------------------------------------ */
+.dl-emptystate {
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 4rem 2rem;
+}
+.dl-emptystate-content {
+  width: 100%; max-width: 58rem;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  gap: 1.6rem;
+}
+.dl-emptystate__illustration {
+  width: 14.4rem; height: 14.4rem;
+  border-radius: 50%;
+  background: var(--oxygen-color-semantic-brand-subtle-weak);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0.4rem;
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.dl-emptystate__title {
+  font: var(--oxygen-font-semantic-title-m-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  margin: 0;
+}
+.dl-emptystate__desc {
+  font: var(--oxygen-font-semantic-body-m-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  margin: 0 0 0.8rem;
+}
+
+
+/* ------------------------------------------------------------
+   <Tabs>
+   Source: packages/core/src/navigation/Tabs/v2/Tabs.{tsx,module.scss}
+   Root markup:
+     <div class="ox-tabs [ox-tabs--stretch|ox-tabs--start]">
+       <ul class="ox-tabs__list" role="tablist">
+         <li class="ox-tabs__tab"><button aria-current="true|false">Label</button></li>
+         ...
+       </ul>
+       <div class="ox-tabs__panel">{content}</div>
+     </div>
+   ------------------------------------------------------------ */
+.ox-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.ox-tabs__list {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ox-tabs--stretch .ox-tabs__list { width: 100%; }
+.ox-tabs--start   .ox-tabs__list { width: fit-content; }
+
+.ox-tabs__tab {
+  display: flex;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ox-tabs__tab > button {
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  min-width: max-content;
+  padding: 1.2rem 1.6rem;
+  flex: 1 0;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  font: var(--oxygen-font-semantic-body-s-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  transition: color 120ms ease;
+}
+.ox-tabs__tab > button::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 0;
+}
+.ox-tabs__tab > button:hover,
+.ox-tabs__tab > button:active {
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+}
+.ox-tabs__tab > button[aria-current="true"] {
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-tabs__tab > button[aria-current="true"]::before {
+  height: 0.3rem;
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-tabs__panel {
+  box-shadow: 0 -0.1rem 0 var(--oxygen-color-semantic-neutral-subtle-base);
+  flex-grow: 1;
+  width: 100%;
+}
+
+/* ------------------------------------------------------------
+   <Stepper> + <Step>
+   Source: packages/core/src/navigation/Stepper/Stepper.{tsx,module.scss}
+   The real component uses inline utility classes (flex, dl-padding-4, etc)
+   and composes <Badge> + <Icon>. This block mirrors the final visual.
+   Root markup:
+     <div class="ox-stepper">
+       <div class="ox-step ox-step--{done|active|inactive}">
+         <span class="ox-step__badge">{N | check-svg}</span>
+         <span class="ox-step__label">Label</span>
+       </div>
+       <svg class="ox-step__sep">...chevron-right...</svg>
+       ...
+     </div>
+   Use <button class="ox-step ox-step--clickable"> for clickable done steps.
+   ------------------------------------------------------------ */
+.ox-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.ox-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-right: 0.8rem;
+  padding: 0.4rem;
+  border: 0;
+  background: transparent;
+}
+.ox-step--clickable {
+  cursor: pointer;
+  border-radius: 0.8rem;
+  transition: background-color 120ms ease;
+}
+.ox-step--clickable:hover,
+.ox-step--clickable:active {
+  background-color: var(--oxygen-color-semantic-neutral-subtle-base);
+}
+.ox-step__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font: var(--oxygen-font-semantic-body-xs-bold);
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.ox-step--done .ox-step__badge {
+  background: var(--oxygen-color-primitive-green-600);
+  color: #fff;
+}
+.ox-step--active .ox-step__badge {
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+  color: #fff;
+}
+.ox-step--inactive .ox-step__badge {
+  background: var(--oxygen-color-semantic-neutral-subtle-base);
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+}
+.ox-step__label {
+  font: var(--oxygen-font-semantic-body-s-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  white-space: nowrap;
+}
+.ox-step--inactive .ox-step__label {
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+}
+.ox-step__sep {
+  margin-right: 0.8rem;
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  flex: 0 0 auto;
+}
+
+
+/* ------------------------------------------------------------
+   <Pagination>
+   Source: packages/core/src/navigation/Pagination/Pagination.{tsx,scss}
+   Root markup:
+     <nav class="ox-pagination">
+       <div class="ox-pagination__infos">Showing 1–10 of 124</div>
+       <ul class="ox-pagination__buttons">
+         <li><button class="ox-pagination__btn" aria-label="Previous">‹</button></li>
+         <li><button class="ox-pagination__btn ox-pagination__btn--page active" aria-current="true">1</button></li>
+         <li><button class="ox-pagination__btn ox-pagination__btn--page">2</button></li>
+         <li class="ox-pagination__ellipsis">…</li>
+         <li><button class="ox-pagination__btn" aria-label="Next">›</button></li>
+       </ul>
+     </nav>
+   ------------------------------------------------------------ */
+.ox-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+.ox-pagination__infos {
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  font: var(--oxygen-font-semantic-body-s-regular);
+}
+.ox-pagination__buttons {
+  user-select: none;
+  display: flex;
+  gap: 0.8rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.ox-pagination__btn,
+.ox-pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: var(--oxygen-scale-semantic-radius-small);
+  background: #fff;
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: var(--oxygen-font-semantic-body-s-regular);
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+.ox-pagination__ellipsis {
+  cursor: default;
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+}
+/* prev/next buttons carry a border */
+.ox-pagination__btn:not(.ox-pagination__btn--page) {
+  border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+  font-size: 1.6rem;
+}
+.ox-pagination__btn:hover:not([disabled]):not(.active) {
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+  color: #fff;
+  border-color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-pagination__btn.active {
+  background: var(--oxygen-color-semantic-brand-prominent-weak);
+  color: #fff;
+  font-weight: 700;
+  cursor: not-allowed;
+}
+.ox-pagination__btn[disabled] {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  border-color: var(--oxygen-color-semantic-neutral-subtle-base);
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------
+   <Accordion> + <AccordionItem>
+   Source: packages/core/src/dataDisplay/Accordion/Accordion.{tsx,scss}
+   Root markup:
+     <section class="ox-accordion">
+       <article class="ox-accordion__item [ox-accordion__item--open]">
+         <button class="ox-accordion__title">
+           <span>Section title</span>
+           <svg class="ox-accordion__chevron">...</svg>
+         </button>
+         <div class="ox-accordion__body">...</div>
+       </article>
+       ...
+     </section>
+   ------------------------------------------------------------ */
+.ox-accordion {
+  display: flex;
+  flex-direction: column;
+  border-top: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+}
+.ox-accordion__item {
+  padding: 1.6rem;
+  border-bottom: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+}
+.ox-accordion__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  width: 100%;
+  background: none;
+  border: 0;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+  font: var(--oxygen-font-semantic-title-s-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  transition: color 100ms ease;
+}
+.ox-accordion__title:hover,
+.ox-accordion__title:focus-visible {
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-accordion__chevron {
+  flex: 0 0 auto;
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  transition: transform 300ms ease, color 100ms ease;
+}
+.ox-accordion__title:hover .ox-accordion__chevron {
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-accordion__item--open .ox-accordion__chevron {
+  transform: rotate(-180deg);
+}
+
+/* Chevron-start modifier — flips the chevron to the leading side
+   of the row (before the title). The title itself is pushed to fill
+   the remaining space so click target stays full-width. */
+.ox-accordion__item--chevron-start .ox-accordion__title {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.ox-accordion__body {
+  margin-top: 0.8rem;
+  font: var(--oxygen-font-semantic-body-m-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+}
+.ox-accordion__item:not(.ox-accordion__item--open) .ox-accordion__body {
+  display: none;
+}
+
+/* ------------------------------------------------------------
+   <DatePicker> — calendar grid
+   Note: not yet an Oxygen core component — style derived from
+   tokens to match the rest of the system. Inline HTML grid.
+   Root markup:
+     <div class="ox-datepicker">
+       <header class="ox-datepicker__header">
+         <button class="ox-datepicker__nav" aria-label="Previous month">‹</button>
+         <span class="ox-datepicker__title">October 2025</span>
+         <button class="ox-datepicker__nav" aria-label="Next month">›</button>
+       </header>
+       <div class="ox-datepicker__weekdays">
+         <span>M</span><span>T</span>...
+       </div>
+       <div class="ox-datepicker__grid">
+         <button class="ox-datepicker__day" ...>1</button>
+         ...
+         <button class="ox-datepicker__day ox-datepicker__day--selected">14</button>
+         <button class="ox-datepicker__day" disabled>15</button>
+         <button class="ox-datepicker__day ox-datepicker__day--today">20</button>
+       </div>
+     </div>
+   ------------------------------------------------------------ */
+.ox-datepicker {
+  display: inline-block;
+  padding: 1.6rem;
+  background: #fff;
+  border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+  border-radius: var(--oxygen-scale-semantic-radius-medium);
+  box-shadow: 0 0.4rem 1.6rem rgba(25, 38, 52, 0.08);
+  width: 32rem;
+}
+.ox-datepicker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+.ox-datepicker__title {
+  font: var(--oxygen-font-semantic-body-m-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  white-space: nowrap;
+  flex: 1;
+  text-align: center;
+}
+.ox-datepicker__nav {
+  width: 3.2rem;
+  height: 3.2rem;
+  background: transparent;
+  border: 0;
+  border-radius: var(--oxygen-scale-semantic-radius-small);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 120ms ease;
+}
+.ox-datepicker__nav:hover {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-datepicker__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.2rem;
+  margin-bottom: 0.4rem;
+}
+.ox-datepicker__weekdays > span {
+  text-align: center;
+  font: var(--oxygen-font-semantic-body-xs-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  text-transform: uppercase;
+  line-height: 2.8rem;
+}
+.ox-datepicker__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.2rem;
+}
+.ox-datepicker__day {
+  aspect-ratio: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--oxygen-scale-semantic-radius-small);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  font: var(--oxygen-font-semantic-body-s-regular);
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.ox-datepicker__day:hover:not([disabled]):not(.ox-datepicker__day--selected) {
+  background: var(--oxygen-color-semantic-brand-subtle-weak);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-datepicker__day--outside {
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+}
+.ox-datepicker__day--today {
+  outline: 0.1rem solid var(--oxygen-color-semantic-brand-prominent-base);
+  outline-offset: -0.1rem;
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+  font-weight: 700;
+}
+.ox-datepicker__day--selected {
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+  color: #fff;
+  font-weight: 700;
+}
+.ox-datepicker__day[disabled] {
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* ------------------------------------------------------------
+   <Combobox> — search with suggestions
+   Note: not yet an Oxygen core component — styled to match the
+   InputText primitives and Dropdown menu patterns.
+   Root markup:
+     <div class="ox-combobox">
+       <div class="ox-combobox__input">
+         <svg>...search icon...</svg>
+         <input type="search" placeholder="Search doctors, specialties, places" />
+       </div>
+       <ul class="ox-combobox__list" role="listbox">
+         <li role="option" class="ox-combobox__opt ox-combobox__opt--active">
+           <svg>...</svg>
+           <span><b>Dr</b> Claire Martin — General practitioner · Paris 11</span>
+         </li>
+         ...
+         <li class="ox-combobox__group">SPECIALTIES</li>
+         <li role="option" class="ox-combobox__opt">...</li>
+       </ul>
+     </div>
+   ------------------------------------------------------------ */
+.ox-combobox {
+  position: relative;
+  width: 100%;
+  max-width: 48rem;
+}
+.ox-combobox__input {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0 1.2rem;
+  height: 4.4rem;
+  background: #fff;
+  border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+  border-radius: var(--oxygen-scale-semantic-radius-small);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.ox-combobox__input:focus-within {
+  border-color: var(--oxygen-color-semantic-brand-prominent-base);
+  box-shadow: 0 0 0 0.3rem var(--oxygen-color-semantic-brand-subtle-weak);
+}
+.ox-combobox__input svg {
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  flex: 0 0 auto;
+}
+.ox-combobox__input input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: var(--oxygen-font-semantic-body-m-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+}
+.ox-combobox__input input::placeholder {
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+}
+.ox-combobox__list {
+  margin: 0.4rem 0 0;
+  padding: 0.4rem 0;
+  list-style: none;
+  background: #fff;
+  border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+  border-radius: var(--oxygen-scale-semantic-radius-small);
+  box-shadow: 0 0.8rem 2.4rem rgba(25, 38, 52, 0.12);
+  max-height: 36rem;
+  overflow-y: auto;
+}
+.ox-combobox__group {
+  padding: 0.8rem 1.2rem 0.4rem;
+  font: var(--oxygen-font-semantic-body-xs-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.ox-combobox__opt {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem 1.2rem;
+  font: var(--oxygen-font-semantic-body-m-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  cursor: pointer;
+  transition: background-color 80ms ease;
+}
+.ox-combobox__opt svg {
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  flex: 0 0 auto;
+}
+.ox-combobox__opt b {
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  font-weight: 700;
+}
+.ox-combobox__opt:hover,
+.ox-combobox__opt--active {
+  background: var(--oxygen-color-semantic-brand-subtle-weak);
+}
+.ox-combobox__opt--active svg,
+.ox-combobox__opt:hover svg {
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-combobox__opt small {
+  display: block;
+  font: var(--oxygen-font-semantic-body-xs-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+}
+
+/* ------------------------------------------------------------
+   <ProgressBar>
+   Note: not yet an Oxygen core component — uses brand tokens and
+   the component-radius-small for the pill shape. Single size only
+   (4 px) — no sm/md/lg variants.
+   Root markup:
+     <div class="ox-progress" style="--p:40%" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+       <div class="ox-progress__header">
+         <span class="ox-progress__label">Uploading file</span>
+         <span class="ox-progress__value">40%</span>
+       </div>
+       <div class="ox-progress__track">
+         <div class="ox-progress__fill"></div>
+         <div class="ox-progress__cap"></div>
+       </div>
+     </div>
+   Modifiers: .ox-progress--square (no border-radius — full bleed)
+   The header (label + value) is optional. Either side can be omitted.
+   The end-cap dot is fixed at the right edge of the track and marks
+   the size / 100% extent of the bar. Hidden in --square.
+   ------------------------------------------------------------ */
+.ox-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+}
+.ox-progress__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.6rem;
+}
+.ox-progress__label,
+.ox-progress__value {
+  font: var(--oxygen-font-semantic-body-m-regular);
+  font-weight: 300;
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+}
+.ox-progress__value { font-variant-numeric: tabular-nums; }
+
+.ox-progress__track {
+  position: relative;
+  width: 100%;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--oxygen-color-semantic-neutral-subtle-base);
+}
+.ox-progress--square .ox-progress__track { border-radius: 0; }
+
+.ox-progress__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #107ACA;
+  width: var(--p, 0%);
+  transition: width 320ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* End-cap dot — fixed at the right edge of the track to mark the
+   100% / total extent of the progress bar. */
+.ox-progress__cap {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: #107ACA;
+  transform: translate(50%, -50%);
+  pointer-events: none;
+}
+.ox-progress--square .ox-progress__cap { display: none; }
+
+
+/* ============================================================
+   P2/P3 COMPONENTS — tokens-based styling derived from Oxygen
+   ============================================================ */
+
+/* ---------- Dialog — from overlays/Dialog/Dialog.scss ---------- */
+.ox-dialog-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(25, 36, 70, .55);
+  backdrop-filter: blur(2px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1;
+  padding: 2rem;
+}
+.ox-dialog {
+  background: var(--oxygen-color-semantic-neutral-minor-base, #fff);
+  border-radius: var(--oxygen-scale-semantic-radius-large, 1.2rem);
+  box-shadow: 0 2.4rem 4.8rem -1.2rem rgba(25,36,70,.28), 0 0 0 .1rem rgba(25,36,70,.06);
+  width: 44.8rem; max-width: 100%;
+  display: flex; flex-direction: column;
+  outline: .1rem solid transparent;
+}
+.ox-dialog__header {
+  padding: 2.4rem 2.4rem 0;
+  font: var(--oxygen-font-semantic-title-s-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+}
+.ox-dialog__body {
+  padding: 1.2rem 2.4rem 2rem;
+  font: var(--oxygen-font-semantic-body-m-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+}
+.ox-dialog__footer {
+  display: flex; justify-content: flex-end; gap: 1.6rem;
+  padding: 0 2.4rem 2.4rem;
+}
+
+/* ---------- Contextual popover ---------- */
+.ox-cpop {
+  display: inline-flex; align-items: center; gap: .6rem;
+  position: relative;
+}
+.ox-cpop__trigger {
+  width: 2.4rem; height: 2.4rem; border-radius: 999px;
+  background: transparent; border: 0; display: inline-flex;
+  align-items: center; justify-content: center; cursor: pointer;
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.ox-cpop__trigger:hover {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-cpop__bubble {
+  position: absolute; top: calc(100% + .8rem); left: 50%;
+  transform: translateX(-50%);
+  background: var(--oxygen-color-semantic-neutral-minor-base);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  padding: 1.2rem 1.6rem; border-radius: .8rem;
+  box-shadow: 0 1.2rem 2.4rem -.8rem rgba(25,36,70,.18), 0 0 0 .1rem rgba(25,36,70,.06);
+  width: 24rem; z-index: 2;
+  font: var(--oxygen-font-semantic-body-s-regular);
+}
+.ox-cpop__bubble::before {
+  content: ''; position: absolute; top: -.5rem; left: 50%; transform: translateX(-50%) rotate(45deg);
+  width: 1rem; height: 1rem; background: inherit; box-shadow: -.1rem -.1rem 0 rgba(25,36,70,.06);
+}
+
+/* ---------- AlphaSidePanel — from overlays/AlphaSidePanel/AlphaSidePanel.module.scss ---------- */
+.ox-sidepanel-frame {
+  position: relative; height: 48rem; overflow: hidden;
+  border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+  border-radius: 1.2rem;
+  background: var(--oxygen-color-semantic-neutral-minor-weak, #F4F6FB);
+}
+.ox-sidepanel__scrim {
+  position: absolute; inset: 0; background: rgba(25,36,70,.35);
+}
+.ox-sidepanel {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: 40rem; max-width: 90%;
+  background: var(--oxygen-color-overlays-sidepanel-background, #fff);
+  box-shadow: -1.2rem 0 3.2rem -.8rem rgba(25,36,70,.18);
+  display: flex; flex-direction: column;
+  animation: ox-sidepanel-in .2s ease forwards;
+}
+@keyframes ox-sidepanel-in { 0% { transform: translateX(10%); opacity: .5 } 100% { transform: translateX(0); opacity: 1 } }
+.ox-sidepanel--sm { width: 29.6rem; }
+.ox-sidepanel--lg { width: 72rem; }
+.ox-sidepanel__header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.6rem 2rem;
+  border-bottom: .1rem solid var(--oxygen-color-overlays-sidepanel-border, #E6E8F2);
+}
+.ox-sidepanel__header h3 {
+  margin: 0; font: var(--oxygen-font-semantic-title-s-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+}
+.ox-sidepanel__body { flex: 1; overflow: auto; padding: 2rem; }
+.ox-sidepanel__footer {
+  display: flex; justify-content: flex-end; gap: 1.2rem;
+  padding: 1.6rem 2rem;
+  border-top: .1rem solid var(--oxygen-color-overlays-sidepanel-border, #E6E8F2);
+}
+
+/* ---------- FocusPanel — full-page overlay for focused editing ---------- */
+.ox-focuspanel-frame {
+  position: relative; height: 52rem; overflow: hidden;
+  border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+  border-radius: 1.2rem;
+  background: var(--oxygen-color-semantic-neutral-minor-weak);
+}
+.ox-focuspanel {
+  position: absolute; inset: 0; background: var(--oxygen-color-semantic-neutral-minor-base, #fff);
+  display: flex; flex-direction: column;
+  animation: ox-focus-in .25s ease forwards;
+}
+@keyframes ox-focus-in { 0% { transform: translateY(2%); opacity: 0 } 100% { transform: translateY(0); opacity: 1 } }
+.ox-focuspanel__header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.6rem 2.4rem; gap: 1.6rem;
+  border-bottom: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+}
+.ox-focuspanel__header-left { display: flex; align-items: center; gap: 1.2rem; }
+.ox-focuspanel__header h3 {
+  margin: 0; font: var(--oxygen-font-semantic-title-m-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+}
+.ox-focuspanel__body { flex: 1; overflow: auto; padding: 3.2rem; background: var(--oxygen-color-semantic-neutral-minor-weak); }
+.ox-focuspanel__footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.6rem 2.4rem; gap: 1.2rem;
+  border-top: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+}
+
+/* ---------- StarRating — from forms/StarRating/StarRating.tsx ---------- */
+.ox-stars { display: inline-flex; gap: .4rem; align-items: center; }
+.ox-star {
+  color: var(--oxygen-color-semantic-neutral-subtle-stronger, #C3C9DA);
+  cursor: pointer; user-select: none;
+  font-size: 2.4rem; line-height: 1; background: none; border: 0; padding: 0;
+  transition: color 120ms ease, transform 80ms ease;
+}
+.ox-star--sm { font-size: 1.6rem; }
+.ox-star--filled { color: var(--oxygen-color-primitive-yellow-500, #E9A100); }
+.ox-star:hover { transform: scale(1.1); }
+
+/* ---------- List / ListItem — from collection/List ---------- */
+.ox-list {
+  list-style: none; margin: 0; padding: 0;
+  background: var(--oxygen-color-semantic-neutral-minor-base, #fff);
+  border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+  border-radius: 1.2rem; overflow: hidden;
+}
+.ox-list--stacked { background: transparent; border: 0; display: flex; flex-direction: column; gap: .8rem; }
+.ox-list--stacked > .ox-list-item { border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius: .8rem; background: var(--oxygen-color-semantic-neutral-minor-base); }
+.ox-list--card > .ox-list-item { border: 0; }
+.ox-list-item {
+  display: flex; align-items: center; gap: 1.2rem;
+  padding: 1.2rem 1.6rem;
+  position: relative;
+}
+.ox-list:not(.ox-list--stacked) > .ox-list-item + .ox-list-item { border-top: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); }
+.ox-list-item--interactive { cursor: pointer; transition: background-color 120ms ease; }
+.ox-list-item--interactive:hover { background: var(--oxygen-color-semantic-neutral-subtle-weak); }
+.ox-list-item__avatar { flex-shrink: 0; }
+.ox-list-item__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .2rem; }
+.ox-list-item__title { font: var(--oxygen-font-semantic-body-m-bold); color: var(--oxygen-color-semantic-neutral-prominent-stronger); }
+.ox-list-item__subtitle { font: var(--oxygen-font-semantic-body-s-regular); color: var(--oxygen-color-semantic-neutral-prominent-weak); }
+.ox-list-item__actions { display: flex; gap: .4rem; flex-shrink: 0; }
+
+/* ---------- Selectable card / Collapsible card ---------- */
+.ox-card-selectable {
+  display: flex; align-items: center; gap: 1.2rem;
+  padding: 1.6rem; border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+  border-radius: .8rem; background: var(--oxygen-color-semantic-neutral-minor-base);
+  cursor: pointer; transition: all 120ms ease;
+  flex: 1 1 18rem;
+}
+.ox-card-selectable:hover { border-color: var(--oxygen-color-semantic-brand-prominent-base); background: var(--oxygen-color-semantic-neutral-subtle-weak); }
+.ox-card-selectable--selected {
+  border-color: var(--oxygen-color-semantic-brand-prominent-base);
+  box-shadow: 0 0 0 .1rem var(--oxygen-color-semantic-brand-prominent-base);
+  background: var(--oxygen-color-semantic-brand-minor-base, #F4F8FF);
+}
+.ox-card-selectable__dot {
+  width: 1.6rem; height: 1.6rem; border-radius: 999px;
+  border: .2rem solid var(--oxygen-color-semantic-neutral-subtle-stronger);
+  flex-shrink: 0; position: relative;
+}
+.ox-card-selectable--selected .ox-card-selectable__dot {
+  border-color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+.ox-card-selectable--selected .ox-card-selectable__dot::after {
+  content: ''; position: absolute; inset: .2rem; border-radius: 999px;
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+}
+
+.ox-card-collapsible { border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius: 1.2rem; background: var(--oxygen-color-semantic-neutral-minor-base); }
+.ox-card-collapsible__header { display: flex; align-items: center; justify-content: space-between; padding: 1.6rem; cursor: pointer; }
+.ox-card-collapsible__header h3 { margin: 0; font: var(--oxygen-font-semantic-body-m-bold); color: var(--oxygen-color-semantic-neutral-prominent-stronger); }
+.ox-card-collapsible__body { padding: 0 1.6rem 1.6rem; border-top: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); padding-top: 1.6rem; }
+.ox-card-collapsible[aria-expanded="false"] .ox-card-collapsible__body { display: none; }
+.ox-card-collapsible__chev { transition: transform 160ms ease; }
+.ox-card-collapsible[aria-expanded="true"] .ox-card-collapsible__chev { transform: rotate(180deg); }
+
+/* ---------- BulkSelect / TableSelect cells ---------- */
+.ox-bulkbar {
+  display: flex; align-items: center; gap: 1.6rem;
+  padding: 1.2rem 1.6rem;
+  background: var(--oxygen-color-semantic-brand-minor-base, #EBF1FF);
+  border: .1rem solid var(--oxygen-color-semantic-brand-prominent-base);
+  border-radius: .8rem;
+  color: var(--oxygen-color-semantic-brand-prominent-stronger);
+  font: var(--oxygen-font-semantic-body-s-bold);
+}
+.ox-bulkbar__count { background: var(--oxygen-color-semantic-brand-prominent-base); color: #fff; padding: .2rem .8rem; border-radius: 999px; font-size: 1.2rem; }
+.ox-bulkbar__actions { margin-left: auto; display: flex; gap: .8rem; }
+.ox-table-select-cell { width: 4rem; text-align: center; }
+
+/* ---------- TableSkeletonLoader ---------- */
+.ox-skeleton-row { display: grid; gap: 1.6rem; padding: 1.6rem; border-bottom: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); }
+.ox-skeleton-cell {
+  height: 1.6rem; border-radius: .4rem;
+  background: linear-gradient(90deg,
+    var(--oxygen-color-semantic-neutral-subtle-weak) 0,
+    var(--oxygen-color-semantic-neutral-subtle-strong) 50%,
+    var(--oxygen-color-semantic-neutral-subtle-weak) 100%);
+  background-size: 200% 100%;
+  animation: ox-shimmer 1.4s linear infinite;
+}
+@keyframes ox-shimmer { 0% { background-position: 100% 0 } 100% { background-position: -100% 0 } }
+
+/* ---------- Filters bar ---------- */
+.ox-filter-bar { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; padding: 1rem 0; }
+.ox-filter-chip {
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: .6rem 1rem; height: 3.2rem;
+  border: .1rem dashed var(--oxygen-color-semantic-neutral-subtle-stronger);
+  border-radius: 999px;
+  background: var(--oxygen-color-semantic-neutral-minor-base);
+  font: var(--oxygen-font-semantic-body-s-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  cursor: pointer; transition: all 120ms ease;
+}
+.ox-filter-chip:hover { border-color: var(--oxygen-color-semantic-brand-prominent-base); color: var(--oxygen-color-semantic-brand-prominent-base); }
+.ox-filter-chip--active {
+  border-style: solid;
+  border-color: var(--oxygen-color-semantic-brand-prominent-base);
+  background: var(--oxygen-color-semantic-brand-minor-base);
+  color: var(--oxygen-color-semantic-brand-prominent-stronger);
+  font-weight: 600;
+}
+.ox-filter-chip__count { background: var(--oxygen-color-semantic-brand-prominent-base); color: #fff; padding: 0 .6rem; border-radius: 999px; font-size: 1.1rem; font-weight: 700; min-width: 1.8rem; text-align: center; }
+.ox-filter-chip__x { border: 0; background: transparent; width: 1.6rem; height: 1.6rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; color: inherit; cursor: pointer; padding: 0; }
+.ox-filter-chip__x:hover { background: rgba(25,36,70,.1); }
+
+/* ---------- DataGrid (extended Table with sorting, frozen cols, dense rows) ---------- */
+.ox-datagrid {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius: 1.2rem; overflow: hidden;
+  font: var(--oxygen-font-semantic-body-s-regular);
+}
+.ox-datagrid thead th {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+  padding: 1rem 1.4rem; text-align: left;
+  font: var(--oxygen-font-semantic-body-xs-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  text-transform: uppercase; letter-spacing: .04em;
+  border-bottom: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+  white-space: nowrap;
+}
+.ox-datagrid thead th.sortable { cursor: pointer; user-select: none; }
+.ox-datagrid thead th.sorted { color: var(--oxygen-color-semantic-brand-prominent-base); }
+.ox-datagrid thead th .sort { opacity: .5; margin-left: .4rem; }
+.ox-datagrid thead th.sorted .sort { opacity: 1; }
+.ox-datagrid tbody td { padding: 1rem 1.4rem; border-bottom: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); color: var(--oxygen-color-semantic-neutral-prominent-base); }
+.ox-datagrid tbody tr:last-child td { border-bottom: 0; }
+.ox-datagrid tbody tr:hover td { background: var(--oxygen-color-semantic-neutral-subtle-weak); }
+.ox-datagrid--dense tbody td, .ox-datagrid--dense thead th { padding: .6rem 1.2rem; }
+.ox-datagrid--dense { font-size: 1.2rem; }
+.ox-datagrid td.num, .ox-datagrid th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ---------- HStack / VStack / Columns / Bleed (layout primitives) ---------- */
+.ox-hstack { display: flex; flex-direction: row; }
+.ox-vstack { display: flex; flex-direction: column; }
+.ox-columns { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; }
+.ox-bleed-demo { background: var(--oxygen-color-semantic-brand-minor-base); padding: 1.6rem; border-radius: .8rem; position: relative; }
+.ox-bleed-demo__inner { background: var(--oxygen-color-semantic-brand-prominent-base); color: #fff; padding: 1.6rem; border-radius: .8rem; margin: -1.6rem; }
+
+/* ---------- PinInput ---------- */
+.ox-pin { display: inline-flex; gap: .8rem; }
+.ox-pin__slot {
+  width: 4rem; height: 4.8rem; border-radius: .8rem;
+  border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-stronger);
+  background: var(--oxygen-color-semantic-neutral-minor-base);
+  font: 600 2rem/1 var(--oxygen-font-primitive-fontFamily-sans, 'Proxima Nova', sans-serif);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  text-align: center;
+  transition: all 120ms ease;
+}
+.ox-pin__slot:focus { border-color: var(--oxygen-color-semantic-brand-prominent-base); box-shadow: 0 0 0 .3rem var(--oxygen-color-semantic-brand-minor-base); outline: none; }
+.ox-pin__slot--error { border-color: var(--oxygen-color-semantic-danger-prominent-base); }
+.ox-pin__slot--filled { border-color: var(--oxygen-color-semantic-brand-prominent-base); }
+
+/* ---------- Slider ---------- */
+.ox-slider { display: flex; flex-direction: column; gap: .8rem; }
+.ox-slider__header { display: flex; justify-content: space-between; align-items: baseline; }
+.ox-slider__label { font: var(--oxygen-font-semantic-body-s-bold); color: var(--oxygen-color-semantic-neutral-prominent-stronger); }
+.ox-slider__value { font: var(--oxygen-font-semantic-body-m-bold); color: var(--oxygen-color-semantic-brand-prominent-base); }
+.ox-slider__hint { font: var(--oxygen-font-semantic-body-s-regular); color: var(--oxygen-color-semantic-neutral-prominent-weak); }
+.ox-slider__track-wrap { position: relative; padding: 1rem 0; }
+.ox-slider__track { height: .6rem; background: var(--oxygen-color-semantic-neutral-subtle-strong); border-radius: 999px; position: relative; }
+.ox-slider__fill { height: 100%; border-radius: 999px; background: var(--oxygen-color-semantic-brand-prominent-base); }
+.ox-slider__thumb {
+  position: absolute; top: 50%; width: 2rem; height: 2rem; border-radius: 999px;
+  background: #fff; border: .2rem solid var(--oxygen-color-semantic-brand-prominent-base);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 .1rem .3rem rgba(25,36,70,.12);
+}
+.ox-slider__hints { display: flex; justify-content: space-between; font: var(--oxygen-font-semantic-body-s-regular); color: var(--oxygen-color-semantic-neutral-prominent-weak); }
+
+/* ---------- InputColor ---------- */
+.ox-inputcolor { display: inline-flex; align-items: center; gap: .8rem; padding: .6rem 1rem; border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-stronger); border-radius: .8rem; background: var(--oxygen-color-semantic-neutral-minor-base); cursor: pointer; }
+.ox-inputcolor__swatch { width: 2.4rem; height: 2.4rem; border-radius: .4rem; border: .1rem solid rgba(25,36,70,.1); }
+.ox-inputcolor__code { font: 500 1.3rem/1 'JetBrains Mono', ui-monospace, monospace; color: var(--oxygen-color-semantic-neutral-prominent-stronger); }
+
+/* ---------- EmojiPicker ---------- */
+.ox-emoji-picker { width: 32rem; border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius: 1.2rem; background: var(--oxygen-color-semantic-neutral-minor-base); box-shadow: 0 1.2rem 2.4rem -.8rem rgba(25,36,70,.18); display: flex; flex-direction: column; }
+.ox-emoji-picker__search { padding: 1rem 1.2rem; border-bottom: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); }
+.ox-emoji-picker__search input { width: 100%; border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-stronger); border-radius: .6rem; padding: .6rem 1rem; font-size: 1.3rem; font-family: inherit; }
+.ox-emoji-picker__cat-label { padding: .8rem 1.2rem .4rem; font: var(--oxygen-font-semantic-body-xs-bold); color: var(--oxygen-color-semantic-neutral-prominent-weak); text-transform: uppercase; letter-spacing: .04em; }
+.ox-emoji-picker__grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: .2rem; padding: 0 .8rem .8rem; }
+.ox-emoji-picker__emoji { width: 3.2rem; height: 3.2rem; display: inline-flex; align-items: center; justify-content: center; border-radius: .6rem; cursor: pointer; font-size: 1.8rem; background: none; border: 0; }
+.ox-emoji-picker__emoji:hover { background: var(--oxygen-color-semantic-neutral-subtle-weak); }
+.ox-emoji-picker__tabs { display: flex; border-top: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); padding: .4rem; }
+.ox-emoji-picker__tab { flex: 1; background: none; border: 0; padding: .6rem; border-radius: .4rem; cursor: pointer; font-size: 1.6rem; }
+.ox-emoji-picker__tab--active { background: var(--oxygen-color-semantic-brand-minor-base); }
+
+/* ---------- FileDropZone ---------- */
+.ox-dropzone {
+  border: .2rem dashed var(--oxygen-color-semantic-neutral-subtle-stronger);
+  border-radius: 1.2rem; padding: 3.2rem 2.4rem;
+  display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+  background: var(--oxygen-color-semantic-neutral-minor-weak, #F4F6FB);
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  text-align: center; transition: all 160ms ease;
+}
+.ox-dropzone--active { border-color: var(--oxygen-color-semantic-brand-prominent-base); border-style: solid; background: var(--oxygen-color-semantic-brand-minor-base, #EBF1FF); }
+.ox-dropzone--error { border-color: var(--oxygen-color-semantic-danger-prominent-base); background: #FFF2F2; }
+.ox-dropzone__icon { width: 4.8rem; height: 4.8rem; border-radius: 999px; background: var(--oxygen-color-semantic-neutral-subtle-weak); display: inline-flex; align-items: center; justify-content: center; font-size: 2.4rem; }
+.ox-dropzone--active .ox-dropzone__icon { background: var(--oxygen-color-semantic-brand-prominent-base); color: #fff; }
+.ox-dropzone__title { font: var(--oxygen-font-semantic-body-m-bold); color: var(--oxygen-color-semantic-neutral-prominent-stronger); }
+.ox-dropzone__hint { font: var(--oxygen-font-semantic-body-s-regular); color: var(--oxygen-color-semantic-neutral-prominent-weak); }
+
+/* ---------- Carousel + PaginationDots ---------- */
+.ox-carousel { position: relative; border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius: 1.2rem; overflow: hidden; background: var(--oxygen-color-semantic-neutral-minor-base); }
+.ox-carousel__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+.ox-carousel__track::-webkit-scrollbar { display: none; }
+.ox-carousel__slide { flex: 0 0 100%; scroll-snap-align: start; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; font: var(--oxygen-font-semantic-title-l-bold); color: #fff; }
+.ox-carousel__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 4rem; height: 4rem; border-radius: 999px; background: rgba(255,255,255,.9); border: 0; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 .4rem 1.2rem rgba(25,36,70,.18); }
+.ox-carousel__nav--prev { left: 1.2rem; }
+.ox-carousel__nav--next { right: 1.2rem; }
+.ox-pagination-dots { display: flex; justify-content: center; gap: .6rem; padding: 1.2rem; }
+.ox-pagination-dot { width: .8rem; height: .8rem; border-radius: 999px; background: var(--oxygen-color-semantic-neutral-subtle-stronger); border: 0; cursor: pointer; transition: all 160ms ease; padding: 0; }
+.ox-pagination-dot--active { background: var(--oxygen-color-semantic-brand-prominent-base); width: 2.4rem; border-radius: 999px; }
+
+/* ---------- Image / Picture / IllustrativeIcon / LottieAnimation placeholders ---------- */
+.ox-image-placeholder { aspect-ratio: 16/9; background: linear-gradient(135deg, #C0CAE7 0%, #E6E9F2 100%); border-radius: .8rem; display: flex; align-items: center; justify-content: center; color: var(--oxygen-color-semantic-neutral-prominent-weak); font: var(--oxygen-font-semantic-body-s-regular); }
+.ox-illustrative-icon { width: 8rem; height: 8rem; border-radius: 1.6rem; background: var(--oxygen-color-semantic-brand-minor-base); display: inline-flex; align-items: center; justify-content: center; color: var(--oxygen-color-semantic-brand-prominent-base); font-size: 4rem; }
+.ox-lottie-placeholder { width: 14rem; height: 14rem; border-radius: 999px; background: radial-gradient(circle at 30% 30%, var(--oxygen-color-semantic-brand-prominent-base), var(--oxygen-color-semantic-brand-prominent-stronger, #0036A0)); display: inline-flex; align-items: center; justify-content: center; color: #fff; animation: ox-lottie-spin 2s linear infinite; }
+@keyframes ox-lottie-spin { 100% { transform: rotate(360deg); } }
+
+/* ---------- Censored / HTML renderer / Backdrop / OverlayContainer ---------- */
+.ox-censored { display: inline-flex; align-items: center; gap: .4rem; color: var(--oxygen-color-semantic-neutral-prominent-strong); font-family: 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .05em; }
+.ox-censored__reveal { border: 0; background: transparent; cursor: pointer; color: var(--oxygen-color-semantic-brand-prominent-base); font-size: 1.2rem; padding: 0; }
+.ox-html-renderer { font: var(--oxygen-font-semantic-body-m-regular); color: var(--oxygen-color-semantic-neutral-prominent-base); }
+.ox-html-renderer strong { color: var(--oxygen-color-semantic-neutral-prominent-stronger); }
+.ox-html-renderer a { color: var(--oxygen-color-semantic-brand-prominent-base); text-decoration: underline; text-underline-offset: .2rem; }
+.ox-backdrop-demo { height: 20rem; border-radius: 1.2rem; position: relative; overflow: hidden; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='200'><rect fill='%23B0BCDB' width='600' height='200'/><text x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23fff' font-family='sans-serif' font-size='18'>Page content</text></svg>") center/cover; }
+.ox-backdrop { position: absolute; inset: 0; background: rgba(25,36,70,.55); display: flex; align-items: center; justify-content: center; color: #fff; font: var(--oxygen-font-semantic-body-m-bold); }

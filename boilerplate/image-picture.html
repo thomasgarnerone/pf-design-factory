@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Image · Picture · Illustrative icon · Lottie</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=12">
+<style>
+body{padding:3.2rem;max-width:112rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:0.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+@keyframes sk{0%{background-position:-200px 0}100%{background-position:calc(200px + 100%) 0}}
+</style></head>
+<body><h1>Image · Picture · Illustrative icon · Lottie</h1><p class="lede">Media primitives. Image and Picture wrap native tags with placeholders and breakpoints. IllustrativeIcon is for large decorative glyphs; Lottie renders JSON animations.</p><div class="note"><b>From Oxygen core.</b> <code>display/Image</code>, <code>Picture</code>, <code>IllustrativeIcon</code>, <code>LottieAnimation</code>. Prefer Picture for hero imagery; IllustrativeIcon for empty states.</div>
+<div class="section"><h2>Image — radii & fit</h2>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:88rem">
+<div><div style="aspect-ratio:1;background:linear-gradient(135deg,#D8E5FF,#4A90FF);border-radius:.8rem"></div><div style="font:var(--oxygen-font-semantic-body-xs-bold);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-top:.6rem">radius=small</div></div>
+<div><div style="aspect-ratio:1;background:linear-gradient(135deg,#D8E5FF,#4A90FF);border-radius:1.6rem"></div><div style="font:var(--oxygen-font-semantic-body-xs-bold);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-top:.6rem">radius=large</div></div>
+<div><div style="aspect-ratio:1;background:linear-gradient(135deg,#D8E5FF,#4A90FF);border-radius:50%"></div><div style="font:var(--oxygen-font-semantic-body-xs-bold);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-top:.6rem">radius=full</div></div>
+<div><div style="aspect-ratio:16/9;background:linear-gradient(135deg,#D8E5FF,#4A90FF);border-radius:.8rem"></div><div style="font:var(--oxygen-font-semantic-body-xs-bold);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-top:.6rem">aspect 16/9</div></div>
+</div></div>
+
+<div class="section"><h2>Picture — multi-source + placeholder while loading</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;max-width:88rem">
+<div><div style="aspect-ratio:3/4;background:#E8ECF4 linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);background-size:200px 100%;animation:sk 1.4s linear infinite;border-radius:.8rem"></div><div style="font:var(--oxygen-font-semantic-body-xs-bold);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-top:.6rem">Loading</div></div>
+<div><div style="aspect-ratio:3/4;background:linear-gradient(135deg,#D8E5FF,#4A90FF);border-radius:.8rem"></div><div style="font:var(--oxygen-font-semantic-body-xs-bold);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-top:.6rem">Loaded</div></div>
+<div><div style="aspect-ratio:3/4;background:var(--oxygen-color-semantic-neutral-subtle-weak);border-radius:.8rem;display:grid;place-items:center;color:var(--oxygen-color-semantic-neutral-prominent-weak)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 13l2.5-3 3 4 4-5.5 4 6.5"/></svg></div><div style="font:var(--oxygen-font-semantic-body-xs-bold);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-top:.6rem">Error / fallback</div></div>
+</div></div>
+
+<div class="section"><h2>Illustrative icon — large decorative glyphs</h2>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:88rem">
+<div style="text-align:center"><div style="width:9.6rem;height:9.6rem;margin:0 auto;border-radius:2rem;background:linear-gradient(135deg,#DBF2FA,#4A90FF);display:grid;place-items:center;color:white"><svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-6 14l-4-4 1.4-1.4L13 14.2l5.6-5.6L20 10l-7 7z"/></svg></div><div style="font:var(--oxygen-font-semantic-body-s-bold);margin-top:1rem;color:var(--oxygen-color-semantic-neutral-prominent-stronger)">Appointment</div></div>
+<div style="text-align:center"><div style="width:9.6rem;height:9.6rem;margin:0 auto;border-radius:2rem;background:linear-gradient(135deg,#E6F7EE,#0F7A3E);display:grid;place-items:center;color:white"><svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-7.07 17.07A10 10 0 0012 22a10 10 0 0010-10 10 10 0 00-10-10zM10 16.5L5.5 12l1.4-1.4L10 13.7l6.6-6.6L18 8.5l-8 8z"/></svg></div><div style="font:var(--oxygen-font-semantic-body-s-bold);margin-top:1rem;color:var(--oxygen-color-semantic-neutral-prominent-stronger)">Success</div></div>
+<div style="text-align:center"><div style="width:9.6rem;height:9.6rem;margin:0 auto;border-radius:2rem;background:linear-gradient(135deg,#FDE9D9,#D97706);display:grid;place-items:center;color:white"><svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg></div><div style="font:var(--oxygen-font-semantic-body-s-bold);margin-top:1rem;color:var(--oxygen-color-semantic-neutral-prominent-stronger)">Warning</div></div>
+<div style="text-align:center"><div style="width:9.6rem;height:9.6rem;margin:0 auto;border-radius:2rem;background:linear-gradient(135deg,#F3E7FF,#7C3AED);display:grid;place-items:center;color:white"><svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4a2 2 0 00-2 2v16l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z"/></svg></div><div style="font:var(--oxygen-font-semantic-body-s-bold);margin-top:1rem;color:var(--oxygen-color-semantic-neutral-prominent-stronger)">Message</div></div>
+</div></div>
+
+<div class="section"><h2>Lottie animation — frames</h2>
+<div style="display:flex;gap:2rem;max-width:88rem">
+<div style="flex:1;aspect-ratio:1;background:var(--oxygen-color-semantic-brand-subtle-weakest);border-radius:1.2rem;display:grid;place-items:center"><div style="width:40%;height:40%;border-radius:50%;background:var(--oxygen-color-semantic-brand-prominent-base);opacity:.2"></div></div>
+<div style="flex:1;aspect-ratio:1;background:var(--oxygen-color-semantic-brand-subtle-weakest);border-radius:1.2rem;display:grid;place-items:center"><div style="width:55%;height:55%;border-radius:50%;background:var(--oxygen-color-semantic-brand-prominent-base);opacity:.45"></div></div>
+<div style="flex:1;aspect-ratio:1;background:var(--oxygen-color-semantic-brand-subtle-weakest);border-radius:1.2rem;display:grid;place-items:center"><div style="width:70%;height:70%;border-radius:50%;background:var(--oxygen-color-semantic-brand-prominent-base);opacity:.7"></div></div>
+<div style="flex:1;aspect-ratio:1;background:var(--oxygen-color-semantic-brand-subtle-weakest);border-radius:1.2rem;display:grid;place-items:center"><div style="width:90%;height:90%;border-radius:50%;background:var(--oxygen-color-semantic-brand-prominent-base);opacity:.9;display:grid;place-items:center;color:white"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></div></div>
+</div>
+<div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-top:.8rem">Frames 0 → 30 → 60 → 90 of a success micro-animation. Rendered at runtime via lottie-web.</div></div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Image</td><td>Basic &lt;img&gt; wrapper · radii token · object-fit support</td></tr>
+<tr><td>Picture</td><td>Adds srcSet per breakpoint + skeleton placeholder</td></tr>
+<tr><td>Illustrative icon</td><td>Large decorative glyph (48–96 px) · used in empty states, headers</td></tr>
+<tr><td>Lottie</td><td>JSON-animation renderer · loops by default · pauseable</td></tr>
+<tr><td>Source</td><td>display/Image · Picture · IllustrativeIcon · LottieAnimation</td></tr>
+</table></div></body></html>

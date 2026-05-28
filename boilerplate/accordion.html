@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Accordion</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=2026-04-27-acc">
+<style>
+/* Inlined accordion chevron-start rule so the preview is robust
+   to any cached external stylesheet. */
+.ox-accordion__item--chevron-start .ox-accordion__title{flex-direction:row-reverse;justify-content:flex-end}
+
+body{padding:3.2rem;max-width:72rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+</style></head>
+<body>
+
+<h1>Accordion</h1>
+<p class="lede">Progressive disclosure for long content — FAQ, form sections, help. Click the row to expand; the chevron rotates 180°. The chevron sits on the trailing edge by default; opt into a leading-edge chevron via <code style="font-family:'JetBrains Mono',monospace;font-size:.95em">ox-accordion__item--chevron-start</code> for navigation-style lists where the disclosure cue should lead the title.</p>
+
+<div class="section">
+  <h2>Default — chevron at the end</h2>
+  <section class="ox-accordion">
+    <article class="ox-accordion__item">
+      <button class="ox-accordion__title" onclick="this.parentElement.classList.toggle('ox-accordion__item--open')">
+        <span>How do I cancel a booking?</span>
+        <svg class="ox-accordion__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"/></svg>
+      </button>
+      <div class="ox-accordion__body">Open your appointments list from the dashboard, pick the booking, and tap Cancel. Cancellations made more than 24 hours before the slot are free.</div>
+    </article>
+    <article class="ox-accordion__item ox-accordion__item--open">
+      <button class="ox-accordion__title" onclick="this.parentElement.classList.toggle('ox-accordion__item--open')">
+        <span>What happens if my practitioner reschedules?</span>
+        <svg class="ox-accordion__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"/></svg>
+      </button>
+      <div class="ox-accordion__body">You'll receive an SMS and an email with the new proposed slot. You can accept it in one tap, propose a different time, or cancel without fees.</div>
+    </article>
+    <article class="ox-accordion__item">
+      <button class="ox-accordion__title" onclick="this.parentElement.classList.toggle('ox-accordion__item--open')">
+        <span>Does Doctolib accept health insurance directly?</span>
+        <svg class="ox-accordion__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"/></svg>
+      </button>
+      <div class="ox-accordion__body">Reimbursement depends on your country and plan. In France, sessions with conventionné practitioners are partially covered by Assurance Maladie; your mutuelle handles the rest.</div>
+    </article>
+    <article class="ox-accordion__item">
+      <button class="ox-accordion__title" onclick="this.parentElement.classList.toggle('ox-accordion__item--open')">
+        <span>Is my medical data private?</span>
+        <svg class="ox-accordion__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"/></svg>
+      </button>
+      <div class="ox-accordion__body">All records are hosted on HDS-certified infrastructure in the EU. Only practitioners you book with have access to the medical information you choose to share.</div>
+    </article>
+  </section>
+</div>
+
+<div class="section">
+  <h2>Chevron at the start — <code style="font-family:'JetBrains Mono',monospace;font-size:.95em">--chevron-start</code></h2>
+  <section class="ox-accordion">
+    <article class="ox-accordion__item ox-accordion__item--chevron-start">
+      <button class="ox-accordion__title" onclick="this.parentElement.classList.toggle('ox-accordion__item--open')">
+        <span>Patient identity &amp; contact</span>
+        <svg class="ox-accordion__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"/></svg>
+      </button>
+      <div class="ox-accordion__body">Name, date of birth, address, phone, email. Used to identify the patient across appointments and to send reminders.</div>
+    </article>
+    <article class="ox-accordion__item ox-accordion__item--chevron-start ox-accordion__item--open">
+      <button class="ox-accordion__title" onclick="this.parentElement.classList.toggle('ox-accordion__item--open')">
+        <span>Insurance &amp; coverage</span>
+        <svg class="ox-accordion__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"/></svg>
+      </button>
+      <div class="ox-accordion__body">Carte Vitale, mutuelle, attestations de droits. Stored encrypted; readable only to practitioners you book with.</div>
+    </article>
+    <article class="ox-accordion__item ox-accordion__item--chevron-start">
+      <button class="ox-accordion__title" onclick="this.parentElement.classList.toggle('ox-accordion__item--open')">
+        <span>Medical history</span>
+        <svg class="ox-accordion__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"/></svg>
+      </button>
+      <div class="ox-accordion__body">Past conditions, surgeries, allergies, current medications. The patient controls what is shared with each practitioner.</div>
+    </article>
+    <article class="ox-accordion__item ox-accordion__item--chevron-start">
+      <button class="ox-accordion__title" onclick="this.parentElement.classList.toggle('ox-accordion__item--open')">
+        <span>Documents &amp; results</span>
+        <svg class="ox-accordion__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"/></svg>
+      </button>
+      <div class="ox-accordion__body">Lab results, imaging, prescriptions. Uploaded by the patient or pushed by partner labs.</div>
+    </article>
+  </section>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec">
+    <tr><td>Title</td><td>title/s/bold · hover → brand-prominent-base</td></tr>
+    <tr><td>Body</td><td>body/m/regular · neutral-prominent-strong</td></tr>
+    <tr><td>Padding</td><td>1.6 rem per item</td></tr>
+    <tr><td>Chevron</td><td>16 px · rotates -180° when open · 300 ms</td></tr>
+    <tr><td>Chevron position</td><td>trailing by default · add <code>ox-accordion__item--chevron-start</code> for leading</td></tr>
+    <tr><td>Separator</td><td>0.1 rem neutral-subtle-base between items</td></tr>
+    <tr><td>Source</td><td>packages/core/src/dataDisplay/Accordion/Accordion.{tsx,scss}</td></tr>
+  </table>
+</div>
+
+</body></html>

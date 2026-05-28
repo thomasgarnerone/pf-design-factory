@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<title>Switch — Oxygen actions/Switch</title>
+<style>
+  /* ====================================================================
+     1:1 reproduction of packages/core/src/actions/Switch/Switch.module.scss.
+     Tokens come from --oxygen-color-component-form-* (brand) and
+     --oxygen-color-semantic-neutral-*. Thumb scales 1 → 5/3 and slides
+     from 6 → 22 px when turning on; the check icon fades in once the
+     track has reached brand colour.
+     ==================================================================== */
+  .ox-switch {
+    --oxygen-LOCAL-switch-transition-duration: 0.3s;
+    --oxygen-LOCAL-switch-transition-delay: 0.1s;
+    --oxygen-LOCAL-switch-border-width: 0.1rem;
+    --oxygen-LOCAL-switch-thumb-offset-off: 0.6rem;
+    --oxygen-LOCAL-switch-thumb-offset-on: 2.2rem;
+
+    display: inline-flex;
+    align-items: center;
+    padding: 0.8rem 0.4rem;
+  }
+  .ox-switch__button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    appearance: none;
+    padding: 0; margin: 0;
+    background: none;
+    border: 0;
+    gap: 1.2rem;
+    font: var(--oxygen-font-semantic-body-s-regular);
+    color: var(--oxygen-color-semantic-neutral-prominent-strong);
+    cursor: pointer;
+  }
+  .ox-switch__button:disabled {
+    color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+    cursor: not-allowed;
+  }
+  .ox-switch__button--label-left  { flex-direction: row-reverse; text-align: right; }
+  .ox-switch__button--label-right { flex-direction: row;         text-align: left;  }
+
+  .ox-switch__indicator {
+    position: relative;
+    display: flex; align-items: center;
+    flex: none;
+    width: 4rem; height: 2.4rem;
+  }
+  .ox-switch__indicator::before {
+    content: '';
+    position: relative;
+    display: block;
+    width: 4rem; height: 2.4rem;
+    border-radius: var(--oxygen-scale-semantic-radius-full);
+    border-width: var(--oxygen-LOCAL-switch-border-width);
+    border-style: solid;
+    box-sizing: border-box;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .ox-switch__indicator::after {
+    content: '';
+    position: absolute;
+    width: 1.2rem; height: 1.2rem;
+    border-radius: var(--oxygen-scale-semantic-radius-full);
+    transform: scale(1);
+    left: var(--oxygen-LOCAL-switch-thumb-offset-off);
+    transition: transform 0.3s, left 0.3s, background-color 0.3s;
+  }
+  .ox-switch__icon {
+    position: absolute;
+    left: 2.2rem;
+    width: 1.2rem; height: 1.2rem;
+    opacity: 0; z-index: 1;
+    color: var(--oxygen-color-semantic-brand-prominent-weak);
+    transition: opacity 0.1s 0s, color 0.3s;
+    pointer-events: none;
+  }
+
+  /* ON state */
+  .ox-switch__button[aria-pressed='true'] .ox-switch__indicator::after {
+    transform: scale(calc(5 / 3));
+    left: var(--oxygen-LOCAL-switch-thumb-offset-on);
+  }
+  .ox-switch__button[aria-pressed='true'] .ox-switch__icon {
+    opacity: 1;
+    transition: opacity 0.3s 0.1s, color 0.3s;
+  }
+
+  /* These are the `component.form.*` tokens Switch.module.scss references.
+     We resolve them against the semantic palette so the CSS is self-contained.
+       _value-brand                → brand-prominent-weak            #107ACA
+       _field-brand-background-*   → common-subtle                   #FFFFFF
+       _field-brand-border-default → brand-subtle-strong             #A0D2F8
+       _field-brand-border-hover   → brand-prominent-weak            #107ACA
+       _control-on-brand-background-default → brand-prominent-weak   #107ACA
+       _control-on-brand-background-hover   → brand-prominent-base   #045FAE
+       _control-on-brand-background-pressed → brand-prominent-strong #004080
+       _indicator-default          → common-subtle (white thumb on)  #FFFFFF
+       toggle_VISION_-indicator-off-default → brand-subtle-stronger  #5AB0F2
+       toggle_VISION_-indicator-off-hover   → brand-prominent-weak   #107ACA
+       toggle_VISION_-icon-on-default       → brand-prominent-weak   #107ACA
+       _highlight-brand            → brand-subtle-weak (focus halo)  #E7F4FD
+  */
+
+  /* DEFAULT (:not disabled) */
+  .ox-switch__button:not(:disabled) {
+    color: var(--oxygen-color-semantic-brand-prominent-weak);
+  }
+  .ox-switch__button:not(:disabled) .ox-switch__indicator::before {
+    background-color: var(--oxygen-color-common-subtle, var(--oxygen-color-primitive-white));
+    border-color:     var(--oxygen-color-semantic-neutral-subtle-stronger);  /* default off border */
+  }
+  .ox-switch__button:not(:disabled) .ox-switch__indicator::after {
+    background-color: var(--oxygen-color-semantic-neutral-subtle-stronger); /* default off thumb */
+  }
+  .ox-switch__button:not(:disabled)[aria-pressed='true'] .ox-switch__indicator::before {
+    background-color: var(--oxygen-color-semantic-brand-prominent-weak);  /* #107ACA solid fill  */
+    border-color:     var(--oxygen-color-semantic-brand-prominent-weak);
+  }
+  .ox-switch__button:not(:disabled)[aria-pressed='true'] .ox-switch__indicator::after {
+    background-color: var(--oxygen-color-primitive-white);                /* white thumb on      */
+  }
+  .ox-switch__button:not(:disabled) .ox-switch__icon {
+    color: var(--oxygen-color-semantic-brand-prominent-weak);             /* blue check on white */
+  }
+
+  /* HOVER */
+  .ox-switch__button:not(:disabled):hover .ox-switch__indicator::before {
+    border-color: var(--oxygen-color-semantic-brand-prominent-weak);
+  }
+  .ox-switch__button:not(:disabled):hover .ox-switch__indicator::after {
+    background-color: var(--oxygen-color-semantic-brand-prominent-weak);
+  }
+  .ox-switch__button:not(:disabled)[aria-pressed='true']:hover .ox-switch__indicator::before {
+    background-color: var(--oxygen-color-semantic-brand-prominent-weak);
+    border-color:     var(--oxygen-color-semantic-brand-prominent-weak);
+    box-shadow: 0 0 0 0.4rem var(--oxygen-color-semantic-brand-subtle-weak, #EBF1FF);
+  }
+  .ox-switch__button:not(:disabled)[aria-pressed='true']:hover .ox-switch__indicator::after {
+    background-color: var(--oxygen-color-primitive-white);
+  }
+
+  /* ACTIVE */
+  .ox-switch__button:not(:disabled):active .ox-switch__indicator::before {
+    border-color:     var(--oxygen-color-semantic-brand-prominent-strong);
+    background-color: var(--oxygen-color-primitive-white);
+    box-shadow: 0 0 0 0.4rem var(--oxygen-color-semantic-brand-subtle-weak);
+  }
+  .ox-switch__button:not(:disabled):active .ox-switch__indicator::after {
+    background-color: var(--oxygen-color-semantic-brand-prominent-strong);
+    transform: scale(calc(4 / 3));
+  }
+  .ox-switch__button:not(:disabled)[aria-pressed='true']:active .ox-switch__indicator::before {
+    background-color: var(--oxygen-color-semantic-brand-prominent-strong);
+    border-color:     var(--oxygen-color-semantic-brand-prominent-strong);
+  }
+  .ox-switch__button:not(:disabled)[aria-pressed='true']:active .ox-switch__indicator::after {
+    transform: scale(calc(4 / 3));
+  }
+
+  /* DISABLED */
+  .ox-switch__button:disabled { color: var(--oxygen-color-semantic-neutral-subtle-stronger); }
+  .ox-switch__button:disabled .ox-switch__indicator::before {
+    background-color: var(--oxygen-color-semantic-neutral-subtle-weak);
+    border-color:     var(--oxygen-color-semantic-neutral-subtle-stronger);
+  }
+  .ox-switch__button:disabled .ox-switch__indicator::after {
+    background-color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+  }
+  .ox-switch__button:disabled[aria-pressed='true'] .ox-switch__indicator::before {
+    background-color: var(--oxygen-color-semantic-brand-subtle-strong);
+    border-color:     var(--oxygen-color-semantic-brand-subtle-strong);
+  }
+  .ox-switch__button:disabled[aria-pressed='true'] .ox-switch__indicator::after {
+    background-color: var(--oxygen-color-primitive-white);
+  }
+  .ox-switch__button:disabled .ox-switch__icon {
+    color: var(--oxygen-color-semantic-brand-subtle-strong);
+  }
+
+  /* Focus ring — wraps the whole switch button (matches Checkbox/Radio) */
+  .ox-switch__button:focus-visible { outline: none; }
+  .ox-switch__button:focus-visible .ox-switch__indicator::before {
+    outline: 0.2rem solid var(--oxygen-color-semantic-brand-prominent-base);
+    outline-offset: 0.2rem;
+  }
+
+  /* ==================================================================
+     PAGE CHROME
+     ================================================================== */
+  body { padding: 2.4rem 2.8rem; font-family: 'Roboto', sans-serif; background: #FFFFFF; }
+  .header { font: 600 1.1rem/1.4 Roboto, sans-serif; color: #3A5978; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem; }
+  .legend { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1.1rem; color: #3A5978; line-height: 1.6; margin-bottom: 2rem; max-width: 96rem; }
+  .legend code { background: #F1F7FE; padding: 0.1rem 0.4rem; border-radius: 0.3rem; color: #004080; }
+  .legend b { color: #192634; }
+
+  .section + .section { margin-top: 2.8rem; }
+  .section-title { font: 600 1.1rem/1.4 Roboto, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: #4B739B; margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 0.1rem solid #E4EDF6; }
+
+  .row-grid { display: grid; grid-template-columns: 16rem 1fr; column-gap: 2rem; row-gap: 1.2rem; align-items: center; margin-bottom: 1rem; }
+  .row-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1.1rem; color: #4B739B; }
+  .row-items { display: flex; align-items: center; gap: 2.4rem; flex-wrap: wrap; }
+  .token-caption { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1rem; color: #6B91B8; }
+</style>
+</head>
+<body>
+
+<div class="header">actions / Switch</div>
+<p class="legend">
+  <b>&lt;Switch /&gt;</b> · recreation of
+  <code>packages/core/src/actions/Switch/Switch.module.scss</code> &amp; <code>Switch.tsx</code>.
+  Modern Oxygen switch (<code>stage:beta</code>) — binary on/off control.
+  Renders a <code>&lt;button aria-pressed&gt;</code> with a visually-hidden
+  <code>&lt;input type="checkbox"&gt;</code>. Thumb scales <code>1 → 5/3</code>
+  and slides <code>6 → 22 px</code> on; a <code>CheckSolid</code> icon fades in
+  once the track reaches brand colour.
+  Props: <code>label</code>, <code>labelPosition</code> <code>'left' | 'right'</code>,
+  <code>defaultIsChecked</code>, <code>isChecked</code>, <code>onChange</code>,
+  <code>isDisabled</code>.
+</p>
+
+<section class="section">
+  <div class="section-title">state · off · on</div>
+  <div class="row-grid">
+    <div class="row-label">off <span style="color:#A9BFD6">(default)</span></div>
+    <div class="row-items">
+      <span class="ox-switch"><button class="ox-switch__button ox-switch__button--label-right" aria-pressed="false" type="button">
+        <span class="ox-switch__indicator"><svg class="ox-switch__icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg></span>
+        <span>Notifications</span>
+      </button></span>
+      <span class="token-caption">track border · neutral-subtle-stronger ·· thumb @ 6px</span>
+    </div>
+    <div class="row-label">on</div>
+    <div class="row-items">
+      <span class="ox-switch"><button class="ox-switch__button ox-switch__button--label-right" aria-pressed="true" type="button">
+        <span class="ox-switch__indicator"><svg class="ox-switch__icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg></span>
+        <span>Notifications</span>
+      </button></span>
+      <span class="token-caption">track · brand-prominent-weak ·· thumb scale(5/3) @ 22px · icon opacity 1</span>
+    </div>
+  </div>
+
+  <p class="mono" style="margin-top:0.4rem;max-width:84rem">
+    Hover, active &amp; focus states are live — hover over the switches above to see them animate.
+  </p>
+</section>
+
+<section class="section">
+  <div class="section-title">labelPosition · 'right' (default) · 'left'</div>
+
+  <div class="row-grid">
+    <div class="row-label">right</div>
+    <div class="row-items">
+      <span class="ox-switch"><button class="ox-switch__button ox-switch__button--label-right" aria-pressed="true" type="button">
+        <span class="ox-switch__indicator"><svg class="ox-switch__icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg></span>
+        <span>Email reminders</span>
+      </button></span>
+    </div>
+
+    <div class="row-label">left</div>
+    <div class="row-items">
+      <span class="ox-switch"><button class="ox-switch__button ox-switch__button--label-left" aria-pressed="true" type="button">
+        <span class="ox-switch__indicator"><svg class="ox-switch__icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg></span>
+        <span>Email reminders</span>
+      </button></span>
+    </div>
+
+    <div class="row-label">multi-line</div>
+    <div class="row-items">
+      <div style="width:30rem;background:#F1F7FE;padding:1.6rem;border-radius:0.6rem;display:flex;flex-direction:column;gap:1.2rem">
+        <span class="ox-switch" style="padding:0">
+          <button class="ox-switch__button ox-switch__button--label-right" aria-pressed="false" type="button" style="align-items:flex-start">
+            <span class="ox-switch__indicator" style="margin-top:0.2rem"><svg class="ox-switch__icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg></span>
+            <span style="text-align:left">Send push notifications when a new appointment is booked</span>
+          </button>
+        </span>
+        <span class="ox-switch" style="padding:0">
+          <button class="ox-switch__button ox-switch__button--label-left" aria-pressed="true" type="button" style="align-items:flex-start;width:100%;justify-content:space-between">
+            <span class="ox-switch__indicator" style="margin-top:0.2rem"><svg class="ox-switch__icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg></span>
+            <span style="text-align:right;flex:1">Allow my doctor to renew prescriptions automatically</span>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">isDisabled</div>
+  <div class="row-grid">
+    <div class="row-label">disabled · off</div>
+    <div class="row-items">
+      <span class="ox-switch"><button class="ox-switch__button ox-switch__button--label-right" aria-pressed="false" type="button" disabled>
+        <span class="ox-switch__indicator"><svg class="ox-switch__icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg></span>
+        <span>SMS reminders</span>
+      </button></span>
+      <span class="token-caption">track · mute-subtle-weaker ·· thumb · mute-subtle-stronger</span>
+    </div>
+    <div class="row-label">disabled · on</div>
+    <div class="row-items">
+      <span class="ox-switch"><button class="ox-switch__button ox-switch__button--label-right" aria-pressed="true" type="button" disabled>
+        <span class="ox-switch__indicator"><svg class="ox-switch__icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg></span>
+        <span>SMS reminders</span>
+      </button></span>
+      <span class="token-caption">track · _control-on-brand-background-disabled · icon-on-disabled</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">specs</div>
+  <table style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.1rem;color:#3A5978;border-collapse:collapse">
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">track</td><td>40 × 24 (gridUnit-x5 × gridUnit-x3) · radius full</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">border</td><td>0.1rem solid · off neutral-subtle-stronger · on brand</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">thumb</td><td>12 × 12 (gridUnit-x1_5) · scales 5/3× on · 4/3× active</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">thumb offset</td><td>6 → 22 px (off → on)</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">icon</td><td>12 × 12 CheckSolid · opacity 0 → 1 · 0.1s delay</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">label gap</td><td>1.2rem · --oxygen-scale-semantic-padding-medium</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">font</td><td>body-s-regular (14 / 20 Roboto)</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">transition</td><td>0.3s on bg · border · transform · position</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">semantics</td><td>&lt;button aria-pressed&gt; + visually-hidden &lt;input checkbox&gt;</td></tr>
+  </table>
+</section>
+
+</body>
+</html>

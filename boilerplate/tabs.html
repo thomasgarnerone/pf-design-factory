@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Tabs</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=9">
+<style>
+body{padding:3.2rem;max-width:96rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4.8rem}
+.panel-demo{color:var(--oxygen-color-semantic-neutral-prominent-strong);font:var(--oxygen-font-semantic-body-m-regular);padding:1.6rem 0}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+</style></head>
+<body>
+
+<h1>Tabs</h1>
+<p class="lede">Switch between sibling views. One row of bold labels, a 3 px brand underline marks the active tab, everything else stays neutral. The tab list lives above a thin divider that separates it from its panel.</p>
+
+<div class="section">
+  <h2>Default — stretch</h2>
+  <div class="ox-tabs ox-tabs--stretch">
+    <ul class="ox-tabs__list" role="tablist">
+      <li class="ox-tabs__tab"><button aria-current="true">Overview</button></li>
+      <li class="ox-tabs__tab"><button aria-current="false">Patients</button></li>
+      <li class="ox-tabs__tab"><button aria-current="false">Billing</button></li>
+      <li class="ox-tabs__tab"><button aria-current="false">Settings</button></li>
+    </ul>
+    <div class="ox-tabs__panel"><div class="panel-demo">Panel content for the selected tab lives here.</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Start-aligned — intrinsic width</h2>
+  <div class="ox-tabs ox-tabs--start">
+    <ul class="ox-tabs__list" role="tablist">
+      <li class="ox-tabs__tab"><button aria-current="false">All</button></li>
+      <li class="ox-tabs__tab"><button aria-current="true">Upcoming</button></li>
+      <li class="ox-tabs__tab"><button aria-current="false">Past</button></li>
+    </ul>
+    <div class="ox-tabs__panel"><div class="panel-demo">Use when the tabs should hug their labels rather than fill the container.</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec">
+    <tr><td>Label</td><td>body/s/bold · 14px / 700</td></tr>
+    <tr><td>Active mark</td><td>3 px bottom border · brand-prominent-base</td></tr>
+    <tr><td>Panel divider</td><td>0.1 rem box-shadow, neutral-subtle-base</td></tr>
+    <tr><td>Layouts</td><td>stretch (equal flex) · start (fit-content)</td></tr>
+    <tr><td>Source</td><td>packages/core/src/navigation/Tabs/v2/Tabs.{tsx,module.scss}</td></tr>
+  </table>
+</div>
+
+</body></html>

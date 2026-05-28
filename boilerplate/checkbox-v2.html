@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Checkbox (v2)</title>
+<link rel="stylesheet" href="_base.css?v=4"><link rel="stylesheet" href="_components.css?v=12">
+<style>body{padding:3.2rem;max-width:112rem;font-family:Roboto,sans-serif}h1{font:700 2.8rem/1.2 Montserrat,sans-serif;color:#192634;margin:0 0 .6rem}h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:#4B739B;margin:0 0 1.4rem;font-weight:600;padding-bottom:.6rem;border-bottom:0.1rem solid #E4EDF6}.lede{color:#3A5978;font-size:1.4rem;line-height:1.5;margin:0 0 3rem;max-width:72rem}.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}.spec{font-family:'Roboto Mono',monospace;font-size:1.1rem;border-collapse:collapse;color:#3A5978}.spec td{padding:.4rem 2rem .4rem 0;vertical-align:top}.spec td:first-child{color:#6B91B8}</style></head><body><h1>Checkbox (v2)</h1><p class="lede">Updated Checkbox — beta v2 rewrite with new focus-ring and variants.</p><style>
+.cv2{display:inline-flex;align-items:flex-start;gap:.8rem;cursor:pointer;padding:.6rem}
+.cv2 input{position:absolute;opacity:0;pointer-events:none}
+.cv2 .box{width:2rem;height:2rem;border-radius:.4rem;border:0.1rem solid #6B91B8;background:#fff;flex:none;display:flex;align-items:center;justify-content:center;margin-top:.1rem;transition:all .13s;color:#fff}
+.cv2:hover .box{border-color:#107ACA;box-shadow:0 0 0 .4rem #E3F1FB}
+.cv2 input:checked + .box{background:#107ACA;border-color:#107ACA}
+.cv2 input:indeterminate + .box, .cv2.indet .box{background:#107ACA;border-color:#107ACA}
+.cv2 input:checked + .box::after{content:"";width:.6rem;height:1.1rem;border:solid white;border-width:0 .2rem .2rem 0;transform:rotate(45deg) translate(-.1rem,-.1rem)}
+.cv2.indet .box::after{content:"";width:1rem;height:.2rem;background:white}
+.cv2 .lbl{font-size:1.4rem;color:#192634}
+.cv2 .hint{font-size:1.2rem;color:#3A5978;margin-top:.2rem}
+.cv2.err .box{border-color:#DB3B21}
+.cv2.err input:checked + .box{background:#DB3B21;border-color:#DB3B21}
+.cv2[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
+.cv2.card{border:0.1rem solid #C9D9E8;border-radius:.8rem;padding:1.2rem 1.6rem;min-width:22rem}
+.cv2.card:hover{border-color:#107ACA;background:#F4FAFD}
+.cv2.card:has(input:checked){border-color:#107ACA;background:#E3F1FB}
+</style>
+<div class="section"><h2>Default</h2>
+<div style="display:flex;flex-direction:column;gap:.6rem">
+<label class="cv2"><input type="checkbox" checked><span class="box"></span><span class="lbl">Send SMS reminder</span></label>
+<label class="cv2"><input type="checkbox"><span class="box"></span><span class="lbl">Send email reminder</span></label>
+<label class="cv2 indet"><input type="checkbox"><span class="box"></span><span><span class="lbl">Include family members</span><div class="hint">Some members are selected</div></span></label>
+</div></div>
+<div class="section"><h2>Card variant</h2>
+<div style="display:flex;gap:.8rem;flex-wrap:wrap">
+<label class="cv2 card"><input type="checkbox" checked><span class="box"></span><span><span class="lbl">In-person</span><div class="hint">Clinic visit</div></span></label>
+<label class="cv2 card"><input type="checkbox" checked><span class="box"></span><span><span class="lbl">Video</span><div class="hint">Teleconsultation</div></span></label>
+<label class="cv2 card"><input type="checkbox"><span class="box"></span><span><span class="lbl">Phone</span><div class="hint">Call only</div></span></label>
+</div></div>
+<div class="section"><h2>States</h2>
+<div style="display:flex;flex-direction:column;gap:.6rem;max-width:36rem">
+<label class="cv2 err"><input type="checkbox" checked><span class="box"></span><span class="lbl">Error state</span></label>
+<label class="cv2" aria-disabled="true"><input type="checkbox" disabled checked><span class="box"></span><span class="lbl">Disabled (checked)</span></label>
+<label class="cv2" aria-disabled="true"><input type="checkbox" disabled><span class="box"></span><span class="lbl">Disabled</span></label>
+</div></div>
+<div class="section"><h2>Specs</h2><table class="spec"><tr><td>Status</td><td>v2 · beta API</td></tr><tr><td>Box</td><td>2rem · radius .4rem · brand fill on check</td></tr><tr><td>States</td><td>unchecked · checked · indeterminate · disabled · error</td></tr><tr><td>Source</td><td>v2/Checkbox.tsx · v2/Checkbox.module.scss</td></tr></table></div></body></html>

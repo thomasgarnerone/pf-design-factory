@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<title>SegmentedControl — Oxygen navigation/SegmentedControl</title>
+<style>
+  /* ====================================================================
+     1:1 reproduction of
+       packages/core/src/navigation/SegmentedControl/SegmentedControl.scss
+       packages/core/src/navigation/SegmentedControl/private/_styles.module.scss
+     Pill-shaped container with 0.4rem padding and a neutral-030 border.
+     Selected item has a dark neutral bg + white text and a check icon
+     that slides in from the left (the content translates by 0.8rem so
+     the icon appears to push it to the right).
+     ==================================================================== */
+
+  .ox-segmented {
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem;
+    display: inline-flex;
+    gap: 0.4rem;
+    border-radius: var(--oxygen-scale-semantic-radius-full);
+    border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+    background: var(--oxygen-color-semantic-common-subtle);
+  }
+  .ox-segmented__itemWrapper {
+    list-style-type: none;
+    margin: 0; padding: 0;
+    border-radius: var(--oxygen-scale-semantic-radius-full);
+  }
+  .ox-segmented__item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 2rem;
+    border-radius: var(--oxygen-scale-semantic-radius-full);
+    border: none;
+    background: var(--oxygen-color-semantic-common-subtle);
+    color: var(--oxygen-color-semantic-neutral-prominent-strong);
+    font: var(--oxygen-font-semantic-body-s-regular);
+    cursor: pointer;
+    text-decoration: none;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .ox-segmented__item:focus { outline: none; }
+  .ox-segmented__item:focus-visible {
+    outline: 0.2rem solid var(--oxygen-color-semantic-brand-prominent-weak);
+    outline-offset: 0.2rem;
+  }
+  .ox-segmented__item:not(.ox-segmented__item--selected):hover {
+    background: var(--oxygen-color-semantic-neutral-subtle-weak);
+  }
+  .ox-segmented__item--selected,
+  .ox-segmented__item--selected:hover,
+  .ox-segmented__item--selected:focus {
+    background: var(--oxygen-color-semantic-neutral-prominent-strong);
+    color: var(--oxygen-color-semantic-common-subtle);
+  }
+
+  .ox-segmented__icon {
+    position: absolute;
+    left: 0.8rem;
+    width: 1.6rem; height: 1.6rem;
+    visibility: hidden;
+    opacity: 0;
+    fill: currentColor;
+    transition: visibility 0.1s, opacity 0.1s linear;
+    pointer-events: none;
+  }
+  .ox-segmented__content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    transform: translateX(0);
+    transition: transform 0.1s 0.1s ease-in-out;
+  }
+  .ox-segmented__item--selected .ox-segmented__icon {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0.1s 0.1s, opacity 0.1s 0.1s linear;
+  }
+  .ox-segmented__item--selected .ox-segmented__content {
+    transform: translateX(0.8rem);
+    transition: transform 0.1s ease-in-out;
+  }
+
+  /* Disabled items (applied to <button disabled>) */
+  .ox-segmented__item:disabled {
+    color: var(--oxygen-color-semantic-neutral-subtle-stronger);
+    cursor: not-allowed;
+  }
+  .ox-segmented__item:disabled.ox-segmented__item--selected {
+    background: var(--oxygen-color-semantic-neutral-subtle-stronger);
+    color: var(--oxygen-color-primitive-white);
+  }
+
+  /* ==================================================================
+     PAGE CHROME
+     ================================================================== */
+  body { padding: 2.4rem 2.8rem; font-family: 'Roboto', sans-serif; background: #FFFFFF; }
+  .header { font: 600 1.1rem/1.4 Roboto, sans-serif; color: #3A5978; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem; }
+  .legend { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1.1rem; color: #3A5978; line-height: 1.6; margin-bottom: 2rem; max-width: 96rem; }
+  .legend code { background: #F1F7FE; padding: 0.1rem 0.4rem; border-radius: 0.3rem; color: #004080; }
+  .legend b { color: #192634; }
+
+  .section + .section { margin-top: 2.8rem; }
+  .section-title { font: 600 1.1rem/1.4 Roboto, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: #4B739B; margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 0.1rem solid #E4EDF6; }
+
+  .row-grid { display: grid; grid-template-columns: 18rem 1fr; column-gap: 2rem; row-gap: 1.6rem; align-items: center; margin-bottom: 1rem; }
+  .row-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1.1rem; color: #4B739B; }
+  .row-items { display: flex; align-items: center; gap: 2.4rem; flex-wrap: wrap; }
+  .token-caption { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1rem; color: #6B91B8; }
+</style>
+</head>
+<body>
+
+<div class="header">navigation / SegmentedControl</div>
+<p class="legend">
+  <b>&lt;SegmentedControl /&gt;</b> · recreation of
+  <code>packages/core/src/navigation/SegmentedControl/SegmentedControl.scss</code> &amp;
+  <code>_styles.module.scss</code>. A <b>single-select</b> pill container used
+  for mutually-exclusive views — e.g. <i>Day / Week / Month</i> toggles or an
+  agenda-vs-list switcher. The selected segment inverts to the dark neutral
+  surface; a <code>CheckSolid</code> icon fades in from the left as the label
+  slides 0.8rem to the right. Renders a <code>&lt;ul&gt;</code> of
+  <code>&lt;button&gt;</code>s (or <code>&lt;a&gt;</code>s) with
+  <code>aria-pressed</code> on the active one.
+</p>
+
+<!-- =========================================================
+     basic — 2 / 3 / 4 items
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">basic · 2 · 3 · 4 items</div>
+
+  <div class="row-grid">
+    <div class="row-label">2 items</div>
+    <div class="row-items">
+      <ul class="ox-segmented">
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item ox-segmented__item--selected" type="button" aria-pressed="true">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Agenda</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">List</span>
+        </button></li>
+      </ul>
+    </div>
+
+    <div class="row-label">3 items</div>
+    <div class="row-items">
+      <ul class="ox-segmented">
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Day</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item ox-segmented__item--selected" type="button" aria-pressed="true">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Week</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Month</span>
+        </button></li>
+      </ul>
+      <span class="token-caption">classic calendar zoom selector</span>
+    </div>
+
+    <div class="row-label">4 items</div>
+    <div class="row-items">
+      <ul class="ox-segmented">
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item ox-segmented__item--selected" type="button" aria-pressed="true">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">All</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Upcoming</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Past</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Cancelled</span>
+        </button></li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="mono" style="margin-top:0.4rem;max-width:84rem">
+    Click any unselected item to see the animation — the check icon fades in (0.1s) and the label slides 0.8rem to the right.
+  </p>
+</section>
+
+<!-- =========================================================
+     States
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">state · rest · hover · selected</div>
+
+  <div class="row-grid">
+    <div class="row-label">rest</div>
+    <div class="row-items">
+      <ul class="ox-segmented">
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Day</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Week</span>
+        </button></li>
+      </ul>
+      <span class="token-caption">neutral-prominent-strong text · common-subtle bg · neutral-subtle-strong border</span>
+    </div>
+
+    <div class="row-label">hover (unselected)</div>
+    <div class="row-items">
+      <ul class="ox-segmented">
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false" style="background:var(--oxygen-color-semantic-neutral-subtle-weak)">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Day</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Week</span>
+        </button></li>
+      </ul>
+      <span class="token-caption">hovered item bg → neutral-subtle-weak</span>
+    </div>
+
+    <div class="row-label">selected</div>
+    <div class="row-items">
+      <ul class="ox-segmented">
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item ox-segmented__item--selected" type="button" aria-pressed="true">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Day</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Week</span>
+        </button></li>
+      </ul>
+      <span class="token-caption">selected bg → neutral-prominent-strong · text → common-subtle · check fades in · content translateX 0.8rem</span>
+    </div>
+
+    <div class="row-label">focus-visible</div>
+    <div class="row-items">
+      <ul class="ox-segmented">
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false" style="outline:0.2rem solid var(--oxygen-color-semantic-brand-prominent-weak); outline-offset:0.2rem">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Day</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item ox-segmented__item--selected" type="button" aria-pressed="true">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Week</span>
+        </button></li>
+      </ul>
+      <span class="token-caption">0.2rem brand-prominent-weak ring · 0.2rem offset</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     Interactive demo — live state
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">interactive · try it</div>
+
+  <div class="row-grid">
+    <div class="row-label">live</div>
+    <div class="row-items">
+      <ul class="ox-segmented" id="live-demo">
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item ox-segmented__item--selected" type="button" data-v="day" aria-pressed="true">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Day</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" data-v="week" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Week</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" data-v="month" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Month</span>
+        </button></li>
+      </ul>
+      <span class="token-caption">selected = <code id="live-val" style="font-family:'JetBrains Mono',monospace;background:#F1F7FE;padding:0.1rem 0.4rem;border-radius:0.3rem;color:#004080">day</code></span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     Disabled
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">disabled</div>
+  <div class="row-grid">
+    <div class="row-label">one item disabled</div>
+    <div class="row-items">
+      <ul class="ox-segmented">
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item ox-segmented__item--selected" type="button" aria-pressed="true">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Upcoming</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false">
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Past</span>
+        </button></li>
+        <li class="ox-segmented__itemWrapper"><button class="ox-segmented__item" type="button" aria-pressed="false" disabled>
+          <svg class="ox-segmented__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+          <span class="ox-segmented__content">Archived</span>
+        </button></li>
+      </ul>
+      <span class="token-caption">disabled item · text neutral-subtle-stronger · cursor not-allowed</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     Specs
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">specs</div>
+  <table style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.1rem;color:#3A5978;border-collapse:collapse">
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">container</td><td>inline-flex · gap 0.4rem · padding 0.4rem · radius full</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">container border</td><td>0.1rem solid neutral-subtle-strong</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">container bg</td><td>common-subtle (white)</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">item padding</td><td>0.4rem × 2rem</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">item font</td><td>body-s-regular (14 / 20 Roboto)</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">item text · rest</td><td>neutral-prominent-strong</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">item bg · rest</td><td>common-subtle (transparent over white)</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">item bg · hover</td><td>neutral-subtle-weak</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">item bg · selected</td><td>neutral-prominent-strong · text common-subtle</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">icon</td><td>16 × 16 CheckSolid · absolute left 0.8rem · opacity 0 → 1 on select</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">content anim</td><td>translateX 0 → 0.8rem · 0.1s ease-in-out</td></tr>
+    <tr><td style="padding:0.2rem 1.6rem 0.2rem 0;color:#192634">semantics</td><td>&lt;ul&gt;/&lt;li&gt; with &lt;button aria-pressed&gt;</td></tr>
+  </table>
+</section>
+
+<script>
+  // tiny live demo — swap selected class + aria-pressed
+  const demo = document.getElementById('live-demo');
+  const out  = document.getElementById('live-val');
+  demo.addEventListener('click', e => {
+    const btn = e.target.closest('.ox-segmented__item');
+    if (!btn) return;
+    demo.querySelectorAll('.ox-segmented__item').forEach(b => {
+      b.classList.remove('ox-segmented__item--selected');
+      b.setAttribute('aria-pressed', 'false');
+    });
+    btn.classList.add('ox-segmented__item--selected');
+    btn.setAttribute('aria-pressed', 'true');
+    out.textContent = btn.dataset.v;
+  });
+</script>
+
+</body>
+</html>

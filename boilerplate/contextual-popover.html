@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Contextual popover</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=12">
+<style>
+body{padding:3.2rem;max-width:96rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:0.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.note--warn{color:#794006;background:#FFF9E5;border-left-color:var(--oxygen-color-primitive-yellow-500)}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.grid{display:grid;gap:1.6rem}
+
+</style></head>
+<body>
+<h1>Contextual popover</h1>
+<p class="lede">An inline help/info icon that opens a bubble with contextual guidance. Sits next to the thing it explains — never free-floating.</p>
+<div class="note"><b>From Oxygen core.</b> <code>overlays/ContextualPopover/ContextualPopover.tsx</code> — wraps Popover/PopoverContent on desktop; falls back to a small Modal on mobile.</div>
+
+<div class="section">
+  <h2>Help variant — closed</h2>
+  <p style="display:flex;align-items:center;gap:.8rem;font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-stronger)">
+    Your professional number
+    <span class="ox-cpop">
+      <button class="ox-cpop__trigger" aria-label="Help"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M6 6.2c0-.9.8-1.7 2-1.7s2 .8 2 1.7c0 .6-.3 1-.9 1.4S8 8.2 8 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="11.3" r=".9" fill="currentColor"/></svg></button>
+    </span>
+  </p>
+</div>
+<div class="section">
+  <h2>Help variant — open</h2>
+  <div style="display:flex;align-items:flex-start;gap:.8rem;padding:4rem 0 8rem;font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-stronger)">
+    Your RPPS number
+    <span class="ox-cpop">
+      <button class="ox-cpop__trigger" style="background:var(--oxygen-color-semantic-neutral-subtle-weak);color:var(--oxygen-color-semantic-brand-prominent-base)" aria-label="Help"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M6 6.2c0-.9.8-1.7 2-1.7s2 .8 2 1.7c0 .6-.3 1-.9 1.4S8 8.2 8 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="11.3" r=".9" fill="currentColor"/></svg></button>
+      <div class="ox-cpop__bubble">Your 11-digit RPPS identifier. It appears on your medical ID card and is used to verify your registration with the Ordre des Médecins.</div>
+    </span>
+  </div>
+</div>
+<div class="section">
+  <h2>Info variant</h2>
+  <div style="display:flex;align-items:flex-start;gap:.8rem;padding:4rem 0 8rem;font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-stronger)">
+    Billing cycle
+    <span class="ox-cpop">
+      <button class="ox-cpop__trigger" style="background:var(--oxygen-color-semantic-neutral-subtle-weak);color:var(--oxygen-color-semantic-brand-prominent-base)" aria-label="Info"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm-1-4h2V7H7v4zm1-5.3a1 1 0 110-2 1 1 0 010 2z"/></svg></button>
+      <div class="ox-cpop__bubble" style="width:26rem">Billing runs on the 1st of each month for the previous month's appointments. Invoices are available in your Documents tab.</div>
+    </span>
+  </div>
+</div>
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec">
+    <tr><td>Trigger</td><td>IconButton xsmall · transparent · neutral</td></tr>
+    <tr><td>Help icon</td><td>regular/circle-question</td></tr>
+    <tr><td>Info icon</td><td>regular/square-info</td></tr>
+    <tr><td>Bubble</td><td>max-w 240px · shadow-3 · radius-small</td></tr>
+    <tr><td>Mobile</td><td>opens in a small Modal instead</td></tr>
+    <tr><td>Source</td><td>overlays/ContextualPopover/ContextualPopover.tsx</td></tr>
+  </table>
+</div>
+</body></html>

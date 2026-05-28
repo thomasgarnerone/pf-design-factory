@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · SkeletonLoader</title>
+<link rel="stylesheet" href="_base.css?v=4"><link rel="stylesheet" href="_components.css?v=12">
+<style>body{padding:3.2rem;max-width:112rem;font-family:Roboto,sans-serif}h1{font:700 2.8rem/1.2 Montserrat,sans-serif;color:#192634;margin:0 0 .6rem}h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:#4B739B;margin:0 0 1.4rem;font-weight:600;padding-bottom:.6rem;border-bottom:0.1rem solid #E4EDF6}.lede{color:#3A5978;font-size:1.4rem;line-height:1.5;margin:0 0 3rem;max-width:72rem}.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}.spec{font-family:'Roboto Mono',monospace;font-size:1.1rem;border-collapse:collapse;color:#3A5978}.spec td{padding:.4rem 2rem .4rem 0;vertical-align:top}.spec td:first-child{color:#6B91B8}</style></head><body><h1>SkeletonLoader</h1><p class="lede">Animated placeholder shapes shown while content loads.</p><style>@keyframes pulse{0%,100%{background-color:#C9D9E8}50%{background-color:#6B91B8}}.sk{background-color:#C9D9E8;animation:pulse 1.4s ease-in-out infinite;border-radius:.4rem}</style>
+<div class="section"><h2>Primitives</h2>
+<div style="display:flex;flex-direction:column;gap:1.2rem;max-width:56rem">
+<div class="sk" style="height:1.4rem;width:60%"></div>
+<div class="sk" style="height:1.4rem;width:90%"></div>
+<div class="sk" style="height:1.4rem;width:75%"></div>
+<div style="display:flex;gap:.8rem;align-items:center;margin-top:1rem"><div class="sk" style="width:4.8rem;height:4.8rem;border-radius:50%"></div><div style="flex:1"><div class="sk" style="height:1.4rem;width:40%;margin-bottom:.6rem"></div><div class="sk" style="height:1.2rem;width:60%"></div></div></div>
+</div></div>
+<div class="section"><h2>Card skeleton</h2>
+<div style="border:0.1rem solid #E4EDF6;border-radius:1.2rem;padding:2rem;max-width:40rem;background:#fff">
+<div class="sk" style="height:16rem;margin-bottom:1.6rem"></div>
+<div class="sk" style="height:1.6rem;width:70%;margin-bottom:.8rem"></div>
+<div class="sk" style="height:1.2rem;width:90%;margin-bottom:.4rem"></div>
+<div class="sk" style="height:1.2rem;width:60%"></div>
+</div></div>
+<div class="section"><h2>Specs</h2><table class="spec"><tr><td>Animation</td><td>pulsate · 1.4s ease-in-out · alternates between #C9D9E8 ↔ #6B91B8</td></tr><tr><td>Radius</td><td>matches real content it replaces</td></tr><tr><td>Source</td><td>indicator/SkeletonLoader.ts</td></tr></table></div></body></html>

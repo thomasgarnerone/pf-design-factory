@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<title>Focus — Oxygen</title>
+<style>
+  :root{
+    --oxygen-color-core-white: #ffffff;
+    --oxygen-color-core-blue-500: #107ACA;
+    --ink: #192634;
+    --body: #3A5978;
+    --hint: #6B91B8;
+    --line: #E4EDF6;
+    --line-2: #C9D9E8;
+    --mono: 'Roboto Mono', ui-monospace, monospace;
+  }
+  body { padding: 2.8rem 3.2rem; font-family: Roboto, sans-serif; color: var(--ink); background: #F7FAFE; }
+  .wrap { max-width: 118rem; }
+  .page-title { font: 700 2.8rem/1.2 Montserrat, sans-serif; margin: 0 0 0.4rem; color: var(--ink); }
+  .page-sub { font: 400 1.4rem/1.5 Roboto, sans-serif; color: var(--body); max-width: 76rem; margin: 0 0 2rem; }
+  h3.section { font: 600 1.1rem/1.4 Roboto, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: #4B739B; margin: 4rem 0 1.8rem; padding-bottom: 0.8rem; border-bottom: 0.1rem solid var(--line); }
+  h3.section:first-of-type { margin-top: 0; }
+  .legend { font-family: var(--mono); font-size: 1.1rem; color: var(--body); margin: 0 0 2.4rem; max-width: 92rem; line-height: 1.6; }
+  .legend b { color: var(--ink); font-weight: 700; font-family: Roboto, sans-serif; }
+  .legend code { background: #fff; border: 1px solid var(--line); padding: 0.1rem 0.4rem; border-radius: 0.3rem; color: #004080; }
+
+  .focus-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr)); gap: 2.4rem; align-items: start; }
+  .focus-cell { display: flex; flex-direction: column; gap: 1rem; }
+  .focus-box { background: #fff; border-radius: 0.6rem; padding: 1.8rem; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); min-height: 9rem; }
+  .oxy-focusable { display: inline-block; padding: 0.8rem 1.4rem; background: #fff; border: 1px solid var(--line-2); border-radius: 0.4rem; font: 500 1.4rem/1 Roboto, sans-serif; color: var(--ink); }
+  .oxy-focusable.focused { outline: 0.2rem solid var(--oxygen-color-core-blue-500); outline-offset: 0.2rem; box-shadow: 0 0 0 0.2rem var(--oxygen-color-core-white); }
+  .focus-meta { font-family: var(--mono); font-size: 1.1rem; line-height: 1.5; color: var(--body); }
+  .focus-meta code { background: #fff; border: 1px solid var(--line); padding: 0.15rem 0.4rem; border-radius: 0.3rem; color: #004080; }
+  .focus-meta .tname { color: #107ACA; font-weight: 500; display:block; margin-bottom: 0.4rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="page-title">Focus ring</h1>
+  <p class="page-sub">Global focus recipe applied to every interactive Oxygen component.</p>
+
+  <h3 class="section">Focus ring</h3>
+  <p class="legend">
+    Sourced from <code>packages/core/src/style/focus.scss</code>. Every
+    interactive Oxygen component (Button, IconButton, Input, Pill, Link, etc.) uses this exact recipe.
+  </p>
+
+  <div class="focus-row">
+    <div class="focus-cell">
+      <div class="focus-box">
+        <button class="oxy-focusable focused" type="button">Focused button</button>
+      </div>
+      <div class="focus-meta">
+        <span class="tname">focus.scss → @mixin focus-ring</span>
+        inner ring: <code>2px solid white</code><br>
+        outer ring: <code>2px solid blue-500</code><br>
+        offset: <code>2px</code>
+      </div>
+    </div>
+
+    <div class="focus-cell">
+      <div class="focus-box">
+        <input class="oxy-focusable focused" value="Focused input" style="width:20rem">
+      </div>
+      <div class="focus-meta">
+        Same ring on <b>every</b> interactive surface — inputs, toggles, pills, links.
+        The white→blue double ring maintains contrast against dark, light, and branded backgrounds.
+      </div>
+    </div>
+
+    <div class="focus-cell">
+      <div class="focus-box" style="background:#192634">
+        <a class="oxy-focusable focused" href="#" style="background:#192634;color:#fff;border-color:#3A5978">Focused link on dark</a>
+      </div>
+      <div class="focus-meta">
+        On dark surfaces, the <b>inner white ring</b> separates the element
+        from the blue halo — that's why the recipe is a double ring, not a single
+        blue outline.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.oxy-focusable').forEach(el => {
+    el.addEventListener('focus', () => el.classList.add('focused'));
+    el.addEventListener('blur',  () => el.classList.remove('focused'));
+  });
+</script>
+</body>
+</html>

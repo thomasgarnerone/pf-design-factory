@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Oxygen · IconButton v2</title>
+  <link rel="stylesheet" href="_base.css?v=4">
+  <link rel="stylesheet" href="_components.css?v=7">
+  <style>
+    body { padding: 3.2rem; }
+    h2 {
+      font: var(--oxygen-font-semantic-title-s-bold);
+      margin-bottom: 1.2rem;
+      color: var(--oxygen-color-semantic-neutral-prominent-strong);
+    }
+    .section { margin-bottom: 3.2rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 14rem repeat(4, minmax(8rem, auto));
+      gap: 1.6rem 2rem;
+      align-items: center;
+      justify-items: start;
+    }
+    .grid > .cell { justify-self: start; }
+    .grid .head {
+      font: var(--oxygen-font-semantic-body-xs-bold);
+      color: var(--oxygen-color-semantic-neutral-prominent-weak);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .grid .lead {
+      font: var(--oxygen-font-semantic-body-xs-bold);
+      color: var(--oxygen-color-semantic-neutral-prominent-weak);
+    }
+    .inverted-row {
+      background: var(--oxygen-color-semantic-brand-prominent-strong);
+      padding: 1.6rem 2rem;
+      border-radius: 1.2rem;
+      display: grid;
+      grid-template-columns: 14rem repeat(4, minmax(8rem, auto));
+      gap: 1.6rem 2rem;
+      align-items: center;
+      justify-items: start;
+    }
+    .inverted-row .lead,
+    .inverted-row .head {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .note {
+      font: var(--oxygen-font-semantic-body-xs-regular);
+      color: var(--oxygen-color-semantic-neutral-prominent-weak);
+      margin-top: 0.4rem;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 1.1rem;
+    }
+    .size-row {
+      display: flex;
+      align-items: center;
+      gap: 2.4rem;
+      flex-wrap: wrap;
+    }
+    .size-row .ox-iconbutton + .note { margin-top: 0; }
+    .size-caption {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .size-caption .mono {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 1.1rem;
+      color: var(--oxygen-color-semantic-neutral-prominent-weak);
+    }
+    .invalid-row {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .invalid-row .ox-iconbutton {
+      opacity: 0.85;
+      outline: 0.2rem dashed var(--oxygen-color-semantic-danger-prominent-base);
+      outline-offset: 0.4rem;
+    }
+    code {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 1.1rem;
+      background: var(--oxygen-color-semantic-neutral-subtle-weak);
+      padding: 0.1rem 0.4rem;
+      border-radius: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <h2>IconButton · sizes</h2>
+  <div class="size-row">
+    <div class="size-caption">
+      <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-brand ox-iconbutton--size-xsmall"
+              aria-label="Add"><span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#plus"/></svg></span></button>
+      <span class="mono">xsmall · 24</span>
+    </div>
+    <div class="size-caption">
+      <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-brand ox-iconbutton--size-small"
+              aria-label="Add"><span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#plus"/></svg></span></button>
+      <span class="mono">small · 32</span>
+    </div>
+    <div class="size-caption">
+      <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-brand ox-iconbutton--size-medium"
+              aria-label="Add"><span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#plus"/></svg></span></button>
+      <span class="mono">medium · 40 (default)</span>
+    </div>
+    <div class="size-caption">
+      <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-brand ox-iconbutton--size-large"
+              aria-label="Add"><span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#plus"/></svg></span></button>
+      <span class="mono">large · 54</span>
+    </div>
+  </div>
+  <div class="note">Icon scales with size — xsmall 12 · small 16 · medium 20 · large uses medium glyph (20). Circle radius from <code>radius-full</code>.</div>
+</div>
+
+<!-- Brand + danger grid (light background) -->
+<div class="section">
+  <h2>IconButton · variant × uiStyle · size = medium</h2>
+  <div class="grid">
+    <span class="head"></span>
+    <span class="head">default</span>
+    <span class="head">hover</span>
+    <span class="head">loading</span>
+    <span class="head">disabled</span>
+
+    <!-- brand / solid -->
+    <span class="lead">brand&nbsp;/&nbsp;solid</span>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-brand ox-iconbutton--size-medium" aria-label="Add">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#plus"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-brand ox-iconbutton--size-medium" aria-label="Add">
+      <span class="ox-iconbutton__innerWrapper" style="background:var(--oxygen-color-semantic-brand-prominent-base);color:var(--oxygen-color-semantic-common-subtle)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#plus"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-brand ox-iconbutton--size-medium" aria-label="Loading">
+      <span class="ox-iconbutton__innerWrapper"><span class="ox-iconbutton__spinner"></span></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-brand ox-iconbutton--size-medium" disabled aria-label="Add">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#plus"/></svg></span>
+    </button>
+
+    <!-- brand / outlined -->
+    <span class="lead">brand&nbsp;/&nbsp;outlined</span>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-brand ox-iconbutton--size-medium" aria-label="Edit">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#heart-regular"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-brand ox-iconbutton--size-medium" aria-label="Edit">
+      <span class="ox-iconbutton__innerWrapper" style="background:var(--oxygen-color-semantic-brand-subtle-weak)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#heart-regular"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-brand ox-iconbutton--size-medium" aria-label="Loading">
+      <span class="ox-iconbutton__innerWrapper"><span class="ox-iconbutton__spinner"></span></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-brand ox-iconbutton--size-medium" disabled aria-label="Edit">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#heart-regular"/></svg></span>
+    </button>
+
+    <!-- brand / transparent -->
+    <span class="lead">brand&nbsp;/&nbsp;transparent</span>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-brand ox-iconbutton--size-medium" aria-label="Info">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#bell-regular"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-brand ox-iconbutton--size-medium" aria-label="Info">
+      <span class="ox-iconbutton__innerWrapper" style="color:var(--oxygen-color-semantic-brand-prominent-strong)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#bell-regular"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-brand ox-iconbutton--size-medium" aria-label="Loading">
+      <span class="ox-iconbutton__innerWrapper"><span class="ox-iconbutton__spinner"></span></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-brand ox-iconbutton--size-medium" disabled aria-label="Info">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#bell-regular"/></svg></span>
+    </button>
+
+    <!-- danger / solid -->
+    <span class="lead">danger&nbsp;/&nbsp;solid</span>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-danger ox-iconbutton--size-medium" aria-label="Delete">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#xmark"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-danger ox-iconbutton--size-medium" aria-label="Delete">
+      <span class="ox-iconbutton__innerWrapper" style="background:var(--oxygen-color-semantic-danger-prominent-strong);color:var(--oxygen-color-semantic-common-subtle)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#xmark"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-danger ox-iconbutton--size-medium" aria-label="Loading">
+      <span class="ox-iconbutton__innerWrapper"><span class="ox-iconbutton__spinner"></span></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-danger ox-iconbutton--size-medium" disabled aria-label="Delete">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#xmark"/></svg></span>
+    </button>
+
+    <!-- danger / transparent -->
+    <span class="lead">danger&nbsp;/&nbsp;transparent</span>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-danger ox-iconbutton--size-medium" aria-label="Remove">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#xmark"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-danger ox-iconbutton--size-medium" aria-label="Remove">
+      <span class="ox-iconbutton__innerWrapper" style="color:var(--oxygen-color-semantic-danger-prominent-strong)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#xmark"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-danger ox-iconbutton--size-medium" aria-label="Loading">
+      <span class="ox-iconbutton__innerWrapper"><span class="ox-iconbutton__spinner"></span></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-danger ox-iconbutton--size-medium" disabled aria-label="Remove">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#xmark"/></svg></span>
+    </button>
+
+    <!-- neutral / outlined -->
+    <span class="lead">neutral&nbsp;/&nbsp;outlined</span>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-neutral ox-iconbutton--size-medium" aria-label="More">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#ellipsis"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-neutral ox-iconbutton--size-medium" aria-label="More">
+      <span class="ox-iconbutton__innerWrapper" style="background:var(--oxygen-color-semantic-neutral-subtle-weak)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#ellipsis"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-neutral ox-iconbutton--size-medium" aria-label="Loading">
+      <span class="ox-iconbutton__innerWrapper"><span class="ox-iconbutton__spinner"></span></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-neutral ox-iconbutton--size-medium" disabled aria-label="More">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#ellipsis"/></svg></span>
+    </button>
+
+    <!-- neutral / transparent -->
+    <span class="lead">neutral&nbsp;/&nbsp;transparent</span>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-neutral ox-iconbutton--size-medium" aria-label="More">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#ellipsis"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-neutral ox-iconbutton--size-medium" aria-label="More">
+      <span class="ox-iconbutton__innerWrapper" style="color:var(--oxygen-color-primitive-gray-900, #0F172A)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#ellipsis"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-neutral ox-iconbutton--size-medium" aria-label="Loading">
+      <span class="ox-iconbutton__innerWrapper"><span class="ox-iconbutton__spinner"></span></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-neutral ox-iconbutton--size-medium" disabled aria-label="More">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#ellipsis"/></svg></span>
+    </button>
+  </div>
+</div>
+
+<!-- Inverted row (dark bg) -->
+<div class="section">
+  <h2>IconButton · uiStyle = inverted · on brand surface</h2>
+  <div class="inverted-row">
+    <span class="head"></span>
+    <span class="head">default</span>
+    <span class="head">hover</span>
+    <span class="head">loading</span>
+    <span class="head">disabled</span>
+
+    <!-- inverted / solid -->
+    <span class="lead">inverted&nbsp;/&nbsp;solid</span>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-inverted ox-iconbutton--size-medium" aria-label="Add">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#plus"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-inverted ox-iconbutton--size-medium" aria-label="Add">
+      <span class="ox-iconbutton__innerWrapper" style="background:var(--oxygen-color-semantic-neutral-subtle-weak);color:var(--oxygen-color-semantic-brand-prominent-base)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#plus"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-inverted ox-iconbutton--size-medium" aria-label="Loading">
+      <span class="ox-iconbutton__innerWrapper"><span class="ox-iconbutton__spinner"></span></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-inverted ox-iconbutton--size-medium" disabled aria-label="Add">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#plus"/></svg></span>
+    </button>
+
+    <!-- inverted / outlined -->
+    <span class="lead">inverted&nbsp;/&nbsp;outlined</span>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-inverted ox-iconbutton--size-medium" aria-label="Menu">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#ellipsis"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-inverted ox-iconbutton--size-medium" aria-label="Menu">
+      <span class="ox-iconbutton__innerWrapper" style="background:rgba(255,255,255,0.12);color:var(--oxygen-color-semantic-common-subtle);border-color:var(--oxygen-color-semantic-common-subtle)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#ellipsis"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-inverted ox-iconbutton--size-medium" aria-label="Loading">
+      <span class="ox-iconbutton__innerWrapper"><span class="ox-iconbutton__spinner"></span></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-inverted ox-iconbutton--size-medium" disabled aria-label="Menu">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#ellipsis"/></svg></span>
+    </button>
+
+    <!-- inverted / transparent -->
+    <span class="lead">inverted&nbsp;/&nbsp;transparent</span>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-inverted ox-iconbutton--size-medium" aria-label="Close">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#xmark"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-inverted ox-iconbutton--size-medium" aria-label="Close">
+      <span class="ox-iconbutton__innerWrapper" style="color:var(--oxygen-color-semantic-neutral-subtle-weak)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#xmark"/></svg></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-inverted ox-iconbutton--size-medium" aria-label="Loading">
+      <span class="ox-iconbutton__innerWrapper"><span class="ox-iconbutton__spinner"></span></span>
+    </button>
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-inverted ox-iconbutton--size-medium" disabled aria-label="Close">
+      <span class="ox-iconbutton__innerWrapper"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#xmark"/></svg></span>
+    </button>
+  </div>
+</div>
+
+<!-- Forbidden combos -->
+<div class="section">
+  <h2>Invalid combinations <span style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)">— do not use</span></h2>
+  <div class="invalid-row">
+    <div class="size-caption">
+      <button class="ox-iconbutton ox-iconbutton--variant-solid ox-iconbutton--ui-neutral ox-iconbutton--size-medium" aria-label="More">
+        <span class="ox-iconbutton__innerWrapper" style="background:var(--oxygen-color-semantic-neutral-prominent-strong);color:var(--oxygen-color-semantic-common-subtle)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#ellipsis"/></svg></span>
+      </button>
+      <span class="mono">solid + neutral</span>
+    </div>
+    <div class="size-caption">
+      <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-danger ox-iconbutton--size-medium" aria-label="Remove">
+        <span class="ox-iconbutton__innerWrapper" style="background:var(--oxygen-color-semantic-common-subtle);color:var(--oxygen-color-semantic-danger-prominent-base);border-color:var(--oxygen-color-semantic-danger-prominent-base)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#xmark"/></svg></span>
+      </button>
+      <span class="mono">outlined + danger</span>
+    </div>
+  </div>
+  <div class="note">From <code>IconButton.stories.tsx · InvalidVariant</code>. The components don't error at runtime, but they're explicitly disallowed by the design spec.</div>
+</div>
+
+<!-- SVG sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="plus" viewBox="0 0 16 16"><path d="M12.875 8a.555.555 0 0 1-.562.563h-3.75v3.75a.576.576 0 0 1-.563.585c-.328 0-.562-.257-.562-.585v-3.75h-3.75c-.329 0-.563-.235-.563-.54 0-.328.234-.585.563-.585h3.75v-3.75c0-.305.234-.563.562-.563.305 0 .563.258.563.563v3.75h3.75c.305 0 .562.257.562.562Z"/></symbol>
+    <symbol id="xmark" viewBox="0 0 16 16"><path d="m8.797 8 3.117 3.117a.55.55 0 0 1 0 .797.55.55 0 0 1-.797 0L8 8.797l-3.117 3.117a.55.55 0 0 1-.797 0 .55.55 0 0 1 0-.797L7.203 8 4.086 4.883a.563.563 0 1 1 .797-.797L8 7.203l3.117-3.117a.563.563 0 1 1 .797.797L8.797 8Z"/></symbol>
+    <symbol id="heart-regular" viewBox="0 0 16 16"><path d="m7.719 3.969.258.281.28-.258a3.34 3.34 0 0 1 2.93-.937A3.35 3.35 0 0 1 14 6.359v.118c0 .984-.422 1.921-1.125 2.578l-4.242 3.96c-.164.165-.399.235-.633.235-.258 0-.492-.07-.656-.234L3.102 9.055C2.421 8.397 2 7.461 2 6.477v-.118c0-1.64 1.172-3.046 2.79-3.304a3.34 3.34 0 0 1 2.929.937M8 5.188l-.68-.727a2.3 2.3 0 0 0-1.991-.633A2.22 2.22 0 0 0 3.125 6.36v.118c0 .68.281 1.312.774 1.78l4.101 3.82 4.102-3.82c.492-.468.773-1.1.773-1.78v-.118a2.22 2.22 0 0 0-2.203-2.531 2.3 2.3 0 0 0-1.992.633Z"/></symbol>
+    <symbol id="bell-regular" viewBox="0 0 16 16"><path d="M8.75 2.75v.422c1.688.281 3 1.758 3 3.516v.796c0 1.055.352 2.086 1.008 2.93l.351.422a.58.58 0 0 1 .07.61.55.55 0 0 1-.492.304H3.313a.56.56 0 0 1-.516-.305.58.58 0 0 1 .07-.61l.352-.42A4.75 4.75 0 0 0 4.25 7.484v-.796c0-1.758 1.29-3.235 3-3.516v-.422c0-.41.328-.75.75-.75.398 0 .75.34.75.75m-.75 1.5a2.444 2.444 0 0 0-2.438 2.438v.796c0 1.149-.351 2.25-1.007 3.211h6.867a5.56 5.56 0 0 1-.984-3.21v-.797A2.423 2.423 0 0 0 8 4.25M9.5 13.25c0 .422-.164.797-.445 1.078A1.47 1.47 0 0 1 8 14.75c-.422 0-.797-.14-1.078-.422A1.5 1.5 0 0 1 6.5 13.25Z"/></symbol>
+    <symbol id="ellipsis" viewBox="0 0 16 16"><path d="M10.625 8c0-.61.492-1.125 1.125-1.125.61 0 1.125.516 1.125 1.125 0 .633-.516 1.125-1.125 1.125A1.11 1.11 0 0 1 10.625 8m-3.75 0c0-.61.492-1.125 1.125-1.125.61 0 1.125.516 1.125 1.125 0 .633-.516 1.125-1.125 1.125A1.11 1.11 0 0 1 6.875 8m-.75 0c0 .633-.516 1.125-1.125 1.125A1.11 1.11 0 0 1 3.875 8c0-.61.492-1.125 1.125-1.125.61 0 1.125.516 1.125 1.125"/></symbol>
+  </defs>
+</svg>
+
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<title>Badge — Oxygen dataDisplay/Badge</title>
+<style>
+  /* ====================================================================
+     1:1 reproduction of packages/core/src/dataDisplay/Badge/Badge.scss
+     Token hexes resolved from packages/tokens/src/colors/colorsHex.ts
+     (component.indicator.badge.* → exact light-theme values).
+
+     Size/padding/radius tokens:
+       gridUnit-x2   = 1.6rem   (small height)
+       gridUnit-x2_5 = 2.0rem   (…also .small height in scss*) — see scss
+       gridUnit-x4   = 3.2rem   (.large height)
+     ==================================================================== */
+
+  .dl-badge {
+    /* background-color LOCALS (mirror of the SCSS :root overrides) */
+    --oxygen-LOCAL-badge-background-warning:     #FFBA1A;   /* indicator-badge-warning-background     */
+    --oxygen-LOCAL-badge-background-informative: #00BFFF;   /* indicator-badge-informative-background */
+    --oxygen-LOCAL-badge-background-danger:      #E5004C;   /* indicator-badge-danger-background      */
+    --oxygen-LOCAL-badge-background-positive:    #00806A;   /* indicator-badge-positive-background    */
+    --oxygen-LOCAL-badge-background-brand:       #004080;   /* indicator-badge-brand-background       */
+    --oxygen-LOCAL-badge-background-neutral:     #C9D9E8;   /* indicator-badge-neutral-background     */
+    --oxygen-LOCAL-badge-background-mute:        #4B739B;   /* semantic-neutral-prominent-weak        */
+    --oxygen-LOCAL-badge-background-disabled:    #E4EDF6;   /* indicator-badge-disabled-background    */
+
+    /* icon colours */
+    --oxygen-LOCAL-badge-icon-color-disabled: #294056;      /* semantic-neutral-prominent-strong      */
+    --oxygen-LOCAL-badge-icon-color-neutral:  #294056;      /* semantic-neutral-prominent-strong      */
+
+    /* text colours */
+    --oxygen-LOCAL-badge-color:              #FFFFFF;       /* text-bodyText-inverted-default         */
+    --oxygen-LOCAL-badge-color-neutral:      #294056;       /* indicator-badge-transparent-border     */
+    --oxygen-LOCAL-badge-color-disabled:     #FFFFFF;       /* indicator-badge-disabled-label         */
+    --oxygen-LOCAL-badge-color-noBackground: #294056;       /* indicator-badge-transparent-border     */
+  }
+
+  /* ---- base --------------------------------------------------------- */
+  .dl-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.4rem;
+    height: 2.4rem;
+    min-width: 2.4rem;
+    border-radius: 2.0rem;              /* gridUnit-x2_5 */
+    line-height: 1.6rem;                /* font-primitive-lineHeight-small */
+    outline: 0.1rem solid transparent;  /* high-contrast mode */
+    box-sizing: border-box;
+    /* Body/XS/Bold — 12/16 Roboto 700 */
+    font: 700 1.2rem/1.6rem Roboto, sans-serif;
+    text-align: center;
+    color: inherit;
+  }
+  .dl-badge-small {
+    height: 1.6rem;                     /* gridUnit-x2 */
+    min-width: 1.6rem;
+    line-height: unset;
+  }
+  .dl-badge-large {
+    height: 3.2rem;                     /* gridUnit-x4 */
+    min-width: 3.2rem;
+    padding: 0 1.2rem;                  /* gridUnit-x1_5 */
+    line-height: 2.4rem;                /* lineHeight-medium */
+    /* Body/S/Bold — 14/24 Roboto 700 */
+    font: 700 1.4rem/2.4rem Roboto, sans-serif;
+  }
+  .dl-badge-empty {
+    border-radius: 50%;
+    padding: 0.4rem;
+    height: 0.4rem;
+    min-width: 0.4rem;
+  }
+
+  /* ---- uiStyles — one-to-one with Badge.scss ------------------------ */
+  .dl-badge-warning   { background-color: var(--oxygen-LOCAL-badge-background-warning); }
+  .dl-badge-info      { background-color: var(--oxygen-LOCAL-badge-background-informative); }
+  .dl-badge-error     { background-color: var(--oxygen-LOCAL-badge-background-danger); }
+  .dl-badge-success   { background-color: var(--oxygen-LOCAL-badge-background-positive); }
+  .dl-badge-dark-info { background-color: var(--oxygen-LOCAL-badge-background-brand); }
+  .dl-badge-mute      { background-color: var(--oxygen-LOCAL-badge-background-mute); }
+
+  /* warning + info → dark label (uses color-noBackground), white icon */
+  .dl-badge-warning,
+  .dl-badge-info { color: var(--oxygen-LOCAL-badge-color-noBackground); }
+  .dl-badge-warning svg,
+  .dl-badge-info svg { fill: var(--oxygen-LOCAL-badge-color); }
+
+  /* error, dark-info, mute, success → white label + white icon */
+  .dl-badge-error,
+  .dl-badge-dark-info,
+  .dl-badge-mute,
+  .dl-badge-success { color: var(--oxygen-LOCAL-badge-color); }
+  .dl-badge-error svg,
+  .dl-badge-dark-info svg,
+  .dl-badge-mute svg,
+  .dl-badge-success svg { fill: var(--oxygen-LOCAL-badge-color); }
+
+  .dl-badge-no-background {
+    background-color: transparent;
+    color: var(--oxygen-LOCAL-badge-color-noBackground);
+    border: solid 0.1rem;
+  }
+  .dl-badge-no-background svg { fill: var(--oxygen-LOCAL-badge-color-noBackground); }
+
+  .dl-badge-disabled {
+    background-color: var(--oxygen-LOCAL-badge-background-disabled);
+    color: var(--oxygen-LOCAL-badge-color-disabled);
+  }
+  .dl-badge-disabled svg { fill: var(--oxygen-LOCAL-badge-icon-color-disabled); }
+
+  .dl-badge-neutral {
+    background-color: var(--oxygen-LOCAL-badge-background-neutral);
+    color: var(--oxygen-LOCAL-badge-color-neutral);
+  }
+  .dl-badge-neutral svg { fill: var(--oxygen-LOCAL-badge-icon-color-neutral); }
+
+  /* ==================================================================== */
+  /* Preview page chrome                                                  */
+  /* ==================================================================== */
+  body { padding: 2.4rem 2.8rem; font-family: 'Roboto', sans-serif; background: #FFFFFF; color: #192634; }
+
+  .header {
+    font: 600 1.1rem/1.4 Roboto, sans-serif;
+    color: #3A5978;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.6rem;
+  }
+  .legend {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 1.1rem;
+    color: #3A5978;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 96rem;
+  }
+  .legend code { background: #F1F7FE; padding: 0.1rem 0.4rem; border-radius: 0.3rem; color: #004080; }
+  .legend b { color: #192634; }
+  .legend a { color: #107ACA; }
+
+  .section + .section { margin-top: 2.8rem; }
+  .section-title {
+    font: 600 1.1rem/1.4 Roboto, sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4B739B;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 0.1rem solid #E4EDF6;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 16rem 1fr;
+    column-gap: 2rem;
+    row-gap: 1.2rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .row-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 1.1rem;
+    color: #4B739B;
+  }
+  .row-items {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .token-caption {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 1rem;
+    color: #6B91B8;
+  }
+  .token-caption b { color: #192634; font-weight: 600; }
+
+  /* in-situ hosts */
+  .icon-host {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.8rem;
+    background: #F1F7FE;
+    color: #294056;
+  }
+  .icon-host svg.host-icon { width: 1.8rem; height: 1.8rem; fill: currentColor; }
+  .icon-host .dl-badge {
+    position: absolute;
+    top: -0.4rem;
+    right: -0.4rem;
+    box-shadow: 0 0 0 0.2rem #fff;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">dataDisplay / Badge</div>
+<p class="legend">
+  <b>&lt;Badge /&gt;</b> · 1:1 reproduction of
+  <code>packages/core/src/dataDisplay/Badge/Badge.scss</code> &amp;
+  <code>Badge.tsx</code>. Token hexes taken from
+  <code>packages/tokens/src/colors/colorsHex.ts</code> → <code>component.indicator.badge.*</code>.
+  Used as a <b>count / presence indicator</b> — for tags or
+  filter chips see <a href="pills.html">Pill</a>.
+  Props: <code>uiStyle</code> (9), <code>size</code> ('small' | 'medium' | 'large'),
+  <code>children</code> (ReactNode). When children is nullish the scss adds
+  <code>.dl-badge-empty</code>. Font = <code>Body/XS/Bold</code> (12/16), except
+  <code>size=large</code> → <code>Body/S/Bold</code> (14/24). Radius = <code>gridUnit-x2_5</code>.
+</p>
+
+<!-- =========================================================
+     uiStyle — 9 variants (BadgeStyle union)
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">uiStyle · 9 variants  <span style="font-weight:400;text-transform:none;color:#6B91B8">· default = 'warning'</span></div>
+
+  <div class="row">
+    <div class="row-label">warning <span style="color:#A9BFD6">(default)</span></div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-warning">3</span>
+      <span class="token-caption">bg <b>#FFBA1A</b> · label <b>#294056</b></span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">info</div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-info">12</span>
+      <span class="token-caption">bg <b>#00BFFF</b> · label <b>#294056</b></span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">error</div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-error">99+</span>
+      <span class="token-caption">bg <b>#E5004C</b> · label <b>#FFFFFF</b></span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">success</div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-success">
+        <svg viewBox="0 0 16 16" width="12" height="12"><path d="M13.47 4.47a.75.75 0 0 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 1.06-1.06L7 10.94l6.47-6.47z"/></svg>
+      </span>
+      <span class="token-caption">bg <b>#00806A</b> · label + icon <b>#FFFFFF</b></span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">dark-info</div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-dark-info">New</span>
+      <span class="token-caption">bg <b>#004080</b> · label <b>#FFFFFF</b></span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">mute</div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-mute">7</span>
+      <span class="token-caption">bg <b>#4B739B</b> (neutral-prominent-weak) · label <b>#FFFFFF</b></span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">neutral</div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-neutral">42</span>
+      <span class="token-caption">bg <b>#C9D9E8</b> · label <b>#294056</b></span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">disabled</div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-disabled">0</span>
+      <span class="token-caption">bg <b>#E4EDF6</b> · label <b>#FFFFFF</b>  <span style="color:#A9BFD6">(yes — white label on pale grey; matches token)</span></span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">no-background</div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-no-background">beta</span>
+      <span class="token-caption">transparent bg · 0.1rem border currentColor · label <b>#294056</b></span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     size — BadgeSize = 'small' | 'medium' | 'large'
+     + 'empty' state auto-applied when children is nullish
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">size · small / medium / large / empty  <span style="font-weight:400;text-transform:none;color:#6B91B8">· default = 'medium'</span></div>
+
+  <div class="row">
+    <div class="row-label">medium <span style="color:#A9BFD6">(default)</span></div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-warning">3</span>
+      <span class="dl-badge dl-badge-error">12</span>
+      <span class="dl-badge dl-badge-success">99+</span>
+      <span class="token-caption">height 2.4rem · min-width 2.4rem · Body/XS/Bold</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">small</div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-warning dl-badge-small">1</span>
+      <span class="dl-badge dl-badge-error dl-badge-small">9</span>
+      <span class="dl-badge dl-badge-dark-info dl-badge-small">2</span>
+      <span class="token-caption">height 1.6rem (gridUnit-x2) · line-height unset</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">large</div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-warning dl-badge-large">New</span>
+      <span class="dl-badge dl-badge-success dl-badge-large">Verified</span>
+      <span class="dl-badge dl-badge-dark-info dl-badge-large">Beta access</span>
+      <span class="token-caption">height 3.2rem (gridUnit-x4) · padding 0 1.2rem · Body/S/Bold</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-label">empty</div>
+    <div class="row-items">
+      <span class="dl-badge dl-badge-warning dl-badge-empty"></span>
+      <span class="dl-badge dl-badge-error dl-badge-empty"></span>
+      <span class="dl-badge dl-badge-success dl-badge-empty"></span>
+      <span class="dl-badge dl-badge-dark-info dl-badge-empty"></span>
+      <span class="token-caption">auto-applied when <code style="font-family:'JetBrains Mono',monospace">!children && children !== 0</code></span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     in situ — layered on icon hosts (notification indicator)
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">in situ · layered on icon hosts</div>
+
+  <div class="row">
+    <div class="row-label">notifications</div>
+    <div class="row-items" style="gap:2.4rem">
+      <span class="icon-host">
+        <svg class="host-icon" viewBox="0 0 16 16"><path d="M8 1.5A3.5 3.5 0 0 0 4.5 5v1.38c0 .75-.27 1.48-.78 2.05L2.3 10.04a.5.5 0 0 0 .37.84h10.66a.5.5 0 0 0 .37-.84l-1.42-1.6a3.1 3.1 0 0 1-.78-2.06V5A3.5 3.5 0 0 0 8 1.5zm-2 10a2 2 0 1 0 4 0H6z"/></svg>
+        <span class="dl-badge dl-badge-error dl-badge-small">5</span>
+      </span>
+      <span class="icon-host">
+        <svg class="host-icon" viewBox="0 0 16 16"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm1 3v7h8V5H4zm0-1h8V3H4v1z"/></svg>
+        <span class="dl-badge dl-badge-warning dl-badge-small">2</span>
+      </span>
+      <span class="icon-host">
+        <svg class="host-icon" viewBox="0 0 16 16"><path d="M2 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1L8 9 2 5V4zm0 3.25l5.6 3.73a.75.75 0 0 0 .8 0L14 7.25V12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.25z"/></svg>
+        <span class="dl-badge dl-badge-error dl-badge-empty"></span>
+      </span>
+      <span class="icon-host">
+        <svg class="host-icon" viewBox="0 0 16 16"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 3a1 1 0 0 1 1 1v3a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+        <span class="dl-badge dl-badge-dark-info dl-badge-small">New</span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     tokens summary
+     ========================================================= -->
+<section class="section">
+  <div class="section-title">token map · component.indicator.badge.*</div>
+  <table style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.1rem;color:#3A5978;border-collapse:collapse">
+    <tr><td style="padding:0.3rem 1.6rem 0.3rem 0;color:#192634">warning.background</td><td>#FFBA1A</td></tr>
+    <tr><td style="padding:0.3rem 1.6rem 0.3rem 0;color:#192634">informative.background</td><td>#00BFFF</td></tr>
+    <tr><td style="padding:0.3rem 1.6rem 0.3rem 0;color:#192634">danger.background</td><td>#E5004C</td></tr>
+    <tr><td style="padding:0.3rem 1.6rem 0.3rem 0;color:#192634">positive.background</td><td>#00806A</td></tr>
+    <tr><td style="padding:0.3rem 1.6rem 0.3rem 0;color:#192634">brand.background</td><td>#004080</td></tr>
+    <tr><td style="padding:0.3rem 1.6rem 0.3rem 0;color:#192634">neutral.background</td><td>#C9D9E8</td></tr>
+    <tr><td style="padding:0.3rem 1.6rem 0.3rem 0;color:#192634">disabled.background</td><td>#E4EDF6</td></tr>
+    <tr><td style="padding:0.3rem 1.6rem 0.3rem 0;color:#192634">disabled.label</td><td>#FFFFFF</td></tr>
+    <tr><td style="padding:0.3rem 1.6rem 0.3rem 0;color:#192634">transparent.border</td><td>#294056</td></tr>
+    <tr><td style="padding:0.3rem 1.6rem 0.3rem 0;color:#192634">mute.background <span style="color:#A9BFD6">(semantic)</span></td><td>#4B739B</td></tr>
+  </table>
+</section>
+
+</body>
+</html>

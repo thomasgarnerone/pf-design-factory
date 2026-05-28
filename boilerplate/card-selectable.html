@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Card — collapsible</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=12">
+<style>
+body{padding:3.2rem;max-width:112rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:2rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:0.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:72rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+
+/* Collapsible card — pure presentation, native <details> */
+.ox-card-col{background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:1.2rem;overflow:hidden}
+.ox-card-col summary{list-style:none;padding:1.6rem 2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)}
+.ox-card-col summary::-webkit-details-marker{display:none}
+.ox-card-col summary:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.ox-card-col__chev{transition:transform .15s;color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.ox-card-col[open] .ox-card-col__chev{transform:rotate(180deg)}
+.ox-card-col__body{border-top:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong)}
+.ox-card-col__row{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2rem;border-bottom:.1rem solid var(--oxygen-color-semantic-neutral-subtle-weak)}
+.ox-card-col__row:last-child{border-bottom:0}
+.ox-card-col__sub{padding:1.6rem 2rem;color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-s-regular)}
+</style></head>
+<body>
+<h1>Card — collapsible</h1>
+<p class="lede">Collapsible cards keep dense content scannable. Click the header to expand or hide the body.</p>
+<div class="note"><b>From Oxygen core.</b> <code>containers/Card/Card.tsx</code> · <code>CardCollapsible</code>. Built on the native <code>&lt;details&gt;</code> element — keyboard, focus, and ARIA states come for free.</div>
+
+<div class="section"><h2>Default</h2>
+<div style="display:flex;flex-direction:column;gap:1.2rem;max-width:72rem">
+<details class="ox-card-col" open>
+<summary><span>Past consultations (4)</span><svg class="ox-card-col__chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6l5 5 5-5"/></svg></summary>
+<div class="ox-card-col__body">
+<div class="ox-card-col__row"><div><div style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)">Suivi hypertension</div><div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)">12 September 2025 · 10:15</div></div><span class="ox-pill ox-pill--success">Completed</span></div>
+<div class="ox-card-col__row"><div><div style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)">Consultation annuelle</div><div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)">3 June 2025 · 14:30</div></div><span class="ox-pill ox-pill--success">Completed</span></div>
+<div class="ox-card-col__row"><div><div style="font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger)">Renouvellement ordonnance</div><div style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak)">14 March 2025 · 09:00</div></div><span class="ox-pill">Téléconsultation</span></div>
+</div>
+</details>
+<details class="ox-card-col">
+<summary><span>Prescriptions (12)</span><svg class="ox-card-col__chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6l5 5 5-5"/></svg></summary>
+<div class="ox-card-col__body"><div class="ox-card-col__sub">Click to expand</div></div>
+</details>
+<details class="ox-card-col">
+<summary><span>Documents (7)</span><svg class="ox-card-col__chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6l5 5 5-5"/></svg></summary>
+<div class="ox-card-col__body"><div class="ox-card-col__sub">Click to expand</div></div>
+</details>
+</div>
+</div>
+
+<div class="section"><h2>With description in header</h2>
+<div style="display:flex;flex-direction:column;gap:1.2rem;max-width:72rem">
+<details class="ox-card-col">
+<summary>
+  <span style="display:flex;flex-direction:column;gap:.2rem"><span>Notification preferences</span><span style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);font-weight:400">SMS, email, and in-app alerts</span></span>
+  <svg class="ox-card-col__chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6l5 5 5-5"/></svg>
+</summary>
+<div class="ox-card-col__body"><div class="ox-card-col__sub">Body content here.</div></div>
+</details>
+<details class="ox-card-col" open>
+<summary>
+  <span style="display:flex;flex-direction:column;gap:.2rem"><span>Billing address</span><span style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);font-weight:400">Used for invoices and receipts</span></span>
+  <svg class="ox-card-col__chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6l5 5 5-5"/></svg>
+</summary>
+<div class="ox-card-col__body"><div class="ox-card-col__sub">42 rue de Londres · 75009 Paris · France</div></div>
+</details>
+</div>
+</div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Element</td><td>native &lt;details&gt; / &lt;summary&gt;</td></tr>
+<tr><td>Header</td><td>1.6rem 2rem padding · body-m-bold · cursor:pointer · neutral-subtle-weak hover</td></tr>
+<tr><td>Chevron</td><td>rotates 180° on open · 150ms ease-out</td></tr>
+<tr><td>Body</td><td>top border separator · row variant 1.2rem 2rem padding</td></tr>
+<tr><td>Source</td><td>containers/Card/Card.tsx · CardCollapsible</td></tr>
+</table></div>
+</body></html>

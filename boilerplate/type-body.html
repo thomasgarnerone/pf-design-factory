@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Type — Body &amp; Utility</title>
+<style>
+  body { padding: 2.4rem 2.8rem; font-family: Roboto, sans-serif; color: #192634; }
+  .wrap { max-width: 100rem; }
+
+  h3.section {
+    font: 600 1.1rem/1.4 Roboto, sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4B739B;
+    margin: 0 0 1.6rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 0.1rem solid #E4EDF6;
+  }
+  h3.section + * { margin-top: 0; }
+  h3.section:not(:first-of-type) { margin-top: 3.2rem; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 16rem 1fr 22rem;
+    column-gap: 2.4rem;
+    row-gap: 2rem;
+    align-items: baseline;
+  }
+  .token {
+    font-family: 'Roboto Mono', ui-monospace, monospace;
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+  .token .tname { color: #107ACA; display: block; }
+  .token .tvar  { color: #6B91B8; display: block; margin-top: 0.2rem; }
+  .sample { color: #192634; }
+  .spec {
+    font-family: 'Roboto Mono', ui-monospace, monospace;
+    font-size: 1.1rem;
+    color: #3A5978;
+    line-height: 1.5;
+    text-align: right;
+  }
+  .spec b { color: #192634; font-weight: 700; }
+
+  /* Roboto body classes — 1:1 with fontsRaw.ts body tokens */
+  .body-m-bold     { font: 700 16px/24px Roboto, sans-serif; }
+  .body-m-regular  { font: 400 16px/24px Roboto, sans-serif; }
+  .body-s-bold     { font: 700 14px/24px Roboto, sans-serif; }
+  .body-s-regular  { font: 400 14px/24px Roboto, sans-serif; }
+  .body-xs-bold    { font: 700 12px/16px Roboto, sans-serif; }
+  .body-xs-regular { font: 400 12px/16px Roboto, sans-serif; }
+
+  /* Utility: inline code — Oxygen uses Roboto Mono for monospaced values */
+  .inline-code {
+    font-family: 'Roboto Mono', ui-monospace, monospace;
+    font-size: 14px; line-height: 24px;
+    background: #F1F7FE; color: #004080;
+    padding: 0.15rem 0.5rem; border-radius: 0.3rem;
+    border: 1px solid #D0E9FB;
+  }
+
+  .legend {
+    font-family: 'Roboto Mono', ui-monospace, monospace;
+    font-size: 1.1rem;
+    color: #3A5978;
+    margin-bottom: 2rem;
+    max-width: 80rem;
+    line-height: 1.6;
+  }
+  .legend code {
+    background: #F1F7FE;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.3rem;
+    color: #004080;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="legend">
+  Source: <code>packages/tokens/src/fonts/fontsRaw.ts</code>. <b style="color:#192634">Body</b> covers paragraphs,
+  form help, card copy, labels, captions — every non-title rung. All entries use <b style="color:#192634">Roboto</b>
+  at Regular (400) or Bold (700); there's no Medium and no separate Caption/Overline token in the source. Color is the
+  default text ink <code>--oxygen-color-semantic-neutral-ink-base</code> (#192634); muted copy is an Oxygen
+  <b>semantic</b> choice, not a type-token concern.
+</p>
+
+<h3 class="section">Body · Roboto</h3>
+<div class="grid">
+
+  <div class="token">
+    <span class="tname">body/m-bold</span>
+    <span class="tvar">--oxygen-font-semantic-body-m-bold</span>
+  </div>
+  <div class="sample body-m-bold">
+    Book your appointment and receive confirmation in seconds.
+  </div>
+  <div class="spec"><b>16 / 24</b> · Roboto · 700</div>
+
+  <div class="token">
+    <span class="tname">body/m-regular</span>
+    <span class="tvar">--oxygen-font-semantic-body-m-regular</span>
+  </div>
+  <div class="sample body-m-regular">
+    Dr. Bernard is a cardiologist based in Paris 14ᵉ, practicing at Clinique du Parc
+    since 2011. Consultations in French and English.
+  </div>
+  <div class="spec"><b>16 / 24</b> · Roboto · 400</div>
+
+  <div class="token">
+    <span class="tname">body/s-bold</span>
+    <span class="tvar">--oxygen-font-semantic-body-s-bold</span>
+  </div>
+  <div class="sample body-s-bold">Tomorrow · 09:30 · Télé-consultation</div>
+  <div class="spec"><b>14 / 24</b> · Roboto · 700</div>
+
+  <div class="token">
+    <span class="tname">body/s-regular</span>
+    <span class="tvar">--oxygen-font-semantic-body-s-regular</span>
+  </div>
+  <div class="sample body-s-regular">
+    Your carte Vitale and mutuelle are on file — no paperwork needed at the
+    appointment. Cancel or reschedule up to 24 hours in advance.
+  </div>
+  <div class="spec"><b>14 / 24</b> · Roboto · 400</div>
+
+  <div class="token">
+    <span class="tname">body/xs-bold</span>
+    <span class="tvar">--oxygen-font-semantic-body-xs-bold</span>
+  </div>
+  <div class="sample body-xs-bold">Available today</div>
+  <div class="spec"><b>12 / 16</b> · Roboto · 700</div>
+
+  <div class="token">
+    <span class="tname">body/xs-regular</span>
+    <span class="tvar">--oxygen-font-semantic-body-xs-regular</span>
+  </div>
+  <div class="sample body-xs-regular">
+    Reimbursed by Assurance Maladie · Conventionné secteur 1
+  </div>
+  <div class="spec"><b>12 / 16</b> · Roboto · 400</div>
+
+</div>
+
+<h3 class="section">Utility · Roboto Mono</h3>
+<div class="grid">
+
+  <div class="token">
+    <span class="tname">inline code</span>
+    <span class="tvar">not a type token</span>
+  </div>
+  <div class="sample">
+    Use <span class="inline-code">patient.id</span> as the canonical reference in logs and toasts.
+  </div>
+  <div class="spec"><b>14 / 24</b> · Roboto Mono · 400</div>
+
+</div>
+
+</div>
+</body>
+</html>

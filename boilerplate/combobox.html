@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · Search / Combobox</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=10">
+<style>
+body{padding:3.2rem;max-width:96rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#794006;background:#FFF9E5;border-left:0.3rem solid var(--oxygen-color-primitive-yellow-500);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+</style></head>
+<body>
+
+<h1>Search / Combobox</h1>
+<p class="lede">The doctor search — an input with live suggestions grouped by category (practitioners, specialties, places). The active suggestion fills with subtle brand; icons give each row a glanceable type.</p>
+
+<div class="note"><b>Not yet in Oxygen core.</b> Composes the existing InputText primitive with a Dropdown list; tokens match so the component lands cleanly when promoted.</div>
+
+<div class="section">
+  <h2>Empty — focused input</h2>
+  <div class="ox-combobox">
+    <div class="ox-combobox__input">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.5"/><path d="m13 13-2.5-2.5"/></svg>
+      <input type="search" placeholder="Search doctors, specialties, places" />
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Querying — “dent” with results</h2>
+  <div class="ox-combobox">
+    <div class="ox-combobox__input">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.5"/><path d="m13 13-2.5-2.5"/></svg>
+      <input type="search" value="dent" />
+    </div>
+    <ul class="ox-combobox__list" role="listbox">
+      <li class="ox-combobox__group">Practitioners</li>
+      <li class="ox-combobox__opt ox-combobox__opt--active" role="option">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        <div><div>Dr Claire <b>Dent</b>on — Dentist</div><small>14 rue de Rivoli · Paris 4</small></div>
+      </li>
+      <li class="ox-combobox__opt" role="option">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        <div><div>Dr Marc <b>Dent</b>at — Dentist</div><small>9 bd Magenta · Paris 10</small></div>
+      </li>
+
+      <li class="ox-combobox__group">Specialties</li>
+      <li class="ox-combobox__opt" role="option">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v6a4 4 0 0 0 8 0V3M12 15v6"/></svg>
+        <div><b>Dent</b>ist — general dentistry</div>
+      </li>
+      <li class="ox-combobox__opt" role="option">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v6a4 4 0 0 0 8 0V3M12 15v6"/></svg>
+        <div>Pediatric <b>dent</b>istry</div>
+      </li>
+
+      <li class="ox-combobox__group">Places</li>
+      <li class="ox-combobox__opt" role="option">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-7.5-7-12a7 7 0 1 1 14 0c0 4.5-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <div>Centre <b>dent</b>aire Saint-Lazare</div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Empty results</h2>
+  <div class="ox-combobox">
+    <div class="ox-combobox__input">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.5"/><path d="m13 13-2.5-2.5"/></svg>
+      <input type="search" value="xyzxyz" />
+    </div>
+    <ul class="ox-combobox__list">
+      <li style="padding:2rem 1.2rem;text-align:center;color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-s-regular)">
+        No matches for “xyzxyz”.<br><small style="color:var(--oxygen-color-semantic-neutral-prominent-weak)">Try a different spelling, or a nearby city.</small>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Specs</h2>
+  <table class="spec">
+    <tr><td>Input</td><td>4.4rem tall · search icon lead · 1px neutral border</td></tr>
+    <tr><td>Focus</td><td>brand border + 3px brand-subtle halo</td></tr>
+    <tr><td>List</td><td>0.4rem gap · card shadow · 36rem max-height</td></tr>
+    <tr><td>Option</td><td>1rem 1.2rem · icon + label + optional small meta</td></tr>
+    <tr><td>Active/hover</td><td>brand-subtle-weak bg · icon promotes to brand</td></tr>
+    <tr><td>Groups</td><td>uppercase caption · neutral-prominent-weak</td></tr>
+  </table>
+</div>
+
+</body></html>

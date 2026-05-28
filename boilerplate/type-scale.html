@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<title>Type — Scale (Oxygen fontsRaw.ts)</title>
+<style>
+  body { padding: 2.4rem 2.8rem; }
+  .wrap { max-width: 100rem; }
+  h3.section {
+    font: 700 1.1rem/1.4 Montserrat, sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4B739B;
+    margin: 0 0 1.6rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 0.1rem solid #E4EDF6;
+  }
+  h3.section + h3.section { margin-top: 3.2rem; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 16rem 1fr 22rem;
+    column-gap: 2.4rem;
+    row-gap: 2.4rem;
+    align-items: baseline;
+  }
+  .token {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 1.1rem;
+    color: #192634;
+    line-height: 1.4;
+  }
+  .token .tname { color: #107ACA; display: block; }
+  .token .tvar  { color: #6B91B8; display: block; margin-top: 0.2rem; }
+  .sample { color: #192634; }
+  .spec {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 1.1rem;
+    color: #3A5978;
+    line-height: 1.5;
+    text-align: right;
+  }
+  .spec b { color: #192634; font-weight: 700; }
+
+  /* Roboto body classes — 1:1 with fontsRaw.ts pixel values */
+  .body-m-bold     { font: 700 16px/24px Roboto, sans-serif; }
+  .body-m-regular  { font: 400 16px/24px Roboto, sans-serif; }
+  .body-s-bold     { font: 700 14px/24px Roboto, sans-serif; }
+  .body-s-regular  { font: 400 14px/24px Roboto, sans-serif; }
+  .body-xs-bold    { font: 700 12px/16px Roboto, sans-serif; }
+  .body-xs-regular { font: 400 12px/16px Roboto, sans-serif; }
+
+  /* Montserrat title classes — all Bold */
+  .title-s-bold    { font: 700 14px/24px 'Montserrat', 'Montserrat Fallback', sans-serif; letter-spacing: -0.01em; }
+  .title-m-bold    { font: 700 16px/56px 'Montserrat', 'Montserrat Fallback', sans-serif; letter-spacing: -0.01em; } /* lineHeight 56 per fontsRaw */
+  .title-l-bold    { font: 700 18px/24px 'Montserrat', 'Montserrat Fallback', sans-serif; letter-spacing: -0.01em; }
+  .title-xl-bold   { font: 700 24px/32px 'Montserrat', 'Montserrat Fallback', sans-serif; letter-spacing: -0.015em; }
+  .title-xxl-bold  { font: 700 32px/40px 'Montserrat', 'Montserrat Fallback', sans-serif; letter-spacing: -0.02em; }
+  .title-xxxl-bold { font: 700 40px/56px 'Montserrat', 'Montserrat Fallback', sans-serif; letter-spacing: -0.02em; }
+
+  .legend {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 1.1rem;
+    color: #3A5978;
+    margin-bottom: 2rem;
+    max-width: 80rem;
+    line-height: 1.6;
+  }
+  .legend code {
+    background: #F1F7FE;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.3rem;
+    color: #004080;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="legend">
+  Source: <code>packages/tokens/src/fonts/fontsRaw.ts</code>. Two families only — <b style="color:#192634">Roboto</b> for body,
+  <b style="color:#192634">Montserrat</b> for all titles (always Bold 700). Sizes and line-heights are pixel values
+  direct from the token file. Oxygen sets <code>html { font-size: 62.5% }</code> so every consumer can also express these
+  as rem (16px → 1.6rem).
+</p>
+
+<h3 class="section">Title · Montserrat Bold</h3>
+<div class="grid">
+
+  <div class="token">
+    <span class="tname">title/xxxl-bold</span>
+    <span class="tvar">--oxygen-font-semantic-title-xxxl-bold</span>
+  </div>
+  <div class="sample title-xxxl-bold">Take care of your health</div>
+  <div class="spec"><b>40 / 56</b> · Montserrat · 700</div>
+
+  <div class="token">
+    <span class="tname">title/xxl-bold</span>
+    <span class="tvar">--oxygen-font-semantic-title-xxl-bold</span>
+  </div>
+  <div class="sample title-xxl-bold">Book a trusted practitioner</div>
+  <div class="spec"><b>32 / 40</b> · Montserrat · 700</div>
+
+  <div class="token">
+    <span class="tname">title/xl-bold</span>
+    <span class="tvar">--oxygen-font-semantic-title-xl-bold</span>
+  </div>
+  <div class="sample title-xl-bold">Upcoming appointments this week</div>
+  <div class="spec"><b>24 / 32</b> · Montserrat · 700</div>
+
+  <div class="token">
+    <span class="tname">title/l-bold</span>
+    <span class="tvar">--oxygen-font-semantic-title-l-bold</span>
+  </div>
+  <div class="sample title-l-bold">Dr. Camille Bernard — Cardiology</div>
+  <div class="spec"><b>18 / 24</b> · Montserrat · 700</div>
+
+  <div class="token">
+    <span class="tname">title/m-bold</span>
+    <span class="tvar">--oxygen-font-semantic-title-m-bold</span>
+  </div>
+  <div class="sample title-m-bold">Section label</div>
+  <div class="spec"><b>16 / 56</b> · Montserrat · 700</div>
+
+  <div class="token">
+    <span class="tname">title/s-bold</span>
+    <span class="tvar">--oxygen-font-semantic-title-s-bold</span>
+  </div>
+  <div class="sample title-s-bold">Tiny header</div>
+  <div class="spec"><b>14 / 24</b> · Montserrat · 700</div>
+
+</div>
+
+<h3 class="section">Body · Roboto</h3>
+<div class="grid">
+
+  <div class="token">
+    <span class="tname">body/m-bold</span>
+    <span class="tvar">--oxygen-font-semantic-body-m-bold</span>
+  </div>
+  <div class="sample body-m-bold">
+    Book your appointment and receive confirmation in seconds.
+  </div>
+  <div class="spec"><b>16 / 24</b> · Roboto · 700</div>
+
+  <div class="token">
+    <span class="tname">body/m-regular</span>
+    <span class="tvar">--oxygen-font-semantic-body-m-regular</span>
+  </div>
+  <div class="sample body-m-regular">
+    Dr. Bernard is a cardiologist based in Paris 14ᵉ, practicing at Clinique du Parc
+    since 2011. Consultations in French and English.
+  </div>
+  <div class="spec"><b>16 / 24</b> · Roboto · 400</div>
+
+  <div class="token">
+    <span class="tname">body/s-bold</span>
+    <span class="tvar">--oxygen-font-semantic-body-s-bold</span>
+  </div>
+  <div class="sample body-s-bold">Tomorrow · 09:30 · Télé-consultation</div>
+  <div class="spec"><b>14 / 24</b> · Roboto · 700</div>
+
+  <div class="token">
+    <span class="tname">body/s-regular</span>
+    <span class="tvar">--oxygen-font-semantic-body-s-regular</span>
+  </div>
+  <div class="sample body-s-regular">
+    Your carte Vitale and mutuelle are on file — no paperwork needed at the appointment.
+    Cancel or reschedule up to 24 hours in advance.
+  </div>
+  <div class="spec"><b>14 / 24</b> · Roboto · 400</div>
+
+  <div class="token">
+    <span class="tname">body/xs-bold</span>
+    <span class="tvar">--oxygen-font-semantic-body-xs-bold</span>
+  </div>
+  <div class="sample body-xs-bold">Available today</div>
+  <div class="spec"><b>12 / 16</b> · Roboto · 700</div>
+
+  <div class="token">
+    <span class="tname">body/xs-regular</span>
+    <span class="tvar">--oxygen-font-semantic-body-xs-regular</span>
+  </div>
+  <div class="sample body-xs-regular">
+    Reimbursed by Assurance Maladie · Conventionné secteur 1
+  </div>
+  <div class="spec"><b>12 / 16</b> · Roboto · 400</div>
+
+</div>
+
+</div>
+</body>
+</html>

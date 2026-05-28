@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · QuickEdit</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=13">
+<style>
+body{padding:3.2rem;max-width:112rem}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+.row{display:flex;flex-wrap:wrap;gap:2.4rem;align-items:flex-start}
+
+/* Inline button (used as trigger) */
+.qe-trigger{align-items:center;border-radius:.4rem;display:inline-flex;padding-right:.4rem;cursor:pointer;color:inherit;font:var(--oxygen-font-semantic-body-m-regular);background:transparent;border:none;color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+.qe-trigger:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.qe-trigger .qe-trigger__icon{display:inline-flex;align-items:center;justify-content:center;width:2.4rem;height:2.4rem;border-radius:50%}
+.qe-trigger:hover .qe-trigger__icon{background:var(--oxygen-color-semantic-neutral-subtle-base)}
+
+/* Popover */
+.qe-pop-host{position:relative;display:inline-block}
+.qe-pop{position:absolute;top:calc(100% + .8rem);left:0;background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:1.2rem;box-shadow:0 1.6rem 4.8rem rgba(25,38,52,.18);padding:2rem;min-width:32rem;z-index:50;display:none}
+.qe-pop-host.is-open .qe-pop{display:block}
+.qe-pop__form{display:flex;flex-direction:column;gap:1.6rem}
+.qe-pop__label{font:var(--oxygen-font-semantic-body-s-bold);color:var(--oxygen-color-semantic-neutral-prominent-strong);display:block;margin-bottom:.4rem}
+.qe-pop__hint{font:var(--oxygen-font-semantic-body-xs-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin-top:.4rem}
+.qe-pop__msg{font:var(--oxygen-font-semantic-body-xs-regular);color:var(--oxygen-color-semantic-danger-prominent-base);margin-top:.4rem}
+.qe-pop__field{width:100%;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:.8rem;padding:1rem 1.2rem;font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-stronger);background:white;outline:none}
+.qe-pop__field:focus{border-color:var(--oxygen-color-semantic-brand-prominent-base);box-shadow:0 0 0 .2rem var(--oxygen-color-semantic-brand-subtle-weak)}
+.qe-pop__actions{display:flex;justify-content:flex-end;gap:1.2rem}
+
+.demo-card{padding:2rem 2.4rem;background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:1.2rem;max-width:60rem;display:flex;flex-direction:column;gap:.4rem}
+.demo-row{display:flex;align-items:center;justify-content:space-between;padding:.6rem 0;border-bottom:.1rem solid var(--oxygen-color-semantic-neutral-subtle-base)}
+.demo-row:last-child{border-bottom:none}
+.demo-row .key{font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);min-width:14rem}
+
+.toast{position:fixed;bottom:2.4rem;left:50%;transform:translateX(-50%);background:var(--oxygen-color-primitive-gray-800);color:white;padding:1rem 1.6rem;border-radius:.8rem;font:var(--oxygen-font-semantic-body-s-regular);opacity:0;transition:opacity .2s;pointer-events:none;z-index:9999}
+.toast.is-show{opacity:1}
+</style></head>
+<body>
+<h1>QuickEdit</h1>
+<p class="lede">Inline-edit popover. A trigger element (typically an InlineButton) opens a small form floating over the page; the form holds one input (text / date / select / etc.) plus Cancel/Confirm. Used to edit a single field without leaving context.</p>
+<div class="note"><b>Trigger is consumer-supplied.</b> The component takes a render prop <code>triggerButton({onClick})</code>, so you decide what opens it. The popover is non-modal — clicks outside dismiss without saving.</div>
+
+<div class="section"><h2>Click any field to edit</h2>
+<div class="demo-card">
+  <div class="demo-row">
+    <span class="key">Patient name</span>
+    <div class="qe-pop-host" data-qe='{"type":"text","label":"Name","value":"Marie Leroy","placeholder":"Full name"}'>
+      <button class="qe-trigger" type="button" data-trigger>
+        <span class="qe-trigger__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+        <span class="qe-trigger__label" data-display>Marie Leroy</span>
+      </button>
+    </div>
+  </div>
+  <div class="demo-row">
+    <span class="key">Date of birth</span>
+    <div class="qe-pop-host" data-qe='{"type":"date","label":"Date of birth","value":"1982-03-14","hint":"Format: YYYY-MM-DD"}'>
+      <button class="qe-trigger" type="button" data-trigger>
+        <span class="qe-trigger__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+        <span class="qe-trigger__label" data-display>1982-03-14</span>
+      </button>
+    </div>
+  </div>
+  <div class="demo-row">
+    <span class="key">Email</span>
+    <div class="qe-pop-host" data-qe='{"type":"email","label":"Email","value":"marie.leroy@example.com","message":"Required for prescription delivery"}'>
+      <button class="qe-trigger" type="button" data-trigger>
+        <span class="qe-trigger__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+        <span class="qe-trigger__label" data-display>marie.leroy@example.com</span>
+      </button>
+    </div>
+  </div>
+  <div class="demo-row">
+    <span class="key">Phone</span>
+    <div class="qe-pop-host" data-qe='{"type":"tel","label":"Phone","value":"+33 6 12 34 56 78","placeholder":"+33 ..."}'>
+      <button class="qe-trigger" type="button" data-trigger>
+        <span class="qe-trigger__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+        <span class="qe-trigger__label" data-display>+33 6 12 34 56 78</span>
+      </button>
+    </div>
+  </div>
+  <div class="demo-row">
+    <span class="key">Preferred language</span>
+    <div class="qe-pop-host" data-qe='{"type":"select","label":"Language","value":"fr","options":[{"value":"fr","label":"Français"},{"value":"en","label":"English"},{"value":"de","label":"Deutsch"},{"value":"it","label":"Italiano"}]}'>
+      <button class="qe-trigger" type="button" data-trigger>
+        <span class="qe-trigger__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+        <span class="qe-trigger__label" data-display>Français</span>
+      </button>
+    </div>
+  </div>
+  <div class="demo-row">
+    <span class="key">Insurance ID</span>
+    <div class="qe-pop-host" data-qe='{"type":"text","label":"Insurance ID","value":null,"placeholder":"Enter insurance ID","cancelLabel":"Discard","confirmLabel":"Add"}'>
+      <button class="qe-trigger" type="button" data-trigger>
+        <span class="qe-trigger__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"/></svg></span>
+        <span class="qe-trigger__label" data-display>Add</span>
+      </button>
+    </div>
+  </div>
+</div>
+<p style="font:var(--oxygen-font-semantic-body-s-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);margin:0">When the value is empty, the confirm label defaults to <code>"Add"</code>; when populated, it defaults to <code>"Edit"</code>.</p>
+</div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Source</td><td>packages/global-ux/src/components/QuickEdit/QuickEdit.tsx</td></tr>
+<tr><td>Composition</td><td>Popover (non-modal) → form → InputText / InputDate / Select + Cancel/Confirm buttons</td></tr>
+<tr><td>type</td><td>text | tel | email | date | datetime-local | month | week | time | select</td></tr>
+<tr><td>required</td><td>label · setValue · triggerButton · value</td></tr>
+<tr><td>cancelButton</td><td>{ label } · default i18n: gux.quick-edit.cancel.label</td></tr>
+<tr><td>confirmButton</td><td>{ label } · default = "Add" if value empty, "Edit" if value present</td></tr>
+<tr><td>contextualPopover</td><td>optional ContextualPopover passed to the input field</td></tr>
+<tr><td>hint / message</td><td>passed to the input · message used for inline validation</td></tr>
+</table></div>
+
+<div class="toast" id="toast"></div>
+<script>
+const toast=document.getElementById('toast');
+function showToast(t){toast.textContent=t;toast.classList.add('is-show');clearTimeout(showToast._t);showToast._t=setTimeout(()=>toast.classList.remove('is-show'),1600)}
+function close(host){host.classList.remove('is-open');const p=host.querySelector('.qe-pop');if(p)p.remove()}
+function buildField(cfg){
+  if(cfg.type==='select'){
+    const opts=cfg.options.map(o=>`<option value="${o.value}" ${o.value===cfg.value?'selected':''}>${o.label}</option>`).join('');
+    return `<select class="qe-pop__field" name="v">${opts}</select>`;
+  }
+  return `<input class="qe-pop__field" name="v" type="${cfg.type}" value="${cfg.value??''}" placeholder="${cfg.placeholder||''}" autofocus>`;
+}
+function open(host){
+  const cfg=JSON.parse(host.dataset.qe);
+  const cancelLabel=cfg.cancelLabel||'Cancel';
+  const confirmLabel=cfg.confirmLabel||(cfg.value?'Edit':'Add');
+  const pop=document.createElement('div');
+  pop.className='qe-pop';
+  pop.innerHTML=`<form class="qe-pop__form">
+    <div>
+      <label class="qe-pop__label">${cfg.label}</label>
+      ${buildField(cfg)}
+      ${cfg.hint?`<div class="qe-pop__hint">${cfg.hint}</div>`:''}
+      ${cfg.message?`<div class="qe-pop__msg">${cfg.message}</div>`:''}
+    </div>
+    <div class="qe-pop__actions">
+      <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button" data-cancel><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">${cancelLabel}</span></span></button>
+      <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="submit"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">${confirmLabel}</span></span></button>
+    </div>
+  </form>`;
+  host.appendChild(pop);
+  host.classList.add('is-open');
+  setTimeout(()=>{const f=pop.querySelector('.qe-pop__field');if(f)f.focus();if(f&&f.select)try{f.select()}catch(e){}},10);
+  pop.querySelector('[data-cancel]').addEventListener('click',e=>{e.stopPropagation();close(host)});
+  pop.querySelector('form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const v=pop.querySelector('[name=v]').value;
+    const display=host.querySelector('[data-display]');
+    let displayText=v;
+    if(cfg.type==='select'){const o=cfg.options.find(o=>o.value===v);displayText=o?o.label:v}
+    display.textContent=displayText||'Add';
+    const newCfg={...cfg,value:v||null};host.dataset.qe=JSON.stringify(newCfg);
+    showToast(`${cfg.label} → "${displayText}"`);
+    close(host);
+  });
+  pop.addEventListener('click',e=>e.stopPropagation());
+}
+document.querySelectorAll('[data-trigger]').forEach(t=>t.addEventListener('click',e=>{
+  e.stopPropagation();
+  const host=t.closest('.qe-pop-host');
+  document.querySelectorAll('.qe-pop-host.is-open').forEach(h=>{if(h!==host)close(h)});
+  if(host.classList.contains('is-open'))close(host);else open(host);
+}));
+document.addEventListener('click',()=>document.querySelectorAll('.qe-pop-host.is-open').forEach(h=>close(h)));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.qe-pop-host.is-open').forEach(h=>close(h))});
+</script>
+</body></html>

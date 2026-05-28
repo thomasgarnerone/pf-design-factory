@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Oxygen · CardCollection</title>
+<link rel="stylesheet" href="_base.css?v=4">
+<link rel="stylesheet" href="_components.css?v=13">
+<style>
+body{padding:3.2rem;max-width:128rem;background:var(--oxygen-color-semantic-neutral-subtle-weaker)}
+h1{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0 0 .8rem}
+.section > h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--oxygen-color-semantic-neutral-prominent-strong);margin:0 0 1.6rem;font-weight:600}
+.lede{color:var(--oxygen-color-semantic-neutral-prominent-base);font:var(--oxygen-font-semantic-body-m-regular);margin:0 0 3.2rem;max-width:64rem}
+.section{margin-bottom:4rem;display:flex;flex-direction:column;gap:1.6rem}
+.note{font:var(--oxygen-font-semantic-body-s-regular);color:#1B3A8F;background:#EBF1FF;border-left:.3rem solid var(--oxygen-color-semantic-brand-prominent-base);padding:1.2rem 1.6rem;border-radius:.8rem;margin-bottom:3.2rem;max-width:64rem}
+.spec{font-family:'JetBrains Mono',monospace;font-size:1.1rem;border-collapse:collapse}
+.spec td{padding:.5rem 2.4rem .5rem 0;vertical-align:top}
+.spec td:first-child{color:var(--oxygen-color-semantic-neutral-prominent-weak)}
+
+/* CardCollection */
+.cc{background:var(--oxygen-color-primitive-white);border-radius:1.6rem;padding:1.6rem;display:flex;flex-direction:column;gap:1.2rem;container-type:inline-size}
+.cc__header{display:flex;align-items:flex-start;justify-content:space-between;gap:1.6rem}
+.cc__heading-wrap{padding:.4rem .8rem .4rem .8rem;border-radius:.4rem;display:inline-flex;align-items:center;gap:.4rem;min-width:0}
+.cc__heading-wrap.is-link{cursor:pointer}
+.cc__heading-wrap.is-link:hover{background:var(--oxygen-color-primitive-blue-100)}
+.cc__title{font:var(--oxygen-font-semantic-title-l-bold);color:var(--oxygen-color-semantic-neutral-prominent-stronger);margin:0;line-height:1.2}
+.cc__forward{display:inline-flex;align-items:center;justify-content:center;width:2.4rem;height:2.4rem;border-radius:50%;color:var(--oxygen-color-semantic-neutral-prominent-strong);background:transparent;border:none;cursor:pointer;margin-top:-.4rem}
+.cc__heading-wrap.is-link:hover .cc__forward{color:var(--oxygen-color-semantic-brand-prominent-base)}
+.cc__actions{display:flex;align-items:center;gap:.8rem;flex-shrink:0}
+
+/* Grid */
+.cc__grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-flow:row;gap:1rem}
+.cc__grid.is-dense{grid-auto-flow:row dense}
+.cc__grid > [data-card-size="xxsmall"]{grid-column:span 2}
+.cc__grid > [data-card-size="xsmall"]{grid-column:span 3}
+.cc__grid > [data-card-size="small"]{grid-column:span 4}
+.cc__grid > [data-card-size="medium"]{grid-column:span 6}
+.cc__grid > [data-card-size="large"]{grid-column:span 8}
+.cc__grid > [data-card-size="xlarge"]{grid-column:span 9}
+.cc__grid > [data-card-size="full"]{grid-column:span 12}
+@container (max-width:127.9rem){
+  .cc__grid > [data-card-size="xxsmall"]{grid-column:span 3}
+  .cc__grid > [data-card-size="xsmall"]{grid-column:span 4}
+  .cc__grid > [data-card-size="xlarge"]{grid-column:span 12}
+}
+@container (max-width:102.3rem){
+  .cc__grid > [data-card-size="xxsmall"]{grid-column:span 4}
+  .cc__grid > [data-card-size="xsmall"]{grid-column:span 6}
+  .cc__grid > [data-card-size="small"]{grid-column:span 6}
+  .cc__grid > [data-card-size="large"]{grid-column:span 12}
+}
+@container (max-width:76.7rem){
+  .cc__grid > [data-card-size="xxsmall"]{grid-column:span 6}
+  .cc__grid > [data-card-size="xsmall"]{grid-column:span 6}
+  .cc__grid > [data-card-size="small"]{grid-column:span 12}
+  .cc__grid > [data-card-size="medium"]{grid-column:span 12}
+}
+@container (max-width:63.9rem){
+  .cc__grid > *{grid-column:span 12 !important}
+}
+
+/* Demo card body */
+.demo-card{background:var(--oxygen-color-semantic-neutral-subtle-weak);border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:1.2rem;padding:1.6rem;min-height:8rem;display:flex;flex-direction:column;gap:.4rem}
+.demo-card .dc-title{font:var(--oxygen-font-semantic-body-m-bold);color:var(--oxygen-color-semantic-neutral-prominent-strong)}
+.demo-card .dc-meta{font:var(--oxygen-font-semantic-body-xs-regular);color:var(--oxygen-color-semantic-neutral-prominent-weak);font-family:'JetBrains Mono',monospace}
+
+/* dropdown */
+.dd{position:relative;display:inline-block}
+.dd__menu{position:absolute;right:0;top:100%;margin-top:.4rem;min-width:18rem;background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:.8rem;box-shadow:0 .8rem 2.4rem rgba(25,38,52,.12);padding:.4rem;z-index:10;display:none}
+.dd.is-open .dd__menu{display:block}
+.dd__item{display:flex;align-items:center;gap:.8rem;padding:.8rem 1rem;border-radius:.4rem;cursor:pointer;font:var(--oxygen-font-semantic-body-m-regular);color:var(--oxygen-color-semantic-neutral-prominent-strong);background:transparent;border:none;width:100%;text-align:left}
+.dd__item:hover{background:var(--oxygen-color-semantic-neutral-subtle-weak)}
+.dd__item.is-danger{color:var(--oxygen-color-semantic-danger-prominent-base)}
+
+/* Width controls */
+.width-shifter{display:flex;align-items:center;gap:1rem;background:white;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);border-radius:.8rem;padding:.8rem 1.2rem;font:var(--oxygen-font-semantic-body-s-regular)}
+.width-shifter button{padding:.4rem 1rem;border-radius:.4rem;border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);background:white;cursor:pointer;font:var(--oxygen-font-semantic-body-xs-bold);font-family:'JetBrains Mono',monospace}
+.width-shifter button.is-active{background:var(--oxygen-color-semantic-brand-prominent-base);color:white;border-color:transparent}
+
+.toast{position:fixed;bottom:2.4rem;left:50%;transform:translateX(-50%);background:var(--oxygen-color-primitive-gray-800);color:white;padding:1rem 1.6rem;border-radius:.8rem;font:var(--oxygen-font-semantic-body-s-regular);opacity:0;transition:opacity .2s;pointer-events:none;z-index:9999}
+.toast.is-show{opacity:1}
+</style></head>
+<body>
+<h1>CardCollection</h1>
+<p class="lede">Solid-card container with a heading row and a responsive 12-column masonry inside. Cards declare a <code>size</code> (xxsmall→xlarge→full); the collection maps it to grid spans across container-query breakpoints.</p>
+<div class="note"><b>Container queries, not media queries.</b> The reflow tracks the collection's own width — useful in split layouts where a column shrinks while the viewport stays wide. Default breakpoints at 1280 / 1024 / 768 / 640 px.</div>
+
+<div class="section"><h2>Bare · just title</h2>
+<div class="cc">
+  <div class="cc__header">
+    <div class="cc__heading-wrap"><h2 class="cc__title">Patient details</h2></div>
+  </div>
+  <div class="cc__grid">
+    <div data-card-size="small"><div class="demo-card"><div class="dc-title">Marie Leroy</div><div class="dc-meta">size=small</div></div></div>
+    <div data-card-size="small"><div class="demo-card"><div class="dc-title">14 March 1982</div><div class="dc-meta">size=small</div></div></div>
+    <div data-card-size="small"><div class="demo-card"><div class="dc-title">FR-284 037 521 80451</div><div class="dc-meta">size=small</div></div></div>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>With primary action + 1 icon action</h2>
+<div class="cc">
+  <div class="cc__header">
+    <div class="cc__heading-wrap"><h2 class="cc__title">Documents</h2></div>
+    <div class="cc__actions">
+      <button class="ox-button ox-button--variant-outlined ox-button--ui-neutral ox-button--size-small" data-action="Upload"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Upload</span></span></button>
+      <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-neutral ox-iconbutton--size-small" data-action="Filter" aria-label="Filter"><span class="ox-iconbutton__innerWrapper"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></span></button>
+    </div>
+  </div>
+  <div class="cc__grid">
+    <div data-card-size="medium"><div class="demo-card"><div class="dc-title">Consultation 14 Oct</div><div class="dc-meta">PDF · 240 KB · medium</div></div></div>
+    <div data-card-size="medium"><div class="demo-card"><div class="dc-title">Lab results</div><div class="dc-meta">PDF · 1.2 MB · medium</div></div></div>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>With childView (clickable title) + overflow actions (&gt;2)</h2>
+<div class="cc">
+  <div class="cc__header">
+    <div class="cc__heading-wrap is-link" data-action="Open child view">
+      <h2 class="cc__title">Prescriptions</h2>
+      <span class="cc__forward" aria-label="Open prescriptions"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+    </div>
+    <div class="cc__actions">
+      <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-neutral ox-iconbutton--size-small" data-action="Add" aria-label="Add"><span class="ox-iconbutton__innerWrapper"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
+      <div class="dd">
+        <button class="ox-iconbutton ox-iconbutton--variant-outlined ox-iconbutton--ui-neutral ox-iconbutton--size-small" type="button" aria-label="More" data-toggle="dd"><span class="ox-iconbutton__innerWrapper"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></span></button>
+        <div class="dd__menu">
+          <button class="dd__item" type="button" data-action="View history">View history</button>
+          <button class="dd__item" type="button" data-action="Print">Print</button>
+          <button class="dd__item is-danger" type="button" data-action="Delete">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cc__grid">
+    <div data-card-size="small"><div class="demo-card"><div class="dc-title">Amlodipine 5 mg</div><div class="dc-meta">1×/day · 30d · small</div></div></div>
+    <div data-card-size="small"><div class="demo-card"><div class="dc-title">Metformine 1000 mg</div><div class="dc-meta">2×/day · 90d · small</div></div></div>
+    <div data-card-size="small"><div class="demo-card"><div class="dc-title">Atorvastatine 20 mg</div><div class="dc-meta">1×/day · 90d · small</div></div></div>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>Card sizes · all 7 spans</h2>
+<div class="cc">
+  <div class="cc__header"><div class="cc__heading-wrap"><h2 class="cc__title">Span library</h2></div></div>
+  <div class="cc__grid">
+    <div data-card-size="xxsmall"><div class="demo-card"><div class="dc-title">xxsmall</div><div class="dc-meta">1/6</div></div></div>
+    <div data-card-size="xxsmall"><div class="demo-card"><div class="dc-title">xxsmall</div><div class="dc-meta">1/6</div></div></div>
+    <div data-card-size="xxsmall"><div class="demo-card"><div class="dc-title">xxsmall</div><div class="dc-meta">1/6</div></div></div>
+    <div data-card-size="xsmall"><div class="demo-card"><div class="dc-title">xsmall</div><div class="dc-meta">1/4</div></div></div>
+    <div data-card-size="xsmall"><div class="demo-card"><div class="dc-title">xsmall</div><div class="dc-meta">1/4</div></div></div>
+    <div data-card-size="small"><div class="demo-card"><div class="dc-title">small</div><div class="dc-meta">1/3</div></div></div>
+    <div data-card-size="medium"><div class="demo-card"><div class="dc-title">medium</div><div class="dc-meta">1/2</div></div></div>
+    <div data-card-size="medium"><div class="demo-card"><div class="dc-title">medium</div><div class="dc-meta">1/2</div></div></div>
+    <div data-card-size="large"><div class="demo-card"><div class="dc-title">large</div><div class="dc-meta">2/3</div></div></div>
+    <div data-card-size="xlarge"><div class="demo-card"><div class="dc-title">xlarge</div><div class="dc-meta">3/4</div></div></div>
+    <div data-card-size="full"><div class="demo-card"><div class="dc-title">full</div><div class="dc-meta">12/12</div></div></div>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>Density · regular vs dense (rearranges to fill gaps)</h2>
+<div class="cc">
+  <div class="cc__header"><div class="cc__heading-wrap"><h2 class="cc__title">density="dense"</h2></div></div>
+  <div class="cc__grid is-dense">
+    <div data-card-size="medium"><div class="demo-card"><div class="dc-title">A</div><div class="dc-meta">medium</div></div></div>
+    <div data-card-size="large"><div class="demo-card"><div class="dc-title">B</div><div class="dc-meta">large</div></div></div>
+    <div data-card-size="small"><div class="demo-card"><div class="dc-title">C</div><div class="dc-meta">small (slots into gap)</div></div></div>
+    <div data-card-size="medium"><div class="demo-card"><div class="dc-title">D</div><div class="dc-meta">medium</div></div></div>
+    <div data-card-size="small"><div class="demo-card"><div class="dc-title">E</div><div class="dc-meta">small</div></div></div>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>Responsive · resize the container</h2>
+<div class="width-shifter">
+  <span style="font-family:'JetBrains Mono',monospace">container width:</span>
+  <button type="button" data-w="1280">1280</button>
+  <button type="button" data-w="1100">1100</button>
+  <button type="button" data-w="900">900</button>
+  <button type="button" data-w="700" class="is-active">700</button>
+  <button type="button" data-w="500">500</button>
+</div>
+<div id="responsive-host" style="width:70rem;transition:width .25s;max-width:100%">
+  <div class="cc">
+    <div class="cc__header"><div class="cc__heading-wrap"><h2 class="cc__title">Resize me</h2></div></div>
+    <div class="cc__grid">
+      <div data-card-size="small"><div class="demo-card"><div class="dc-title">Card A</div><div class="dc-meta">small</div></div></div>
+      <div data-card-size="small"><div class="demo-card"><div class="dc-title">Card B</div><div class="dc-meta">small</div></div></div>
+      <div data-card-size="small"><div class="demo-card"><div class="dc-title">Card C</div><div class="dc-meta">small</div></div></div>
+      <div data-card-size="medium"><div class="demo-card"><div class="dc-title">Card D</div><div class="dc-meta">medium</div></div></div>
+      <div data-card-size="large"><div class="demo-card"><div class="dc-title">Card E</div><div class="dc-meta">large</div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="section"><h2>Specs</h2>
+<table class="spec">
+<tr><td>Source</td><td>packages/global-ux/src/components/CardCollection/CardCollection.tsx</td></tr>
+<tr><td>Container</td><td>solid card · padding-large · radius-xlarge</td></tr>
+<tr><td>Heading</td><td>Title/L/Bold · h2 · optional ariaLabel · optional childView link (arrow icon, hover bg)</td></tr>
+<tr><td>actions</td><td>0–2 inline · &gt;2 = first inline + rest in More dropdown</td></tr>
+<tr><td>primaryAction</td><td>button or link · rendered outlined small</td></tr>
+<tr><td>density</td><td>regular (default) | dense (CSS grid-auto-flow)</td></tr>
+<tr><td>Grid</td><td>12-column · container-query reflow at 1280/1024/768/640 rem</td></tr>
+<tr><td>Card sizes</td><td>xxsmall (1/6) · xsmall (1/4) · small (1/3) · medium (1/2) · large (2/3) · xlarge (3/4) · full</td></tr>
+<tr><td>Telemetry</td><td>card_collection_action__clicked · card_collection_more_actions__displayed · card_collection_primary_action__clicked · card_collection_child_view_link__clicked</td></tr>
+</table></div>
+
+<div class="toast" id="toast"></div>
+<script>
+const toast=document.getElementById('toast');
+function showToast(t){toast.textContent=t;toast.classList.add('is-show');clearTimeout(showToast._t);showToast._t=setTimeout(()=>toast.classList.remove('is-show'),1400)}
+document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();showToast(b.dataset.action+' clicked');document.querySelectorAll('.dd.is-open').forEach(d=>d.classList.remove('is-open'))}));
+document.querySelectorAll('[data-toggle="dd"]').forEach(t=>t.addEventListener('click',e=>{e.stopPropagation();const dd=t.closest('.dd');document.querySelectorAll('.dd.is-open').forEach(d=>{if(d!==dd)d.classList.remove('is-open')});dd.classList.toggle('is-open')}));
+document.addEventListener('click',()=>document.querySelectorAll('.dd.is-open').forEach(d=>d.classList.remove('is-open')));
+const host=document.getElementById('responsive-host');
+document.querySelectorAll('.width-shifter button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.width-shifter button').forEach(x=>x.classList.remove('is-active'));
+  b.classList.add('is-active');
+  host.style.width=(b.dataset.w/10)+'rem';
+}));
+</script>
+</body></html>
