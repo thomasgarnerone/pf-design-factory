@@ -25,8 +25,8 @@ Read these files from disk before starting. All paths relative to `~/doctolib/`:
 pf-design-factory/pf-layout.md                                                          → PF layout zones, CSS classes, hard constraints
 pf-design-factory/oxygen-ds.md                                                          → Oxygen DS component reference
 oxygen/README.md                                                                         → DS fundamentals (tokens, type, color, motion)
-oxygen/prototype/patient-detail.composed.jsx                                             → Canonical composed components
-oxygen/prototype/patient-detail.css                                                      → PF shell CSS
+pf-design-factory/boilerplate/prototype/patient-detail.composed.jsx                                             → Canonical composed components
+pf-design-factory/boilerplate/prototype/patient-detail.css                                                      → PF shell CSS
 
 --- B2B framework foundations (oxygen) ---
 oxygen/packages/b2b/stories/documentation/framework/foundations/design-principles.md
@@ -73,11 +73,8 @@ pro-frontend/docs/pro-sdks-guidelines.md
 
 --- PF component implementations (pro-frontend) ---
 pro-frontend/components/Workspace/Workspace.tsx
-pro-frontend/components/Workspace/Workspace.module.css
 pro-frontend/components/ActionBar/ActionBar.tsx
-pro-frontend/components/ActionBar/ActionBar.module.css
 pro-frontend/components/Focus/Focus.tsx
-pro-frontend/components/Focus/Focus.module.css
 pro-frontend/components/ChildViewHeader/ChildViewHeader.tsx
 pro-frontend/components/ChildViewHeader/types.ts
 pro-frontend/components/SectionMenu/SectionMenu.tsx
@@ -87,27 +84,41 @@ pro-frontend/components/QuickEdit/QuickEdit.tsx
 pro-frontend/components/InlineButton/InlineButton.tsx
 pro-frontend/components/InlineButton/InlineButtonText.tsx
 pro-frontend/components/WorkflowPanel/WorkflowPanel.tsx
+# CSS module files: grep on demand only — never read in full
 ```
 
 > ⚠️ If any file is missing, stop and tell the user before proceeding.
+
+**CSS files — never read in full.** Use targeted lookups only:
+```bash
+# Look up a specific token by name
+grep -n "color-semantic-brand" ~/doctolib/oxygen/packages/tokens/src/tokens.css
+
+# Look up a specific component's styles
+grep -n "pd-card" ~/doctolib/pf-design-factory/boilerplate/prototype/patient-detail.css
+
+# Look up a CSS module class
+grep -n "actionBar\|workspace" ~/doctolib/pro-frontend/components/ActionBar/ActionBar.module.css
+```
+Never `cat` `tokens.css`, `_components.css`, or any `.css` file in full — they are too large and will waste context.
 
 ---
 
 ## Tech stack
 
-All prototypes use the React/Babel stack from `oxygen/prototype/`. Always reference shared files by relative path — never copy CSS into cluster folders.
+All prototypes use the React/Babel stack from `pf-design-factory/boilerplate/prototype/`. Always reference shared files by relative path — never copy CSS into cluster folders.
 
 ```html
-<!-- From oxygen/preview/ — reference by relative path, never copy -->
-<link rel="stylesheet" href="../../oxygen/preview/_base.css">
-<link rel="stylesheet" href="../../oxygen/preview/_components.css">
-<link rel="stylesheet" href="../../oxygen/prototype/patient-detail.css">
+<!-- From boilerplate/ — reference by relative path, never copy -->
+<link rel="stylesheet" href="../../boilerplate/preview/_base.css">
+<link rel="stylesheet" href="../../boilerplate/preview/_components.css">
+<link rel="stylesheet" href="../../boilerplate/prototype/patient-detail.css">
 
 <!-- JS runtime from CDN -->
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
-<script src="../../oxygen/prototype/icon-sprite.js"></script>
+<script src="../../boilerplate/prototype/icon-sprite.js"></script>
 
 <!-- Cluster-specific scripts -->
 <script type="text/babel" src="[cluster].primitives.jsx"></script>
@@ -125,7 +136,7 @@ All prototypes use the React/Babel stack from `oxygen/prototype/`. Always refere
 
 ## Canonical PF component hierarchy
 
-Every prototype must use this exact tree. Read `oxygen/prototype/patient-detail.app.jsx` for the live reference.
+Every prototype must use this exact tree. Read `pf-design-factory/boilerplate/prototype/patient-detail.app.jsx` for the live reference.
 
 ```
 <div class="pd-app">                      ← CSS grid: topbar (5.6rem) + workspace (1fr)
@@ -165,8 +176,8 @@ cat ~/doctolib/pf-design-factory/oxygen-ds.md
 
 # oxygen — core
 cat ~/doctolib/oxygen/README.md
-cat ~/doctolib/oxygen/prototype/patient-detail.composed.jsx
-cat ~/doctolib/oxygen/prototype/patient-detail.css
+cat ~/doctolib/pf-design-factory/boilerplate/prototype/patient-detail.composed.jsx
+cat ~/doctolib/pf-design-factory/boilerplate/prototype/patient-detail.css
 
 # oxygen — B2B framework foundations
 cat ~/doctolib/oxygen/packages/b2b/stories/documentation/framework/foundations/design-principles.md
@@ -212,11 +223,8 @@ cat ~/doctolib/pro-frontend/docs/pro-sdks-guidelines.md
 
 # pro-frontend — PF component implementations
 cat ~/doctolib/pro-frontend/components/Workspace/Workspace.tsx
-cat ~/doctolib/pro-frontend/components/Workspace/Workspace.module.css
 cat ~/doctolib/pro-frontend/components/ActionBar/ActionBar.tsx
-cat ~/doctolib/pro-frontend/components/ActionBar/ActionBar.module.css
 cat ~/doctolib/pro-frontend/components/Focus/Focus.tsx
-cat ~/doctolib/pro-frontend/components/Focus/Focus.module.css
 cat ~/doctolib/pro-frontend/components/ChildViewHeader/ChildViewHeader.tsx
 cat ~/doctolib/pro-frontend/components/ChildViewHeader/types.ts
 cat ~/doctolib/pro-frontend/components/SectionMenu/SectionMenu.tsx
@@ -226,7 +234,7 @@ cat ~/doctolib/pro-frontend/components/QuickEdit/QuickEdit.tsx
 cat ~/doctolib/pro-frontend/components/InlineButton/InlineButton.tsx
 cat ~/doctolib/pro-frontend/components/InlineButton/InlineButtonText.tsx
 cat ~/doctolib/pro-frontend/components/WorkflowPanel/WorkflowPanel.tsx
-```
+# CSS module files: grep on demand only — never cat in full
 
 ### Step 2 — Parse the feature list
 
@@ -258,6 +266,12 @@ Map each feature to: **Tab → CardCollection → Card → Component type**
 - Priority conflicts, edge cases (empty state, skeleton, error)
 
 Wait for answers before writing any code.
+
+Also ask — for every cluster — these challenge questions:
+- What does the current generic PF get wrong for this cluster/persona?
+- Are there modules in the current PF that are irrelevant for this cluster?
+- What critical information is missing from the current PF for this persona?
+- What's the single most important action this persona needs to take in the PF?
 
 ### Step 4 — Layout plan (requires approval)
 
@@ -297,7 +311,23 @@ Output to `prototypes/[cluster]/`:
 - Each CardCollection opens with `{/* MODULE: [name] */}`
 - No Lorem ipsum anywhere
 
-### Step 6 — Update master index
+### Viewing prototypes
+
+Never open HTML files directly in the browser — this causes CORS errors with local script loading.
+
+Always serve via a local HTTP server:
+```bash
+cd ~/doctolib/pf-design-factory/prototypes
+npx serve .
+# then open http://localhost:3000/[cluster]/[cluster].html
+```
+
+Or with Python:
+```bash
+cd ~/doctolib/pf-design-factory/prototypes
+python3 -m http.server 3000
+# then open http://localhost:3000/[cluster]/[cluster].html
+```
 
 Update `prototypes/index.html` with the new cluster:
 - Name, market/persona, feature count, date generated
@@ -308,7 +338,20 @@ Update `prototypes/index.html` with the new cluster:
 
 ## Hard constraints
 
-1. **Layout is immutable** — all 5 zones (topbar, ActionBar, Focus, SectionMenu, WorkflowPanel) must be present and used correctly
+### What the agent must never change
+- The foundational shell zones (topbar, ActionBar, Focus, SectionMenu, WorkflowPanel)
+- The component vocabulary (Oxygen + pro-frontend only)
+- The market canonical tab set (unless explicitly asked to challenge it)
+
+### What the agent is expected to challenge
+The existing PF content, modules, and architecture are **not** a template to replicate. The agent should actively question:
+- Does this module need to exist for this cluster/persona?
+- Is this the right tab for this content?
+- Can two existing modules be merged into one?
+- Is there a missing module the current PF doesn't have but this cluster needs?
+- Is the current information hierarchy optimal for this persona's workflow?
+
+**The goal is the best possible PF for this cluster — not a copy of the generic PF with new content slotted in.**
 2. **Component source hierarchy** — for every component, always:
    - Read the `.tsx` source first — props, types, and behavior are the ground truth
    - Read the `.guidelines.md` to understand correct usage, patterns, and anti-patterns
@@ -341,10 +384,10 @@ patient-file-skill/
 
 Shared files referenced from (never copied):
 ```
-~/doctolib/oxygen/preview/_base.css
-~/doctolib/oxygen/preview/_components.css
-~/doctolib/oxygen/prototype/patient-detail.css
-~/doctolib/oxygen/prototype/icon-sprite.js
+~/doctolib/pf-design-factory/boilerplate/preview/_base.css
+~/doctolib/pf-design-factory/boilerplate/preview/_components.css
+~/doctolib/pf-design-factory/boilerplate/prototype/patient-detail.css
+~/doctolib/pf-design-factory/boilerplate/prototype/icon-sprite.js
 ```
 
 ---
