@@ -295,7 +295,7 @@ Wait for explicit approval before writing code.
 
 ### Step 5 — Generate prototype
 
-**Always start by copying the boilerplate files — never generate from scratch:**
+**STOP. Before writing a single line of code, run these commands:**
 ```bash
 cp boilerplate/patient-detail.primitives.jsx prototypes/[cluster]/[cluster].primitives.jsx
 cp boilerplate/patient-detail.composed.jsx prototypes/[cluster]/[cluster].composed.jsx
@@ -303,7 +303,14 @@ cp boilerplate/patient-detail.app.jsx prototypes/[cluster]/[cluster].app.jsx
 cp boilerplate/patient-detail.css prototypes/[cluster]/[cluster].css
 ```
 
-Then adapt each file for the cluster — never write component code from scratch.
+**Verify the files exist on disk before proceeding:**
+```bash
+ls prototypes/[cluster]/
+```
+
+Only after these 4 files exist, adapt them for the cluster. Never create them from scratch.
+
+**Custom CSS is forbidden.** The only content allowed in `[cluster].css` is cluster-specific overrides that genuinely don't exist in the boilerplate. If you find yourself writing layout, colors, typography, or component styles — stop immediately. Those already exist in `_base.css`, `_components.css`, and `patient-detail.css`. Use the existing `pd-*` class names instead.
 
 Output to `prototypes/[cluster]/`:
 
