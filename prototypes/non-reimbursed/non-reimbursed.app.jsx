@@ -1,25 +1,22 @@
 /* global React, ReactDOM, loadIconSprite,
    Workspace, Focus, ActionBar, ChildViewHeader, SectionMenu,
-   Button, IconButton, Icon,
-   TabSante, TabFinancier, TabHistorique, TabAdministratif, BillCreationPanel */
+   TabSante, TabFinancier, TabHistorique, TabAdministratif, BillCreationPanel,
+   Button, IconButton, Icon */
 
 const { useState, useEffect } = React;
 
-// ================================================================
-// Icons required for this cluster
-// ================================================================
 const ICONS = [
-  'ArrowLeft', 'ArrowRight', 'ChevronRight', 'ChevronDown',
-  'XmarkLarge', 'Plus', 'Pencil', 'PenToSquare',
-  'CalendarDay', 'Calendar', 'CalendarPlus', 'Clock',
-  'Phone', 'Envelope', 'MapPin',
-  'User', 'Stethoscope', 'Pills', 'FileLines',
-  'Bell', 'MagnifyingGlass', 'Star', 'Filter', 'Gear', 'InfoCircle',
-  'Paperclip', 'Print', 'Share', 'CircleCheck',
+  'ArrowLeft','ArrowRight','ChevronRight','ChevronDown',
+  'XmarkLarge','Plus','Pencil','PenToSquare',
+  'CalendarDay','Calendar','CalendarPlus','Clock',
+  'Phone','Envelope','MapPin',
+  'User','Stethoscope','Pills','FileLines',
+  'Bell','MagnifyingGlass','Star','Filter','Gear','InfoCircle',
+  'Paperclip','Print','Share','CircleCheck',
 ];
 
 // ================================================================
-// Patient fixture data
+// Patient data fixture (osteopath context)
 // ================================================================
 const INITIAL_PATIENT = {
   name: 'Sophie Mercier',
@@ -32,8 +29,7 @@ const INITIAL_PATIENT = {
   address: '17 rue de la Paix, 69001 Lyon',
   dob: '1987-09-12',
   occupation: 'Ergothérapeute',
-
-  // Health — Osteopathy specific
+  // Osteopathy-specific health data
   motifPrincipal: 'Douleurs cervicales chroniques et céphalées de tension · Suivi postural suite à scoliose légère (< 10°)',
   frequenceSuivi: 'monthly',
   nbSeances: 12,
@@ -43,7 +39,6 @@ const INITIAL_PATIENT = {
   contreIndications: 'Aucune contre-indication ostéopathique connue',
   medicaments: 'Ibuprofène 400 mg (au besoin) · Magnésium 300 mg/j',
   autresPraticiens: 'Kinésithérapeute (Dr. Arnaud Blanc) · Médecin traitant (Dr. Isabelle Fontaine)',
-
   // Administrative
   emergencyName: 'Julien Mercier',
   emergencyPhone: '+33 6 87 65 43 21',
@@ -56,7 +51,7 @@ const INITIAL_PATIENT = {
 };
 
 // ================================================================
-// Bills fixture data
+// Bills data fixture
 // ================================================================
 const INITIAL_BILLS = [
   {
@@ -95,19 +90,10 @@ const INITIAL_BILLS = [
     amountRaw: 75,
     status: 'paid',
   },
-  {
-    id: 'F2026-001',
-    date: '14 fév. 2026',
-    description: 'Bilan initial + 1ère séance',
-    actes: ['Consultation ostéopathique (adulte)'],
-    amount: '75 €',
-    amountRaw: 75,
-    status: 'paid',
-  },
 ];
 
 // ================================================================
-// Consultations fixture data
+// Consultations data fixture
 // ================================================================
 const CONSULTATIONS = [
   {
@@ -138,57 +124,8 @@ const CONSULTATIONS = [
     billStatus: 'paid',
     amount: '75 €',
   },
-  {
-    date: '14 fév. 2026',
-    zones: ['Cervical', 'Thoracique', 'Lombaire', 'Bassin'],
-    note: 'Bilan initial complet. Scoliose dorsale confirmée. Plan de suivi mensuel convenu sur 6 mois.',
-    billStatus: 'paid',
-    amount: '75 €',
-  },
 ];
 
-// ================================================================
-// ActionBar navigation groups
-// ================================================================
-const ACTION_BAR_GROUPS = [
-  {
-    heading: "Aujourd'hui",
-    items: [
-      { id: 'agenda', label: 'Mon agenda', icon: 'calendar-day', count: 9 },
-      { id: 'messages', label: 'Messages', icon: 'envelope', count: 2 },
-    ],
-  },
-  {
-    heading: 'Patients',
-    items: [
-      { id: 'patients', label: 'Tous les patients', icon: 'user' },
-      { id: 'starred', label: 'Favoris', icon: 'star' },
-      { id: 'recent', label: 'Récents', icon: 'clock' },
-    ],
-  },
-  {
-    heading: 'Cabinet',
-    items: [
-      { id: 'bills', label: 'Factures', icon: 'file-lines', count: 3 },
-      { id: 'stats', label: 'Statistiques', icon: 'info-circle' },
-      { id: 'settings', label: 'Paramètres', icon: 'gear' },
-    ],
-  },
-];
-
-// ================================================================
-// Section tabs for non-reimbursed cluster
-// ================================================================
-const SECTION_ITEMS = [
-  { id: 'sante', label: 'Santé', icon: 'stethoscope' },
-  { id: 'financier', label: 'Financier', icon: 'info-circle' },
-  { id: 'historique', label: 'Historique', icon: 'clock' },
-  { id: 'administratif', label: 'Administratif', icon: 'file-lines' },
-];
-
-// ================================================================
-// Main App Component
-// ================================================================
 function App() {
   const [ready, setReady] = useState(false);
   const [section, setSection] = useState('sante');
@@ -228,6 +165,39 @@ function App() {
     setSection('financier');
   };
 
+  const actionBarGroups = [
+    {
+      heading: "Aujourd'hui",
+      items: [
+        { id: 'agenda', label: 'Mon agenda', icon: 'calendar-day', count: 9 },
+        { id: 'messages', label: 'Messages', icon: 'envelope', count: 2 },
+      ],
+    },
+    {
+      heading: 'Patients',
+      items: [
+        { id: 'patients', label: 'Tous les patients', icon: 'user' },
+        { id: 'starred', label: 'Favoris', icon: 'star' },
+        { id: 'recent', label: 'Récents', icon: 'clock' },
+      ],
+    },
+    {
+      heading: 'Cabinet',
+      items: [
+        { id: 'bills', label: 'Factures', icon: 'file-lines', count: 3 },
+        { id: 'stats', label: 'Statistiques', icon: 'info-circle' },
+        { id: 'settings', label: 'Paramètres', icon: 'gear' },
+      ],
+    },
+  ];
+
+  const sectionItems = [
+    { id: 'sante', label: 'Santé', icon: 'stethoscope' },
+    { id: 'financier', label: 'Financier', icon: 'info-circle' },
+    { id: 'historique', label: 'Historique', icon: 'clock' },
+    { id: 'administratif', label: 'Administratif', icon: 'file-lines' },
+  ];
+
   return (
     <div className="pd-app">
       {/* TopBar */}
@@ -260,7 +230,7 @@ function App() {
       <Workspace
         actionBar={
           <ActionBar
-            groups={ACTION_BAR_GROUPS}
+            groups={actionBarGroups}
             activeId={actionBarItem}
             onSelect={setActionBarItem}
           />
@@ -284,7 +254,7 @@ function App() {
           />
 
           <SectionMenu
-            items={SECTION_ITEMS}
+            items={sectionItems}
             selectedId={section}
             onSelectionChange={setSection}
           >

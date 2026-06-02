@@ -104,6 +104,25 @@ Never `cat` `tokens.css`, `_components.css`, or any `.css` file in full — they
 
 ---
 
+## Visual reference
+
+The prototype must match the layout screenshots in `pf-layout-examples/`. Each filename encodes the active panel states:
+
+| File | Child view | HO active | Workflow panel |
+|---|---|---|---|
+| `cv-ho-wf.png` | ✅ | ✅ | ✅ |
+| `cv-ho.png` | ✅ | ✅ | ❌ |
+| `cv-wf.png` | ✅ | ❌ | ✅ |
+| `cv.png` | ✅ | ❌ | ❌ |
+| `ho-wf.png` | ❌ | ✅ | ✅ |
+| `ho.png` | ❌ | ✅ | ❌ |
+| `wf.png` | ❌ | ❌ | ✅ |
+| `default.png` | ❌ | ❌ | ❌ |
+
+Before presenting any output, read the relevant reference screenshot and verify the prototype matches on: overall layout, dark navy topbar, sidebar, card grid, typography, and component shapes. If anything doesn't match — fix it before presenting.
+
+---
+
 ## Tech stack
 
 All prototypes use the React/Babel stack from `pf-design-factory/boilerplate/prototype/`. Always reference shared files by relative path — never copy CSS into cluster folders.
