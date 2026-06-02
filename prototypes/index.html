@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PF Design Factory — Prototypes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; }
+    body {
+      font-family: 'Roboto', system-ui, sans-serif;
+      font-size: 1.4rem;
+      background: #F1F7FE;
+      color: #192634;
+      -webkit-font-smoothing: antialiased;
+      padding: 4rem;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 3.2rem;
+    }
+    .brand-mark {
+      width: 4rem;
+      height: 4rem;
+      background: #045FAE;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.4rem;
+      color: #045FAE;
+    }
+    .subtitle {
+      font-size: 1.4rem;
+      color: #4B739B;
+      margin-top: 0.2rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 1.2rem;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.2s, transform 0.2s;
+      border: 0.1rem solid #E4EDF6;
+      display: block;
+    }
+    .card:hover {
+      box-shadow: 0 8px 24px rgba(4,95,174,.10);
+      transform: translateY(-2px);
+    }
+    .card__tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.8rem;
+      border-radius: 0.6rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: #E7F4FD;
+      color: #045FAE;
+      margin-bottom: 1.2rem;
+    }
+    .card__name {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #192634;
+      margin-bottom: 0.4rem;
+    }
+    .card__meta {
+      font-size: 1.3rem;
+      color: #4B739B;
+      margin-bottom: 1.2rem;
+    }
+    .card__features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .card__feature {
+      padding: 0.2rem 0.8rem;
+      border-radius: 0.6rem;
+      font-size: 1.2rem;
+      background: #F1F7FE;
+      color: #3A5978;
+    }
+    .card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.6rem;
+      padding-top: 1.2rem;
+      border-top: 0.1rem solid #E4EDF6;
+      font-size: 1.2rem;
+      color: #6B91B8;
+    }
+    .card__date { color: #6B91B8; }
+    .card__open {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #045FAE;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="brand-mark">D</div>
+    <div>
+      <h1>PF Design Factory</h1>
+      <div class="subtitle">Prototypes de dossier patient — Oxygen DS</div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <a class="card" href="non-reimbursed/non-reimbursed.html">
+      <div class="card__tag">Non-remboursé</div>
+      <div class="card__name">Actes non remboursés</div>
+      <div class="card__meta">Ostéopathe · Marché FR non-médics</div>
+      <div class="card__features">
+        <span class="card__feature">Santé</span>
+        <span class="card__feature">Financier</span>
+        <span class="card__feature">Historique</span>
+        <span class="card__feature">Administratif</span>
+        <span class="card__feature">WorkflowPanel</span>
+        <span class="card__feature">CUJ 1–10</span>
+      </div>
+      <div class="card__footer">
+        <span class="card__date">Généré le 28 mai 2026</span>
+        <span class="card__open">Ouvrir →</span>
+      </div>
+    </a>
+
+  </div>
+
+</body>
+</html>

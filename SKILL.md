@@ -25,8 +25,8 @@ Read these files from disk before starting. All paths relative to `~/doctolib/`:
 pf-design-factory/pf-layout.md                                                          → PF layout zones, CSS classes, hard constraints
 pf-design-factory/oxygen-ds.md                                                          → Oxygen DS component reference
 oxygen/README.md                                                                         → DS fundamentals (tokens, type, color, motion)
-pf-design-factory/boilerplate/prototype/patient-detail.composed.jsx                                             → Canonical composed components
-pf-design-factory/boilerplate/prototype/patient-detail.css                                                      → PF shell CSS
+pf-design-factory/boilerplate/patient-detail.composed.jsx                                             → Canonical composed components
+pf-design-factory/boilerplate/patient-detail.css                                                      → PF shell CSS
 
 --- B2B framework foundations (oxygen) ---
 oxygen/packages/b2b/stories/documentation/framework/foundations/design-principles.md
@@ -95,7 +95,7 @@ pro-frontend/components/WorkflowPanel/WorkflowPanel.tsx
 grep -n "color-semantic-brand" ~/doctolib/oxygen/packages/tokens/src/tokens.css
 
 # Look up a specific component's styles
-grep -n "pd-card" ~/doctolib/pf-design-factory/boilerplate/prototype/patient-detail.css
+grep -n "pd-card" ~/doctolib/pf-design-factory/boilerplate/patient-detail.css
 
 # Look up a CSS module class
 grep -n "actionBar\|workspace" ~/doctolib/pro-frontend/components/ActionBar/ActionBar.module.css
@@ -110,15 +110,15 @@ All prototypes use the React/Babel stack from `pf-design-factory/boilerplate/pro
 
 ```html
 <!-- From boilerplate/ — reference by relative path, never copy -->
-<link rel="stylesheet" href="../../boilerplate/preview/_base.css">
-<link rel="stylesheet" href="../../boilerplate/preview/_components.css">
-<link rel="stylesheet" href="../../boilerplate/prototype/patient-detail.css">
+<link rel="stylesheet" href="../../boilerplate/_base.css">
+<link rel="stylesheet" href="../../boilerplate/_components.css">
+<link rel="stylesheet" href="../../boilerplate/patient-detail.css">
 
 <!-- JS runtime from CDN -->
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
-<script src="../../boilerplate/prototype/icon-sprite.js"></script>
+<script src="../../boilerplate/icon-sprite.js"></script>
 
 <!-- Cluster-specific scripts -->
 <script type="text/babel" src="[cluster].primitives.jsx"></script>
@@ -136,7 +136,7 @@ All prototypes use the React/Babel stack from `pf-design-factory/boilerplate/pro
 
 ## Canonical PF component hierarchy
 
-Every prototype must use this exact tree. Read `pf-design-factory/boilerplate/prototype/patient-detail.app.jsx` for the live reference.
+Every prototype must use this exact tree. Read `pf-design-factory/boilerplate/patient-detail.app.jsx` for the live reference.
 
 ```
 <div class="pd-app">                      ← CSS grid: topbar (5.6rem) + workspace (1fr)
@@ -176,8 +176,8 @@ cat ~/doctolib/pf-design-factory/oxygen-ds.md
 
 # oxygen — core
 cat ~/doctolib/oxygen/README.md
-cat ~/doctolib/pf-design-factory/boilerplate/prototype/patient-detail.composed.jsx
-cat ~/doctolib/pf-design-factory/boilerplate/prototype/patient-detail.css
+cat ~/doctolib/pf-design-factory/boilerplate/patient-detail.composed.jsx
+cat ~/doctolib/pf-design-factory/boilerplate/patient-detail.css
 
 # oxygen — B2B framework foundations
 cat ~/doctolib/oxygen/packages/b2b/stories/documentation/framework/foundations/design-principles.md
@@ -295,6 +295,16 @@ Wait for explicit approval before writing code.
 
 ### Step 5 — Generate prototype
 
+**Always start by copying the boilerplate files — never generate from scratch:**
+```bash
+cp boilerplate/patient-detail.primitives.jsx prototypes/[cluster]/[cluster].primitives.jsx
+cp boilerplate/patient-detail.composed.jsx prototypes/[cluster]/[cluster].composed.jsx
+cp boilerplate/patient-detail.app.jsx prototypes/[cluster]/[cluster].app.jsx
+cp boilerplate/patient-detail.css prototypes/[cluster]/[cluster].css
+```
+
+Then adapt each file for the cluster — never write component code from scratch.
+
 Output to `prototypes/[cluster]/`:
 
 ```
@@ -410,10 +420,10 @@ patient-file-skill/
 
 Shared files referenced from (never copied):
 ```
-~/doctolib/pf-design-factory/boilerplate/preview/_base.css
-~/doctolib/pf-design-factory/boilerplate/preview/_components.css
-~/doctolib/pf-design-factory/boilerplate/prototype/patient-detail.css
-~/doctolib/pf-design-factory/boilerplate/prototype/icon-sprite.js
+~/doctolib/pf-design-factory/boilerplate/_base.css
+~/doctolib/pf-design-factory/boilerplate/_components.css
+~/doctolib/pf-design-factory/boilerplate/patient-detail.css
+~/doctolib/pf-design-factory/boilerplate/icon-sprite.js
 ```
 
 ---

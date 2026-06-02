@@ -1,0 +1,239 @@
+/* ================================================================
+   Non-reimbursed cluster — Custom styles
+   ================================================================ */
+
+/* ---- Bill Status Badges --------------------------------------- */
+.nr-bill-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.8rem;
+  font: 600 1.2rem/1.4 var(--oxygen-font-primitive-fontFamily-base);
+  border-radius: 0.6rem;
+  white-space: nowrap;
+}
+
+.nr-bill-badge--success {
+  background: var(--oxygen-color-semantic-success-subtle-weak);
+  color: var(--oxygen-color-semantic-success-prominent-stronger);
+}
+
+.nr-bill-badge--warning {
+  background: var(--oxygen-color-semantic-warning-subtle-weak);
+  color: var(--oxygen-color-semantic-warning-prominent-stronger);
+}
+
+.nr-bill-badge--danger {
+  background: var(--oxygen-color-semantic-danger-subtle-weak);
+  color: var(--oxygen-color-semantic-danger-prominent-stronger);
+}
+
+.nr-bill-badge--neutral {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+}
+
+.nr-bill-badge--info {
+  background: var(--oxygen-color-semantic-info-subtle-weak);
+  color: var(--oxygen-color-semantic-info-prominent-stronger);
+}
+
+/* ---- Zone Chips ----------------------------------------------- */
+.nr-zone-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  font: 500 1.3rem/1.4 var(--oxygen-font-primitive-fontFamily-base);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+  background: var(--oxygen-color-semantic-brand-subtle-weak);
+  border: 0.1rem solid var(--oxygen-color-semantic-brand-subtle-base);
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.nr-zone-chip:hover {
+  background: var(--oxygen-color-semantic-brand-subtle-base);
+  border-color: var(--oxygen-color-semantic-brand-subtle-strong);
+}
+
+.nr-zone-chip--selected {
+  background: var(--oxygen-color-semantic-brand-prominent-base);
+  color: var(--oxygen-color-primitive-white);
+  border-color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+
+.nr-zone-chip--selected:hover {
+  background: var(--oxygen-color-semantic-brand-prominent-strong);
+  border-color: var(--oxygen-color-semantic-brand-prominent-strong);
+}
+
+/* ---- Financial Summary ---------------------------------------- */
+.nr-financial-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1.6rem;
+  padding: 0.8rem 0;
+}
+
+.nr-financial-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.2rem;
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+  border-radius: 0.8rem;
+}
+
+.nr-financial-stat__label {
+  font: 500 1.2rem/1.4 var(--oxygen-font-primitive-fontFamily-base);
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nr-financial-stat__value {
+  font: 700 2rem/1.2 var(--oxygen-font-primitive-fontFamily-base);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+}
+
+.nr-financial-stat--success {
+  background: var(--oxygen-color-semantic-success-subtle-weak);
+}
+
+.nr-financial-stat--success .nr-financial-stat__value {
+  color: var(--oxygen-color-semantic-success-prominent-stronger);
+}
+
+.nr-financial-stat--warning {
+  background: var(--oxygen-color-semantic-warning-subtle-weak);
+}
+
+.nr-financial-stat--warning .nr-financial-stat__value {
+  color: var(--oxygen-color-semantic-warning-prominent-stronger);
+}
+
+.nr-financial-stat--danger {
+  background: var(--oxygen-color-semantic-danger-subtle-weak);
+}
+
+.nr-financial-stat--danger .nr-financial-stat__value {
+  color: var(--oxygen-color-semantic-danger-prominent-stronger);
+}
+
+/* ---- Bill Creation Form --------------------------------------- */
+.nr-bill-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.nr-bill-form__section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.nr-bill-form__section-title {
+  font: 600 1.4rem/1.4 var(--oxygen-font-primitive-fontFamily-base);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  margin: 0;
+  padding-bottom: 0.8rem;
+  border-bottom: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+}
+
+.nr-bill-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.nr-bill-form__field-label {
+  font: 500 1.3rem/1.4 var(--oxygen-font-primitive-fontFamily-base);
+  color: var(--oxygen-color-semantic-neutral-prominent-base);
+}
+
+.nr-bill-form__field-value {
+  font: 400 1.4rem/1.4 var(--oxygen-font-primitive-fontFamily-base);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+}
+
+.nr-bill-form__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.nr-bill-form__checkbox:hover {
+  background: var(--oxygen-color-semantic-neutral-subtle-weak);
+}
+
+.nr-bill-form__checkbox input[type='checkbox'] {
+  width: 1.8rem;
+  height: 1.8rem;
+  cursor: pointer;
+  accent-color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+
+.nr-bill-form__checkbox-label {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 400 1.4rem/1.4 var(--oxygen-font-primitive-fontFamily-base);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+}
+
+.nr-bill-form__checkbox-price {
+  font: 600 1.4rem/1.4 var(--oxygen-font-primitive-fontFamily-base);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+}
+
+.nr-bill-form__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.6rem;
+  background: var(--oxygen-color-semantic-brand-subtle-weak);
+  border-radius: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.nr-bill-form__total-label {
+  font: 600 1.6rem/1.4 var(--oxygen-font-primitive-fontFamily-base);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nr-bill-form__total-value {
+  font: 700 2.4rem/1.2 var(--oxygen-font-primitive-fontFamily-base);
+  color: var(--oxygen-color-semantic-brand-prominent-strong);
+}
+
+/* ---- Form field overrides ------------------------------------- */
+.pd-field__input {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  font: 400 1.4rem/1.4 var(--oxygen-font-primitive-fontFamily-base);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  background: var(--oxygen-color-primitive-white);
+  border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-base);
+  border-radius: 0.6rem;
+  transition: all 0.15s ease;
+}
+
+.pd-field__input:focus {
+  outline: none;
+  border-color: var(--oxygen-color-semantic-brand-prominent-base);
+  box-shadow: 0 0 0 0.3rem var(--oxygen-color-semantic-brand-subtle-weak);
+}
+
+.pd-textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
