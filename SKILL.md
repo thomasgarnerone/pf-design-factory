@@ -300,6 +300,171 @@ Before generating, read the reference screenshots in `pf-layout-examples/`:
 
 ---
 
+## Interaction Patterns
+
+**MANDATORY: All prototypes must implement full interactivity with data persistence.**
+
+Every button, form field, and interactive element must work. No static mockups.
+
+### Required Interactions
+
+**1. Tab Switching** ✅ (see Tabs section below)
+- Click tab → show corresponding panel
+- Update `aria-selected` states
+- Persist last-viewed tab to localStorage
+
+**2. QuickEdit (Inline Edit)**
+- Pattern: Click read-only field → becomes editable input → save/cancel
+- Use case: Patient contact info (phone, email, address)
+- Persist to localStorage on save
+
+```javascript
+function initQuickEdit() {
+  document.querySelectorAll('[data-quickedit]').forEach(field => {
+    field.addEventListener('click', () => {
+      const value = field.textContent;
+      const key = field.dataset.quickedit;
+      field.innerHTML = `
+        <input type="text" value="${value}" class="qe-input" />
+        <button class="qe-save">✓</button>
+        <button class="qe-cancel">✗</button>
+      `;
+      field.querySelector('.qe-save').onclick = () => {
+        const newValue = field.querySelector('.qe-input').value;
+        localStorage.setItem(key, newValue);
+        field.textContent = newValue;
+      };
+      field.querySelector('.qe-cancel').onclick = () => {
+        field.textContent = value;
+      };
+    });
+  });
+}
+```
+
+**3. ActionBar → WorkflowPanel Transition**
+- Pattern: Click ActionBar card → Toolbox transitions to WorkflowPanel
+- Use case: Create invoice, write consultation note, prescription
+
+```javascript
+function showWorkflowPanel(panelId) {
+  document.getElementById('actionbar').style.display = 'none';
+  document.getElementById(panelId).style.display = 'flex';
+}
+
+function hideWorkflowPanel(panelId) {
+  document.getElementById(panelId).style.display = 'none';
+  document.getElementById('actionbar').style.display = 'block';
+}
+```
+
+**4. WorkflowPanel Controls**
+- Header: Back button (return to ActionBar), Close button (same)
+- Body: Form fields with validation
+- Footer: Cancel (return to ActionBar), Submit (save + return)
+- Persist form data to localStorage on submit
+
+**5. Button Actions**
+- Every "Ajouter" button → opens WorkflowPanel or modal
+- Every "Voir tous" button → navigates to full list view (can be stub)
+- All buttons must have visible feedback (loading state, success message)
+
+**6. Form Validation & Submission**
+- Required fields: visual feedback on empty submit
+- Success message after submit
+- Data persists to localStorage
+- Form resets after successful submit
+
+**7. Data Persistence Strategy**
+
+All interactive data stored in localStorage with namespaced keys:
+
+```javascript
+const STORAGE_PREFIX = 'pf_osteopath_';
+
+function saveData(key, value) {
+  localStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(value));
+}
+
+function loadData(key, defaultValue = null) {
+  const data = localStorage.getItem(STORAGE_PREFIX + key);
+  return data ? JSON.parse(data) : defaultValue;
+}
+
+// Example usage:
+saveData('patient_phone', '06 12 34 56 78');
+saveData('invoices', [{id: 1, date: '2026-06-03', amount: 65}]);
+saveData('last_tab', 'sante');
+```
+
+**8. Loading States**
+- Buttons: disable + show spinner during "save"
+- Forms: overlay during submit
+- Use setTimeout(fn, 500) to simulate async operations
+
+```javascript
+async function simulateAsync(fn) {
+  await new Promise(resolve => setTimeout(resolve, 500));
+  fn();
+}
+```
+
+**9. Feedback Messages**
+- Success: green toast notification (auto-dismiss 3s)
+- Error: red toast notification (dismiss on click)
+- Use simple toast implementation:
+
+```javascript
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.className = `toast toast--${type}`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.classList.add('toast--show'), 10);
+  setTimeout(() => {
+    toast.classList.remove('toast--show');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+```
+
+**CSS for toast:**
+```css
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 1.2rem 1.6rem;
+  border-radius: 0.8rem;
+  color: white;
+  font-weight: 600;
+  transform: translateY(10rem);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+.toast--show { transform: translateY(0); opacity: 1; }
+.toast--success { background: #00A65A; }
+.toast--error { background: #E03C31; }
+```
+
+### Mandatory Interactions Checklist
+
+Before delivering any prototype, verify:
+
+- [ ] All tabs switch correctly
+- [ ] At least 2 QuickEdit fields work (phone, email)
+- [ ] At least 1 ActionBar card → WorkflowPanel transition works
+- [ ] WorkflowPanel back/close buttons return to ActionBar
+- [ ] At least 1 form submits with validation
+- [ ] Data persists to localStorage (test page refresh)
+- [ ] All "Ajouter" buttons trigger actions (modal/panel/form)
+- [ ] Loading states visible on async actions
+- [ ] Success/error toasts appear on actions
+- [ ] No console errors
+
+---
+
 ## HTML cheat sheet — exact patterns to copy
 
 These are the exact HTML structures to use. Copy them verbatim — do not invent alternatives.
