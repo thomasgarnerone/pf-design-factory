@@ -368,6 +368,494 @@ document.querySelectorAll('.tabs').forEach(tablist => {
 
 ---
 
+## Interaction Patterns
+
+**CRITICAL: ALL buttons in prototypes MUST have functional interactions. No dead buttons.**
+
+Prototypes must include:
+- Full visual state transitions
+- Form validation feedback
+- Data persistence via localStorage
+- Loading states and success/error messages
+
+### 1. QuickEdit (Inline Edit)
+
+**Pattern:** Click read-only field → edit mode → save/cancel
+
+**HTML structure:**
+```html
+<div class="qe" data-field="phone">
+  <div class="qe__read" onclick="enterEditMode(this)">
+    <span class="qe__label">Téléphone</span>
+    <span class="qe__value">06 12 34 56 78</span>
+    <i class="fa-solid fa-pen qe__icon"></i>
+  </div>
+  <div class="qe__edit" style="display:none">
+    <input type="tel" class="qe__input" value="06 12 34 56 78">
+    <button class="qe__save" onclick="saveQuickEdit(this)"><i class="fa-solid fa-check"></i></button>
+    <button class="qe__cancel" onclick="cancelQuickEdit(this)"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+</div>
+```
+
+**JavaScript:**
+```javascript
+function enterEditMode(readEl) {
+  const container = readEl.closest('.qe');
+  const editEl = container.querySelector('.qe__edit');
+  const input = editEl.querySelector('.qe__input');
+  readEl.style.display = 'none';
+  editEl.style.display = 'flex';
+  input.focus();
+  input.select();
+}
+
+function saveQuickEdit(btn) {
+  const container = btn.closest('.qe');
+  const input = container.querySelector('.qe__input');
+  const valueEl = container.querySelector('.qe__value');
+  const readEl = container.querySelector('.qe__read');
+  const editEl = container.querySelector('.qe__edit');
+  
+  // Update value
+  valueEl.textContent = input.value;
+  
+  // Persist to localStorage
+  const field = container.dataset.field;
+  localStorage.setItem(`patient_${field}`, input.value);
+  
+  // Show success feedback
+  container.classList.add('qe--success');
+  setTimeout(() => container.classList.remove('qe--success'), 1500);
+  
+  // Return to read mode
+  editEl.style.display = 'none';
+  readEl.style.display = 'flex';
+}
+
+function cancelQuickEdit(btn) {
+  const container = btn.closest('.qe');
+  const readEl = container.querySelector('.qe__read');
+  const editEl = container.querySelector('.qe__edit');
+  const input = editEl.querySelector('.qe__input');
+  const valueEl = container.querySelector('.qe__value');
+  
+  // Reset input to original value
+  input.value = valueEl.textContent;
+  
+  // Return to read mode
+  editEl.style.display = 'none';
+  readEl.style.display = 'flex';
+}
+```
+
+**CSS:**
+```css
+.qe { position: relative; }
+.qe__read { display: flex; align-items: center; gap: .8rem; padding: .8rem 1.2rem; border-radius: .6rem; cursor: pointer; transition: background .15s; }
+.qe__read:hover { background: var(--oxygen-color-semantic-neutral-subtle-weak); }
+.qe__read:hover .qe__icon { opacity: 1; }
+.qe__label { font-weight: 600; color: var(--oxygen-color-semantic-neutral-prominent-weak); }
+.qe__value { flex: 1; color: var(--oxygen-color-semantic-neutral-prominent-strong); }
+.qe__icon { opacity: 0; font-size: 1.2rem; color: var(--oxygen-color-semantic-neutral-prominent-weak); transition: opacity .15s; }
+.qe__edit { display: flex; gap: .6rem; align-items: center; padding: .8rem 1.2rem; }
+.qe__input { flex: 1; padding: .6rem 1rem; border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius: .6rem; }
+.qe__save, .qe__cancel { width: 3.2rem; height: 3.2rem; border: none; border-radius: .6rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.qe__save { background: var(--oxygen-color-semantic-brand-prominent-base); color: white; }
+.qe__cancel { background: var(--oxygen-color-semantic-neutral-subtle-weak); color: var(--oxygen-color-semantic-neutral-prominent-strong); }
+.qe--success { animation: successPulse .4s ease-out; }
+@keyframes successPulse { 0%, 100% { background: transparent; } 50% { background: var(--oxygen-color-semantic-positive-subtle-weak); } }
+```
+
+---
+
+### 2. ActionBar → WorkflowPanel Transition
+
+**Pattern:** Click ActionBar card → Toolbox shows WorkflowPanel → Close returns to ActionBar
+
+**HTML structure:**
+```html
+<!-- Toolbox container -->
+<aside class="ws__toolbox" id="toolbox">
+  
+  <!-- ActionBar (default state) -->
+  <div class="pf-actionbar" id="actionbar">
+    <div class="pf-actionbar__card" onclick="openWorkflowPanel('invoice')">
+      <h3>Nouvelle facture</h3>
+      <p>Créer une facture pour la consultation</p>
+    </div>
+  </div>
+  
+  <!-- WorkflowPanel (hidden by default) -->
+  <div class="pf-workflow" id="workflow-invoice" style="display:none">
+    <div class="pf-workflow__header">
+      <button class="pf-workflow__back" onclick="closeWorkflowPanel('invoice')">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <h2>Nouvelle facture</h2>
+      <button class="pf-workflow__close" onclick="closeWorkflowPanel('invoice')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="pf-workflow__body">
+      <!-- Form content -->
+    </div>
+    <div class="pf-workflow__footer">
+      <button onclick="closeWorkflowPanel('invoice')">Annuler</button>
+      <button class="primary" onclick="submitWorkflow('invoice')">Créer la facture</button>
+    </div>
+  </div>
+  
+</aside>
+```
+
+**JavaScript:**
+```javascript
+function openWorkflowPanel(panelId) {
+  // Hide ActionBar
+  document.getElementById('actionbar').style.display = 'none';
+  
+  // Show WorkflowPanel
+  const panel = document.getElementById(`workflow-${panelId}`);
+  panel.style.display = 'flex';
+  
+  // Add class to workspace for layout adjustment
+  document.querySelector('.ws').classList.add('has-workflow');
+  
+  // Focus first input
+  const firstInput = panel.querySelector('input, select, textarea');
+  if (firstInput) firstInput.focus();
+}
+
+function closeWorkflowPanel(panelId) {
+  // Hide WorkflowPanel
+  const panel = document.getElementById(`workflow-${panelId}`);
+  panel.style.display = 'none';
+  
+  // Show ActionBar
+  document.getElementById('actionbar').style.display = 'block';
+  
+  // Remove workflow class
+  document.querySelector('.ws').classList.remove('has-workflow');
+  
+  // Reset form if needed
+  const form = panel.querySelector('form');
+  if (form) form.reset();
+}
+
+function submitWorkflow(panelId) {
+  const panel = document.getElementById(`workflow-${panelId}`);
+  const form = panel.querySelector('form');
+  
+  // Validate
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+  
+  // Get form data
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+  
+  // Persist to localStorage
+  const storageKey = `workflow_${panelId}_${Date.now()}`;
+  localStorage.setItem(storageKey, JSON.stringify(data));
+  
+  // Show success message
+  showToast('✓ Facture créée avec succès');
+  
+  // Close panel
+  closeWorkflowPanel(panelId);
+  
+  // Optionally: update UI to show new item
+  refreshDataDisplay(panelId, data);
+}
+
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.classList.add('show'), 10);
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+```
+
+**CSS:**
+```css
+.pf-workflow { display: none; flex-direction: column; height: 100%; background: white; border-radius: 1.2rem; overflow: hidden; }
+.pf-workflow__header { display: flex; align-items: center; gap: 1.2rem; padding: 1.6rem; border-bottom: .1rem solid var(--oxygen-color-semantic-neutral-subtle-weak); }
+.pf-workflow__back, .pf-workflow__close { width: 3.2rem; height: 3.2rem; border: none; background: transparent; border-radius: .6rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.pf-workflow__back:hover, .pf-workflow__close:hover { background: var(--oxygen-color-semantic-neutral-subtle-weak); }
+.pf-workflow__header h2 { flex: 1; font: var(--oxygen-font-semantic-title-m-bold); margin: 0; }
+.pf-workflow__body { flex: 1; overflow-y: auto; padding: 2.4rem; }
+.pf-workflow__footer { display: flex; gap: 1.2rem; justify-content: flex-end; padding: 1.6rem; border-top: .1rem solid var(--oxygen-color-semantic-neutral-subtle-weak); }
+.toast { position: fixed; bottom: 2.4rem; right: 2.4rem; padding: 1.2rem 2.4rem; background: var(--oxygen-color-semantic-positive-prominent-base); color: white; border-radius: .8rem; font-weight: 600; opacity: 0; transform: translateY(2rem); transition: all .3s ease-out; z-index: 9999; }
+.toast.show { opacity: 1; transform: translateY(0); }
+```
+
+---
+
+### 3. Button Click Actions
+
+**Every button must have an onclick handler.** Common patterns:
+
+**Add new item:**
+```html
+<button onclick="openWorkflowPanel('consultation')">Ajouter</button>
+```
+
+**View all / Navigate:**
+```html
+<button onclick="navigateToView('consultations')">Voir toutes les consultations</button>
+```
+
+**Card expansion:**
+```html
+<div class="card" onclick="expandCard(this)">
+  <!-- card content -->
+</div>
+```
+
+**JavaScript helpers:**
+```javascript
+function navigateToView(viewName) {
+  console.log(`Navigate to: ${viewName}`);
+  showToast(`Navigation vers ${viewName} (prototype)`);
+}
+
+function expandCard(card) {
+  card.classList.toggle('is-expanded');
+}
+
+function deleteItem(itemId) {
+  if (confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) {
+    localStorage.removeItem(itemId);
+    showToast('✓ Élément supprimé');
+    // Remove from DOM or refresh
+    document.querySelector(`[data-id="${itemId}"]`)?.remove();
+  }
+}
+```
+
+---
+
+### 4. Form Validation
+
+**Required fields, pattern validation, custom validation:**
+
+```html
+<form id="invoice-form" onsubmit="return handleSubmit(event)">
+  <div class="form-field">
+    <label for="amount">Montant *</label>
+    <input 
+      type="number" 
+      id="amount" 
+      name="amount" 
+      required 
+      min="0" 
+      step="0.01"
+      oninput="validateAmount(this)"
+    >
+    <span class="error-message" style="display:none">Le montant doit être supérieur à 0</span>
+  </div>
+  
+  <div class="form-field">
+    <label for="email">Email patient</label>
+    <input 
+      type="email" 
+      id="email" 
+      name="email" 
+      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+      oninput="validateEmail(this)"
+    >
+    <span class="error-message" style="display:none">Email invalide</span>
+  </div>
+  
+  <button type="submit" class="primary">Soumettre</button>
+</form>
+```
+
+**JavaScript:**
+```javascript
+function validateAmount(input) {
+  const error = input.parentElement.querySelector('.error-message');
+  const isValid = input.value > 0;
+  
+  if (!isValid && input.value !== '') {
+    input.classList.add('error');
+    error.style.display = 'block';
+  } else {
+    input.classList.remove('error');
+    error.style.display = 'none';
+  }
+  
+  return isValid;
+}
+
+function validateEmail(input) {
+  const error = input.parentElement.querySelector('.error-message');
+  const isValid = input.checkValidity();
+  
+  if (!isValid && input.value !== '') {
+    input.classList.add('error');
+    error.style.display = 'block';
+  } else {
+    input.classList.remove('error');
+    error.style.display = 'none';
+  }
+  
+  return isValid;
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return false;
+  }
+  
+  // Process form...
+  return false;
+}
+```
+
+**CSS:**
+```css
+.form-field { margin-bottom: 1.6rem; }
+.form-field label { display: block; font-weight: 600; margin-bottom: .6rem; }
+.form-field input, .form-field select, .form-field textarea { width: 100%; padding: .8rem 1.2rem; border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius: .6rem; }
+.form-field input.error { border-color: var(--oxygen-color-semantic-danger-prominent-base); }
+.error-message { display: block; color: var(--oxygen-color-semantic-danger-prominent-base); font-size: 1.2rem; margin-top: .4rem; }
+```
+
+---
+
+### 5. Data Persistence (localStorage)
+
+**Pattern:** Save form data, user preferences, session state
+
+```javascript
+// Save data
+function saveToLocalStorage(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+    return true;
+  } catch (e) {
+    console.error('localStorage save failed:', e);
+    return false;
+  }
+}
+
+// Load data
+function loadFromLocalStorage(key, defaultValue = null) {
+  try {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : defaultValue;
+  } catch (e) {
+    console.error('localStorage load failed:', e);
+    return defaultValue;
+  }
+}
+
+// Initialize on page load
+window.addEventListener('DOMContentLoaded', () => {
+  // Restore patient data
+  const phone = loadFromLocalStorage('patient_phone');
+  if (phone) {
+    document.querySelector('[data-field="phone"] .qe__value').textContent = phone;
+  }
+  
+  // Restore form drafts
+  const draftInvoice = loadFromLocalStorage('draft_invoice');
+  if (draftInvoice) {
+    document.getElementById('invoice-form')?.fillForm(draftInvoice);
+  }
+});
+
+// Auto-save drafts
+function autosaveDraft(formId) {
+  const form = document.getElementById(formId);
+  if (!form) return;
+  
+  form.addEventListener('input', debounce(() => {
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    saveToLocalStorage(`draft_${formId}`, data);
+    console.log('Draft saved');
+  }, 1000));
+}
+
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+```
+
+---
+
+### 6. Loading States
+
+**Show feedback during async operations:**
+
+```html
+<button id="save-btn" onclick="saveWithLoading(this)">
+  <span class="btn-text">Enregistrer</span>
+  <span class="btn-spinner" style="display:none">
+    <i class="fa-solid fa-spinner fa-spin"></i>
+  </span>
+</button>
+```
+
+```javascript
+async function saveWithLoading(btn) {
+  // Disable button
+  btn.disabled = true;
+  btn.querySelector('.btn-text').style.display = 'none';
+  btn.querySelector('.btn-spinner').style.display = 'inline-block';
+  
+  try {
+    // Simulate async operation
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Success
+    showToast('✓ Enregistré avec succès');
+  } catch (error) {
+    showToast('✗ Erreur lors de l\'enregistrement');
+  } finally {
+    // Re-enable button
+    btn.disabled = false;
+    btn.querySelector('.btn-text').style.display = 'inline-block';
+    btn.querySelector('.btn-spinner').style.display = 'none';
+  }
+}
+```
+
+---
+
+### Checklist: Before Delivering Prototype
+
+- [ ] All buttons have onclick handlers (no dead buttons)
+- [ ] Tab switching works
+- [ ] QuickEdit works on editable fields
+- [ ] ActionBar cards open WorkflowPanels
+- [ ] WorkflowPanel back/close buttons work
+- [ ] Form validation provides feedback
+- [ ] Submit actions persist to localStorage
+- [ ] Success/error messages appear via toast
+- [ ] Loading states during actions
+- [ ] Data loads from localStorage on page load
+
+---
+
 ### Card
 ```html
 <div class="ox-card ox-card--outlined">
