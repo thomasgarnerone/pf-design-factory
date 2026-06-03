@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Sophie Mercier · Ostéopathe · Patient File</title>
+<link rel="stylesheet" href="../../boilerplate/colors_and_type.css">
+<link rel="stylesheet" href="../../boilerplate/base.css">
+<link rel="stylesheet" href="../../boilerplate/components.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 62.5%; }
+  body {
+    font-family: 'Roboto', -apple-system, sans-serif;
+    background: var(--oxygen-color-primitive-grey-00);
+    color: var(--oxygen-color-primitive-grey-150);
+    min-height: 100vh;
+  }
+
+  /* ============================================================
+   * Page shell — OS Menu (left) + Top Bar (top) + white content
+   * ============================================================ */
+  .ox-shell {
+    --shell-chrome-bg: #00264C;
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    grid-template-rows: 5.6rem 1fr;
+    min-height: 100vh;
+    background: var(--shell-chrome-bg);
+  }
+  .ox-shell > .ox-osmenu { grid-column: 1; grid-row: 1 / span 2; }
+  .ox-shell > .ox-topbar { grid-column: 2; grid-row: 1; }
+
+  .ox-shell__content {
+    grid-column: 2;
+    grid-row: 2;
+    background: #FFFFFF;
+    border-top-left-radius: 0.8rem;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* ============================================================
+   * OS Menu
+   * ============================================================ */
+  .ox-osmenu {
+    --osmenu-bg: #00264C;
+    --osmenu-hover: rgba(255, 255, 255, 0.15);
+    --osmenu-active: rgba(255, 255, 255, 0.25);
+    --osmenu-fg: #FFFFFF;
+    --osmenu-badge-bg: #F5B400;
+    --osmenu-badge-fg: #00264C;
+    --osmenu-new-bg: #F5B400;
+    --osmenu-new-fg: #00264C;
+    width: 8rem;
+    background: var(--osmenu-bg);
+    color: var(--osmenu-fg);
+    display: flex; flex-direction: column; align-items: stretch;
+    padding: 1.2rem 0; gap: 0.2rem; user-select: none;
+    font-family: 'Roboto', sans-serif;
+  }
+  .ox-osmenu__brand { display: flex; align-items: center; justify-content: center; height: 6.4rem; margin-bottom: 0.4rem; color: var(--osmenu-fg); }
+  .ox-osmenu__brand svg { width: 2.7rem; height: 3rem; display: block; }
+  .ox-osmenu__item {
+    position: relative; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0.6rem;
+    padding: 1.2rem 0.4rem; border: 0; background: transparent;
+    color: var(--osmenu-fg); border-radius: 0; cursor: pointer;
+    text-decoration: none; text-align: center;
+    transition: background-color 150ms ease-out; font-family: inherit;
+  }
+  .ox-osmenu__item:hover { background: var(--osmenu-hover); }
+  .ox-osmenu__item:focus-visible { outline: 0.2rem solid #FFFFFF; outline-offset: -0.2rem; }
+  .ox-osmenu__item[aria-current="page"], .ox-osmenu__item.is-active { background: var(--osmenu-active); }
+  .ox-osmenu__icon { width: 2.4rem; height: 2.4rem; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; line-height: 1; color: var(--osmenu-fg); }
+  .ox-osmenu__label { font-size: 1.1rem; font-weight: 400; line-height: 1.25; color: var(--osmenu-fg); text-wrap: balance; }
+  .ox-osmenu__badge { position: absolute; top: 0.6rem; right: 0.8rem; min-width: 1.8rem; height: 1.8rem; padding: 0 0.5rem; border-radius: 99rem; background: var(--osmenu-badge-bg); color: var(--osmenu-badge-fg); font-size: 1.1rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+  .ox-osmenu__new { position: absolute; top: 0.4rem; right: 0.4rem; background: var(--osmenu-new-bg); color: var(--osmenu-new-fg); font-size: 1rem; font-weight: 700; line-height: 1; padding: 0.3rem 0.6rem; border-radius: 0.4rem; letter-spacing: 0.02em; }
+  .ox-osmenu__spacer { flex: 1; }
+  .ox-osmenu__footer { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; padding: 1.2rem 0 0.4rem; }
+  .ox-osmenu__avatar { width: 4rem; height: 4rem; border-radius: 99rem; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.4rem; color: #FFFFFF; border: 0.2rem solid var(--osmenu-bg); box-shadow: 0 0 0 0.1rem rgba(255,255,255,0.15); }
+  .ox-osmenu__avatar--user { background: #B45A1A; }
+  .ox-osmenu__avatar--more { background: var(--oxygen-color-primitive-blue-107); }
+
+  /* ============================================================
+   * Top Bar
+   * ============================================================ */
+  .ox-topbar {
+    --topbar-bg: #00264C;
+    --topbar-fg: #FFFFFF;
+    --topbar-fg-weak: rgba(255, 255, 255, 0.72);
+    --topbar-stroke: rgba(255, 255, 255, 0.24);
+    --topbar-stroke-strong: rgba(255, 255, 255, 0.40);
+    --topbar-hover: rgba(255, 255, 255, 0.08);
+    --topbar-input-bg: rgba(255, 255, 255, 0.06);
+    --topbar-badge-bg: #F5B400;
+    --topbar-badge-fg: #00264C;
+    width: 100%; height: 5.6rem;
+    background: var(--topbar-bg); color: var(--topbar-fg);
+    display: flex; align-items: center; gap: 1.2rem;
+    padding: 0 1.6rem; font-family: 'Roboto', sans-serif;
+  }
+  .ox-topbar__search { flex: 1 1 auto; min-width: 0; max-width: 56rem; height: 4rem; display: flex; align-items: center; gap: 1rem; padding: 0 1.4rem; background: var(--topbar-input-bg); border: 0.1rem solid var(--topbar-stroke); border-radius: 0.8rem; color: var(--topbar-fg); cursor: text; transition: border-color 150ms ease-out, background-color 150ms ease-out; }
+  .ox-topbar__search:hover { border-color: var(--topbar-stroke-strong); }
+  .ox-topbar__search:focus-within { border-color: #FFFFFF; background: rgba(255, 255, 255, 0.10); }
+  .ox-topbar__search i { font-size: 1.4rem; color: var(--topbar-fg-weak); flex: 0 0 auto; }
+  .ox-topbar__search input { flex: 1 1 auto; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--topbar-fg); font: inherit; font-size: 1.4rem; }
+  .ox-topbar__search input::placeholder { color: var(--topbar-fg-weak); }
+  .ox-topbar__pill { flex: 0 0 auto; height: 4rem; display: inline-flex; align-items: center; gap: 0.8rem; padding: 0 1.6rem; background: transparent; color: var(--topbar-fg); border: 0.1rem solid var(--topbar-stroke); border-radius: 99rem; font: inherit; font-size: 1.4rem; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background-color 150ms ease-out, border-color 150ms ease-out; }
+  .ox-topbar__pill:hover { background: var(--topbar-hover); border-color: var(--topbar-stroke-strong); }
+  .ox-topbar__pill:focus-visible { outline: 0.2rem solid #FFFFFF; outline-offset: 0.2rem; }
+  .ox-topbar__pill i { font-size: 1.4rem; color: var(--topbar-fg); }
+  .ox-topbar__group { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 0.4rem; }
+  .ox-topbar__icon { position: relative; width: 4rem; height: 4rem; display: inline-flex; align-items: center; justify-content: center; background: transparent; color: var(--topbar-fg); border: 0; border-radius: 99rem; cursor: pointer; transition: background-color 150ms ease-out; }
+  .ox-topbar__icon i { font-size: 1.7rem; line-height: 1; }
+  .ox-topbar__icon:hover { background: var(--topbar-hover); }
+  .ox-topbar__icon:focus-visible { outline: 0.2rem solid #FFFFFF; outline-offset: -0.2rem; }
+  .ox-topbar__badge { position: absolute; top: 0.4rem; right: 0.4rem; min-width: 1.6rem; height: 1.6rem; padding: 0 0.4rem; border-radius: 99rem; background: var(--topbar-badge-bg); color: var(--topbar-badge-fg); font-size: 1rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; line-height: 1; box-shadow: 0 0 0 0.2rem var(--topbar-bg); }
+  .ox-topbar__divider { width: 0.1rem; align-self: stretch; margin: 1.2rem 0.4rem; background: var(--topbar-stroke); }
+  .ox-topbar__avatar { width: 4rem; height: 4rem; border-radius: 99rem; border: 0; padding: 0; background: #B45A1A; color: #FFFFFF; font: inherit; font-weight: 700; font-size: 1.3rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; box-shadow: 0 0 0 0.1rem rgba(255,255,255,0.18); transition: box-shadow 150ms ease-out; }
+  .ox-topbar__avatar:hover { box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.32); }
+  .ox-topbar__spacer { flex: 1 1 auto; }
+
+  /* ============================================================
+   * SidebarMenu (Settings — sectioned, two-level hierarchy)
+   * ============================================================ */
+  .ox-sb{
+    width:28rem; flex-shrink:0;
+    background:var(--oxygen-color-component-navigation-sidebarMenu-background-default,#fff);
+    border-right:0.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+    padding:1.6rem 1.2rem 2.4rem;
+    display:flex;flex-direction:column;gap:.2rem;
+    border-top-left-radius:0.8rem;
+    overflow-y:auto;
+  }
+  .ox-sb__title{
+    font:700 1.6rem/1.2 Roboto,sans-serif;
+    color:var(--oxygen-color-semantic-neutral-prominent-stronger);
+    padding:.4rem .4rem 1.2rem;
+  }
+  .ox-sb__select{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:.8rem;width:100%;
+    padding:.9rem 1.2rem;
+    background:#fff;
+    border:0.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+    border-radius:.6rem;
+    font:400 1.4rem/1.2 Roboto,sans-serif;
+    color:var(--oxygen-color-semantic-neutral-prominent-stronger);
+    cursor:pointer;
+    margin-bottom:1.6rem;
+  }
+  .ox-sb__select i{ font-size:1rem; color:var(--oxygen-color-semantic-neutral-prominent-base); }
+
+  /* Section header (level-1) */
+  .ox-sb__section{
+    display:flex;align-items:center;gap:1rem;width:100%;
+    padding:1rem .8rem;border:0;background:transparent;
+    text-align:left;cursor:pointer;
+    color:var(--oxygen-color-semantic-neutral-prominent-stronger);
+    font:700 1.4rem/1.2 Roboto,sans-serif;
+    border-radius:.6rem;
+    margin-top:.4rem;
+  }
+  .ox-sb__section:hover{ background:var(--oxygen-color-semantic-neutral-subtle-weak); }
+  .ox-sb__section .ox-icon{
+    width:1.8rem;height:1.8rem;flex-shrink:0;
+    color:var(--oxygen-color-semantic-neutral-prominent-strong);
+  }
+  .ox-sb__section .ox-sb__chevron{
+    width:1.2rem;height:1.2rem;margin-left:auto;
+    color:var(--oxygen-color-semantic-neutral-prominent-base);
+    transition:transform .18s ease;
+  }
+  .ox-sb__section[aria-expanded="true"] .ox-sb__chevron{ transform:rotate(90deg); }
+
+  /* Sublist */
+  .ox-sb__sublist{
+    display:none;flex-direction:column;
+    padding:.2rem 0 .4rem 3.6rem;gap:.1rem;
+  }
+  .ox-sb__section[aria-expanded="true"] + .ox-sb__sublist{ display:flex; }
+
+  /* Level-2 leaf */
+  .ox-sb__sub{
+    display:flex;align-items:center;gap:.8rem;
+    padding:.8rem 1.2rem;border-radius:.5rem;
+    border:0;background:transparent;text-align:left;
+    text-decoration:none;cursor:pointer;
+    color:var(--oxygen-color-semantic-neutral-prominent-stronger);
+    font:400 1.3rem/1.3 Roboto,sans-serif;
+    width:100%;
+    position:relative;
+    transition:background-color .12s ease;
+  }
+  .ox-sb__sub:hover{ background:var(--oxygen-color-semantic-neutral-subtle-weak); }
+  .ox-sb__sub .ox-sb__chevron{
+    width:1.2rem;height:1.2rem;margin-left:auto;
+    color:var(--oxygen-color-semantic-neutral-prominent-base);
+    transition:transform .18s ease;
+  }
+  .ox-sb__sub[aria-expanded="true"] .ox-sb__chevron{ transform:rotate(90deg); }
+
+  /* Sub with children → its own nested list */
+  .ox-sb__sublist-l3{
+    display:none;flex-direction:column;
+    padding:.1rem 0 .2rem 1.6rem;gap:.1rem;
+  }
+  .ox-sb__sub[aria-expanded="true"] + .ox-sb__sublist-l3{ display:flex; }
+
+  /* Selected — parent (lighter grey) */
+  .ox-sb__sub.is-selected-parent{
+    background:var(--oxygen-color-semantic-neutral-subtle-base,#EEF2F6);
+    font-weight:500;
+  }
+
+  /* Selected — current page (darker grey) */
+  .ox-sb__sub[aria-current="page"]{
+    background:var(--oxygen-color-semantic-neutral-subtle-strong,#D9DFE5);
+    color:var(--oxygen-color-semantic-neutral-prominent-stronger);
+    font-weight:600;
+  }
+
+  /* Settings content placeholder — body hosts the Workspace */
+  .ox-settings__body{
+    flex:1; min-width:0; min-height:0;
+    display:flex;
+    padding:1.6rem;
+    background:#F1F7FE;
+    overflow:hidden;
+  }
+
+  /* ============================================================
+   * Workspace (embedded inside the settings body)
+   * ============================================================ */
+  .ws{
+    --workspace-gap: 1.6rem;
+    --workspace-size: calc(100% - var(--workspace-gap));
+    display:flex;
+    gap:var(--workspace-gap);
+    flex:1;
+    min-width:0;
+    min-height:0;
+    position:relative;
+  }
+  .ws > *{ transition: width .3s ease, flex-basis .3s ease; }
+
+  .ws__focus{
+    flex-basis:0; flex-grow:1; min-width:0;
+    display:flex; flex-direction:column; gap:1.2rem;
+    min-height:0;
+  }
+
+  .ws__pageheader{
+    background:#fff;
+    border-radius:1.6rem;
+    padding:1.2rem 1.6rem;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1.6rem;
+    flex-shrink:0;
+  }
+  .ws__pageheader h1{
+    font:var(--oxygen-font-semantic-title-xl-bold);
+    color:var(--oxygen-color-semantic-neutral-prominent-stronger);
+    margin:0;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .ws__pageheader__actions{display:flex;align-items:center;gap:.8rem;flex-shrink:0}
+
+  .ws__content{
+    flex-grow:1;
+    min-height:0;
+    border-radius:1.6rem;
+    background:transparent;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    gap:1.2rem;
+  }
+  .ws__main{
+    flex:1; min-width:0;
+    background:#fff;
+    border-radius:1.6rem;
+    overflow:auto;
+    padding:2.4rem;
+  }
+
+  /* Settings content (default state) */
+  .settings-content{ display:flex; flex-direction:column; gap:2rem; max-width:80rem; }
+  .settings-content h2{ font:var(--oxygen-font-semantic-title-l-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 .4rem; }
+  .settings-content p.lede{ font:var(--oxygen-font-semantic-body-m-regular); color:var(--oxygen-color-semantic-neutral-prominent-base); margin:0; }
+  .settings-card{ background:#fff; border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius:1.2rem; padding:2rem; }
+  .settings-card h3{ font:var(--oxygen-font-semantic-body-l-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 .4rem; }
+  .settings-card > p{ font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0 0 1.6rem; }
+  .settings-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:1.6rem; padding:1.2rem 0; border-top:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); }
+  .settings-row:first-of-type{ border-top:none; padding-top:0; }
+  .settings-row__label{ flex:1; min-width:0; }
+  .settings-row__label strong{ font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); display:block; }
+  .settings-row__label span{ font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); display:block; margin-top:.2rem; }
+  .settings-row__control{ flex-shrink:0; }
+  .pill-toggle{ position:relative; width:4.4rem; height:2.4rem; border-radius:99rem; background:var(--oxygen-color-semantic-neutral-subtle-strong); border:none; cursor:pointer; transition:background-color .15s; }
+  .pill-toggle::after{ content:""; position:absolute; top:.2rem; left:.2rem; width:2rem; height:2rem; border-radius:50%; background:#fff; transition:transform .15s; box-shadow:0 .1rem .2rem rgba(0,0,0,.15); }
+  .pill-toggle.is-on{ background:var(--oxygen-color-semantic-brand-prominent-base); }
+  .pill-toggle.is-on::after{ transform:translateX(2rem); }
+
+  /* ============================================================
+   * Workflow panel (right rail)
+   * ============================================================ */
+  .ws__workflow{
+    flex-shrink:0; width:0; overflow:hidden; display:flex;
+  }
+  .ws.has-workflow .ws__workflow{
+    width:calc(var(--workspace-size) * (1 / 3));
+    min-width:34rem;
+  }
+  .ws.has-workflow.is-comfort .ws__workflow{
+    width:calc(var(--workspace-size) * (1 / 2));
+  }
+  .wp{ background:#fff; border-radius:1.6rem; padding:1.6rem; flex:1; min-width:32rem; display:flex; flex-direction:column; gap:.8rem; }
+  .wp__header{ display:flex; align-items:center; justify-content:space-between; gap:.4rem; }
+  .wp__head-left{ display:flex; align-items:center; min-width:0; }
+  .wp__title{ font:var(--oxygen-font-semantic-title-l-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0; padding:0 .8rem; line-height:1.3; }
+  .wp__head-right{ display:flex; align-items:center; gap:.4rem; flex-shrink:0; }
+  .wp__hbtn{ width:3.2rem; height:3.2rem; border:none; background:transparent; border-radius:50%; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; color:var(--oxygen-color-semantic-neutral-prominent-strong); }
+  .wp__hbtn:hover{ background:var(--oxygen-color-semantic-neutral-subtle-weak); }
+  .wp__hbtn svg{ width:1.6rem; height:1.6rem; }
+  .wp__body{
+    flex-grow:1; overflow-y:auto; padding:.8rem;
+    display:flex; flex-direction:column; gap:1.2rem;
+  }
+  .wp__body label{ display:block; font:var(--oxygen-font-semantic-body-s-bold); margin:0 0 .6rem; color:var(--oxygen-color-semantic-neutral-prominent-strong); }
+  .wp__body input,.wp__body select,.wp__body textarea{ width:100%; border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius:.8rem; padding:1rem 1.2rem; font:var(--oxygen-font-semantic-body-m-regular); background:#fff; outline:none; }
+  .wp__body textarea{ min-height:8rem; resize:vertical; }
+  .wp__body input:focus,.wp__body select:focus,.wp__body textarea:focus{ border-color:var(--oxygen-color-semantic-brand-prominent-base); box-shadow:0 0 0 .2rem var(--oxygen-color-semantic-brand-subtle-weak); }
+  .wp__footer{ display:flex; justify-content:flex-end; align-items:center; gap:1.2rem; padding-top:.8rem; border-top:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); margin-top:.4rem; padding-top:1.2rem; }
+
+  /* ============================================================
+   * Focus panel (side panel, sits right of page content under PageHeader)
+   * ============================================================ */
+  .fp{
+    flex-shrink:0;
+    width:0;
+    overflow:hidden;
+    display:flex;
+    transition:width .3s ease;
+  }
+  .ws.has-focus .fp{
+    width:36rem;
+  }
+  .fp__inner{
+    background:#fff;
+    border-radius:1.6rem;
+    flex:1;
+    min-width:32rem;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+  .fp__header{ display:flex; align-items:center; justify-content:space-between; padding:1.6rem; gap:1.2rem; border-bottom:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); }
+  .fp__head-left{ display:flex; align-items:center; gap:.8rem; min-width:0; }
+  .fp__title{ font:var(--oxygen-font-semantic-title-s-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0; line-height:1.2; }
+  .fp__sub{ font:var(--oxygen-font-semantic-body-xs-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:.2rem 0 0; }
+  .fp__actions{ display:flex; align-items:center; gap:.4rem; flex-shrink:0; }
+  .fp__body{ flex:1; overflow-y:auto; padding:1.6rem; display:flex; flex-direction:column; gap:1.2rem; }
+  .fp__card{ background:var(--oxygen-color-semantic-neutral-subtle-weaker); border-radius:.8rem; padding:1.2rem 1.4rem; }
+  .fp__card h3{ font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 .4rem; }
+  .fp__card > p{ font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0 0 1rem; }
+  .fp__field{ margin-top:.8rem; }
+  .fp__field label{ display:block; font:var(--oxygen-font-semantic-body-xs-bold); color:var(--oxygen-color-semantic-neutral-prominent-strong); margin-bottom:.4rem; }
+  .fp__field input,.fp__field select,.fp__field textarea{ width:100%; border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius:.6rem; padding:.8rem 1rem; font:var(--oxygen-font-semantic-body-s-regular); background:#fff; outline:none; }
+  .fp__field input:focus,.fp__field select:focus,.fp__field textarea:focus{ border-color:var(--oxygen-color-semantic-brand-prominent-base); box-shadow:0 0 0 .2rem var(--oxygen-color-semantic-brand-subtle-weak); }
+  .fp__footer{ padding:1.2rem 1.6rem; border-top:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); display:flex; justify-content:flex-end; gap:.8rem; }
+
+  /* ============================================================
+   * Variant switcher — dev-only floating chip
+   * ============================================================ */
+  .variant-switcher{
+    position:fixed; top:1.2rem; right:1.6rem; z-index:50;
+    display:flex; align-items:center; gap:.4rem;
+    background:rgba(15, 23, 32, .72); backdrop-filter:blur(.8rem);
+    border-radius:99rem; padding:.4rem;
+    box-shadow:0 .4rem 1.6rem rgba(0,0,0,.3);
+    font-family:'Roboto',sans-serif;
+  }
+  .variant-switcher__label{ font-size:1rem; font-weight:700; color:rgba(255,255,255,.6); text-transform:uppercase; letter-spacing:.06em; padding:0 .8rem 0 1rem; }
+  .variant-switcher button{ background:transparent; border:none; color:rgba(255,255,255,.85); font:600 1.2rem/1 'Roboto',sans-serif; padding:.7rem 1.2rem; border-radius:99rem; cursor:pointer; transition:background-color .15s, color .15s; }
+  .variant-switcher button:hover{ background:rgba(255,255,255,.1); color:#fff; }
+  .variant-switcher button.is-active{ background:#fff; color:var(--oxygen-color-semantic-neutral-prominent-stronger); }
+
+  /* ============================================================
+   * PF ActionBar
+   * ============================================================ */
+  .pf-actionbar {
+    width: 26rem;
+    flex: none;
+    background: var(--oxygen-color-primitive-white);
+    border-radius: 1.2rem;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    overflow-y: auto;
+  }
+  .pf-actionbar__heading {
+    font: var(--oxygen-font-semantic-body-xs-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--oxygen-color-semantic-neutral-prominent-weak);
+    padding: 0.8rem 0.4rem 0.4rem;
+  }
+  .pf-actionbar__item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.6rem;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font: var(--oxygen-font-semantic-body-m-regular);
+    color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+    text-decoration: none;
+  }
+  .pf-actionbar__item:hover { background: var(--oxygen-color-semantic-neutral-subtle-weak); }
+  .pf-actionbar__item.is-active {
+    background: var(--oxygen-color-semantic-brand-subtle-weak);
+    color: var(--oxygen-color-semantic-brand-prominent-base);
+    font: var(--oxygen-font-semantic-body-m-bold);
+  }
+  .pf-actionbar__count {
+    margin-left: auto;
+    font: var(--oxygen-font-semantic-body-xs-bold);
+    color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  }
+</style>
+</head>
+<body>
+
+<div class="ox-shell" data-screen-label="B2B Settings Page Template">
+
+  <!-- OS Menu (left rail) -->
+  <nav class="ox-osmenu" aria-label="Primary">
+    <div class="ox-osmenu__brand" aria-label="Doctolib">
+      <svg viewBox="0 0 27 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M26.383 14.5641C27.1787 10.1879 27.1787 1.54163 13.4401 0.0829107C9.8066 -0.288401 4.18388 0.6664 0.125981 1.3825C0.0729362 1.3825 0.0464139 1.43554 0.0198917 1.48859C-0.00663056 1.54163 -0.00663056 1.67424 0.0198917 1.78033C0.125981 2.0986 0.523814 2.68209 1.00121 2.89427C1.37253 3.07992 2.19472 3.02688 2.3008 3.02688C14.8458 1.91295 23.8103 4.64474 22.1925 13.8214C21.2377 19.1259 17.7633 25.7299 8.18874 25.7299C6.25262 25.7299 6.01392 25.5708 6.25262 24.006C6.27914 23.7938 9.24963 7.93349 9.43529 6.34216C9.43529 6.28911 9.40877 6.23607 9.35572 6.20955C9.24963 6.20955 7.15438 5.70562 6.65045 7.72131C6.54436 8.14567 1.50514 26.9234 1.26644 27.9047C0.94817 29.2839 1.87645 30 8.02961 30C23.5982 29.9735 25.9321 17.1367 26.383 14.5641Z" fill="currentColor"/>
+      </svg>
+    </div>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__icon"><i class="fa-solid fa-calendar-days"></i></span><span class="ox-osmenu__label">Calendar</span></button>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__icon"><i class="fa-solid fa-circle-check"></i></span><span class="ox-osmenu__label">Tasks</span></button>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__new">New</span><span class="ox-osmenu__icon"><i class="fa-solid fa-comment-medical"></i></span><span class="ox-osmenu__label">Connect (Tele-expertise)</span></button>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__badge">2</span><span class="ox-osmenu__icon"><i class="fa-solid fa-comment-dots"></i></span><span class="ox-osmenu__label">Patient Messaging</span></button>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__icon"><i class="fa-solid fa-folder-open"></i></span><span class="ox-osmenu__label">Patient Management</span></button>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__icon"><i class="fa-solid fa-envelope"></i></span><span class="ox-osmenu__label">Emails</span></button>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__badge">2</span><span class="ox-osmenu__icon"><i class="fa-solid fa-file-import"></i></span><span class="ox-osmenu__label">Import of documents</span></button>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__icon"><i class="fa-solid fa-euro-sign"></i></span><span class="ox-osmenu__label">Billing</span></button>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__icon"><i class="fa-solid fa-chart-line"></i></span><span class="ox-osmenu__label">My activity</span></button>
+    <span class="ox-osmenu__spacer" aria-hidden="true"></span>
+    <div class="ox-osmenu__footer">
+      <span class="ox-osmenu__avatar ox-osmenu__avatar--user">BJ</span>
+      <span class="ox-osmenu__avatar ox-osmenu__avatar--more">+37</span>
+    </div>
+  </nav>
+
+  <!-- Top Bar -->
+  <header class="ox-topbar" role="banner">
+    <label class="ox-topbar__search">
+      <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+      <input type="search" placeholder="Search for a patient">
+    </label>
+    <button type="button" class="ox-topbar__pill"><i class="fa-regular fa-id-card"></i><span>Insurance card</span></button>
+    <div class="ox-topbar__group" role="group" aria-label="Telehealth">
+      <button type="button" class="ox-topbar__icon" aria-label="Video consultation"><i class="fa-solid fa-video"></i><span class="ox-topbar__badge">1</span></button>
+      <button type="button" class="ox-topbar__icon" aria-label="Audio levels"><i class="fa-solid fa-wave-square"></i></button>
+      <span class="ox-topbar__divider" aria-hidden="true"></span>
+      <button type="button" class="ox-topbar__icon" aria-label="Microphone"><i class="fa-solid fa-microphone"></i></button>
+    </div>
+    <span class="ox-topbar__spacer" aria-hidden="true"></span>
+    <button type="button" class="ox-topbar__pill"><i class="fa-regular fa-circle-question"></i><span>Help and contact</span></button>
+    <div class="ox-topbar__group" role="group" aria-label="System">
+      <button type="button" class="ox-topbar__icon" aria-label="Announcements"><i class="fa-solid fa-bullhorn"></i></button>
+      <button type="button" class="ox-topbar__icon" aria-label="Team"><i class="fa-solid fa-user-group"></i></button>
+      <button type="button" class="ox-topbar__icon" aria-label="Lock"><i class="fa-solid fa-lock"></i></button>
+      <button type="button" class="ox-topbar__icon" aria-label="Settings"><i class="fa-solid fa-gear"></i></button>
+    </div>
+    <button type="button" class="ox-topbar__avatar">BJ</button>
+  </header>
+
+  <!-- White content area: SidebarMenu (stacked left) + empty body -->
+  <main class="ox-shell__content" aria-label="Settings">
+
+
+    <div class="ox-settings__body" aria-label="Settings content">
+      <div class="ws" id="ws-settings">
+        <div class="ws__focus">
+          <header class="ws__pageheader">
+            <h1>Advanced settings</h1>
+            <div class="ws__pageheader__actions">
+              <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" data-open-focus><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Show details</span></span></button>
+              <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-small" type="button" data-open-workflow><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Add integration</span></span></button>
+            </div>
+          </header>
+
+          <div class="ws__content" id="ws-content">
+
+            <!-- Main page content (left) -->
+            <div class="ws__main">
+              <div class="settings-content" data-default-content>
+                <div>
+                  <h2>Advanced settings</h2>
+                  <p class="lede">Manage support access, third-party integrations, and data retention rules for your practice.</p>
+                </div>
+
+                <section class="settings-card">
+                  <h3>Doctolib support access</h3>
+                  <p>Allow Doctolib support agents to access your account for assistance with a specific request.</p>
+                  <div class="settings-row">
+                    <div class="settings-row__label"><strong>Temporary access for troubleshooting</strong><span>Grants read-only access for 24 hours when an active ticket is open.</span></div>
+                    <div class="settings-row__control"><button type="button" class="pill-toggle is-on" aria-pressed="true"></button></div>
+                  </div>
+                  <div class="settings-row">
+                    <div class="settings-row__label"><strong>Full-access screen sharing</strong><span>Requires explicit confirmation each session. Auto-revokes after 1 hour.</span></div>
+                    <div class="settings-row__control"><button type="button" class="pill-toggle" aria-pressed="false"></button></div>
+                  </div>
+                </section>
+
+                <section class="settings-card">
+                  <h3>Integrations</h3>
+                  <p>Connect your calendar, billing tools, and electronic health record systems.</p>
+                  <div class="settings-row">
+                    <div class="settings-row__label"><strong>Apple Calendar</strong><span>Connected to bjohanssen@cardio.fr · last sync 4 min ago</span></div>
+                    <div class="settings-row__control"><button class="ox-button ox-button--variant-outlined ox-button--ui-neutral ox-button--size-small" type="button" data-open-focus><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Details</span></span></button></div>
+                  </div>
+                  <div class="settings-row">
+                    <div class="settings-row__label"><strong>Stripe billing</strong><span>Not connected</span></div>
+                    <div class="settings-row__control"><button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" data-open-workflow><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Connect</span></span></button></div>
+                  </div>
+                </section>
+
+                <section class="settings-card">
+                  <h3>Data retention</h3>
+                  <p>Control how long patient and activity data is stored on Doctolib servers.</p>
+                  <div class="settings-row">
+                    <div class="settings-row__label"><strong>Archive inactive patient files</strong><span>After 5 years of no activity, patient files are moved to cold storage.</span></div>
+                    <div class="settings-row__control"><button type="button" class="pill-toggle is-on" aria-pressed="true"></button></div>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <!-- Focus panel (right side, under PageHeader) -->
+            <aside class="fp" id="fp" aria-label="Integration details">
+              <div class="fp__inner">
+                <header class="fp__header">
+                  <div class="fp__head-left">
+                    <div>
+                      <h3 class="fp__title">Apple Calendar</h3>
+                      <p class="fp__sub">Connected · last sync 4 min ago</p>
+                    </div>
+                  </div>
+                  <div class="fp__actions">
+                    <button class="wp__hbtn" type="button" aria-label="Close" data-close-focus><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                  </div>
+                </header>
+                <div class="fp__body">
+                  <div class="fp__card">
+                    <h3>Connection</h3>
+                    <p>Connected to <strong>bjohanssen@cardio.fr</strong></p>
+                    <div class="fp__field"><label>Sync direction</label><select><option>Two-way</option><option>Doctolib → Apple</option><option>Apple → Doctolib</option></select></div>
+                    <div class="fp__field"><label>Sync frequency</label><select><option>Every 5 minutes</option><option>Every 15 minutes</option><option>Manual only</option></select></div>
+                  </div>
+                  <div class="fp__card">
+                    <h3>Visibility</h3>
+                    <p>Control which calendars are exposed on the connected account.</p>
+                    <div class="fp__field"><label>Calendars to sync</label><select><option>All clinic calendars</option><option>Only my calendar</option><option>Custom selection…</option></select></div>
+                  </div>
+                  <div class="fp__card">
+                    <h3>Activity</h3>
+                    <p>Last 24 hours · <strong>12 events synced</strong>, 0 errors.</p>
+                  </div>
+                </div>
+                <div class="fp__footer">
+                  <button class="ox-button ox-button--variant-outlined ox-button--ui-danger ox-button--size-small" type="button"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Disconnect</span></span></button>
+                  <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-small" type="button"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Save</span></span></button>
+                </div>
+              </div>
+            </aside>
+
+          </div>
+        </div>
+
+        <!-- WORKFLOW PANEL (right rail) -->
+        <aside class="ws__workflow">
+          <div class="wp">
+            <div class="wp__header">
+              <div class="wp__head-left">
+                <h2 class="wp__title">Add integration</h2>
+              </div>
+              <div class="wp__head-right">
+                <button class="wp__hbtn" type="button" aria-label="More actions"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg></button>
+                <button class="wp__hbtn" type="button" aria-label="Toggle comfort mode" data-toggle-comfort><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+                <button class="wp__hbtn" type="button" aria-label="Close" data-close-workflow><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+              </div>
+            </div>
+            <div class="wp__body">
+              <div>
+                <label>Integration type</label>
+                <select><option>Stripe billing</option><option>Apple Calendar</option><option>Google Workspace</option><option>Microsoft 365</option><option>Doctolib API</option></select>
+              </div>
+              <div>
+                <label>Display name</label>
+                <input type="text" placeholder="e.g. Main billing account">
+              </div>
+              <div>
+                <label>Environment</label>
+                <select><option>Production</option><option>Sandbox</option></select>
+              </div>
+              <div>
+                <label>Description (optional)</label>
+                <textarea placeholder="Notes for your team about this integration…"></textarea>
+              </div>
+            </div>
+            <div class="wp__footer">
+              <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-medium" type="button" data-close-workflow><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Cancel</span></span></button>
+              <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" type="button"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Connect</span></span></button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Variant switcher (dev-only chrome — toggles workspace states) -->
+<div class="variant-switcher" role="toolbar" aria-label="Template variant">
+  <span class="variant-switcher__label">Variant</span>
+  <button type="button" data-variant="default" class="is-active">Default</button>
+  <button type="button" data-variant="workflow">+ Workflow</button>
+  <button type="button" data-variant="focus">+ Focus</button>
+  <button type="button" data-variant="both">+ Both</button>
+</div>
+
+<script>
+  // Sidebar expand/collapse
+  document.querySelectorAll('.ox-sb__section[aria-expanded], .ox-sb__sub[aria-expanded]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+
+  // Pill toggles
+  document.querySelectorAll('.pill-toggle').forEach(t => {
+    t.addEventListener('click', () => {
+      const on = t.classList.toggle('is-on');
+      t.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  });
+
+  // Variant switcher
+  const ws = document.getElementById('ws-settings');
+  const fp = document.getElementById('fp');
+  const switcher = document.querySelector('.variant-switcher');
+
+  function applyVariant(name){
+    ws.classList.remove('has-workflow','has-focus');
+    if (name === 'workflow') ws.classList.add('has-workflow');
+    if (name === 'focus')    ws.classList.add('has-focus');
+    if (name === 'both')     ws.classList.add('has-workflow','has-focus');
+    switcher.querySelectorAll('button').forEach(b => b.classList.toggle('is-active', b.dataset.variant === name));
+    history.replaceState(null, '', '#' + name);
+  }
+
+  switcher.addEventListener('click', e => {
+    const b = e.target.closest('button[data-variant]');
+    if (b) applyVariant(b.dataset.variant);
+  });
+
+  // Inline triggers in the page itself
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-open-workflow]')) {
+      applyVariant(ws.classList.contains('has-focus') ? 'both' : 'workflow');
+    }
+    if (e.target.closest('[data-close-workflow]')) {
+      applyVariant(ws.classList.contains('has-focus') ? 'focus' : 'default');
+    }
+    if (e.target.closest('[data-open-focus]')) {
+      applyVariant(ws.classList.contains('has-workflow') ? 'both' : 'focus');
+    }
+    if (e.target.closest('[data-close-focus]')) {
+      applyVariant(ws.classList.contains('has-workflow') ? 'workflow' : 'default');
+    }
+    if (e.target.closest('[data-toggle-comfort]')) {
+      ws.classList.toggle('is-comfort');
+    }
+  });
+
+  // Restore from hash
+  const initial = (location.hash || '').replace('#','');
+  if (['workflow','focus','both'].includes(initial)) applyVariant(initial);
+</script>
+</body>
+</html>

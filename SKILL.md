@@ -46,7 +46,31 @@ boilerplate/
 └── tokens.css                       ← full design token set
 ```
 
-**Never modify these files. Never copy their content inline. Reference by relative path only.**
+**CSS files (base.css, components.css, tokens.css):** Reference by relative path only. Never copy or modify.
+
+**Component HTML files (*.html):** Copy the HTML structure and inline `<style>` blocks as needed. These contain component-specific styles not in components.css.
+
+### Boilerplate component HTML files
+
+The boilerplate/ directory contains ~70 component HTML files with exact structures and inline styles:
+
+**Key files for Patient File prototypes:**
+- `patientfilemenu.html` - PatientFileMenu with pill-style tabs (`.mh` > `.tabs` > `.tab`)
+- `sectionmenu.html` - Generic SectionMenu with underline tabs
+- `patientfileheader.html` - ChildViewHeader with patient identity
+- `patientfileactionbar.html` - ActionBar with contextual cards
+- `workflowpanel.html` - WorkflowPanel structure
+- `cardcollection.html` - CardCollection layouts
+- `os-menu.html` - OS Menu (left navigation)
+
+**Rule:** Always check these files FIRST for component-specific HTML structure and CSS classes. Many components (like PatientFileMenu) use custom inline styles not in `components.css`.
+
+To find available patterns:
+```bash
+ls ~/doctolib/pf-design-factory/boilerplate/*.html
+```
+
+---
 
 The template already handles all 4 workspace states via CSS classes:
 - Default: `<div class="ws">`
@@ -183,28 +207,56 @@ Colors: `ox-avatar--dark-primary` (blue) · `ox-avatar--dark-red` · default (gr
 
 ---
 
-### Tabs (SectionMenu)
+### Tabs
+
+**For Patient File navigation, use PatientFileMenu pattern** (from `boilerplate/patientfilemenu.html`):
+
 ```html
-<div class="ox-tabs">
-  <ul class="ox-tabs__list" role="tablist">
-    <li class="ox-tabs__tab" role="presentation">
-      <button class="ox-tabs__button" role="tab" aria-current="true">Santé</button>
-    </li>
-    <li class="ox-tabs__tab" role="presentation">
-      <button class="ox-tabs__button" role="tab">Financier</button>
-    </li>
-    <li class="ox-tabs__tab" role="presentation">
-      <button class="ox-tabs__button" role="tab">Historique</button>
-    </li>
-    <li class="ox-tabs__tab" role="presentation">
-      <button class="ox-tabs__button" role="tab">Administratif</button>
-    </li>
-  </ul>
-  <div class="ox-tabs__panel" role="tabpanel">
-    <!-- CardCollections go here -->
+<div class="pfm">
+  <div class="pfm__main">
+    <div class="mh">
+      <div class="tabs" role="tablist">
+        <button class="tab is-active" role="tab" aria-selected="true">Santé</button>
+        <button class="tab" role="tab" aria-selected="false">Financier</button>
+        <button class="tab" role="tab" aria-selected="false">Historique</button>
+        <button class="tab" role="tab" aria-selected="false">Administratif</button>
+      </div>
+    </div>
+    <div class="panel" role="tabpanel">
+      <!-- content -->
+    </div>
   </div>
 </div>
 ```
+
+Required CSS (copy from `patientfilemenu.html` inline styles):
+```css
+.pfm { display: flex; flex-direction: column; gap: .8rem; }
+.pfm__main { display: flex; flex-direction: column; gap: .8rem; flex: 1; min-width: 0; }
+.mh { background: #fff; border-radius: 1.2rem; padding: .6rem; }
+.tabs { display: flex; align-items: center; gap: .4rem; }
+.tab { padding: .8rem 1.2rem; border-radius: .8rem; border: none; background: transparent; cursor: pointer; }
+.tab.is-active { background: var(--oxygen-color-semantic-brand-subtle-weak); color: var(--oxygen-color-semantic-brand-prominent-strong); font-weight: 600; }
+.panel { background: #fff; border-radius: 1.2rem; padding: 2.4rem; flex: 1; overflow-y: auto; }
+```
+
+Tab switching JavaScript:
+```javascript
+document.querySelectorAll('.tabs').forEach(tablist => {
+  tablist.addEventListener('click', e => {
+    const tab = e.target.closest('.tab');
+    if (!tab) return;
+    tablist.querySelectorAll('.tab').forEach(t => {
+      t.classList.remove('is-active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    tab.classList.add('is-active');
+    tab.setAttribute('aria-selected', 'true');
+  });
+});
+```
+
+**For generic tabs elsewhere** (underline style), use `ox-tabs` pattern from `boilerplate/tabs.html`.
 
 ---
 
