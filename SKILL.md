@@ -142,39 +142,65 @@ After presenting options and questions:
 
 **Variant switcher implementation:**
 
-Add at top of prototype (after ChildViewHeader, before tabs):
+**IMPORTANT:** Place in the **Top Bar** (right side, between search and notifications).
+
+**Why Top Bar:**
+- Always visible (doesn't scroll away)
+- Global view-mode control (like theme/language selectors)
+- Keeps main content area clean
+- Standard pattern for app-level toggles
 
 ```html
-<div class="variant-switcher">
-  <div class="variant-switcher__label">Architecture:</div>
-  <div class="variant-switcher__options">
+<!-- Inside .ox-topbar, after search, before notifications -->
+<div class="ox-topbar__group">
+  <div class="variant-switcher">
     <label class="variant-switcher__option">
       <input type="radio" name="variant" value="option-a" checked>
-      <span>Option A: Conservative (4 tabs)</span>
+      <span>Option A</span>
     </label>
     <label class="variant-switcher__option">
       <input type="radio" name="variant" value="option-b">
-      <span>Option B: Optimized (3 tabs)</span>
+      <span>Option B</span>
     </label>
   </div>
 </div>
 ```
 
 ```css
+/* Top Bar variant switcher - blends with Top Bar dark theme */
 .variant-switcher {
-  display: flex; align-items: center; gap: 1.6rem;
-  padding: 1.2rem 1.6rem; background: var(--oxygen-color-semantic-informative-subtle-weaker);
-  border-radius: 0.8rem; margin-bottom: 1.6rem;
-}
-.variant-switcher__label {
-  font: var(--oxygen-font-semantic-body-m-bold);
-  color: var(--oxygen-color-semantic-neutral-prominent-strong);
-}
-.variant-switcher__options {
-  display: flex; gap: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 0.1rem solid rgba(255, 255, 255, 0.24);
+  border-radius: 0.6rem;
 }
 .variant-switcher__option {
-  display: flex; align-items: center; gap: 0.6rem; cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1.3rem;
+  transition: all 0.2s ease;
+}
+.variant-switcher__option:has(input:checked) {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+.variant-switcher__option input[type="radio"] {
+  appearance: none;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+.variant-switcher__option:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.12);
 }
 ```
 

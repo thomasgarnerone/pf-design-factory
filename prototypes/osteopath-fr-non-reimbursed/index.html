@@ -152,40 +152,49 @@
   .ws__pageheader__actions{display:flex;align-items:center;gap:.8rem;flex-shrink:0}
 
   /* ============================================================
-   * VARIANT SWITCHER (new)
+   * VARIANT SWITCHER (Top Bar theme)
    * ============================================================ */
-  .variant-switcher {
-    background: var(--oxygen-color-semantic-informative-subtle-weak);
-    border-radius: 1.6rem;
-    padding: 1.6rem;
+  .ox-topbar__group {
     display: flex;
     align-items: center;
-    gap: 1.6rem;
-    flex-shrink: 0;
+    gap: 1.2rem;
   }
-  .variant-switcher__label {
-    font: var(--oxygen-font-semantic-body-m-bold);
-    color: var(--oxygen-color-semantic-neutral-prominent-stronger);
-  }
-  .variant-switcher__options {
+  .variant-switcher {
     display: flex;
-    gap: 2.4rem;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 0.1rem solid rgba(255, 255, 255, 0.24);
+    border-radius: 0.6rem;
+    flex-shrink: 0;
   }
   .variant-switcher__option {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.4rem;
     cursor: pointer;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1.3rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .variant-switcher__option:has(input:checked) {
+    background: rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
   }
   .variant-switcher__option input[type="radio"] {
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
+    appearance: none;
+    width: 0;
+    height: 0;
+    margin: 0;
   }
   .variant-switcher__option label {
-    font: var(--oxygen-font-semantic-body-m-regular);
-    color: var(--oxygen-color-semantic-neutral-prominent-strong);
     cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: 500;
   }
 
   .ws__content{
@@ -492,6 +501,21 @@
       <i class="fa-solid fa-magnifying-glass"></i>
       <input type="search" placeholder="Rechercher un patient">
     </label>
+
+    <!-- Variant Switcher in Top Bar -->
+    <div class="ox-topbar__group">
+      <div class="variant-switcher">
+        <div class="variant-switcher__option">
+          <input type="radio" id="variant-a" name="variant" value="a" checked>
+          <label for="variant-a">Option A: Conservative (4 tabs)</label>
+        </div>
+        <div class="variant-switcher__option">
+          <input type="radio" id="variant-b" name="variant" value="b">
+          <label for="variant-b">Option B: Optimized (3 tabs)</label>
+        </div>
+      </div>
+    </div>
+
     <button type="button" class="ox-topbar__pill"><i class="fa-regular fa-circle-question"></i><span>Aide</span></button>
     <span class="ox-topbar__spacer"></span>
     <button type="button" class="ox-topbar__icon"><i class="fa-solid fa-bell"></i></button>
@@ -526,21 +550,6 @@
               </button>
             </div>
           </header>
-
-          <!-- VARIANT SWITCHER -->
-          <div class="variant-switcher">
-            <span class="variant-switcher__label">Comparer les options :</span>
-            <div class="variant-switcher__options">
-              <div class="variant-switcher__option">
-                <input type="radio" id="variant-a" name="variant" value="a" checked>
-                <label for="variant-a">Option A: Conservative (4 tabs)</label>
-              </div>
-              <div class="variant-switcher__option">
-                <input type="radio" id="variant-b" name="variant" value="b">
-                <label for="variant-b">Option B: Optimized (3 tabs)</label>
-              </div>
-            </div>
-          </div>
 
           <div class="ws__content">
             <div class="ws__main">
