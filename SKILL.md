@@ -350,53 +350,113 @@ For each option (A, B, C):
 
 ## Output strategy
 
-**Pure HTML/CSS — no React, no JSX, no build step.**
+**⚠️ CRITICAL: Use real React components — NEVER create custom HTML/CSS.**
 
-Every prototype is built by:
-1. Copying `boilerplate/B2B_Settings_Page_Template.html` as the starting point
-2. Removing the settings sidebar (`.ox-sb`) — not used in PF
-3. Replacing the page header with `PatientFileHeader`
-4. Replacing the main content area with PF `CardCollections` and `Cards`
-5. Adapting the WorkflowPanel content for the cluster
-6. Referencing shared CSS files by relative path — never copying or rewriting them
+Every prototype MUST use the actual production components:
+- `PatientFileMenu` from `@doctolib/pro-patient-file`
+- `SectionMenu` from `@doctolib/global-ux`
+- `ActionBar`, `WorkflowPanel` from design system packages
 
-The prototype opens directly in a browser with `python3 -m http.server 3000`. No CORS issues, no build step, no custom CSS.
+**Why React components are mandatory:**
+
+✅ **Same code that goes to production** - Test the real thing  
+✅ **All features included** - Dropdown, accessibility, keyboard nav, responsive  
+✅ **Automatically updated** - Get bug fixes and improvements from DS team  
+✅ **No maintenance burden** - Don't recreate what already exists  
+✅ **Real behavior** - Stakeholders test actual implementation  
+✅ **Design tokens** - Applied correctly via theming  
+
+❌ **Never create custom HTML/CSS** - It diverges immediately, missing features, double work, false validation
 
 ---
 
-## Boilerplate structure
+## Prototype development environment
 
-```
-boilerplate/
-├── B2B_Settings_Page_Template.html  ← shell to copy and adapt
-├── base.css                         ← Oxygen base styles (1rem = 10px)
-├── colors_and_type.css              ← color + typography tokens
-├── components.css                   ← all Oxygen component CSS classes
-└── tokens.css                       ← full design token set
-```
+**Location:** `~/doctolib/pro-frontend/packages/prototype-app`
 
-**CSS files (base.css, components.css, tokens.css):** Reference by relative path only. Never copy or modify.
+**Tech stack:**
+- Vite + React + TypeScript
+- Imports from `@doctolib/global-ux` and `@doctolib/pro-patient-file`
+- Managed in pro-frontend monorepo via Nx workspace
 
-**Component HTML files (*.html):** Copy the HTML structure and inline `<style>` blocks as needed. These contain component-specific styles not in components.css.
-
-### Boilerplate component HTML files
-
-The boilerplate/ directory contains ~70 component HTML files with exact structures and inline styles:
-
-**Key files for Patient File prototypes:**
-- `patientfilemenu.html` - PatientFileMenu with pill-style tabs (`.mh` > `.tabs` > `.tab`)
-- `sectionmenu.html` - Generic SectionMenu with underline tabs
-- `patientfileheader.html` - ChildViewHeader with patient identity
-- `patientfileactionbar.html` - ActionBar with contextual cards
-- `workflowpanel.html` - WorkflowPanel structure
-- `cardcollection.html` - CardCollection layouts
-- `os-menu.html` - OS Menu (left navigation)
-
-**Rule:** Always check these files FIRST for component-specific HTML structure and CSS classes. Many components (like PatientFileMenu) use custom inline styles not in `components.css`.
-
-To find available patterns:
+**Setup** (if prototype-app doesn't exist yet):
 ```bash
-ls ~/doctolib/pf-design-factory/boilerplate/*.html
+cd ~/doctolib/pro-frontend
+# See Step 2 setup instructions below
+```
+
+**Development:**
+```bash
+cd ~/doctolib/pro-frontend
+npx nx serve prototype-app          # Hot reload on http://localhost:4200
+npx nx build prototype-app           # Production build
+```
+
+---
+
+## Creating a new prototype
+
+### 1. Create prototype component
+
+`packages/prototype-app/src/prototypes/YourPrototypeName.tsx`
+
+```tsx
+import { PatientFileMenu } from '@doctolib/pro-patient-file/PatientFileMenu'
+import { useState } from 'react'
+
+export const YourPrototypeName = () => {
+  const [variant, setVariant] = useState<'a' | 'b'>('a')
+  
+  return (
+    <div>
+      {/* Variant Switcher */}
+      <VariantSwitcher value={variant} onChange={setVariant} />
+      
+      {/* Real Component */}
+      {variant === 'a' && <PatientFileMenu recorderId={123} />}
+      {variant === 'b' && <PatientFileMenuOptimized recorderId={123} />}
+    </div>
+  )
+}
+```
+
+### 2. Add route
+
+`packages/prototype-app/src/App.tsx`
+
+```tsx
+<Route path="/your-prototype" element={<YourPrototypeName />} />
+```
+
+### 3. Use real components only
+
+**DO:**
+```tsx
+import { SectionMenu } from '@doctolib/global-ux/SectionMenu'
+import { PatientFileMenu } from '@doctolib/pro-patient-file/PatientFileMenu'
+import { ActionBar } from '@doctolib/pro-app-shell/ActionBar'
+```
+
+**DON'T:**
+```tsx
+// ❌ NEVER create custom components
+<div className="custom-tabs">
+  <button className="custom-tab">...</button>
+</div>
+```
+
+### 4. Mock data
+
+Create `src/mocks/patients.ts` with mock patient data:
+```tsx
+export const MOCK_PATIENTS = {
+  sophieMercier: {
+    id: '123',
+    name: 'Sophie Mercier',
+    age: 38,
+    // ...
+  }
+}
 ```
 
 ---
