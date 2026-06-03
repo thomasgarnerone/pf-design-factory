@@ -123,7 +123,133 @@ After presenting options and questions:
 3. Re-validate any changes to module placement
 4. Get explicit approval: "Shall I proceed with [Option X] / [Hybrid approach]?"
 
-**Only after approval:** proceed to build the HTML/CSS prototype.
+### Step 4: Decide prototype delivery format
+
+**When building multiple options (2-3 variants), use ONE prototype with a variant switcher:**
+
+✅ **Preferred: Single prototype with variants** (when 2-3 options)
+- One URL to share with stakeholders
+- Easy to compare options side-by-side or toggle between them
+- Shared interactions/code = less duplication
+- Built-in A/B testing tracking
+- localStorage remembers last-viewed variant
+
+❌ **Separate prototypes** (avoid unless necessary)
+- Multiple URLs to manage
+- Code duplication
+- Harder to compare
+- Use only when variants are radically different implementations
+
+**Variant switcher implementation:**
+
+Add at top of prototype (after ChildViewHeader, before tabs):
+
+```html
+<div class="variant-switcher">
+  <div class="variant-switcher__label">Architecture:</div>
+  <div class="variant-switcher__options">
+    <label class="variant-switcher__option">
+      <input type="radio" name="variant" value="option-a" checked>
+      <span>Option A: Conservative (4 tabs)</span>
+    </label>
+    <label class="variant-switcher__option">
+      <input type="radio" name="variant" value="option-b">
+      <span>Option B: Optimized (3 tabs)</span>
+    </label>
+  </div>
+</div>
+```
+
+```css
+.variant-switcher {
+  display: flex; align-items: center; gap: 1.6rem;
+  padding: 1.2rem 1.6rem; background: var(--oxygen-color-semantic-informative-subtle-weaker);
+  border-radius: 0.8rem; margin-bottom: 1.6rem;
+}
+.variant-switcher__label {
+  font: var(--oxygen-font-semantic-body-m-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-strong);
+}
+.variant-switcher__options {
+  display: flex; gap: 1.6rem;
+}
+.variant-switcher__option {
+  display: flex; align-items: center; gap: 0.6rem; cursor: pointer;
+}
+```
+
+```javascript
+// Variant switching logic
+function initVariantSwitcher() {
+  const radios = document.querySelectorAll('[name="variant"]');
+  const variants = {
+    'option-a': document.getElementById('variant-a'),
+    'option-b': document.getElementById('variant-b')
+  };
+  
+  // Restore last variant from localStorage
+  const lastVariant = localStorage.getItem('pf_current_variant') || 'option-a';
+  document.querySelector(`[value="${lastVariant}"]`).checked = true;
+  showVariant(lastVariant);
+  
+  radios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      const variant = e.target.value;
+      localStorage.setItem('pf_current_variant', variant);
+      showVariant(variant);
+    });
+  });
+  
+  function showVariant(variant) {
+    Object.keys(variants).forEach(key => {
+      variants[key].style.display = key === variant ? 'block' : 'none';
+    });
+  }
+}
+```
+
+**Structure each variant as a separate container:**
+
+```html
+<!-- Variant A -->
+<div id="variant-a" class="variant-container">
+  <div class="pfm">
+    <div class="pfm__main">
+      <div class="mh">
+        <div class="tabs" role="tablist">
+          <button class="tab is-active" role="tab">Santé</button>
+          <button class="tab" role="tab">Finance</button>
+          <button class="tab" role="tab">Historique</button>
+          <button class="tab" role="tab">Administratif</button>
+        </div>
+      </div>
+      <!-- panels -->
+    </div>
+  </div>
+</div>
+
+<!-- Variant B -->
+<div id="variant-b" class="variant-container" style="display:none">
+  <div class="pfm">
+    <div class="pfm__main">
+      <div class="mh">
+        <div class="tabs" role="tablist">
+          <button class="tab is-active" role="tab">Séances</button>
+          <button class="tab" role="tab">Paiements</button>
+          <button class="tab" role="tab">Dossier</button>
+        </div>
+      </div>
+      <!-- panels -->
+    </div>
+  </div>
+</div>
+```
+
+**Benefits:**
+- Users can instantly compare workflows
+- Track which variant gets more "time spent" (analytics)
+- Easy to add "Why this option?" info tooltips next to each radio
+- Can add comparison table below switcher showing differences
 
 ---
 
@@ -462,6 +588,61 @@ Before delivering any prototype, verify:
 - [ ] Loading states visible on async actions
 - [ ] Success/error toasts appear on actions
 - [ ] No console errors
+
+### Testing Script
+
+Run this sequence before delivering any prototype (total time: ~5 minutes):
+
+**1. Variant Switcher (if multiple options)** — 30 seconds
+- [ ] Toggle between variants → verify correct structure shows
+- [ ] Refresh page → verify last-viewed variant restored
+
+**2. Tab Switching** — 30 seconds
+- [ ] Click each tab → verify correct panel displays
+- [ ] Refresh page → verify last-viewed tab restored from localStorage
+- [ ] Check aria-selected attributes update correctly
+
+**3. QuickEdit** — 1 minute
+- [ ] Click phone field → verify edit mode with input + ✓/✗ buttons
+- [ ] Change value, click ✗ → verify reverted
+- [ ] Change value, click ✓ → verify saved + toast appears
+- [ ] Refresh page → verify value persisted
+- [ ] Repeat for email and address fields
+
+**4. ActionBar → WorkflowPanel Transition** — 2 minutes
+- [ ] Click "Nouvelle facture" → verify ActionBar disappears, WorkflowPanel appears
+- [ ] Click back button → verify returns to ActionBar
+- [ ] Open WorkflowPanel again, click close button → verify returns to ActionBar
+- [ ] Open WorkflowPanel, click comfort mode toggle → verify works
+
+**5. Form Validation** — 1 minute
+- [ ] Leave required fields empty, click submit → verify validation errors appear
+- [ ] Fill all required fields, click submit → verify loading state appears
+- [ ] After submit → verify success toast, form resets, WorkflowPanel closes
+- [ ] Verify new data appears in content (e.g., invoice in list)
+
+**6. Data Persistence** — 30 seconds
+- [ ] Create new invoice/item
+- [ ] Refresh page
+- [ ] Verify created data still present
+- [ ] Open DevTools → Application → localStorage → verify keys exist
+
+**7. All Buttons** — 1 minute
+- [ ] Click every "Ajouter" button → verify action triggers (toast/modal/panel)
+- [ ] Click every "Voir tous" button → verify navigation or expansion
+- [ ] Hover buttons → verify hover states work
+
+**8. Console Errors** — 10 seconds
+- [ ] Open DevTools Console (F12)
+- [ ] Perform 2-3 interactions
+- [ ] Verify NO red errors (warnings OK)
+
+**9. Responsive (optional)** — 30 seconds
+- [ ] Resize browser to narrow width
+- [ ] Verify layout doesn't break
+- [ ] Verify tabs remain accessible (dropdown if needed)
+
+**Total time: ~5 minutes per variant**
 
 ---
 
