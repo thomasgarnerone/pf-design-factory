@@ -13,9 +13,117 @@ Given a feature list with priorities for a cluster, market, or persona:
 1. Pulls latest sources from all three repos
 2. Reads live component specs and guidelines
 3. Asks targeted clarifying questions before designing anything
-4. Challenges the existing PF content — does not replicate it
-5. Generates a hi-fi HTML/CSS prototype by adapting the B2B shell template
-6. Verifies the output before presenting it
+4. **Proposes 3 architecture options** (see Architecture Iteration Process below)
+5. **Validates module placement** with targeted questions for each option
+6. Challenges the existing PF content — does not replicate it
+7. Generates a hi-fi HTML/CSS prototype by adapting the B2B shell template
+8. Verifies the output before presenting it
+
+---
+
+## Architecture Iteration Process
+
+**CRITICAL: Before building any HTML, propose multiple architectures and validate with the user.**
+
+### Step 1: Generate 3 architecture options
+
+After understanding the cluster/market requirements, propose **3 distinct architectures**:
+
+**Option A:** "Conservative" — stays close to existing PF patterns, uses canonical tabs (Santé, Financier, Historique, Administratif)
+
+**Option B:** "Optimized" — rethinks tab structure based on user workflows, may introduce new tabs or merge existing ones
+
+**Option C:** "Radical" — challenges assumptions, could use completely different navigation (e.g., "Treatment Plan", "Payment Journey", "Session History") if it better serves user needs
+
+**For each option, provide:**
+- Tab structure (list all tabs, even creative ones like "Banana" if they fit user needs)
+- Module placement table showing which modules go in which tab
+- Rationale: Why this structure serves the user's workflow
+- Trade-offs: What you gain and what you lose vs. other options
+
+**Example format:**
+```markdown
+## Option A: Conservative
+
+**Tabs:** Santé | Financier | Historique | Administratif
+
+**Module placement:**
+| Module | Tab | Rationale |
+|--------|-----|-----------|
+| Suivi ostéopathique | Santé | Clinical tracking, standard placement |
+| Motifs de consultation | Santé | Health-related, fits existing pattern |
+| Factures récentes | Financier | Financial, standard placement |
+| Solde patient | Financier | Financial, standard placement |
+
+**Rationale:** Familiar to practitioners, matches existing EHR pattern, low learning curve.
+
+**Trade-offs:** 
+- ✅ Consistent with other markets
+- ❌ May split related workflows across tabs
+- ❌ Doesn't optimize for osteopath-specific journey
+
+---
+
+## Option B: Optimized
+
+**Tabs:** Séances | Paiements | Dossier patient
+
+**Module placement:**
+| Module | Tab | Rationale |
+|--------|-----|-----------|
+| Suivi ostéopathique | Séances | Session-centric view |
+| Motifs de consultation | Séances | Grouped with session tracking |
+| Factures récentes | Paiements | All payment info in one place |
+| Solde patient | Paiements | Financial overview |
+
+**Rationale:** Optimized for osteopath workflow (sessions → payment → admin), reduces tab switching.
+
+**Trade-offs:**
+- ✅ Workflow-optimized
+- ✅ Fewer tabs = less cognitive load
+- ❌ Diverges from canonical structure
+- ❌ Practitioners see different layout vs. other specialties
+
+---
+
+## Option C: Radical
+
+[... and so on]
+```
+
+### Step 2: Ask validation questions for each module
+
+**For each module in each option, ask:**
+
+1. **Workflow fit:** "Does placing [Module X] in [Tab Y] match how practitioners actually work?"
+2. **Alternatives:** "Could [Module X] live in [Alternative Tab] instead? Why/why not?"
+3. **Dependencies:** "When practitioners use [Module X], what other info do they need visible? Should those be co-located?"
+4. **Frequency:** "Is [Module X] used frequently or rarely? Does its placement reflect that priority?"
+5. **Split risk:** "Are we splitting a single workflow across multiple tabs? Example: if billing requires clinical notes, do both need to be accessible without tab switching?"
+
+**Example questions:**
+```markdown
+### Validation questions for Option B:
+
+**Module: Suivi ostéopathique (in Séances tab)**
+- Q: When reviewing session tracking, do practitioners need to see financial info (invoices) simultaneously?
+- Q: Should session history and upcoming appointments be in the same view?
+- Q: Is the term "Séances" clear, or would "Consultations" be more familiar?
+
+**Module: Factures récentes (in Paiements tab)**
+- Q: Do practitioners create invoices during a session, or after? If during, does this need to be in the same tab as clinical notes?
+- Q: Should we show unpaid invoices prominently, or is the current "Solde patient" summary enough?
+```
+
+### Step 3: Iterate based on feedback
+
+After presenting options and questions:
+1. Listen to user feedback on what works/doesn't work
+2. Refine the chosen option or create a hybrid
+3. Re-validate any changes to module placement
+4. Get explicit approval: "Shall I proceed with [Option X] / [Hybrid approach]?"
+
+**Only after approval:** proceed to build the HTML/CSS prototype.
 
 ---
 
