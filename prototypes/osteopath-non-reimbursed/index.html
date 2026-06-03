@@ -548,6 +548,50 @@
             </div>
           </header>
 
+          <!-- QuickEdit: Patient Contact Info -->
+          <div style="background:#fff; border-radius:1.2rem; padding:1.6rem; margin-bottom:.8rem">
+            <h3 style="font:var(--oxygen-font-semantic-body-s-bold); color:var(--oxygen-color-semantic-neutral-prominent-weak); text-transform:uppercase; letter-spacing:.04em; margin:0 0 .8rem">Informations de contact</h3>
+
+            <div class="qe" data-field="phone">
+              <div class="qe__read" onclick="enterEditMode(this)">
+                <span class="qe__label">Téléphone</span>
+                <span class="qe__value">06 12 34 56 78</span>
+                <i class="fa-solid fa-pen qe__icon"></i>
+              </div>
+              <div class="qe__edit" style="display:none">
+                <input type="tel" class="qe__input" value="06 12 34 56 78">
+                <button class="qe__save" onclick="saveQuickEdit(this)"><i class="fa-solid fa-check"></i></button>
+                <button class="qe__cancel" onclick="cancelQuickEdit(this)"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+            </div>
+
+            <div class="qe" data-field="email">
+              <div class="qe__read" onclick="enterEditMode(this)">
+                <span class="qe__label">Email</span>
+                <span class="qe__value">sophie.mercier@example.fr</span>
+                <i class="fa-solid fa-pen qe__icon"></i>
+              </div>
+              <div class="qe__edit" style="display:none">
+                <input type="email" class="qe__input" value="sophie.mercier@example.fr">
+                <button class="qe__save" onclick="saveQuickEdit(this)"><i class="fa-solid fa-check"></i></button>
+                <button class="qe__cancel" onclick="cancelQuickEdit(this)"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+            </div>
+
+            <div class="qe" data-field="address">
+              <div class="qe__read" onclick="enterEditMode(this)">
+                <span class="qe__label">Adresse</span>
+                <span class="qe__value">12 rue de la Santé, 75014 Paris</span>
+                <i class="fa-solid fa-pen qe__icon"></i>
+              </div>
+              <div class="qe__edit" style="display:none">
+                <input type="text" class="qe__input" value="12 rue de la Santé, 75014 Paris">
+                <button class="qe__save" onclick="saveQuickEdit(this)"><i class="fa-solid fa-check"></i></button>
+                <button class="qe__cancel" onclick="cancelQuickEdit(this)"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+            </div>
+          </div>
+
           <div class="ws__content" id="ws-content">
 
             <!-- Main page content (left) -->
@@ -574,7 +618,7 @@
                       <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">
                         Suivi ostéopathique
                       </h2>
-                      <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button">
+                      <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" onclick="addConsultation()">
                         <span class="ox-button__innerWrapper">
                           <span class="ox-button__hoverEffect"></span>
                           <span class="ox-button__activeEffect"></span>
@@ -638,7 +682,7 @@
                       <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">
                         Factures récentes
                       </h2>
-                      <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button">
+                      <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button" onclick="viewAllInvoices()">
                         <span class="ox-button__innerWrapper">
                           <span class="ox-button__contentWrapper">Voir toutes les factures</span>
                         </span>
@@ -761,14 +805,14 @@
               <h3>Documents</h3>
               <p>Ordonnances, certificats, comptes-rendus</p>
               <div class="pf-actionbar__actions">
-                <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button">
+                <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" onclick="showToast('Création de document (prototype)')">
                   <span class="ox-button__innerWrapper">
                     <span class="ox-button__hoverEffect"></span>
                     <span class="ox-button__activeEffect"></span>
                     <span class="ox-button__contentWrapper"><i class="fa-solid fa-file-medical" style="margin-right:.6rem"></i>Nouveau document</span>
                   </span>
                 </button>
-                <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button">
+                <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button" onclick="viewAllDocuments()">
                   <span class="ox-button__innerWrapper">
                     <span class="ox-button__contentWrapper">Voir tous les documents</span>
                   </span>
@@ -788,7 +832,7 @@
                     <span class="ox-button__contentWrapper"><i class="fa-solid fa-file-invoice-dollar" style="margin-right:.6rem"></i>Nouvelle facture</span>
                   </span>
                 </button>
-                <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button">
+                <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button" onclick="viewAllInvoices()">
                   <span class="ox-button__innerWrapper">
                     <span class="ox-button__contentWrapper">Historique des factures</span>
                   </span>
@@ -801,14 +845,14 @@
               <h3>Actions patient</h3>
               <p>Communication et suivi</p>
               <div class="pf-actionbar__actions">
-                <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button">
+                <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" onclick="showToast('Envoi de message (prototype)')">
                   <span class="ox-button__innerWrapper">
                     <span class="ox-button__hoverEffect"></span>
                     <span class="ox-button__activeEffect"></span>
                     <span class="ox-button__contentWrapper"><i class="fa-solid fa-envelope" style="margin-right:.6rem"></i>Envoyer un message</span>
                   </span>
                 </button>
-                <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button">
+                <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button" onclick="showToast('Export du dossier (prototype)')">
                   <span class="ox-button__innerWrapper">
                     <span class="ox-button__contentWrapper">Exporter le dossier</span>
                   </span>
@@ -829,17 +873,18 @@
               </div>
             </div>
             <div class="wp__body">
+              <form id="invoice-form" onsubmit="return false">
               <div>
                 <label>Patient</label>
-                <input type="text" value="Sophie Mercier" readonly style="background:var(--oxygen-color-semantic-neutral-subtle-weaker)">
+                <input type="text" name="patient" value="Sophie Mercier" readonly style="background:var(--oxygen-color-semantic-neutral-subtle-weaker)">
               </div>
               <div>
                 <label>Date de la séance</label>
-                <input type="date" value="2026-06-03">
+                <input type="date" name="date" value="2026-06-03" required>
               </div>
               <div>
                 <label>Acte</label>
-                <select>
+                <select name="acte" required>
                   <option>Séance ostéopathie (65,00 €)</option>
                   <option>Première consultation (70,00 €)</option>
                   <option>Consultation de suivi (60,00 €)</option>
@@ -848,11 +893,11 @@
               </div>
               <div>
                 <label>Montant</label>
-                <input type="number" value="65.00" step="0.01">
+                <input type="number" name="amount" value="65.00" step="0.01" min="0" required>
               </div>
               <div>
                 <label>Mode de paiement</label>
-                <select>
+                <select name="payment_method" required>
                   <option>Carte bancaire</option>
                   <option>Espèces</option>
                   <option>Chèque</option>
@@ -861,7 +906,7 @@
               </div>
               <div>
                 <label>Statut</label>
-                <select>
+                <select name="status" required>
                   <option selected>Payé</option>
                   <option>Non payé</option>
                   <option>Paiement partiel</option>
@@ -869,7 +914,7 @@
               </div>
               <div>
                 <label>Envoi facture</label>
-                <select>
+                <select name="send_method">
                   <option>Email (sophie.mercier@example.fr)</option>
                   <option>SMS</option>
                   <option>Imprimer</option>
@@ -878,7 +923,7 @@
               </div>
               <div>
                 <label>Notes (optionnel)</label>
-                <textarea placeholder="Notes sur la consultation ou le paiement…" rows="3"></textarea>
+                <textarea name="notes" placeholder="Notes sur la consultation ou le paiement…" rows="3"></textarea>
               </div>
               <div style="padding:1.2rem; background:var(--oxygen-color-semantic-neutral-subtle-weaker); border-radius:.8rem; margin-top:.8rem">
                 <div style="display:flex; justify-content:space-between; margin-bottom:.4rem">
@@ -894,10 +939,11 @@
                   <span style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-brand-prominent-base)">65,00 €</span>
                 </div>
               </div>
+              </form>
             </div>
             <div class="wp__footer">
               <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-medium" type="button" data-close-workflow><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Annuler</span></span></button>
-              <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" type="button"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Créer facture</span></span></button>
+              <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" type="button" onclick="submitInvoice(document.getElementById('invoice-form'))"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Créer facture</span></span></button>
             </div>
           </div>
         </aside>
@@ -954,6 +1000,299 @@
       });
     });
   });
+
+  // ============================================================
+  // INTERACTION PATTERNS
+  // ============================================================
+
+  // Toast notifications
+  function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast--${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // QuickEdit (Inline Edit)
+  window.enterEditMode = function(readEl) {
+    const container = readEl.closest('.qe');
+    const editEl = container.querySelector('.qe__edit');
+    const input = editEl.querySelector('.qe__input');
+    readEl.style.display = 'none';
+    editEl.style.display = 'flex';
+    input.focus();
+    input.select();
+  };
+
+  window.saveQuickEdit = function(btn) {
+    const container = btn.closest('.qe');
+    const input = container.querySelector('.qe__input');
+    const valueEl = container.querySelector('.qe__value');
+    const readEl = container.querySelector('.qe__read');
+    const editEl = container.querySelector('.qe__edit');
+
+    // Update value
+    valueEl.textContent = input.value;
+
+    // Persist to localStorage
+    const field = container.dataset.field;
+    localStorage.setItem(`patient_${field}`, input.value);
+
+    // Show success feedback
+    container.classList.add('qe--success');
+    setTimeout(() => container.classList.remove('qe--success'), 1500);
+
+    // Return to read mode
+    editEl.style.display = 'none';
+    readEl.style.display = 'flex';
+
+    showToast('✓ Enregistré');
+  };
+
+  window.cancelQuickEdit = function(btn) {
+    const container = btn.closest('.qe');
+    const readEl = container.querySelector('.qe__read');
+    const editEl = container.querySelector('.qe__edit');
+    const input = editEl.querySelector('.qe__input');
+    const valueEl = container.querySelector('.qe__value');
+
+    // Reset input to original value
+    input.value = valueEl.textContent;
+
+    // Return to read mode
+    editEl.style.display = 'none';
+    readEl.style.display = 'flex';
+  };
+
+  // Button actions
+  window.addConsultation = function() {
+    showToast('Ajout de consultation (prototype)');
+  };
+
+  window.viewAllDocuments = function() {
+    showToast('Navigation vers Documents (prototype)');
+  };
+
+  window.viewAllInvoices = function() {
+    showToast('Navigation vers Factures (prototype)');
+  };
+
+  // Form validation
+  window.validateAmount = function(input) {
+    const error = input.parentElement.querySelector('.error-message');
+    const isValid = input.value > 0;
+
+    if (!isValid && input.value !== '') {
+      input.classList.add('error');
+      if (error) error.style.display = 'block';
+    } else {
+      input.classList.remove('error');
+      if (error) error.style.display = 'none';
+    }
+
+    return isValid;
+  };
+
+  // Submit workflow
+  window.submitInvoice = function(form) {
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return false;
+    }
+
+    // Get form data
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    // Persist to localStorage
+    const storageKey = `invoice_${Date.now()}`;
+    localStorage.setItem(storageKey, JSON.stringify(data));
+
+    // Close workflow
+    workflow.style.display = 'none';
+    actionbar.style.display = 'flex';
+    ws.classList.remove('is-comfort');
+
+    // Show success
+    showToast('✓ Facture créée avec succès');
+
+    // Reset form
+    form.reset();
+
+    return false;
+  };
+
+  // Load saved data on page load
+  window.addEventListener('DOMContentLoaded', () => {
+    // Restore QuickEdit fields
+    ['phone', 'email', 'address'].forEach(field => {
+      const value = localStorage.getItem(`patient_${field}`);
+      if (value) {
+        const el = document.querySelector(`[data-field="${field}"] .qe__value`);
+        if (el) el.textContent = value;
+      }
+    });
+  });
 </script>
+
+<!-- Toast styles -->
+<style>
+  .toast {
+    position: fixed;
+    bottom: 2.4rem;
+    right: 2.4rem;
+    padding: 1.2rem 2.4rem;
+    background: var(--oxygen-color-semantic-positive-prominent-base);
+    color: white;
+    border-radius: .8rem;
+    font-weight: 600;
+    font-size: 1.4rem;
+    opacity: 0;
+    transform: translateY(2rem);
+    transition: all .3s ease-out;
+    z-index: 9999;
+    box-shadow: 0 .4rem 1.2rem rgba(0,0,0,.15);
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .toast--error {
+    background: var(--oxygen-color-semantic-danger-prominent-base);
+  }
+
+  /* QuickEdit styles */
+  .qe {
+    position: relative;
+    margin-bottom: .8rem;
+  }
+  .qe__read {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    padding: .8rem 1.2rem;
+    border-radius: .6rem;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .qe__read:hover {
+    background: var(--oxygen-color-semantic-neutral-subtle-weak);
+  }
+  .qe__read:hover .qe__icon {
+    opacity: 1;
+  }
+  .qe__label {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--oxygen-color-semantic-neutral-prominent-weak);
+    min-width: 10rem;
+  }
+  .qe__value {
+    flex: 1;
+    color: var(--oxygen-color-semantic-neutral-prominent-strong);
+    font-size: 1.4rem;
+  }
+  .qe__icon {
+    opacity: 0;
+    font-size: 1.2rem;
+    color: var(--oxygen-color-semantic-neutral-prominent-weak);
+    transition: opacity .15s;
+  }
+  .qe__edit {
+    display: flex;
+    gap: .6rem;
+    align-items: center;
+    padding: .8rem 1.2rem;
+  }
+  .qe__input {
+    flex: 1;
+    padding: .8rem 1.2rem;
+    border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+    border-radius: .6rem;
+    font-size: 1.4rem;
+  }
+  .qe__input:focus {
+    outline: none;
+    border-color: var(--oxygen-color-semantic-brand-prominent-base);
+  }
+  .qe__save,
+  .qe__cancel {
+    width: 3.2rem;
+    height: 3.2rem;
+    border: none;
+    border-radius: .6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+  }
+  .qe__save {
+    background: var(--oxygen-color-semantic-brand-prominent-base);
+    color: white;
+  }
+  .qe__save:hover {
+    background: var(--oxygen-color-semantic-brand-prominent-strong);
+  }
+  .qe__cancel {
+    background: var(--oxygen-color-semantic-neutral-subtle-weak);
+    color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  }
+  .qe__cancel:hover {
+    background: var(--oxygen-color-semantic-neutral-subtle-strong);
+  }
+  .qe--success {
+    animation: successPulse .4s ease-out;
+  }
+  @keyframes successPulse {
+    0%, 100% {
+      background: transparent;
+    }
+    50% {
+      background: var(--oxygen-color-semantic-positive-subtle-weak);
+    }
+  }
+
+  /* Form validation */
+  .form-field {
+    margin-bottom: 1.6rem;
+  }
+  .form-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: .6rem;
+    font-size: 1.3rem;
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%;
+    padding: .8rem 1.2rem;
+    border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+    border-radius: .6rem;
+    font-size: 1.4rem;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    outline: none;
+    border-color: var(--oxygen-color-semantic-brand-prominent-base);
+  }
+  .form-field input.error {
+    border-color: var(--oxygen-color-semantic-danger-prominent-base);
+  }
+  .error-message {
+    display: block;
+    color: var(--oxygen-color-semantic-danger-prominent-base);
+    font-size: 1.2rem;
+    margin-top: .4rem;
+  }
+</style>
+
 </body>
 </html>
