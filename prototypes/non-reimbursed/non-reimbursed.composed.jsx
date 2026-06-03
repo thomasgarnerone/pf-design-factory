@@ -263,7 +263,7 @@ Object.assign(window, {
 });
 
 // ================================================================
-// Non-reimbursed cluster — Tab components
+// Non-reimbursed cluster — Tab components (pure Oxygen DS)
 // ================================================================
 
 /* global CardCollection, Card, QuickEdit, InlineButton, WorkflowPanel */
