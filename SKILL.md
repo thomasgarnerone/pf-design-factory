@@ -542,32 +542,41 @@ Wait for explicit approval before writing any code.
 
 ### Step 5 — Generate prototype
 
-**STOP. Before writing a single line of HTML:**
+**STOP. Do not write any HTML. Run this first:**
 
 ```bash
 mkdir -p prototypes/[cluster]
 cp boilerplate/B2B_Settings_Page_Template.html prototypes/[cluster]/[cluster].html
 ```
 
-Verify the file exists:
+**Immediately verify the copy worked and the shell is intact:**
 ```bash
-ls prototypes/[cluster]/
+head -15 prototypes/[cluster]/[cluster].html
+grep -c "ox-shell\|ox-osmenu\|ox-topbar" prototypes/[cluster]/[cluster].html
 ```
 
-Then adapt `[cluster].html` by making only these changes:
+The second command must return at least 3. If it returns 0, the copy failed — stop and fix before proceeding.
 
-1. **Remove** the entire `.ox-sb` settings sidebar block
-2. **Replace** `.ws__pageheader` content with `PatientFileHeader` markup
-3. **Replace** `.settings-content` with PF `CardCollections` and `Cards` using correct `ox-*` CSS classes from `components.css`
-4. **Adapt** `.wp` (WorkflowPanel) content for the cluster's workflow
-5. **Update** CSS `<link>` hrefs to point to `../../boilerplate/` files
-6. **Remove** the variant switcher dev toolbar at the bottom
+**Now make only these 6 surgical changes to the copied file — nothing else:**
 
-**Never:**
-- Write custom CSS
-- Inline styles beyond what the template already has
-- Invent CSS class names — use only existing `ox-*` classes from `components.css`
-- Modify the shell structure (topbar, OS menu, workspace grid)
+1. Update `<title>` to the cluster name
+2. Update `<link>` hrefs: change all CSS paths to `../../boilerplate/[filename]`
+3. **Remove** the entire `<nav class="ox-sb">...</nav>` settings sidebar block
+4. **Replace** the `<header class="ws__pageheader">` content with PatientFileHeader markup
+5. **Replace** the `<div class="settings-content">` content with PF CardCollections and Cards
+6. **Replace** the `<div class="wp__body">` WorkflowPanel content for the cluster
+7. **Remove** the `<div class="variant-switcher">` dev toolbar at the bottom
+
+**Add** the PF ActionBar as the first child of `<div class="ws">`:
+```html
+<div class="ws" id="ws-[cluster]">
+  <aside class="pf-actionbar"> ... </aside>  ← INSERT HERE
+  <div class="ws__focus"> ... </div>
+  <aside class="ws__workflow"> ... </aside>
+</div>
+```
+
+**The `ox-shell` grid, `ox-osmenu`, `ox-topbar`, and all shell CSS must remain exactly as copied from the template. Never rewrite, never touch.**
 
 **Content rules:**
 - French-sounding patient names (Marie Leroy, Jean-Marc Dubois, Fatima Benali…)
