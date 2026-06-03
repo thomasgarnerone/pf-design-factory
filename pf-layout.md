@@ -1,26 +1,28 @@
 # Patient File — Foundational Layout Specification
-**Status:** 🟡 Partially populated — structural zones extracted from prototype. Figma details still needed.  
-**Live source:** `~/doctolib/oxygen/prototype/patient-detail.css` and `preview/patientfile*.html`  
+**Status:** ✅ Updated to match Oxygen page-anatomy.md (2026-06-03)
+**Official source:** `~/doctolib/oxygen/packages/b2b/stories/documentation/framework/foundations/page-anatomy.md`
 **Repo:** `github.com/doctolib/pf-design-factory`
 
 ---
 
 ## Layout Overview
 
+Based on Oxygen's official page anatomy, the Patient File uses a **three-zone layout**:
+
 ```
-┌─────────────────────────────────────────────────────────┐
-│  pd-topbar  (5.6rem fixed, white, bottom border)         │
-├──────────┬──────────────────────────────┬───────────────┤
-│          │  Focus                        │               │
-│ Action   │  ┌────────────────────────┐  │  Workflow     │
-│ Bar      │  │ ChildViewHeader        │  │  Panel        │
-│          │  ├────────────────────────┤  │  (optional)   │
-│ 26rem    │  │ SectionMenu (tabs)     │  │  40rem        │
-│ fixed    │  ├────────────────────────┤  │               │
-│          │  │ Tab panels             │  │               │
-│          │  │ (CardCollections)      │  │               │
-└──────────┴──────────────────────────────┴───────────────┘
-  Workspace: flex row, gap 1.6rem, padding 1.6rem, height 100%
+┌─────────────────────────────────────────────────────────────┐
+│  Top Bar  (global functions, fixed)                         │
+├──────────┬──────────────────────────────────┬──────────────┤
+│          │  Focus Zone                       │              │
+│ OS Menu  │  ┌────────────────────────────┐  │  Toolbox     │
+│          │  │ ChildViewHeader            │  │              │
+│ (left,   │  ├────────────────────────────┤  │ (right,      │
+│  collap- │  │ SectionMenu (tabs)         │  │  contextual) │
+│  sible)  │  ├────────────────────────────┤  │              │
+│          │  │ Tab panels                 │  │ ActionBar or │
+│          │  │ (CardCollections)          │  │ Workflow     │
+│          │  │                            │  │ Panel        │
+└──────────┴──────────────────────────────────┴──────────────┘
 ```
 
 CSS grid root:
@@ -50,45 +52,34 @@ Must never contain: module content, patient data, primary CTAs, form fields.
 
 ---
 
-## Zone 2 — Workspace
+## Zone 2 — OS Menu
 
-```css
-.pd-workspace {
-  display: flex;
-  gap: 1.6rem;
-  height: 100%;
-  overflow: hidden;
-  padding: 1.6rem;
-}
-.pd-workspace > * { transition: width .3s ease; }
-```
-
-Direct children only: ActionBar (fixed) + Focus (grows) + WorkflowPanel (fixed, optional).
-
----
-
-## Zone 3 — Action Bar
+**Location:** Left side, vertical navigation  
+**Official spec:** See `oxygen/packages/b2b/stories/documentation/framework/foundations/page-anatomy.md`
 
 | Property | Value |
 |---|---|
-| Width | `26rem` — `flex: none` |
-| Background | `white` |
-| Border radius | `1.2rem` |
-| Padding | `1.2rem` |
-| Overflow | `overflow-y: auto` |
+| Width | Variable (collapsible) |
+| Position | Fixed left |
+| Behavior | Collapsible to maximize Focus Zone space |
 
-Role: contextual navigation for the practitioner's daily workflow. Not patient record content.
+**Structure:**
+- Primary navigation items (major features/sections)
+- Maximum one level of sub-navigation
+- Always accessible regardless of page context
 
-Standard PF groups (from prototype):
-- **Today:** My agenda (count), Waiting room (count), Messages (unread count)
-- **Patients:** All patients, Starred, Recently seen
-- **Practice:** Prescriptions, Documents, Settings
+**Rule:** The OS Menu was previously called the "Stub". Use **OS Menu** terminology consistently.
 
-Must never contain: solid buttons, form fields, patient record content.
+Component spec → `oxygen/packages/b2b/src/navigation/SidebarMenu/SidebarMenu.guidelines.md`
 
 ---
 
-## Zone 4 — Focus
+## Zone 3 — Focus Zone
+
+**Location:** Center, primary workspace  
+**Official spec:** See `oxygen/packages/b2b/stories/documentation/framework/foundations/page-anatomy.md`
+
+**The primary interactive area where healthcare professionals perform their core tasks.**
 
 ```css
 .pd-focus {
@@ -103,11 +94,17 @@ Must never contain: solid buttons, form fields, patient record content.
 }
 ```
 
-Contains in order: ChildViewHeader → SectionMenu → tab panels.
+**Behaviors:**
+- Content changes with every primary navigation action
+- The Focus Zone's content dictates what appears in the Toolbox (right side)
+
+**Structure:** Contains in order: ChildViewHeader → SectionMenu → tab panels (CardCollections)
+
+Pattern spec → `oxygen/packages/b2b/stories/documentation/framework/patterns/collections-and-cards.md`
 
 ---
 
-## Zone 4a — Child View Header
+## Zone 3a — Child View Header (within Focus Zone)
 
 Always the first element in Focus. Never removed.
 
@@ -123,7 +120,7 @@ Right: secondary icon buttons + primary CTA (solid brand button)
 
 ---
 
-## Zone 4b — Section Menu
+## Zone 3b — Section Menu (within Focus Zone)
 
 Always the second element in Focus. Never removed.
 
@@ -152,7 +149,7 @@ Market canonical tab sets — never deviate:
 
 ---
 
-## Zone 4c — Tab Panels (CardCollections + Cards)
+## Zone 3c — Tab Panels (CardCollections + Cards, within Focus Zone)
 
 ```css
 .pd-cardcollection__header { display: flex; align-items: center; justify-content: space-between; }
@@ -168,19 +165,55 @@ Card `size`: `"small"` (half-width) | `"medium"` (full-width).
 
 ---
 
-## Zone 5 — Workflow Panel (optional)
+## Zone 4 — Toolbox
+
+**Location:** Right side, contextual companion to Focus Zone  
+**Official spec:** See `oxygen/packages/b2b/stories/documentation/framework/foundations/page-anatomy.md`
+
+> "Houses secondary actions, Workflow panels, and the Doctolib Assistant without cluttering the main workspace."
+
+**Contents:**
+- **ActionBar** (default): Contextual action cards for the current page/view
+- **Workflow Panels**: Multi-step processes (consultation notes, prescriptions, billing, etc.)
+- **Supplemental information**: Related docs, activity feeds, live consultation
+- **AI Assistant** (when active)
+
+**Behaviors:**
+- Content is **always** dependent on what is displayed in the Focus Zone
+- Persists only when it contains an active Workflow or the Doctolib Assistant
+- **Sizing:** Four preset widths (Small, Medium, Large, Comfort)
+  - Default width when hosting a Workflow Panel: 1/3 of available space
+  - Comfort mode: 1/2 of available space
 
 | Property | Value |
 |---|---|
-| Width | `40rem` — `flex: none` |
+| Width | Variable (based on content mode) |
 | Background | `white` |
 | Border radius | `1.2rem` |
-| Layout | `flex-direction: column; overflow: hidden` |
+| Position | Fixed right |
 
-Use for: multi-step workflows, consultation note creation, referral letter generation, prescription editing.  
-Do not use for: read-only detail views, content that fits in a Card.
+### ActionBar Mode (default)
 
-Structure: Header (label + back + actions + close) → Body (scrollable) → Footer (cancel + alternative + confirm).
+Shows contextual action cards relevant to the current Focus Zone content:
+
+Example cards for Patient File:
+- **Documents**: Clinical documents, prescriptions, referrals
+- **Billing**: Invoice creation, payment tracking
+- **Consultation**: Start consultation, consultation notes
+- **Patient actions**: Messaging, tasks, exports
+
+**Rule:** ActionBar cards trigger Workflow Panels that open in the same Toolbox space, replacing the ActionBar temporarily.
+
+### Workflow Panel Mode
+
+When an ActionBar card is clicked, the Toolbox transitions to show a Workflow Panel:
+
+**Structure:** Header (label + back + actions + close) → Body (scrollable) → Footer (cancel + alternative + confirm)
+
+**Use for:** Multi-step workflows, consultation note creation, referral letter generation, prescription editing, billing  
+**Do not use for:** Read-only detail views, content that fits in a Card
+
+Panel spec → `oxygen/packages/b2b/src/overlays/Overlays.guidelines.md`
 
 ---
 
@@ -188,52 +221,69 @@ Structure: Header (label + back + actions + close) → Body (scrollable) → Foo
 
 | Module type | Zone | Component |
 |---|---|---|
-| Patient identity | Focus / ChildViewHeader | Always present |
-| Tab navigation | Focus / SectionMenu | Always present |
-| Identity & contact | Overview / CardCollection | QuickEdit fields |
-| Clinical summary | Health tab / CardCollection | Cards |
-| Medication list | Health tab / CardCollection | Cards + InlineButton (Renew) |
-| Appointment history | Overview or History / CardCollection | Cards |
-| Documents | Documents tab / CardCollection | Cards + InlineButton |
-| Consultation note | WorkflowPanel | Triggered by primary CTA |
-| Referral letter | WorkflowPanel | Triggered by InlineButton |
-| Alerts / contraindications | ChildViewHeader or top CardCollection | Tag or status pill |
-| Daily workflow nav | ActionBar | Navigation cards only |
+| Patient identity | Focus Zone / ChildViewHeader | Always present |
+| Tab navigation | Focus Zone / SectionMenu | Always present |
+| Identity & contact | Focus Zone / Overview tab / CardCollection | QuickEdit fields |
+| Clinical summary | Focus Zone / Health tab / CardCollection | Cards |
+| Medication list | Focus Zone / Health tab / CardCollection | Cards + InlineButton (Renew) |
+| Appointment history | Focus Zone / Overview or History tab / CardCollection | Cards |
+| Documents | Focus Zone / Documents tab / CardCollection | Cards + InlineButton |
+| Consultation actions | Toolbox / ActionBar | Action card that triggers Workflow Panel |
+| Billing actions | Toolbox / ActionBar | Action card that triggers Workflow Panel |
+| Consultation note | Toolbox / Workflow Panel | Triggered by ActionBar card or primary CTA |
+| Referral letter | Toolbox / Workflow Panel | Triggered by ActionBar card |
+| Prescription | Toolbox / Workflow Panel | Triggered by ActionBar card |
+| Alerts / contraindications | Focus Zone / ChildViewHeader or top CardCollection | Tag or status pill |
 
 ---
 
 ## Forbidden Patterns
 
-- ❌ Removing or collapsing TopBar, ActionBar, Focus, or SectionMenu
-- ❌ Solid/primary buttons in the ActionBar
-- ❌ Patient record content in the TopBar
+- ❌ Removing or collapsing Top Bar, OS Menu, Focus Zone, or SectionMenu
+- ❌ Page-specific content in the Top Bar (it's for global functions only)
+- ❌ Patient record content in the Top Bar
 - ❌ Tabs outside the canonical market set (without explicit approval)
-- ❌ Modal for WorkflowPanel content
+- ❌ Modal for Workflow Panel content (use Toolbox Workflow Panel instead)
 - ❌ Form fields in ChildViewHeader (except inline QuickEdit)
-- ❌ Extra columns or panels outside the Workspace flex row
+- ❌ Navigation actions in the Toolbox ActionBar (ActionBar is for contextual actions, not navigation)
+- ❌ Extra columns or panels outside the three-zone layout (OS Menu, Focus Zone, Toolbox)
 
 ---
 
-## Still needed (from Figma)
+## Still needed (implementation details)
 
-- [ ] ActionBar card heights and internal spacing
+- [ ] Toolbox ActionBar card heights and internal spacing
 - [ ] CardCollection grid column behavior (how small/medium cards reflow)
-- [ ] WorkflowPanel width variants (narrow / expanded)
+- [ ] Toolbox width transitions (ActionBar mode ↔ Workflow Panel mode)
+- [ ] Comfort mode width calculations and breakpoints
 - [ ] ChildViewHeader with alert banner variant
 - [ ] SectionMenu overflow behavior (dropdown collapse when tabs don't fit)
-- [ ] Health Observation side panel at < 1280px breakpoint
 
 ---
 
-## Live reference
+## Official Documentation References
 
+**Primary sources (Oxygen repo):**
 ```bash
-# Read live layout source
-cat ~/doctolib/oxygen/prototype/patient-detail.css
-open ~/doctolib/oxygen/preview/patientfileheader.html
-open ~/doctolib/oxygen/preview/patientfilemenu.html
-open ~/doctolib/oxygen/preview/patientfileactionbar.html
+# Page anatomy (official)
+~/doctolib/oxygen/packages/b2b/stories/documentation/framework/foundations/page-anatomy.md
+
+# Patient File pattern
+~/doctolib/oxygen/packages/b2b/stories/documentation/framework/patterns/patient-file.md
+
+# Collections and Cards pattern
+~/doctolib/oxygen/packages/b2b/stories/documentation/framework/patterns/collections-and-cards.md
 ```
 
-Figma file: [add link]  
-Last reviewed: 2026-05-12
+**Pro-frontend ActionBar implementation:**
+```bash
+# ActionBar v2 architecture (EHR DE)
+~/doctolib/pro-frontend/docs/patient-file-v3/action-bar/action-bar-v2-architecture.md
+
+# ActionBar extraction strategy (Unified PF v3)
+~/doctolib/pro-frontend/docs/patient-file-v3/action-bar/action-bar-extraction-strategy.md
+```
+
+**Design reference:** [Figma - Patient File v3](https://www.figma.com/design/2MIdwyEW0Cj7rom3PQTpU6/-GUX--Review-File?node-id=7011-90599)
+
+Last updated: 2026-06-03 (aligned with Oxygen page-anatomy.md)
