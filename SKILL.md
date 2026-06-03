@@ -168,7 +168,307 @@ Before generating, read the reference screenshots in `pf-layout-examples/`:
 
 ---
 
-## Workflow
+## HTML cheat sheet — exact patterns to copy
+
+These are the exact HTML structures to use. Copy them verbatim — do not invent alternatives.
+
+### Avatar (patient initials)
+```html
+<span class="ox-avatar ox-avatar--medium ox-avatar--dark-primary">
+  <span class="ox-avatar__circle">SM</span>
+</span>
+```
+Sizes: `ox-avatar--xsmall` (24px) · `ox-avatar--small` (32px) · `ox-avatar--medium` (40px) · `ox-avatar--large` (48px)
+Colors: `ox-avatar--dark-primary` (blue) · `ox-avatar--dark-red` · default (grey)
+
+---
+
+### Tabs (SectionMenu)
+```html
+<div class="ox-tabs">
+  <ul class="ox-tabs__list" role="tablist">
+    <li class="ox-tabs__tab" role="presentation">
+      <button class="ox-tabs__button" role="tab" aria-current="true">Santé</button>
+    </li>
+    <li class="ox-tabs__tab" role="presentation">
+      <button class="ox-tabs__button" role="tab">Financier</button>
+    </li>
+    <li class="ox-tabs__tab" role="presentation">
+      <button class="ox-tabs__button" role="tab">Historique</button>
+    </li>
+    <li class="ox-tabs__tab" role="presentation">
+      <button class="ox-tabs__button" role="tab">Administratif</button>
+    </li>
+  </ul>
+  <div class="ox-tabs__panel" role="tabpanel">
+    <!-- CardCollections go here -->
+  </div>
+</div>
+```
+
+---
+
+### Card
+```html
+<div class="ox-card ox-card--outlined">
+  <p class="ox-paragraph ox-paragraph--label">CARD TITLE</p>
+  <!-- card content -->
+</div>
+```
+Variants: `ox-card--outlined` · `ox-card--elevated` · `ox-card--solid`
+
+---
+
+### Button
+```html
+<!-- Solid brand (primary CTA) -->
+<button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" type="button">
+  <span class="ox-button__innerWrapper">
+    <span class="ox-button__hoverEffect"></span>
+    <span class="ox-button__activeEffect"></span>
+    <span class="ox-button__contentWrapper">+ Nouvelle facture</span>
+  </span>
+</button>
+
+<!-- Outlined brand -->
+<button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button">
+  <span class="ox-button__innerWrapper">
+    <span class="ox-button__hoverEffect"></span>
+    <span class="ox-button__activeEffect"></span>
+    <span class="ox-button__contentWrapper">Modifier</span>
+  </span>
+</button>
+
+<!-- Transparent neutral (cancel) -->
+<button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-medium" type="button">
+  <span class="ox-button__innerWrapper">
+    <span class="ox-button__contentWrapper">Annuler</span>
+  </span>
+</button>
+```
+
+---
+
+### Badge / Status pill
+```html
+<!-- Badges use --ui-* modifiers, not semantic color names -->
+<span class="ox-badge ox-badge--ui-brand">En cours</span>
+<span class="ox-badge ox-badge--ui-neutral">En attente</span>
+<span class="ox-badge ox-badge--ui-informative">Nouveau</span>
+
+<!-- For status colors (success/warning/danger) not in ox-badge, use inline token: -->
+<span class="ox-badge" style="background:var(--oxygen-color-semantic-positive-prominent-base);color:#fff">Payé</span>
+<span class="ox-badge" style="background:var(--oxygen-color-semantic-warning-prominent-base);color:#fff">Partiel</span>
+<span class="ox-badge" style="background:var(--oxygen-color-semantic-danger-prominent-base);color:#fff">En retard</span>
+```
+
+---
+
+### PF ActionBar (left panel inside workspace)
+The B2B template has no ActionBar — it goes from OS menu straight to workspace. For PF, add an ActionBar as the first child of `.ws`. Add this CSS to the cluster's `<style>` block:
+```css
+.pf-actionbar {
+  width: 26rem;
+  flex: none;
+  background: var(--oxygen-color-primitive-white);
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  overflow-y: auto;
+}
+.pf-actionbar__heading {
+  font: var(--oxygen-font-semantic-body-xs-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+  padding: 0.8rem 0.4rem 0.4rem;
+}
+.pf-actionbar__item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.6rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: var(--oxygen-font-semantic-body-m-regular);
+  color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+  text-decoration: none;
+}
+.pf-actionbar__item:hover { background: var(--oxygen-color-semantic-neutral-subtle-weak); }
+.pf-actionbar__item.is-active {
+  background: var(--oxygen-color-semantic-brand-subtle-weak);
+  color: var(--oxygen-color-semantic-brand-prominent-base);
+  font: var(--oxygen-font-semantic-body-m-bold);
+}
+.pf-actionbar__count {
+  margin-left: auto;
+  font: var(--oxygen-font-semantic-body-xs-bold);
+  color: var(--oxygen-color-semantic-neutral-prominent-weak);
+}
+```
+
+```html
+<aside class="pf-actionbar">
+  <p class="pf-actionbar__heading">Aujourd'hui</p>
+  <a class="pf-actionbar__item" href="#">
+    <i class="fa-solid fa-calendar-day"></i> Mon agenda
+    <span class="pf-actionbar__count">8</span>
+  </a>
+  <a class="pf-actionbar__item" href="#">
+    <i class="fa-solid fa-users"></i> Salle d'attente
+    <span class="pf-actionbar__count">2</span>
+  </a>
+  <p class="pf-actionbar__heading">Patients</p>
+  <a class="pf-actionbar__item is-active" href="#">
+    <i class="fa-solid fa-user-group"></i> Tous les patients
+  </a>
+  <a class="pf-actionbar__item" href="#">
+    <i class="fa-solid fa-star"></i> Favoris
+  </a>
+</aside>
+```
+
+---
+The OS menu lives in the template's `<style>` block as `.ox-osmenu`. For PF, use these items:
+```html
+<nav class="ox-osmenu">
+  <div class="ox-osmenu__brand">
+    <!-- Doctolib D logo SVG here -->
+  </div>
+  <a class="ox-osmenu__item is-active" href="#" aria-current="page">
+    <span class="ox-osmenu__icon"><i class="fa-solid fa-users"></i></span>
+    <span class="ox-osmenu__label">Patients</span>
+  </a>
+  <a class="ox-osmenu__item" href="#">
+    <span class="ox-osmenu__icon"><i class="fa-solid fa-calendar-days"></i></span>
+    <span class="ox-osmenu__label">Agenda</span>
+  </a>
+  <a class="ox-osmenu__item" href="#">
+    <span class="ox-osmenu__icon"><i class="fa-solid fa-file-invoice-dollar"></i></span>
+    <span class="ox-osmenu__label">Factures</span>
+  </a>
+  <a class="ox-osmenu__item" href="#">
+    <span class="ox-osmenu__icon"><i class="fa-solid fa-chart-line"></i></span>
+    <span class="ox-osmenu__label">Stats</span>
+  </a>
+  <div class="ox-osmenu__spacer"></div>
+  <div class="ox-osmenu__footer">
+    <span class="ox-osmenu__avatar ox-osmenu__avatar--user">TG</span>
+  </div>
+</nav>
+```
+Note: Font Awesome is already imported in the template — use `fa-solid fa-*` icon classes.
+
+---
+
+### PatientFileHeader structure
+```html
+<div class="ws__pageheader">
+  <div style="display:flex; align-items:center; gap:1.2rem;">
+    <span class="ox-avatar ox-avatar--large ox-avatar--dark-primary">
+      <span class="ox-avatar__circle">SM</span>
+    </span>
+    <div>
+      <h1 style="font:var(--oxygen-font-semantic-title-xl-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">
+        Sophie Mercier
+      </h1>
+      <p style="font:var(--oxygen-font-semantic-body-m-regular); color:var(--oxygen-color-semantic-neutral-prominent-base); margin:0">
+        38 ans · F · Patiente depuis 2023
+      </p>
+    </div>
+  </div>
+  <div class="ws__pageheader__actions">
+    <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-neutral ox-iconbutton--size-medium" aria-label="Favori">
+      <span class="ox-iconbutton__innerWrapper">★</span>
+    </button>
+    <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" type="button">
+      <span class="ox-button__innerWrapper">
+        <span class="ox-button__hoverEffect"></span>
+        <span class="ox-button__activeEffect"></span>
+        <span class="ox-button__contentWrapper">+ Nouvelle facture</span>
+      </span>
+    </button>
+  </div>
+</div>
+```
+
+---
+
+### CardCollection (section with header)
+```html
+<section style="margin-bottom:2.4rem">
+  <!-- MODULE: [name] -->
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem">
+    <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger)">
+      Suivi ostéopathique
+    </h2>
+    <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button">
+      <span class="ox-button__innerWrapper">
+        <span class="ox-button__hoverEffect"></span>
+        <span class="ox-button__activeEffect"></span>
+        <span class="ox-button__contentWrapper">Ajouter</span>
+      </span>
+    </button>
+  </div>
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem">
+    <!-- Cards here -->
+  </div>
+</section>
+```
+
+---
+
+### Form field (WorkflowPanel)
+```html
+<div class="ox-field">
+  <label class="ox-field__label">Acte</label>
+  <input class="ox-input" type="text" placeholder="Ex: Séance ostéopathie">
+</div>
+<div class="ox-field">
+  <label class="ox-field__label">Montant</label>
+  <input class="ox-input" type="number" placeholder="0.00">
+</div>
+<div class="ox-field">
+  <label class="ox-field__label">Statut</label>
+  <select class="ox-select">
+    <option>Non payé</option>
+    <option>Payé</option>
+    <option>Partiel</option>
+  </select>
+</div>
+```
+
+---
+
+### Table (DataGrid)
+```html
+<table class="ox-datagrid">
+  <thead>
+    <tr>
+      <th>Acte</th>
+      <th>Date</th>
+      <th class="num">Montant</th>
+      <th>Statut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Séance ostéopathie</td>
+      <td>12/05/2026</td>
+      <td class="num">65,00 €</td>
+      <td><span class="ox-badge ox-badge--success">Payé</span></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+---
+
+
 
 ### Step 1 — Pull and read
 
