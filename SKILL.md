@@ -29,7 +29,7 @@ Given a feature list with priorities for a cluster, market, or persona:
 
 After understanding the cluster/market requirements, propose **3 distinct architectures**:
 
-**Option A:** "Conservative" — stays close to existing PF patterns, uses canonical tabs (Santé, Financier, Historique, Administratif)
+**Option A:** "Conservative" — stays close to existing PF patterns, uses canonical tabs (Santé, Finance, Historique, Administratif)
 
 **Option B:** "Optimized" — rethinks tab structure based on user workflows, may introduce new tabs or merge existing ones
 
@@ -45,15 +45,15 @@ After understanding the cluster/market requirements, propose **3 distinct archit
 ```markdown
 ## Option A: Conservative
 
-**Tabs:** Santé | Financier | Historique | Administratif
+**Tabs:** Santé | Finance | Historique | Administratif
 
 **Module placement:**
 | Module | Tab | Rationale |
 |--------|-----|-----------|
 | Suivi ostéopathique | Santé | Clinical tracking, standard placement |
 | Motifs de consultation | Santé | Health-related, fits existing pattern |
-| Factures récentes | Financier | Financial, standard placement |
-| Solde patient | Financier | Financial, standard placement |
+| Factures récentes | Finance | Financial, standard placement |
+| Solde patient | Finance | Financial, standard placement |
 
 **Rationale:** Familiar to practitioners, matches existing EHR pattern, low learning curve.
 
@@ -325,7 +325,7 @@ Colors: `ox-avatar--dark-primary` (blue) · `ox-avatar--dark-red` · default (gr
     <div class="mh">
       <div class="tabs" role="tablist">
         <button class="tab is-active" role="tab" aria-selected="true">Santé</button>
-        <button class="tab" role="tab" aria-selected="false">Financier</button>
+        <button class="tab" role="tab" aria-selected="false">Finance</button>
         <button class="tab" role="tab" aria-selected="false">Historique</button>
         <button class="tab" role="tab" aria-selected="false">Administratif</button>
       </div>
