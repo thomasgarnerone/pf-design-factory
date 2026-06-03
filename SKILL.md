@@ -279,6 +279,75 @@ function initVariantSwitcher() {
 
 ---
 
+### Step 5: Document decisions in DECISIONS.md
+
+**MANDATORY:** Every prototype must include a `DECISIONS.md` file documenting the architecture rationale.
+
+**Location:** `prototypes/<prototype-name>/DECISIONS.md`
+
+**Purpose:**
+- Future maintainers understand why choices were made
+- Captures context-specific reasoning (not reusable "patterns")
+- Documents validation plan and success criteria
+- Records open questions and next steps
+
+**⚠️ CRITICAL:** Do NOT create reusable "architecture patterns" at repo root. Each prototype's decisions are context-specific (persona + market + user needs + device). Generate fresh options based on user research, don't copy from other prototypes.
+
+**Required sections:**
+
+```markdown
+# Architecture Decisions Log
+
+**Prototype:** [Name]
+**Created:** [Date]
+**Status:** [Awaiting validation / Validated / Deprecated]
+
+## Context
+- Persona
+- Market
+- Priority (efficiency vs consistency vs compliance)
+- Device (desktop-first vs mobile-first)
+- Key user research insight
+
+## Options Explored
+For each option (A, B, C):
+- Tabs structure
+- Hypothesis being tested
+- Module placement table
+- Trade-offs (gains vs losses)
+
+## Rationale for These Options
+- Why did we choose these specific options?
+- What assumptions are we testing?
+- Why NOT other options?
+
+## Validation Plan
+- Metrics to measure
+- Success criteria
+- How to collect feedback
+
+## Implementation Notes
+- Technical decisions
+- Shared vs variant-specific code
+- Interactions implemented
+
+## Open Questions
+- Terminology concerns
+- UX uncertainties
+- Mobile considerations
+
+## Next Steps
+- Testing plan
+- Iteration strategy
+
+## References
+- Links to research, specs, related docs
+```
+
+**Example:** See `prototypes/osteopath-fr-non-reimbursed/DECISIONS.md`
+
+---
+
 ## Output strategy
 
 **Pure HTML/CSS — no React, no JSX, no build step.**
