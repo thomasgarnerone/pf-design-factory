@@ -1,0 +1,1362 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Claire Fontaine · Psychologue FR · Option A Conservative</title>
+<link rel="stylesheet" href="../../boilerplate/colors_and_type.css">
+<link rel="stylesheet" href="../../boilerplate/base.css">
+<link rel="stylesheet" href="../../boilerplate/components.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 62.5%; }
+  body {
+    font-family: 'Roboto', -apple-system, sans-serif;
+    background: var(--oxygen-color-primitive-grey-00);
+    color: var(--oxygen-color-primitive-grey-150);
+    min-height: 100vh;
+  }
+
+  /* ============================================================
+   * Page shell — OS Menu (left) + Top Bar (top) + white content
+   * ============================================================ */
+  .ox-shell {
+    --shell-chrome-bg: #00264C;
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    grid-template-rows: 5.6rem 1fr;
+    min-height: 100vh;
+    background: var(--shell-chrome-bg);
+  }
+  .ox-shell > .ox-osmenu { grid-column: 1; grid-row: 1 / span 2; }
+  .ox-shell > .ox-topbar { grid-column: 2; grid-row: 1; }
+
+  .ox-shell__content {
+    grid-column: 2;
+    grid-row: 2;
+    background: #FFFFFF;
+    border-top-left-radius: 0.8rem;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* ============================================================
+   * OS Menu
+   * ============================================================ */
+  .ox-osmenu {
+    --osmenu-bg: #00264C;
+    --osmenu-hover: rgba(255, 255, 255, 0.15);
+    --osmenu-active: rgba(255, 255, 255, 0.25);
+    --osmenu-fg: #FFFFFF;
+    --osmenu-badge-bg: #F5B400;
+    --osmenu-badge-fg: #00264C;
+    width: 8rem;
+    background: var(--osmenu-bg);
+    color: var(--osmenu-fg);
+    display: flex; flex-direction: column; align-items: stretch;
+    padding: 1.2rem 0; gap: 0.2rem; user-select: none;
+  }
+  .ox-osmenu__brand { display: flex; align-items: center; justify-content: center; height: 6.4rem; margin-bottom: 0.4rem; color: var(--osmenu-fg); }
+  .ox-osmenu__brand svg { width: 2.7rem; height: 3rem; display: block; }
+  .ox-osmenu__item {
+    position: relative; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0.6rem;
+    padding: 1.2rem 0.4rem; border: 0; background: transparent;
+    color: var(--osmenu-fg); border-radius: 0; cursor: pointer;
+    text-decoration: none; text-align: center;
+    transition: background-color 150ms ease-out;
+  }
+  .ox-osmenu__item:hover { background: var(--osmenu-hover); }
+  .ox-osmenu__item[aria-current="page"],
+  .ox-osmenu__item.is-active { background: var(--osmenu-active); }
+  .ox-osmenu__icon { width: 2.4rem; height: 2.4rem; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; line-height: 1; color: var(--osmenu-fg); }
+  .ox-osmenu__label { font-size: 1.1rem; font-weight: 400; line-height: 1.25; color: var(--osmenu-fg); text-wrap: balance; }
+  .ox-osmenu__badge { position: absolute; top: 0.6rem; right: 0.8rem; min-width: 1.8rem; height: 1.8rem; padding: 0 0.5rem; border-radius: 99rem; background: var(--osmenu-badge-bg); color: var(--osmenu-badge-fg); font-size: 1.1rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+  .ox-osmenu__spacer { flex: 1; }
+  .ox-osmenu__footer { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; padding: 1.2rem 0 0.4rem; }
+  .ox-osmenu__avatar { width: 4rem; height: 4rem; border-radius: 99rem; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.4rem; color: #FFFFFF; border: 0.2rem solid var(--osmenu-bg); box-shadow: 0 0 0 0.1rem rgba(255,255,255,0.15); }
+  .ox-osmenu__avatar--user { background: #B45A1A; }
+
+  /* ============================================================
+   * Top Bar
+   * ============================================================ */
+  .ox-topbar {
+    --topbar-bg: #00264C;
+    --topbar-fg: #FFFFFF;
+    --topbar-fg-weak: rgba(255, 255, 255, 0.72);
+    --topbar-stroke: rgba(255, 255, 255, 0.24);
+    --topbar-hover: rgba(255, 255, 255, 0.08);
+    --topbar-input-bg: rgba(255, 255, 255, 0.06);
+    width: 100%; height: 5.6rem;
+    background: var(--topbar-bg); color: var(--topbar-fg);
+    display: flex; align-items: center; gap: 1.2rem;
+    padding: 0 1.6rem;
+  }
+  .ox-topbar__search { flex: 1 1 auto; min-width: 0; max-width: 56rem; height: 4rem; display: flex; align-items: center; gap: 1rem; padding: 0 1.4rem; background: var(--topbar-input-bg); border: 0.1rem solid var(--topbar-stroke); border-radius: 0.8rem; color: var(--topbar-fg); }
+  .ox-topbar__search i { font-size: 1.4rem; color: var(--topbar-fg-weak); }
+  .ox-topbar__search input { flex: 1; border: 0; outline: 0; background: transparent; color: var(--topbar-fg); font: inherit; font-size: 1.4rem; }
+  .ox-topbar__pill { height: 4rem; display: inline-flex; align-items: center; gap: 0.8rem; padding: 0 1.6rem; background: transparent; color: var(--topbar-fg); border: 0.1rem solid var(--topbar-stroke); border-radius: 99rem; font: inherit; font-size: 1.4rem; font-weight: 500; cursor: pointer; }
+  .ox-topbar__icon { position: relative; width: 4rem; height: 4rem; display: inline-flex; align-items: center; justify-content: center; background: transparent; color: var(--topbar-fg); border: 0; border-radius: 99rem; cursor: pointer; }
+  .ox-topbar__icon i { font-size: 1.7rem; }
+  .ox-topbar__spacer { flex: 1 1 auto; }
+  .ox-topbar__avatar { width: 4rem; height: 4rem; border-radius: 99rem; background: #B45A1A; color: #FFFFFF; font-weight: 700; font-size: 1.3rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+
+  /* ============================================================
+   * Settings body (workspace host)
+   * ============================================================ */
+  .ox-settings__body{
+    flex:1; min-width:0; min-height:0;
+    display:flex;
+    padding:1.6rem;
+    background:#F1F7FE;
+    overflow:hidden;
+  }
+
+  /* ============================================================
+   * Workspace
+   * ============================================================ */
+  .ws{
+    --workspace-gap: 1.6rem;
+    --workspace-size: calc(100% - var(--workspace-gap));
+    display:flex;
+    gap:var(--workspace-gap);
+    flex:1;
+    min-width:0;
+    min-height:0;
+    position:relative;
+  }
+  .ws > *{ transition: width .3s ease, flex-basis .3s ease; }
+
+  .ws__focus{
+    flex-basis:0; flex-grow:1; min-width:0;
+    display:flex; flex-direction:column; gap:1.2rem;
+    min-height:0;
+  }
+
+  .ws__pageheader{
+    background:#fff;
+    border-radius:1.6rem;
+    padding:1.2rem 1.6rem;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1.6rem;
+    flex-shrink:0;
+  }
+  .ws__pageheader h1{
+    font:var(--oxygen-font-semantic-title-xl-bold);
+    color:var(--oxygen-color-semantic-neutral-prominent-stronger);
+    margin:0;
+  }
+  .ws__pageheader__actions{display:flex;align-items:center;gap:.8rem;flex-shrink:0}
+
+  .ws__content{
+    flex-grow:1;
+    min-height:0;
+    border-radius:1.6rem;
+    background:transparent;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    gap:1.2rem;
+  }
+  .ws__main{
+    flex:1; min-width:0;
+    background:#fff;
+    border-radius:1.6rem;
+    overflow:auto;
+    padding:2.4rem;
+  }
+
+  /* ============================================================
+   * Variant containers
+   * ============================================================ */
+  .variant-container {
+    width: 100%;
+  }
+
+  /* ============================================================
+   * Toolbox (right zone)
+   * ============================================================ */
+  .ws__toolbox {
+    flex-shrink: 0;
+    width: 0;
+    overflow: hidden;
+    display: flex;
+    transition: width .3s ease;
+  }
+  .ws.has-toolbox .ws__toolbox {
+    width: 40rem;
+  }
+  .ws.has-toolbox.is-comfort .ws__toolbox {
+    width: calc(var(--workspace-size) * (1 / 2));
+  }
+
+  /* ActionBar (default mode in Toolbox) */
+  .pf-actionbar {
+    background: var(--oxygen-color-primitive-white);
+    border-radius: 1.6rem;
+    padding: 1.6rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    overflow-y: auto;
+  }
+  .pf-actionbar__card {
+    background: var(--oxygen-color-primitive-white);
+    border: 0.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+    border-radius: 1.2rem;
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .pf-actionbar__card h3 {
+    font: var(--oxygen-font-semantic-body-m-bold);
+    color: var(--oxygen-color-semantic-neutral-prominent-stronger);
+    margin: 0;
+  }
+  .pf-actionbar__card p {
+    font: var(--oxygen-font-semantic-body-s-regular);
+    color: var(--oxygen-color-semantic-neutral-prominent-weak);
+    margin: 0;
+  }
+  .pf-actionbar__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  /* ============================================================
+   * PatientFileMenu
+   * ============================================================ */
+  .pfm { display: flex; flex-direction: column; gap: .8rem; height: 54rem; min-height: 0; }
+  .pfm__main { display: flex; flex-direction: column; gap: .8rem; flex: 1; min-width: 0; height: 100%; }
+
+  /* Menu header */
+  .mh { background: #fff; border-radius: var(--oxygen-scale-semantic-radius-large); padding: var(--oxygen-scale-semantic-padding-small); display: flex; align-items: center; gap: .8rem; justify-content: space-between; }
+  .tabs { display: flex; align-items: center; gap: .4rem; flex: 1; min-width: 0; overflow: hidden; }
+  .tab { display: inline-flex; align-items: center; gap: var(--oxygen-scale-semantic-gap-xxsmall); padding: var(--oxygen-scale-semantic-padding-medium) var(--oxygen-scale-semantic-padding-xlarge) var(--oxygen-scale-semantic-padding-medium) var(--oxygen-scale-semantic-padding-large); border-radius: var(--oxygen-scale-semantic-radius-medium); font: var(--oxygen-font-semantic-body-m-regular); color: var(--oxygen-color-component-text-bodyText-neutral-weaker); cursor: pointer; background: transparent; border: none; white-space: nowrap; transition: background-color 0.2s ease, color 0.2s ease; }
+  .tab:hover { background: var(--oxygen-color-component-surface-background-main-base-hover); }
+  .tab.is-active { background: var(--oxygen-color-component-surface-background-main-inverted-default); color: white; font: var(--oxygen-font-semantic-body-m-bold); }
+  .tab.is-active:hover { background: var(--oxygen-color-component-surface-background-main-inverted-hover); }
+
+  /* Panel */
+  .panel { background: #fff; border-radius: 1.2rem; flex: 1; min-height: 0; overflow-y: auto; padding: 2.4rem; }
+
+  /* ============================================================
+   * Workflow panel (right rail)
+   * ============================================================ */
+  .ws__workflow{
+    flex-shrink:0; width:0; overflow:hidden; display:flex;
+  }
+  .ws.has-workflow .ws__workflow{
+    width:calc(var(--workspace-size) * (1 / 3));
+    min-width:34rem;
+  }
+  .ws.has-workflow.is-comfort .ws__workflow{
+    width:calc(var(--workspace-size) * (1 / 2));
+  }
+  .wp{ background:#fff; border-radius:1.6rem; padding:1.6rem; flex:1; min-width:32rem; display:flex; flex-direction:column; gap:.8rem; }
+  .wp__header{ display:flex; align-items:center; justify-content:space-between; gap:.4rem; }
+  .wp__head-left{ display:flex; align-items:center; min-width:0; }
+  .wp__title{ font:var(--oxygen-font-semantic-title-l-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0; padding:0 .8rem; line-height:1.3; }
+  .wp__head-right{ display:flex; align-items:center; gap:.4rem; flex-shrink:0; }
+  .wp__hbtn{ width:3.2rem; height:3.2rem; border:none; background:transparent; border-radius:50%; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; color:var(--oxygen-color-semantic-neutral-prominent-strong); }
+  .wp__hbtn:hover{ background:var(--oxygen-color-semantic-neutral-subtle-weak); }
+  .wp__hbtn svg{ width:1.6rem; height:1.6rem; }
+  .wp__body{
+    flex-grow:1; overflow-y:auto; padding:.8rem;
+    display:flex; flex-direction:column; gap:1.2rem;
+  }
+  .wp__body label{ display:block; font:var(--oxygen-font-semantic-body-s-bold); margin:0 0 .6rem; color:var(--oxygen-color-semantic-neutral-prominent-strong); }
+  .wp__body input,.wp__body select,.wp__body textarea{ width:100%; border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius:.8rem; padding:1rem 1.2rem; font:var(--oxygen-font-semantic-body-m-regular); background:#fff; outline:none; }
+  .wp__body textarea{ min-height:8rem; resize:vertical; }
+  .wp__body input:focus,.wp__body select:focus,.wp__body textarea:focus{ border-color:var(--oxygen-color-semantic-brand-prominent-base); box-shadow:0 0 0 .2rem var(--oxygen-color-semantic-brand-subtle-weak); }
+  .wp__footer{ display:flex; justify-content:flex-end; align-items:center; gap:1.2rem; padding-top:.8rem; border-top:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); margin-top:.4rem; padding-top:1.2rem; }
+
+  /* ============================================================
+   * Toast notifications
+   * ============================================================ */
+  .toast {
+    position: fixed;
+    bottom: 2.4rem;
+    right: 2.4rem;
+    padding: 1.2rem 2.4rem;
+    background: var(--oxygen-color-semantic-positive-prominent-base);
+    color: white;
+    border-radius: .8rem;
+    font-weight: 600;
+    font-size: 1.4rem;
+    opacity: 0;
+    transform: translateY(2rem);
+    transition: all .3s ease-out;
+    z-index: 9999;
+    box-shadow: 0 .4rem 1.2rem rgba(0,0,0,.15);
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .toast--error {
+    background: var(--oxygen-color-semantic-danger-prominent-base);
+  }
+  .toast--info {
+    background: var(--oxygen-color-semantic-brand-prominent-base);
+  }
+
+  /* ============================================================
+   * QuickEdit styles
+   * ============================================================ */
+  .qe {
+    position: relative;
+    margin-bottom: .8rem;
+  }
+  .qe__read {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    padding: .8rem 1.2rem;
+    border-radius: .6rem;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .qe__read:hover {
+    background: var(--oxygen-color-semantic-neutral-subtle-weak);
+  }
+  .qe__read:hover .qe__icon {
+    opacity: 1;
+  }
+  .qe__label {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--oxygen-color-semantic-neutral-prominent-weak);
+    min-width: 10rem;
+  }
+  .qe__value {
+    flex: 1;
+    color: var(--oxygen-color-semantic-neutral-prominent-strong);
+    font-size: 1.4rem;
+  }
+  .qe__icon {
+    opacity: 0;
+    font-size: 1.2rem;
+    color: var(--oxygen-color-semantic-neutral-prominent-weak);
+    transition: opacity .15s;
+  }
+  .qe__edit {
+    display: flex;
+    gap: .6rem;
+    align-items: center;
+    padding: .8rem 1.2rem;
+  }
+  .qe__input {
+    flex: 1;
+    padding: .8rem 1.2rem;
+    border: .1rem solid var(--oxygen-color-semantic-neutral-subtle-strong);
+    border-radius: .6rem;
+    font-size: 1.4rem;
+  }
+  .qe__input:focus {
+    outline: none;
+    border-color: var(--oxygen-color-semantic-brand-prominent-base);
+    box-shadow: 0 0 0 .2rem var(--oxygen-color-semantic-brand-subtle-weak);
+  }
+  .qe__save,
+  .qe__cancel {
+    width: 3.2rem;
+    height: 3.2rem;
+    border: none;
+    border-radius: .6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+  }
+  .qe__save {
+    background: var(--oxygen-color-semantic-brand-prominent-base);
+    color: white;
+  }
+  .qe__save:hover {
+    background: var(--oxygen-color-semantic-brand-prominent-strong);
+  }
+  .qe__cancel {
+    background: var(--oxygen-color-semantic-neutral-subtle-weak);
+    color: var(--oxygen-color-semantic-neutral-prominent-strong);
+  }
+  .qe__cancel:hover {
+    background: var(--oxygen-color-semantic-neutral-subtle-strong);
+  }
+  .qe--success {
+    animation: successPulse .4s ease-out;
+  }
+  @keyframes successPulse {
+    0%, 100% { background: transparent; }
+    50% { background: var(--oxygen-color-semantic-positive-subtle-weak); }
+  }
+
+  /* Loading spinner */
+  .loading {
+    display: inline-block;
+    width: 1.4rem;
+    height: 1.4rem;
+    border: 0.2rem solid rgba(255,255,255,0.3);
+    border-top: 0.2rem solid white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-1rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="ox-shell">
+
+  <!-- OS Menu (left rail) -->
+  <nav class="ox-osmenu" aria-label="Primary">
+    <div class="ox-osmenu__brand" aria-label="Doctolib">
+      <svg viewBox="0 0 27 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M26.383 14.5641C27.1787 10.1879 27.1787 1.54163 13.4401 0.0829107C9.8066 -0.288401 4.18388 0.6664 0.125981 1.3825C0.0729362 1.3825 0.0464139 1.43554 0.0198917 1.48859C-0.00663056 1.54163 -0.00663056 1.67424 0.0198917 1.78033C0.125981 2.0986 0.523814 2.68209 1.00121 2.89427C1.37253 3.07992 2.19472 3.02688 2.3008 3.02688C14.8458 1.91295 23.8103 4.64474 22.1925 13.8214C21.2377 19.1259 17.7633 25.7299 8.18874 25.7299C6.25262 25.7299 6.01392 25.5708 6.25262 24.006C6.27914 23.7938 9.24963 7.93349 9.43529 6.34216C9.43529 6.28911 9.40877 6.23607 9.35572 6.20955C9.24963 6.20955 7.15438 5.70562 6.65045 7.72131C6.54436 8.14567 1.50514 26.9234 1.26644 27.9047C0.94817 29.2839 1.87645 30 8.02961 30C23.5982 29.9735 25.9321 17.1367 26.383 14.5641Z" fill="currentColor"/>
+      </svg>
+    </div>
+    <button type="button" class="ox-osmenu__item" data-nav="agenda" onclick="setNavActive(this)"><span class="ox-osmenu__icon"><i class="fa-solid fa-calendar-days"></i></span><span class="ox-osmenu__label">Agenda</span></button>
+    <button type="button" class="ox-osmenu__item is-active" aria-current="page" data-nav="patients" onclick="setNavActive(this)"><span class="ox-osmenu__icon"><i class="fa-solid fa-folder-open"></i></span><span class="ox-osmenu__label">Patients</span></button>
+    <button type="button" class="ox-osmenu__item" data-nav="messages" onclick="setNavActive(this)"><span class="ox-osmenu__badge">3</span><span class="ox-osmenu__icon"><i class="fa-solid fa-comment-dots"></i></span><span class="ox-osmenu__label">Messages</span></button>
+    <button type="button" class="ox-osmenu__item" data-nav="facturation" onclick="setNavActive(this)"><span class="ox-osmenu__icon"><i class="fa-solid fa-euro-sign"></i></span><span class="ox-osmenu__label">Facturation</span></button>
+    <span class="ox-osmenu__spacer"></span>
+    <div class="ox-osmenu__footer">
+      <span class="ox-osmenu__avatar ox-osmenu__avatar--user">MD</span>
+    </div>
+  </nav>
+
+  <!-- Top Bar -->
+  <header class="ox-topbar" role="banner">
+    <label class="ox-topbar__search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search" placeholder="Rechercher un patient">
+    </label>
+    <button type="button" class="ox-topbar__pill"><i class="fa-regular fa-circle-question"></i><span>Aide</span></button>
+    <span class="ox-topbar__spacer"></span>
+    <button type="button" class="ox-topbar__pill" style="cursor:default; opacity:.8">Option A Conservative</button>
+    <button type="button" class="ox-topbar__icon"><i class="fa-solid fa-bell"></i></button>
+    <button type="button" class="ox-topbar__icon"><i class="fa-solid fa-gear"></i></button>
+    <button type="button" class="ox-topbar__avatar">MD</button>
+  </header>
+
+  <!-- Main content area -->
+  <main class="ox-shell__content">
+    <div class="ox-settings__body">
+      <div class="ws has-toolbox" id="ws-patient-file">
+
+        <div class="ws__focus">
+          <header class="ws__pageheader">
+            <div style="display:flex; align-items:center; gap:1.2rem;">
+              <span class="ox-avatar ox-avatar--large ox-avatar--dark-primary">
+                <span class="ox-avatar__circle">CF</span>
+              </span>
+              <div>
+                <h1>Claire Fontaine</h1>
+                <p style="font:var(--oxygen-font-semantic-body-m-regular); color:var(--oxygen-color-semantic-neutral-prominent-base); margin:0">
+                  34 ans · F · Patiente depuis 2024
+                </p>
+              </div>
+            </div>
+            <div class="ws__pageheader__actions">
+              <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-neutral ox-iconbutton--size-medium">
+                <span class="ox-iconbutton__innerWrapper"><i class="fa-regular fa-star"></i></span>
+              </button>
+              <button class="ox-iconbutton ox-iconbutton--variant-transparent ox-iconbutton--ui-neutral ox-iconbutton--size-medium">
+                <span class="ox-iconbutton__innerWrapper"><i class="fa-solid fa-ellipsis-vertical"></i></span>
+              </button>
+            </div>
+          </header>
+
+          <div class="ws__content">
+            <div class="ws__main">
+
+              <!-- OPTION A: Conservative (4 onglets) -->
+              <div id="variant-a-content" class="variant-container">
+                <div class="pfm">
+                  <div class="pfm__main">
+                    <!-- Menu header -->
+                    <div class="mh">
+                      <div class="tabs" role="tablist">
+                        <button class="tab is-active" role="tab" aria-selected="true" data-tab="sante" data-variant="a">Santé</button>
+                        <button class="tab" role="tab" aria-selected="false" data-tab="finance" data-variant="a">Finance</button>
+                        <button class="tab" role="tab" aria-selected="false" data-tab="historique" data-variant="a">Historique</button>
+                        <button class="tab" role="tab" aria-selected="false" data-tab="administratif" data-variant="a">Administratif</button>
+                      </div>
+                    </div>
+
+                    <!-- Panel 1: Santé -->
+                    <div class="panel" role="tabpanel" data-panel="sante" data-variant="a">
+
+                      <!-- Note de contexte confidentialité -->
+                      <div style="display:flex; align-items:center; gap:.8rem; padding:1rem 1.6rem; background:var(--oxygen-color-semantic-warning-subtle-weak); border-radius:.8rem; margin-bottom:2rem;">
+                        <i class="fa-solid fa-lock" style="color:var(--oxygen-color-semantic-warning-prominent-base); font-size:1.4rem; flex-shrink:0;"></i>
+                        <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-warning-prominent-strong); margin:0">Notes cliniques confidentielles — accès restreint au praticien responsable du dossier.</p>
+                      </div>
+
+                      <!-- MODULE: Notes de séance -->
+                      <section style="margin-bottom:2.4rem">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem">
+                          <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Notes de séance</h2>
+                          <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" data-open-workflow="note">
+                            <span class="ox-button__innerWrapper">
+                              <span class="ox-button__hoverEffect"></span>
+                              <span class="ox-button__activeEffect"></span>
+                              <span class="ox-button__contentWrapper">Nouvelle note</span>
+                            </span>
+                          </button>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:1.2rem">
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.8rem">
+                              <p style="font:var(--oxygen-font-semantic-body-s-bold); color:var(--oxygen-color-semantic-neutral-prominent-weak); text-transform:uppercase; letter-spacing:.04em; margin:0">18 juin 2026 · Séance 22</p>
+                              <span class="ox-badge ox-badge--ui-informative">Dernière séance</span>
+                            </div>
+                            <p style="font:var(--oxygen-font-semantic-body-m-regular); color:var(--oxygen-color-semantic-neutral-prominent-strong); margin:0 0 .8rem; line-height:1.6">Travail sur la gestion des émotions au travail. La patiente rapporte une amélioration des épisodes anxieux depuis 3 semaines. Exercice de respiration introduit, bonne réceptivité. Abordé la relation avec la hiérarchie.</p>
+                            <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">Prochaine séance : 2 juillet 2026</p>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.8rem">
+                              <p style="font:var(--oxygen-font-semantic-body-s-bold); color:var(--oxygen-color-semantic-neutral-prominent-weak); text-transform:uppercase; letter-spacing:.04em; margin:0">4 juin 2026 · Séance 21</p>
+                            </div>
+                            <p style="font:var(--oxygen-font-semantic-body-m-regular); color:var(--oxygen-color-semantic-neutral-prominent-strong); margin:0; line-height:1.6">Retour sur les événements professionnels de la semaine. Exploration des mécanismes de défense identifiés lors de la séance 20. La patiente commence à identifier les déclencheurs.</p>
+                          </div>
+                        </div>
+                      </section>
+
+                      <!-- MODULE: Objectifs thérapeutiques -->
+                      <section style="margin-bottom:2.4rem">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem">
+                          <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Objectifs thérapeutiques</h2>
+                          <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" onclick="showToast('Ajout d\'un objectif (prototype)', 'info')">
+                            <span class="ox-button__innerWrapper">
+                              <span class="ox-button__hoverEffect"></span>
+                              <span class="ox-button__activeEffect"></span>
+                              <span class="ox-button__contentWrapper">Ajouter</span>
+                            </span>
+                          </button>
+                        </div>
+                        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem">
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:.8rem">
+                              <p class="ox-paragraph ox-paragraph--label">Gestion de l'anxiété professionnelle</p>
+                              <span class="ox-badge ox-badge--ui-positive">En cours</span>
+                            </div>
+                            <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">Depuis janvier 2024 · Progression : bonne</p>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:.8rem">
+                              <p class="ox-paragraph ox-paragraph--label">Affirmation de soi</p>
+                              <span class="ox-badge ox-badge--ui-positive">En cours</span>
+                            </div>
+                            <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">Depuis mars 2024 · Progression : modérée</p>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:.8rem">
+                              <p class="ox-paragraph ox-paragraph--label">Deuil de séparation parentale</p>
+                              <span class="ox-badge ox-badge--ui-neutral">Résolu</span>
+                            </div>
+                            <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">Clôturé en octobre 2024</p>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:.8rem">
+                              <p class="ox-paragraph ox-paragraph--label">Troubles du sommeil</p>
+                              <span class="ox-badge ox-badge--ui-informative">Suivi</span>
+                            </div>
+                            <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">En lien avec le médecin traitant</p>
+                          </div>
+                        </div>
+                      </section>
+
+                      <!-- MODULE: Anamnèse -->
+                      <section style="margin-bottom:2.4rem">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem">
+                          <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Anamnèse</h2>
+                          <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button" onclick="showToast('Édition de l\'anamnèse (prototype)', 'info')">
+                            <span class="ox-button__innerWrapper">
+                              <span class="ox-button__contentWrapper">Modifier</span>
+                            </span>
+                          </button>
+                        </div>
+                        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem">
+                          <div class="ox-card ox-card--outlined">
+                            <p class="ox-paragraph ox-paragraph--label">Motif initial</p>
+                            <p style="font:var(--oxygen-font-semantic-body-m-regular); color:var(--oxygen-color-semantic-neutral-prominent-strong); margin:.4rem 0 0">Anxiété généralisée, burn-out professionnel</p>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <p class="ox-paragraph ox-paragraph--label">Approche thérapeutique</p>
+                            <p style="font:var(--oxygen-font-semantic-body-m-regular); color:var(--oxygen-color-semantic-neutral-prominent-strong); margin:.4rem 0 0">TCC — thérapie cognitive et comportementale</p>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <p class="ox-paragraph ox-paragraph--label">Antécédents psy</p>
+                            <p style="font:var(--oxygen-font-semantic-body-m-regular); color:var(--oxygen-color-semantic-neutral-prominent-strong); margin:.4rem 0 0">Suivi ponctuel en 2019 (TCC, 8 séances)</p>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <p class="ox-paragraph ox-paragraph--label">Antécédents médicaux</p>
+                            <p style="font:var(--oxygen-font-semantic-body-m-regular); color:var(--oxygen-color-semantic-neutral-prominent-strong); margin:.4rem 0 0">Hypothyroïdie traitée (lévothyroxine)</p>
+                          </div>
+                        </div>
+                      </section>
+
+                    </div>
+
+                    <!-- Panel 2: Finance -->
+                    <div class="panel" role="tabpanel" data-panel="finance" data-variant="a" style="display:none">
+
+                      <!-- MODULE: Solde patient -->
+                      <section style="margin-bottom:2.4rem">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem">
+                          <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Solde patient</h2>
+                        </div>
+                        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem">
+                          <div class="ox-card ox-card--outlined">
+                            <p class="ox-paragraph ox-paragraph--label">Total facturé</p>
+                            <p style="font:var(--oxygen-font-semantic-title-l-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:.4rem 0 0">1 540,00 €</p>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <p class="ox-paragraph ox-paragraph--label">Total payé</p>
+                            <p style="font:var(--oxygen-font-semantic-title-l-bold); color:var(--oxygen-color-semantic-positive-prominent-base); margin:.4rem 0 0">1 470,00 €</p>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <p class="ox-paragraph ox-paragraph--label">En attente</p>
+                            <p style="font:var(--oxygen-font-semantic-title-l-bold); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:.4rem 0 0">70,00 €</p>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <p class="ox-paragraph ox-paragraph--label">En retard</p>
+                            <p style="font:var(--oxygen-font-semantic-title-l-bold); color:var(--oxygen-color-semantic-danger-prominent-base); margin:.4rem 0 0">0,00 €</p>
+                          </div>
+                        </div>
+                      </section>
+
+                      <!-- MODULE: Factures récentes -->
+                      <section style="margin-bottom:2.4rem">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem">
+                          <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Factures récentes</h2>
+                          <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button" onclick="showToast('Voir toutes les factures (prototype)', 'info')">
+                            <span class="ox-button__innerWrapper">
+                              <span class="ox-button__contentWrapper">Voir tout</span>
+                            </span>
+                          </button>
+                        </div>
+                        <div id="invoices-list-a" style="display:flex; flex-direction:column; gap:1.2rem">
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                              <div style="flex:1">
+                                <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 .2rem">Séance de psychologie</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">18 juin 2026 · Facture #2026-109</p>
+                              </div>
+                              <div style="display:flex; align-items:center; gap:1.2rem">
+                                <p style="font:var(--oxygen-font-semantic-body-l-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">70,00 €</p>
+                                <span class="ox-badge" style="background:var(--oxygen-color-semantic-warning-prominent-base);color:#fff">En attente</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                              <div style="flex:1">
+                                <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 .2rem">Séance de psychologie</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">4 juin 2026 · Facture #2026-098</p>
+                              </div>
+                              <div style="display:flex; align-items:center; gap:1.2rem">
+                                <p style="font:var(--oxygen-font-semantic-body-l-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">70,00 €</p>
+                                <span class="ox-badge" style="background:var(--oxygen-color-semantic-positive-prominent-base);color:#fff">Payé</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                              <div style="flex:1">
+                                <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 .2rem">Séance de psychologie</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">21 mai 2026 · Facture #2026-087</p>
+                              </div>
+                              <div style="display:flex; align-items:center; gap:1.2rem">
+                                <p style="font:var(--oxygen-font-semantic-body-l-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">70,00 €</p>
+                                <span class="ox-badge" style="background:var(--oxygen-color-semantic-positive-prominent-base);color:#fff">Payé</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+
+                      <!-- MODULE: Attestations de paiement -->
+                      <section style="margin-bottom:2.4rem">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem">
+                          <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Attestations de paiement</h2>
+                          <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" onclick="showToast('Génération d\'attestation (prototype)', 'info')">
+                            <span class="ox-button__innerWrapper">
+                              <span class="ox-button__hoverEffect"></span>
+                              <span class="ox-button__activeEffect"></span>
+                              <span class="ox-button__contentWrapper">Générer</span>
+                            </span>
+                          </button>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:1.2rem">
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; align-items:center; gap:1.2rem;">
+                              <i class="fa-solid fa-file-pdf" style="font-size:2.4rem; color:var(--oxygen-color-semantic-danger-prominent-base);"></i>
+                              <div style="flex:1;">
+                                <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Attestation T2 2026 (avril–juin)</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">Générée le 18 juin 2026 · 420,00 €</p>
+                              </div>
+                              <button class="ox-inlinebutton" type="button" onclick="showToast('Téléchargement (prototype)', 'info')">Télécharger</button>
+                            </div>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; align-items:center; gap:1.2rem;">
+                              <i class="fa-solid fa-file-pdf" style="font-size:2.4rem; color:var(--oxygen-color-semantic-danger-prominent-base);"></i>
+                              <div style="flex:1;">
+                                <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Attestation T1 2026 (janvier–mars)</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">Générée le 31 mars 2026 · 420,00 €</p>
+                              </div>
+                              <button class="ox-inlinebutton" type="button" onclick="showToast('Téléchargement (prototype)', 'info')">Télécharger</button>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+
+                    </div>
+
+                    <!-- Panel 3: Historique -->
+                    <div class="panel" role="tabpanel" data-panel="historique" data-variant="a" style="display:none">
+                      <section style="margin-bottom:2.4rem">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem">
+                          <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Historique des séances</h2>
+                          <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">22 séances · depuis janv. 2024</p>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:1.6rem">
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; gap:1.6rem;">
+                              <div style="flex-shrink:0; width:8rem; text-align:center;">
+                                <p style="font:var(--oxygen-font-semantic-body-xs-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">18 juin</p>
+                                <p style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-brand-prominent-base); margin:0">2026</p>
+                                <p style="font:var(--oxygen-font-semantic-body-xs-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:.4rem 0 0">Séance 22</p>
+                              </div>
+                              <div style="flex:1; border-left:.2rem solid var(--oxygen-color-semantic-neutral-subtle-strong); padding-left:1.6rem;">
+                                <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 .4rem">Séance de psychologie</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0 0 .8rem">Gestion des émotions · Exercice de respiration · 50 min</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-base); margin:0"><strong>Montant :</strong> 70,00 € · <strong>Statut :</strong> En attente</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; gap:1.6rem;">
+                              <div style="flex-shrink:0; width:8rem; text-align:center;">
+                                <p style="font:var(--oxygen-font-semantic-body-xs-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">4 juin</p>
+                                <p style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-brand-prominent-base); margin:0">2026</p>
+                                <p style="font:var(--oxygen-font-semantic-body-xs-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:.4rem 0 0">Séance 21</p>
+                              </div>
+                              <div style="flex:1; border-left:.2rem solid var(--oxygen-color-semantic-neutral-subtle-strong); padding-left:1.6rem;">
+                                <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 .4rem">Séance de psychologie</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0 0 .8rem">Mécanismes de défense · 50 min</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-base); margin:0"><strong>Montant :</strong> 70,00 € · <strong>Statut :</strong> Payé</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; gap:1.6rem;">
+                              <div style="flex-shrink:0; width:8rem; text-align:center;">
+                                <p style="font:var(--oxygen-font-semantic-body-xs-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">21 mai</p>
+                                <p style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-brand-prominent-base); margin:0">2026</p>
+                                <p style="font:var(--oxygen-font-semantic-body-xs-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:.4rem 0 0">Séance 20</p>
+                              </div>
+                              <div style="flex:1; border-left:.2rem solid var(--oxygen-color-semantic-neutral-subtle-strong); padding-left:1.6rem;">
+                                <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 .4rem">Séance de psychologie</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0 0 .8rem">Affirmation de soi en milieu professionnel · 50 min</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-base); margin:0"><strong>Montant :</strong> 70,00 € · <strong>Statut :</strong> Payé</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; gap:1.6rem;">
+                              <div style="flex-shrink:0; width:8rem; text-align:center;">
+                                <p style="font:var(--oxygen-font-semantic-body-xs-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">7 mai</p>
+                                <p style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-brand-prominent-base); margin:0">2026</p>
+                                <p style="font:var(--oxygen-font-semantic-body-xs-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:.4rem 0 0">Séance 19</p>
+                              </div>
+                              <div style="flex:1; border-left:.2rem solid var(--oxygen-color-semantic-neutral-subtle-strong); padding-left:1.6rem;">
+                                <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 .4rem">Séance de psychologie</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0 0 .8rem">Événements familiaux · 50 min</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-base); margin:0"><strong>Montant :</strong> 70,00 € · <strong>Statut :</strong> Payé</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+
+                    <!-- Panel 4: Administratif -->
+                    <div class="panel" role="tabpanel" data-panel="administratif" data-variant="a" style="display:none">
+
+                      <!-- QuickEdit: Informations de contact -->
+                      <section style="margin-bottom:2.4rem">
+                        <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 1.2rem">Informations de contact</h2>
+                        <div style="background:#fff; border:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong); border-radius:1.2rem; padding:1.6rem;">
+                          <div class="qe" data-field="phone" data-variant="a">
+                            <div class="qe__read" onclick="enterEditMode(this)">
+                              <span class="qe__label">Téléphone</span>
+                              <span class="qe__value">07 61 23 45 89</span>
+                              <i class="fa-solid fa-pen qe__icon"></i>
+                            </div>
+                            <div class="qe__edit" style="display:none">
+                              <input type="tel" class="qe__input" value="07 61 23 45 89">
+                              <button class="qe__save" onclick="saveQuickEdit(this)"><i class="fa-solid fa-check"></i></button>
+                              <button class="qe__cancel" onclick="cancelQuickEdit(this)"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                          </div>
+                          <div class="qe" data-field="email" data-variant="a">
+                            <div class="qe__read" onclick="enterEditMode(this)">
+                              <span class="qe__label">Email</span>
+                              <span class="qe__value">claire.fontaine@example.fr</span>
+                              <i class="fa-solid fa-pen qe__icon"></i>
+                            </div>
+                            <div class="qe__edit" style="display:none">
+                              <input type="email" class="qe__input" value="claire.fontaine@example.fr">
+                              <button class="qe__save" onclick="saveQuickEdit(this)"><i class="fa-solid fa-check"></i></button>
+                              <button class="qe__cancel" onclick="cancelQuickEdit(this)"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                          </div>
+                          <div class="qe" data-field="address" data-variant="a">
+                            <div class="qe__read" onclick="enterEditMode(this)">
+                              <span class="qe__label">Adresse</span>
+                              <span class="qe__value">8 rue des Lilas, 75011 Paris</span>
+                              <i class="fa-solid fa-pen qe__icon"></i>
+                            </div>
+                            <div class="qe__edit" style="display:none">
+                              <input type="text" class="qe__input" value="8 rue des Lilas, 75011 Paris">
+                              <button class="qe__save" onclick="saveQuickEdit(this)"><i class="fa-solid fa-check"></i></button>
+                              <button class="qe__cancel" onclick="cancelQuickEdit(this)"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+
+                      <!-- Médecin traitant -->
+                      <section style="margin-bottom:2.4rem">
+                        <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 1.2rem">Médecin traitant</h2>
+                        <div class="ox-card ox-card--outlined">
+                          <div style="display:flex; align-items:center; gap:1.2rem;">
+                            <i class="fa-solid fa-user-doctor" style="font-size:2.4rem; color:var(--oxygen-color-semantic-brand-prominent-base);"></i>
+                            <div style="flex:1;">
+                              <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Dr. Isabelle Morin</p>
+                              <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">Médecin généraliste · 75011 Paris</p>
+                            </div>
+                            <button class="ox-inlinebutton" type="button" onclick="showToast('Édition du médecin traitant (prototype)', 'info')">Modifier</button>
+                          </div>
+                        </div>
+                      </section>
+
+                      <!-- Contact d'urgence -->
+                      <section style="margin-bottom:2.4rem">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem">
+                          <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Contact d'urgence</h2>
+                          <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" onclick="showToast('Ajout d\'un contact (prototype)', 'info')">
+                            <span class="ox-button__innerWrapper">
+                              <span class="ox-button__hoverEffect"></span>
+                              <span class="ox-button__activeEffect"></span>
+                              <span class="ox-button__contentWrapper">Ajouter</span>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="ox-card ox-card--outlined">
+                          <div style="display:flex; align-items:center; gap:1.2rem;">
+                            <i class="fa-solid fa-phone" style="font-size:2rem; color:var(--oxygen-color-semantic-neutral-prominent-weak);"></i>
+                            <div style="flex:1;">
+                              <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Thomas Fontaine <span style="font-weight:400">(frère)</span></p>
+                              <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">06 78 90 12 34</p>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+
+                      <!-- Documents -->
+                      <section style="margin-bottom:2.4rem">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem">
+                          <h2 style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Documents</h2>
+                          <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" onclick="showToast('Ajout d\'un document (prototype)', 'info')">
+                            <span class="ox-button__innerWrapper">
+                              <span class="ox-button__hoverEffect"></span>
+                              <span class="ox-button__activeEffect"></span>
+                              <span class="ox-button__contentWrapper">Ajouter</span>
+                            </span>
+                          </button>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:1.2rem">
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; align-items:center; gap:1.2rem;">
+                              <i class="fa-solid fa-file-pdf" style="font-size:2.4rem; color:var(--oxygen-color-semantic-danger-prominent-base);"></i>
+                              <div style="flex:1;">
+                                <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Consentement éclairé.pdf</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">Signé le 15 janvier 2024 · 128 KB</p>
+                              </div>
+                              <button class="ox-inlinebutton" type="button" onclick="showToast('Téléchargement (prototype)', 'info')">Télécharger</button>
+                            </div>
+                          </div>
+                          <div class="ox-card ox-card--outlined">
+                            <div style="display:flex; align-items:center; gap:1.2rem;">
+                              <i class="fa-solid fa-file-pdf" style="font-size:2.4rem; color:var(--oxygen-color-semantic-danger-prominent-base);"></i>
+                              <div style="flex:1;">
+                                <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">Bilan psychologique initial.pdf</p>
+                                <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">15 janvier 2024 · 312 KB</p>
+                              </div>
+                              <button class="ox-inlinebutton" type="button" onclick="showToast('Téléchargement (prototype)', 'info')">Télécharger</button>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- TOOLBOX (right zone) -->
+        <aside class="ws__toolbox" id="toolbox">
+          <!-- ActionBar mode (default) -->
+          <div class="pf-actionbar" id="actionbar">
+
+            <!-- Note de séance -->
+            <div class="pf-actionbar__card">
+              <h3>Note de séance</h3>
+              <p>Rédiger les notes cliniques après la séance</p>
+              <div class="pf-actionbar__actions">
+                <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-small" type="button" data-open-workflow="note">
+                  <span class="ox-button__innerWrapper">
+                    <span class="ox-button__hoverEffect"></span>
+                    <span class="ox-button__activeEffect"></span>
+                    <span class="ox-button__contentWrapper"><i class="fa-solid fa-pen-to-square" style="margin-right:.6rem"></i>Nouvelle note</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Facturation -->
+            <div class="pf-actionbar__card">
+              <h3>Facturation</h3>
+              <p>Créer une facture, générer une attestation mutuelle</p>
+              <div class="pf-actionbar__actions">
+                <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" data-open-workflow="invoice">
+                  <span class="ox-button__innerWrapper">
+                    <span class="ox-button__hoverEffect"></span>
+                    <span class="ox-button__activeEffect"></span>
+                    <span class="ox-button__contentWrapper"><i class="fa-solid fa-file-invoice-dollar" style="margin-right:.6rem"></i>Nouvelle facture</span>
+                  </span>
+                </button>
+                <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button" onclick="switchToTab('finance', 'a'); showToast('Navigation vers Finance', 'info')">
+                  <span class="ox-button__innerWrapper">
+                    <span class="ox-button__contentWrapper">Historique des factures</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Actions patient -->
+            <div class="pf-actionbar__card">
+              <h3>Actions patient</h3>
+              <p>Communication et suivi</p>
+              <div class="pf-actionbar__actions">
+                <button class="ox-button ox-button--variant-outlined ox-button--ui-brand ox-button--size-small" type="button" onclick="showToast('Envoi de message (prototype)', 'info')">
+                  <span class="ox-button__innerWrapper">
+                    <span class="ox-button__hoverEffect"></span>
+                    <span class="ox-button__activeEffect"></span>
+                    <span class="ox-button__contentWrapper"><i class="fa-solid fa-envelope" style="margin-right:.6rem"></i>Envoyer un message</span>
+                  </span>
+                </button>
+                <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-small" type="button" onclick="showToast('Export du dossier (prototype)', 'info')">
+                  <span class="ox-button__innerWrapper">
+                    <span class="ox-button__contentWrapper">Exporter le dossier</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Workflow Panel: Note de séance -->
+          <div class="wp" id="workflow-note" style="display:none">
+            <div class="wp__header">
+              <div class="wp__head-left">
+                <h2 class="wp__title">Note de séance</h2>
+              </div>
+              <div class="wp__head-right">
+                <button class="wp__hbtn" type="button" aria-label="Plein écran" data-toggle-comfort><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+                <button class="wp__hbtn" type="button" aria-label="Fermer" data-close-workflow><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+              </div>
+            </div>
+            <div class="wp__body">
+              <form id="note-form" onsubmit="return false">
+                <div>
+                  <label>Patient</label>
+                  <input type="text" value="Claire Fontaine" readonly style="background:var(--oxygen-color-semantic-neutral-subtle-weaker)">
+                </div>
+                <div>
+                  <label>Date de séance *</label>
+                  <input type="date" name="date" value="2026-06-25" required>
+                </div>
+                <div>
+                  <label>Numéro de séance</label>
+                  <input type="number" name="seance" value="23" min="1">
+                </div>
+                <div>
+                  <label>Contenu de la séance *</label>
+                  <textarea name="notes" rows="6" placeholder="Résumé des échanges, thèmes abordés, observations cliniques…" required></textarea>
+                </div>
+                <div>
+                  <label>Plan pour la prochaine séance</label>
+                  <textarea name="plan" rows="3" placeholder="Exercices à réaliser, points à approfondir…"></textarea>
+                </div>
+                <div>
+                  <label>Prochaine séance</label>
+                  <input type="date" name="next" value="2026-07-02">
+                </div>
+              </form>
+            </div>
+            <div class="wp__footer">
+              <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-medium" type="button" data-close-workflow><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Annuler</span></span></button>
+              <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" type="button" id="submit-note" onclick="submitNote()"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Enregistrer la note</span></span></button>
+            </div>
+          </div>
+
+          <!-- Workflow Panel: Nouvelle facture -->
+          <div class="wp" id="workflow-invoice" style="display:none">
+            <div class="wp__header">
+              <div class="wp__head-left">
+                <h2 class="wp__title">Nouvelle facture</h2>
+              </div>
+              <div class="wp__head-right">
+                <button class="wp__hbtn" type="button" aria-label="Plein écran" data-toggle-comfort><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+                <button class="wp__hbtn" type="button" aria-label="Fermer" data-close-workflow><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+              </div>
+            </div>
+            <div class="wp__body">
+              <form id="invoice-form" onsubmit="return false">
+                <div>
+                  <label>Patient</label>
+                  <input type="text" value="Claire Fontaine" readonly style="background:var(--oxygen-color-semantic-neutral-subtle-weaker)">
+                </div>
+                <div>
+                  <label>Date de la séance *</label>
+                  <input type="date" name="date" value="2026-06-25" required>
+                </div>
+                <div>
+                  <label>Acte *</label>
+                  <select name="acte" required onchange="updateAmount(this)">
+                    <option value="70">Séance de psychologie (70,00 €)</option>
+                    <option value="90">Première consultation — bilan (90,00 €)</option>
+                    <option value="90">Séance de couple (90,00 €)</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Montant *</label>
+                  <input type="number" name="amount" id="invoice-amount" value="70.00" step="0.01" min="0" required>
+                </div>
+                <div>
+                  <label>Mode de paiement *</label>
+                  <select name="payment_method" required>
+                    <option>Carte bancaire</option>
+                    <option>Espèces</option>
+                    <option>Chèque</option>
+                    <option>Virement</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Statut *</label>
+                  <select name="status" required>
+                    <option selected>Payé</option>
+                    <option>Non payé</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Attestation mutuelle</label>
+                  <select name="attestation">
+                    <option>Non</option>
+                    <option>Oui — envoyer par email</option>
+                    <option>Oui — télécharger uniquement</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Envoi facture</label>
+                  <select name="send_method">
+                    <option>Email (claire.fontaine@example.fr)</option>
+                    <option>SMS</option>
+                    <option>Imprimer</option>
+                    <option>Ne pas envoyer</option>
+                  </select>
+                </div>
+                <div style="padding:1.2rem; background:var(--oxygen-color-semantic-neutral-subtle-weaker); border-radius:.8rem; margin-top:.8rem">
+                  <div style="display:flex; justify-content:space-between; margin-bottom:.4rem">
+                    <span style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-base)">Montant HT</span>
+                    <span style="font:var(--oxygen-font-semantic-body-s-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger)" id="amount-ht">70,00 €</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:.8rem">
+                    <span style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-base)">TVA (0%)</span>
+                    <span style="font:var(--oxygen-font-semantic-body-s-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger)">0,00 €</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; padding-top:.8rem; border-top:.1rem solid var(--oxygen-color-semantic-neutral-subtle-strong)">
+                    <span style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger)">Total TTC</span>
+                    <span style="font:var(--oxygen-font-semantic-title-m-bold); color:var(--oxygen-color-semantic-brand-prominent-base)" id="amount-ttc">70,00 €</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="wp__footer">
+              <button class="ox-button ox-button--variant-transparent ox-button--ui-neutral ox-button--size-medium" type="button" data-close-workflow><span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper">Annuler</span></span></button>
+              <button class="ox-button ox-button--variant-solid ox-button--ui-brand ox-button--size-medium" type="button" id="submit-invoice" onclick="submitInvoice()"><span class="ox-button__innerWrapper"><span class="ox-button__hoverEffect"></span><span class="ox-button__activeEffect"></span><span class="ox-button__contentWrapper">Créer facture</span></span></button>
+            </div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  const ws = document.getElementById('ws-patient-file');
+  const actionbar = document.getElementById('actionbar');
+  const workflowNote = document.getElementById('workflow-note');
+  const workflowInvoice = document.getElementById('workflow-invoice');
+
+  // ============================================================
+  // TAB SWITCHING with localStorage persistence
+  // ============================================================
+  function initTabs() {
+    document.querySelectorAll('.tabs').forEach(tablist => {
+      tablist.addEventListener('click', e => {
+        const clickedTab = e.target.closest('.tab');
+        if (!clickedTab) return;
+        const tabId = clickedTab.dataset.tab;
+        const variant = clickedTab.dataset.variant;
+        switchToTab(tabId, variant);
+        localStorage.setItem(`pf_optiona_current_tab`, tabId);
+      });
+    });
+  }
+
+  function switchToTab(tabId, variant) {
+    document.querySelectorAll(`.tab[data-variant="${variant}"]`).forEach(tab => {
+      if (tab.dataset.tab === tabId) {
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+      } else {
+        tab.classList.remove('is-active');
+        tab.setAttribute('aria-selected', 'false');
+      }
+    });
+    document.querySelectorAll(`.panel[data-variant="${variant}"]`).forEach(panel => {
+      panel.style.display = panel.dataset.panel === tabId ? 'block' : 'none';
+    });
+  }
+
+  // ============================================================
+  // QUICKEDIT
+  // ============================================================
+  window.enterEditMode = function(readEl) {
+    const container = readEl.closest('.qe');
+    const editEl = container.querySelector('.qe__edit');
+    const input = editEl.querySelector('.qe__input');
+    readEl.style.display = 'none';
+    editEl.style.display = 'flex';
+    input.focus();
+    input.select();
+  };
+
+  window.saveQuickEdit = function(btn) {
+    const container = btn.closest('.qe');
+    const input = container.querySelector('.qe__input');
+    const valueEl = container.querySelector('.qe__value');
+    const readEl = container.querySelector('.qe__read');
+    const editEl = container.querySelector('.qe__edit');
+    if (!input.value.trim()) { showToast('Le champ ne peut pas être vide', 'error'); return; }
+    valueEl.textContent = input.value;
+    const field = container.dataset.field;
+    localStorage.setItem(`pf_optiona_patient_${field}`, input.value);
+    container.classList.add('qe--success');
+    setTimeout(() => container.classList.remove('qe--success'), 1500);
+    editEl.style.display = 'none';
+    readEl.style.display = 'flex';
+    showToast('Enregistré');
+  };
+
+  window.cancelQuickEdit = function(btn) {
+    const container = btn.closest('.qe');
+    const readEl = container.querySelector('.qe__read');
+    const editEl = container.querySelector('.qe__edit');
+    const input = editEl.querySelector('.qe__input');
+    input.value = container.querySelector('.qe__value').textContent;
+    editEl.style.display = 'none';
+    readEl.style.display = 'flex';
+  };
+
+  // ============================================================
+  // ACTIONBAR → WORKFLOW PANEL TRANSITION
+  // ============================================================
+  function openWorkflow(which) {
+    actionbar.style.display = 'none';
+    workflowNote.style.display = 'none';
+    workflowInvoice.style.display = 'none';
+    if (which === 'note') workflowNote.style.display = 'flex';
+    if (which === 'invoice') workflowInvoice.style.display = 'flex';
+    ws.classList.add('has-workflow');
+    ws.classList.remove('has-toolbox');
+  }
+
+  function closeWorkflow() {
+    workflowNote.style.display = 'none';
+    workflowInvoice.style.display = 'none';
+    actionbar.style.display = 'flex';
+    ws.classList.remove('has-workflow', 'is-comfort');
+    ws.classList.add('has-toolbox');
+  }
+
+  document.addEventListener('click', e => {
+    const openBtn = e.target.closest('[data-open-workflow]');
+    if (openBtn) { openWorkflow(openBtn.dataset.openWorkflow); return; }
+    if (e.target.closest('[data-close-workflow]')) { closeWorkflow(); return; }
+    if (e.target.closest('[data-toggle-comfort]')) { ws.classList.toggle('is-comfort'); }
+  });
+
+  // ============================================================
+  // WORKFLOW FORMS
+  // ============================================================
+  function updateAmount(select) {
+    const amount = parseFloat(select.value);
+    document.getElementById('invoice-amount').value = amount.toFixed(2);
+    const formatted = amount.toFixed(2).replace('.', ',') + ' €';
+    document.getElementById('amount-ht').textContent = formatted;
+    document.getElementById('amount-ttc').textContent = formatted;
+  }
+
+  window.submitNote = function() {
+    const form = document.getElementById('note-form');
+    if (!form.checkValidity()) { form.reportValidity(); return false; }
+    const btn = document.getElementById('submit-note');
+    const orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper"><span class="loading"></span> Enregistrement…</span></span>';
+    setTimeout(() => {
+      closeWorkflow();
+      btn.disabled = false;
+      btn.innerHTML = orig;
+      showToast('Note de séance enregistrée');
+      switchToTab('sante', 'a');
+    }, 1200);
+    return false;
+  };
+
+  window.submitInvoice = function() {
+    const form = document.getElementById('invoice-form');
+    if (!form.checkValidity()) { form.reportValidity(); return false; }
+    const btn = document.getElementById('submit-invoice');
+    const orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="ox-button__innerWrapper"><span class="ox-button__contentWrapper"><span class="loading"></span> Création en cours…</span></span>';
+    setTimeout(() => {
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      data.invoiceNumber = '2026-' + String(Math.floor(Math.random() * 900) + 100).padStart(3, '0');
+      addInvoiceToList(data);
+      closeWorkflow();
+      btn.disabled = false;
+      btn.innerHTML = orig;
+      showToast('Facture créée avec succès');
+      switchToTab('finance', 'a');
+      form.reset();
+      document.getElementById('invoice-amount').value = '70.00';
+      document.getElementById('amount-ht').textContent = '70,00 €';
+      document.getElementById('amount-ttc').textContent = '70,00 €';
+    }, 1500);
+    return false;
+  };
+
+  function addInvoiceToList(invoice) {
+    const list = document.getElementById('invoices-list-a');
+    if (!list) return;
+    const date = new Date(invoice.date);
+    const dateStr = date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    const card = document.createElement('div');
+    card.className = 'ox-card ox-card--outlined';
+    card.style.animation = 'slideIn 0.3s ease-out';
+    card.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div style="flex:1">
+          <p style="font:var(--oxygen-font-semantic-body-m-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0 0 .2rem">${invoice.acte.split('(')[0].trim()}</p>
+          <p style="font:var(--oxygen-font-semantic-body-s-regular); color:var(--oxygen-color-semantic-neutral-prominent-weak); margin:0">${dateStr} · Facture #${invoice.invoiceNumber}</p>
+        </div>
+        <div style="display:flex; align-items:center; gap:1.2rem">
+          <p style="font:var(--oxygen-font-semantic-body-l-bold); color:var(--oxygen-color-semantic-neutral-prominent-stronger); margin:0">${parseFloat(invoice.amount).toFixed(2).replace('.', ',')} €</p>
+          <span class="ox-badge" style="background:${invoice.status === 'Payé' ? 'var(--oxygen-color-semantic-positive-prominent-base)' : 'var(--oxygen-color-semantic-warning-prominent-base)'};color:#fff">${invoice.status}</span>
+        </div>
+      </div>`;
+    list.insertBefore(card, list.firstChild);
+  }
+
+  // ============================================================
+  // TOAST NOTIFICATIONS
+  // ============================================================
+  function showToast(message, type = 'success') {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.className = `toast toast--${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
+  }
+
+  // ============================================================
+  // OS MENU NAV
+  // ============================================================
+  window.setNavActive = function(item) {
+    document.querySelectorAll('.ox-osmenu__item').forEach(el => {
+      el.classList.remove('is-active');
+      el.removeAttribute('aria-current');
+    });
+    item.classList.add('is-active');
+    item.setAttribute('aria-current', 'page');
+    if (item.dataset.nav !== 'patients') {
+      showToast('Navigation vers ' + item.querySelector('.ox-osmenu__label').textContent + ' (prototype)', 'info');
+    }
+  };
+
+  // ============================================================
+  // INIT
+  // ============================================================
+  window.addEventListener('DOMContentLoaded', () => {
+    initTabs();
+    const savedTab = localStorage.getItem('pf_optiona_current_tab');
+    if (savedTab) switchToTab(savedTab, 'a');
+    ['phone', 'email', 'address'].forEach(field => {
+      const value = localStorage.getItem(`pf_optiona_patient_${field}`);
+      if (value) {
+        const el = document.querySelector(`[data-field="${field}"][data-variant="a"] .qe__value`);
+        if (el) el.textContent = value;
+        const input = document.querySelector(`[data-field="${field}"][data-variant="a"] .qe__input`);
+        if (input) input.value = value;
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

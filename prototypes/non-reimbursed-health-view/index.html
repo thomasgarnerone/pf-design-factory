@@ -1,0 +1,1580 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Sylviane ADAM · Vue Santé · Non remboursé</title>
+<link rel="stylesheet" href="../../boilerplate/colors_and_type.css">
+<link rel="stylesheet" href="../../boilerplate/base.css">
+<link rel="stylesheet" href="../../boilerplate/components.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 62.5%; }
+  body {
+    font-family: 'Roboto', -apple-system, sans-serif;
+    background: var(--oxygen-color-primitive-grey-00);
+    color: var(--oxygen-color-primitive-grey-150);
+    min-height: 100vh;
+  }
+
+  /* ── Shell ─────────────────────────────────────────────────────────── */
+  .ox-shell {
+    --shell-chrome-bg: #00264C;
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    grid-template-rows: 5.6rem 1fr;
+    min-height: 100vh;
+    background: var(--shell-chrome-bg);
+  }
+  .ox-shell > .ox-osmenu  { grid-column: 1; grid-row: 1 / span 2; }
+  .ox-shell > .ox-topbar  { grid-column: 2; grid-row: 1; }
+  .ox-shell__content {
+    grid-column: 2; grid-row: 2;
+    background: #FFFFFF;
+    border-top-left-radius: 0.8rem;
+    min-width: 0; min-height: 0;
+    display: flex; align-items: stretch;
+  }
+
+  /* ── OS Menu ────────────────────────────────────────────────────────── */
+  .ox-osmenu {
+    --osmenu-bg: #00264C;
+    --osmenu-hover: rgba(255,255,255,.15);
+    --osmenu-active: rgba(255,255,255,.25);
+    --osmenu-fg: #FFFFFF;
+    width: 8rem; background: var(--osmenu-bg); color: var(--osmenu-fg);
+    display: flex; flex-direction: column; align-items: stretch;
+    padding: 1.2rem 0; gap: 0.2rem; user-select: none;
+  }
+  .ox-osmenu__brand {
+    display: flex; align-items: center; justify-content: center;
+    height: 6.4rem; margin-bottom: 0.4rem; color: var(--osmenu-fg);
+  }
+  .ox-osmenu__brand svg { width: 2.7rem; height: 3rem; display: block; }
+  .ox-osmenu__item {
+    position: relative; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0.6rem;
+    padding: 1.2rem 0.4rem; border: 0; background: transparent;
+    color: var(--osmenu-fg); cursor: pointer; text-align: center;
+    text-decoration: none; transition: background-color 150ms ease-out;
+  }
+  .ox-osmenu__item:hover { background: var(--osmenu-hover); }
+  .ox-osmenu__item[aria-current="page"] { background: var(--osmenu-active); }
+  .ox-osmenu__icon  { width: 2.4rem; height: 2.4rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+  .ox-osmenu__label { font-size: 1.1rem; font-weight: 400; text-wrap: balance; }
+  .ox-osmenu__badge {
+    position: absolute; top: 0.6rem; right: 0.8rem;
+    min-width: 1.8rem; height: 1.8rem; padding: 0 0.5rem;
+    border-radius: 99rem; background: #F5B400; color: #00264C;
+    font-size: 1.1rem; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .ox-osmenu__spacer { flex: 1; }
+  .ox-osmenu__footer { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; padding: 1.2rem 0 0.4rem; }
+  .ox-osmenu__avatar { width: 4rem; height: 4rem; border-radius: 99rem; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.4rem; color: #fff; }
+  .ox-osmenu__avatar--user { background: #B45A1A; }
+
+  /* ── Top Bar ────────────────────────────────────────────────────────── */
+  .ox-topbar {
+    --topbar-bg: #00264C;
+    --topbar-fg: #FFFFFF;
+    --topbar-fg-weak: rgba(255,255,255,.72);
+    --topbar-stroke: rgba(255,255,255,.24);
+    --topbar-input-bg: rgba(255,255,255,.06);
+    width: 100%; height: 5.6rem;
+    background: var(--topbar-bg); color: var(--topbar-fg);
+    display: flex; align-items: center; gap: 1.2rem; padding: 0 1.6rem;
+  }
+  .ox-topbar__search {
+    flex: 1 1 auto; min-width: 0; max-width: 56rem; height: 4rem;
+    display: flex; align-items: center; gap: 1rem; padding: 0 1.4rem;
+    background: var(--topbar-input-bg); border: 0.1rem solid var(--topbar-stroke);
+    border-radius: 0.8rem;
+  }
+  .ox-topbar__search i    { font-size: 1.4rem; color: var(--topbar-fg-weak); }
+  .ox-topbar__search input { flex: 1; border: 0; outline: 0; background: transparent; color: var(--topbar-fg); font: inherit; font-size: 1.4rem; }
+  .ox-topbar__pill {
+    height: 4rem; display: inline-flex; align-items: center; gap: 0.8rem;
+    padding: 0 1.6rem; background: transparent; color: var(--topbar-fg);
+    border: 0.1rem solid var(--topbar-stroke); border-radius: 99rem;
+    font: inherit; font-size: 1.4rem; font-weight: 500; cursor: pointer;
+  }
+  .ox-topbar__icon {
+    width: 4rem; height: 4rem; display: inline-flex; align-items: center;
+    justify-content: center; background: transparent; color: var(--topbar-fg);
+    border: 0; border-radius: 99rem; cursor: pointer;
+  }
+  .ox-topbar__icon i { font-size: 1.7rem; }
+  .ox-topbar__spacer { flex: 1 1 auto; }
+  .ox-topbar__avatar {
+    width: 4rem; height: 4rem; border-radius: 99rem; background: #B45A1A;
+    color: #fff; font-weight: 700; font-size: 1.3rem;
+    display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .ox-topbar__group { display: flex; align-items: center; gap: 1.2rem; }
+
+  /* ── Variant Switcher ───────────────────────────────────────────────── */
+  .variant-switcher {
+    display: flex; align-items: center; gap: 0.4rem;
+    padding: 0.6rem; background: rgba(255,255,255,.08);
+    border: 0.1rem solid rgba(255,255,255,.24); border-radius: 0.6rem; flex-shrink: 0;
+  }
+  .variant-switcher__option {
+    display: flex; align-items: center; gap: 0.4rem;
+    padding: 0.6rem 1.2rem; border-radius: 0.4rem; cursor: pointer;
+    color: rgba(255,255,255,.72); font-size: 1.3rem;
+    transition: all 0.2s ease; white-space: nowrap;
+  }
+  .variant-switcher__option:has(input:checked) { background: rgba(255,255,255,.15); color: #fff; }
+  .variant-switcher__option input[type="radio"] { appearance: none; width: 0; height: 0; margin: 0; }
+  .variant-switcher__option label { cursor: pointer; font-size: 1.3rem; font-weight: 500; }
+
+  /* ── Workspace ──────────────────────────────────────────────────────── */
+  .ox-settings__body {
+    flex: 1; min-width: 0; min-height: 0;
+    display: flex; padding: 1.6rem; background: #F1F7FE; overflow: hidden;
+  }
+  .ws {
+    --workspace-gap: 1.6rem;
+    display: flex; gap: var(--workspace-gap);
+    flex: 1; min-width: 0; min-height: 0; position: relative;
+  }
+  .ws__focus {
+    flex-basis: 0; flex-grow: 1; min-width: 0;
+    display: flex; flex-direction: column; gap: 1.2rem; min-height: 0;
+  }
+  .ws__content {
+    flex-grow: 1; min-height: 0; position: relative; overflow: hidden;
+    display: flex; gap: 1.2rem;
+  }
+  .ws__main {
+    flex: 1; min-width: 0; background: #F1F7FE;
+    border-radius: 1.6rem; overflow-y: auto; padding: 0.4rem;
+  }
+
+  /* ── Patient File Header (GUX - Patient file header) ───────────────── */
+  .pfh {
+    background: #fff;
+    border-radius: 1.6rem;
+    padding: 0.8rem 1.2rem;
+    display: flex; flex-direction: column; gap: 0.4rem;
+    flex-shrink: 0;
+  }
+  .pfh__top {
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 0.4rem; min-height: 4rem;
+  }
+  .pfh__name {
+    font-family: 'Montserrat', -apple-system, sans-serif;
+    font-weight: 700; font-size: 2.4rem; color: #00264c;
+    line-height: 3.2rem; letter-spacing: 0; padding: 0 0.4rem;
+    white-space: nowrap;
+  }
+  .pfh__badge {
+    display: inline-flex; align-items: center; height: 2.4rem;
+    padding: 0 0.6rem; background: #f1f7fe; border-radius: 0.6rem;
+    font-size: 1.4rem; color: #3a5978; white-space: nowrap;
+  }
+  .pfh__status-icons {
+    display: inline-flex; align-items: center;
+    height: 2.4rem; padding: 0.2rem 0.4rem; background: #f1f7fe;
+    border-radius: 0.6rem; gap: 0.2rem;
+  }
+  .pfh__status-icon {
+    width: 2rem; height: 2rem; display: inline-flex;
+    align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 700; border-radius: 0.4rem;
+    color: #107aca;
+  }
+  .pfh__chevron {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.4rem; height: 2.4rem; color: #3a5978;
+    background: transparent; border: 0; cursor: pointer;
+  }
+  .pfh__meta {
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 0; min-height: 2.4rem;
+  }
+  .pfh__meta-item {
+    display: inline-flex; align-items: center;
+    padding: 0 0.6rem; font-size: 1.4rem; color: #00264c;
+    line-height: 2.4rem; white-space: nowrap; position: relative;
+  }
+  .pfh__meta-item + .pfh__meta-item::before {
+    content: ''; position: absolute; left: 0;
+    height: 1.6rem; width: 0.1rem;
+    background: #c9d9e8; border-radius: 99rem;
+  }
+  .pfh__meta-phone {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0 0.6rem; font-size: 1.4rem; color: #00264c; cursor: pointer;
+  }
+  .pfh__meta-phone i { font-size: 1.2rem; color: #3a5978; }
+
+  /* ── Patient File Tab Bar (GUX - Patient file menu) ─────────────────── */
+  .pfm-bar {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin-bottom: 1.6rem; flex-shrink: 0;
+  }
+  .pfm-tabs {
+    background: #fff; border-radius: 1.6rem;
+    padding: 0.4rem; display: flex; align-items: center; gap: 0.4rem;
+    flex: 1; min-width: 0; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .pfm-tabs::-webkit-scrollbar { display: none; }
+  .pfm-tab {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.8rem 1.2rem; border-radius: 1.2rem;
+    font-size: 1.4rem; color: #3a5978;
+    cursor: pointer; background: transparent; border: none;
+    white-space: nowrap; transition: background-color 0.15s, color 0.15s;
+  }
+  .pfm-tab:hover { background: #f1f7fe; }
+  .pfm-tab.is-active { background: #00264c; color: #fff; }
+  .pfm-cta {
+    background: #fff; border-radius: 1.6rem;
+    padding: 0.4rem; flex-shrink: 0;
+  }
+  .pfm-cta__btn {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    padding: 0.8rem 1.2rem; background: #107aca; color: #fff;
+    border: none; border-radius: 1.2rem;
+    font-size: 1.4rem; font-weight: 700; cursor: pointer;
+    white-space: nowrap; transition: background 0.15s;
+  }
+  .pfm-cta__btn:hover { background: #045fae; }
+
+  /* ── Card Collections (GUX - Card Collection) ───────────────────────── */
+  .coll {
+    background: #fff; border-radius: 2.4rem;
+    padding: 1.2rem; display: flex; flex-direction: column;
+    gap: 0.8rem; margin-bottom: 1.2rem;
+  }
+  .coll:last-child { margin-bottom: 0; }
+  .coll__title-row {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 3.2rem; padding-left: 0.4rem;
+  }
+  .coll__title {
+    font-family: 'Montserrat', -apple-system, sans-serif;
+    font-weight: 700; font-size: 1.8rem; color: #00264c; letter-spacing: 0;
+  }
+  .coll__action-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.4rem 0.8rem; background: #fff;
+    border: 0.1rem solid #a0d2f8; border-radius: 0.8rem;
+    font-size: 1.4rem; font-weight: 700; color: #107aca;
+    cursor: pointer; white-space: nowrap; transition: background 0.15s;
+  }
+  .coll__action-btn:hover { background: #e7f4fd; }
+  .coll__cards { display: flex; gap: 1.2rem; align-items: stretch; }
+
+  /* ── Aperçu du patient (wide summary card) ──────────────────────────── */
+  .apercu-card {
+    background: #fff; border: 0.1rem solid #c9d9e8;
+    border-radius: 1.2rem; padding: 1.2rem;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .apercu-card__row {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem;
+    font-size: 1.4rem; color: #00264c; line-height: 2.4rem; padding: 0 0.4rem;
+  }
+
+  /* ── Health event cards (GUX - Card #1/2/3) ─────────────────────────── */
+  .event-card {
+    background: #fff; border: 0.1rem solid #c9d9e8;
+    border-radius: 1.2rem; padding: 1.2rem;
+    flex: 1; min-width: 0;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .event-card__title-row {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 2.4rem;
+  }
+  .event-card__title {
+    font-family: 'Montserrat', -apple-system, sans-serif;
+    font-weight: 700; font-size: 1.4rem; color: #00264c;
+    padding-left: 0.4rem; white-space: nowrap;
+  }
+  .event-card__meta {
+    display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; margin-top: 0.2rem;
+  }
+  .event-card__body {
+    font-size: 1.4rem; color: #00264c; line-height: 2.4rem;
+    padding: 0.4rem 0.4rem 0; flex: 1;
+  }
+
+  /* ── Pills ──────────────────────────────────────────────────────────── */
+  .pfpill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    height: 2.4rem; padding: 0 0.8rem;
+    border-radius: 9.9rem; font-size: 1.2rem; font-weight: 500;
+    line-height: 1; white-space: nowrap;
+    background: transparent; border: none; cursor: default;
+  }
+  .pfpill--neutral { background: #f1f7fe; color: #3a5978; }
+  .pfpill--warning { background: #fff3cd; color: #7a4f00; cursor: pointer; }
+  .pfpill--primary { background: #e7f4fd; color: #107aca; }
+
+  /* ── Toolbox (GUX - CardOutlined list) ──────────────────────────────── */
+  .ws__toolbox {
+    flex-shrink: 0; width: 0; overflow: hidden;
+    display: flex; transition: width .3s ease;
+  }
+  .ws.has-toolbox .ws__toolbox { width: 28rem; }
+  .pf-actionbar {
+    background: #F1F7FE;
+    flex: 1; display: flex; flex-direction: column;
+    gap: 0.8rem; overflow-y: auto; padding: 0 0 1.6rem 0.8rem;
+  }
+  .tb-card {
+    background: #fff; border: 0.1rem solid #c9d9e8;
+    border-radius: 0.8rem; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .tb-card__header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.6rem 0.8rem 1.6rem 1.6rem; gap: 0.4rem;
+  }
+  .tb-card__title {
+    font-family: 'Montserrat', -apple-system, sans-serif;
+    font-weight: 700; font-size: 1.4rem; color: #294056; line-height: 2.4rem;
+  }
+  .tb-card__toggle {
+    display: flex; align-items: center; justify-content: center;
+    width: 3.2rem; height: 3.2rem; border: none; background: transparent;
+    color: #3a5978; cursor: pointer; border-radius: 0.4rem;
+    font-size: 1.2rem; flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+  .tb-card__toggle:hover { background: #f1f7fe; }
+  .tb-card.is-collapsed .tb-card__toggle { transform: rotate(-180deg); }
+  .tb-list {
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    max-height: 40rem; transition: max-height 0.25s ease, opacity 0.2s ease;
+    opacity: 1;
+  }
+  .tb-card.is-collapsed .tb-list { max-height: 0; opacity: 0; }
+  .tb-more-link { transition: max-height 0.25s ease, opacity 0.2s ease; opacity: 1; }
+  .tb-card.is-collapsed .tb-more-link { max-height: 0; opacity: 0; overflow: hidden; padding: 0; }
+  .tb-list-item {
+    display: flex; align-items: flex-start; gap: 0.8rem;
+    padding: 0.8rem 0.8rem 0.8rem 1.6rem;
+    background: #fff; cursor: pointer; transition: background 0.1s;
+    border: none; width: 100%; text-align: left;
+  }
+  .tb-list-item:hover { background: #f1f7fe; }
+  .tb-list-icon {
+    display: flex; align-items: center; justify-content: center;
+    min-width: 2.4rem; min-height: 2.4rem;
+    font-size: 1.4rem; color: #00264c; flex-shrink: 0;
+  }
+  .tb-list-text { font-size: 1.4rem; color: #294056; line-height: 2.4rem; word-break: break-word; }
+  .tb-more-link {
+    display: inline-flex; align-items: center;
+    padding: 0.4rem 0.8rem 1.6rem 1.6rem;
+    font-size: 1.4rem; font-weight: 700; color: #107aca;
+    background: none; border: none; cursor: pointer;
+  }
+  .tb-more-link:hover { text-decoration: underline; }
+
+  /* ── Panels ─────────────────────────────────────────────────────────── */
+  .pfm-panel         { display: none; }
+  .pfm-panel.is-active { display: block; }
+
+  /* ── Medical History Table (Antécédents médicaux) ──────────────────── */
+  .mh-thead {
+    display: flex; align-items: center; min-height: 3.2rem;
+    border-bottom: 0.1rem solid #e8f0f7;
+  }
+  .mh-th { font-size: 1.2rem; font-weight: 600; color: #3a5978; }
+  .mh-th--drag   { width: 3.2rem; flex-shrink: 0; }
+  .mh-th--main   { flex: 1; padding: 0 0 0 1.6rem; }
+  .mh-th--status { width: 12rem; flex-shrink: 0; }
+  .mh-th--date   { width: 9rem; flex-shrink: 0; }
+  .mh-th--pin    { width: 5.6rem; flex-shrink: 0; }
+  .mh-th--menu   { width: 4.8rem; flex-shrink: 0; }
+
+  .mh-row {
+    display: flex; align-items: flex-start;
+    border-bottom: 0.1rem solid #e8f0f7; transition: background 0.1s;
+  }
+  .mh-row:hover  { background: #f7fbff; }
+  .mh-row:last-child { border-bottom: none; }
+
+  .mh-cell { display: flex; align-items: flex-start; }
+  .mh-cell--drag  { width: 3.2rem; flex-shrink: 0; justify-content: center; align-items: center; padding: 1.2rem 0; color: #c9d9e8; cursor: grab; font-size: 1.1rem; }
+  .mh-cell--main  { flex: 1; min-width: 0; flex-direction: column; gap: 0.4rem; padding: 0.8rem 0.8rem 0.8rem 1.6rem; }
+  .mh-cell--status{ width: 12rem; flex-shrink: 0; padding: 1.2rem 0; align-items: center; }
+  .mh-cell--date  { width: 9rem; flex-shrink: 0; padding: 1.2rem 0; font-size: 1.4rem; color: #3a5978; }
+  .mh-cell--pin   { width: 5.6rem; flex-shrink: 0; justify-content: center; align-items: center; padding: 1.2rem 0; color: #c9d9e8; cursor: pointer; }
+  .mh-cell--menu  { width: 4.8rem; flex-shrink: 0; justify-content: center; align-items: center; padding: 1.2rem 0; color: #3a5978; cursor: pointer; font-size: 1.4rem; }
+
+  .mh-accordion { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem; width: 100%; }
+  .mh-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.4rem; color: #00264c; line-height: 2rem; }
+  .mh-chevron {
+    display: flex; align-items: center; justify-content: center;
+    width: 2.4rem; height: 2.4rem; flex-shrink: 0; margin-top: 0.1rem;
+    background: transparent; border: none; color: #3a5978; cursor: pointer;
+    transition: transform 0.2s; font-size: 1.1rem;
+  }
+  .mh-chevron.is-collapsed { transform: rotate(-180deg); }
+  .mh-body {
+    font-size: 1.4rem; color: #00264c; line-height: 2.2rem;
+    max-height: 40rem; overflow: hidden;
+    transition: max-height 0.25s ease, opacity 0.2s; opacity: 1;
+  }
+  .mh-body.is-collapsed { max-height: 0; opacity: 0; }
+  .mh-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .pfpill--positive  { background: #e3f9ee; color: #1a7a4a; }
+  .pfpill--confirmed { background: #e3f9ee; color: #1a7a4a; }
+
+  .mh-empty-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 1.6rem; font-size: 1.4rem; color: #3a5978; font-style: italic;
+  }
+  .mh-family-pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.2rem 0.8rem; background: #f1f7fe; border-radius: 0.6rem;
+    font-size: 1.2rem; color: #3a5978; margin-top: 0.4rem;
+  }
+  .coll__header-actions { display: flex; align-items: center; gap: 0.8rem; }
+  .coll__menu-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 3.2rem; height: 3.2rem; background: transparent;
+    border: none; color: #3a5978; cursor: pointer; border-radius: 0.6rem;
+    font-size: 1.4rem;
+  }
+  .coll__menu-btn:hover { background: #f1f7fe; }
+
+  /* ── Pin button (icon button) ────────────────────────────────────────── */
+  .pin-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 3.2rem; height: 3.2rem; border-radius: 0.8rem;
+    background: transparent; border: none;
+    color: #3a5978; font-size: 1.4rem;
+    cursor: pointer; transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+  }
+  .pin-btn:hover { background: #f1f7fe; color: #107aca; }
+  .pin-btn.is-pinned { background: #e7f4fd; color: #107aca; }
+
+  /* ── Pinned summary rows (inside pinned cards on Santé) ─────────────── */
+  .pinned-row {
+    display: flex; align-items: center; gap: 0.8rem;
+    padding: 0.4rem 0.4rem; font-size: 1.4rem; color: #00264c;
+  }
+
+  /* ── Utility ─────────────────────────────────────────────────────────── */
+  .variant-container { width: 100%; }
+
+  /* ── Toast ──────────────────────────────────────────────────────────── */
+  .toast {
+    position: fixed; bottom: 2.4rem; right: 2.4rem;
+    padding: 1.2rem 2.4rem; background: var(--oxygen-color-semantic-positive-prominent-base);
+    color: #fff; border-radius: 0.8rem; font-weight: 600; font-size: 1.4rem;
+    opacity: 0; transform: translateY(2rem); transition: all .3s ease-out;
+    z-index: 9999; box-shadow: 0 .4rem 1.2rem rgba(0,0,0,.15);
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast--info { background: var(--oxygen-color-semantic-brand-prominent-base); }
+</style>
+</head>
+<body>
+
+<div class="ox-shell">
+
+  <!-- OS Menu -->
+  <nav class="ox-osmenu" aria-label="Primary">
+    <div class="ox-osmenu__brand" aria-label="Doctolib">
+      <svg viewBox="0 0 27 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M26.383 14.5641C27.1787 10.1879 27.1787 1.54163 13.4401 0.0829107C9.8066 -0.288401 4.18388 0.6664 0.125981 1.3825C0.0729362 1.3825 0.0464139 1.43554 0.0198917 1.48859C-0.00663056 1.54163 -0.00663056 1.67424 0.0198917 1.78033C0.125981 2.0986 0.523814 2.68209 1.00121 2.89427C1.37253 3.07992 2.19472 3.02688 2.3008 3.02688C14.8458 1.91295 23.8103 4.64474 22.1925 13.8214C21.2377 19.1259 17.7633 25.7299 8.18874 25.7299C6.25262 25.7299 6.01392 25.5708 6.25262 24.006C6.27914 23.7938 9.24963 7.93349 9.43529 6.34216C9.43529 6.28911 9.40877 6.23607 9.35572 6.20955C9.24963 6.20955 7.15438 5.70562 6.65045 7.72131C6.54436 8.14567 1.50514 26.9234 1.26644 27.9047C0.94817 29.2839 1.87645 30 8.02961 30C23.5982 29.9735 25.9321 17.1367 26.383 14.5641Z" fill="currentColor"/>
+      </svg>
+    </div>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__icon"><i class="fa-solid fa-calendar-days"></i></span><span class="ox-osmenu__label">Agenda</span></button>
+    <button type="button" class="ox-osmenu__item" aria-current="page"><span class="ox-osmenu__icon"><i class="fa-solid fa-folder-open"></i></span><span class="ox-osmenu__label">Patients</span></button>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__badge">2</span><span class="ox-osmenu__icon"><i class="fa-solid fa-comment-dots"></i></span><span class="ox-osmenu__label">Messages</span></button>
+    <button type="button" class="ox-osmenu__item"><span class="ox-osmenu__icon"><i class="fa-solid fa-euro-sign"></i></span><span class="ox-osmenu__label">Facturation</span></button>
+    <span class="ox-osmenu__spacer"></span>
+    <div class="ox-osmenu__footer">
+      <span class="ox-osmenu__avatar ox-osmenu__avatar--user">YS</span>
+    </div>
+  </nav>
+
+  <!-- Top Bar -->
+  <header class="ox-topbar" role="banner">
+    <label class="ox-topbar__search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search" placeholder="Rechercher un patient">
+    </label>
+
+    <div class="ox-topbar__group">
+      <div class="variant-switcher">
+        <div class="variant-switcher__option">
+          <input type="radio" id="variant-a" name="variant" value="a" checked>
+          <label for="variant-a">Option A — EHR complet (6 onglets)</label>
+        </div>
+        <div class="variant-switcher__option">
+          <input type="radio" id="variant-b" name="variant" value="b">
+          <label for="variant-b">Option B — Simplifié (4 onglets)</label>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="ox-topbar__pill"><i class="fa-regular fa-circle-question"></i><span>Aide</span></button>
+    <span class="ox-topbar__spacer"></span>
+    <button type="button" class="ox-topbar__icon"><i class="fa-solid fa-bell"></i></button>
+    <button type="button" class="ox-topbar__icon"><i class="fa-solid fa-gear"></i></button>
+    <button type="button" class="ox-topbar__avatar">YS</button>
+  </header>
+
+  <!-- Main content -->
+  <main class="ox-shell__content">
+    <div class="ox-settings__body">
+      <div class="ws has-toolbox" id="ws-patient-file">
+
+        <div class="ws__focus">
+
+          <!-- GUX - Patient file header -->
+          <div class="pfh">
+            <div class="pfh__top">
+              <span class="pfh__name">Madame Sylviane ADAM</span>
+              <span class="pfh__badge">Privé</span>
+              <span class="pfh__status-icons">
+                <span class="pfh__status-icon" title="Compte Doctolib actif">D</span>
+              </span>
+              <button type="button" class="pfh__chevron" onclick="showToast('Statut patient', 'info')">
+                <i class="fa-solid fa-chevron-down" style="font-size:1.2rem"></i>
+              </button>
+            </div>
+            <div class="pfh__meta">
+              <span class="pfh__meta-item">Née LIGNAC</span>
+              <span class="pfh__meta-item">Femme</span>
+              <span class="pfh__meta-item">28/02/1991 (35 ans)</span>
+              <span class="pfh__meta-phone">
+                <i class="fa-solid fa-phone"></i>
+                00 22 44 66 88
+              </span>
+            </div>
+          </div>
+
+          <!-- Workspace content -->
+          <div class="ws__content">
+            <div class="ws__main">
+
+              <!-- ═══════════════════════════════════════════════════════════
+                   OPTION A — EHR COMPLET (6 onglets) — fidèle au Figma
+                   ═══════════════════════════════════════════════════════════ -->
+              <div id="variant-a-content" class="variant-container">
+
+                <!-- GUX - Patient file menu -->
+                <div class="pfm-bar">
+                  <div class="pfm-tabs" role="tablist">
+                    <button class="pfm-tab is-active" role="tab" aria-selected="true"  data-tab="sante-a"       data-variant="a">Santé</button>
+                    <button class="pfm-tab"           role="tab" aria-selected="false" data-tab="historique-a"  data-variant="a">Historique</button>
+                    <button class="pfm-tab"           role="tab" aria-selected="false" data-tab="factures-a"    data-variant="a">Factures</button>
+                    <button class="pfm-tab"           role="tab" aria-selected="false" data-tab="admin-a"       data-variant="a">Administratif</button>
+                    <button class="pfm-tab"           role="tab" aria-selected="false" data-tab="antecedents-a" data-variant="a">Antécédents médicaux</button>
+                    <button class="pfm-tab"           role="tab" aria-selected="false" data-tab="determinants-a" data-variant="a">Déterminants sociaux</button>
+                  </div>
+                  <div class="pfm-cta">
+                    <button class="pfm-cta__btn" type="button" onclick="showToast('Démarrage d\'une observation', 'info')">
+                      <i class="fa-solid fa-play" style="font-size:1.1rem"></i>
+                      Démarrer une observation
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Santé tab -->
+                <div class="pfm-panel is-active" role="tabpanel" data-panel="sante-a" data-variant="a">
+
+                  <!-- Aperçu du patient -->
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Aperçu du patient</span>
+                      <button class="coll__action-btn" type="button" onclick="showToast('Notes personnelles', 'info')">
+                        Afficher les notes personnelles
+                      </button>
+                    </div>
+                    <div class="apercu-card">
+                      <div class="apercu-card__row">Enseignant, vit seul, fumeur</div>
+                      <div class="apercu-card__row">
+                        <span>Dernières consultations :</span>
+                        <span class="pfpill pfpill--neutral">
+                          <i class="fa-regular fa-calendar" style="font-size:1.1rem"></i>
+                          Douleur lombaire · 14/06/25
+                        </span>
+                      </div>
+                      <div class="apercu-card__row">
+                        <span>Derniers documents</span>
+                        <span class="pfpill pfpill--primary">
+                          <i class="fa-regular fa-file-lines" style="font-size:1.1rem"></i>
+                          IRM de l'épaule gauche · 22/10/25
+                        </span>
+                        <span class="pfpill pfpill--primary">
+                          <i class="fa-solid fa-flask" style="font-size:1.1rem"></i>
+                          Résultats de laboratoire · 22/10/25
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Événements de santé -->
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Événements de santé</span>
+                      <button class="coll__action-btn" type="button" onclick="showToast('Ajout d\'un événement de santé', 'info')">
+                        Ajouter un événement de santé
+                      </button>
+                    </div>
+                    <div class="coll__cards">
+
+                      <!-- Card 1: Entorse cheville -->
+                      <div class="event-card">
+                        <div class="event-card__title-row">
+                          <span class="event-card__title">Entorse cheville</span>
+                          <button class="pfpill pfpill--warning" type="button" onclick="showToast('Statut : Actif', 'info')">
+                            Actif <i class="fa-solid fa-chevron-down" style="font-size:1rem"></i>
+                          </button>
+                        </div>
+                        <div class="event-card__meta">
+                          <span class="pfpill pfpill--neutral">02/2019</span>
+                          <span class="pfpill pfpill--neutral">ALD 6/6</span>
+                          <span class="pfpill pfpill--neutral">E-11</span>
+                        </div>
+                        <p class="event-card__body">Entorse de la cheville droite survenue lors d'une activité sportive (course à pied). Douleur à la mise en charge, légère tuméfaction en regard du ligament latéral externe. Pas de craquement perçu au moment du traumatisme.</p>
+                      </div>
+
+                      <!-- Card 2: Douleur Lombaire -->
+                      <div class="event-card">
+                        <div class="event-card__title-row">
+                          <span class="event-card__title">Douleur Lombaire</span>
+                          <button class="pfpill pfpill--warning" type="button" onclick="showToast('Statut : Actif', 'info')">
+                            Actif <i class="fa-solid fa-chevron-down" style="font-size:1rem"></i>
+                          </button>
+                        </div>
+                        <div class="event-card__meta">
+                          <span class="pfpill pfpill--neutral">02/2019</span>
+                          <span class="pfpill pfpill--neutral">ALD 6/6</span>
+                          <span class="pfpill pfpill--neutral">E-11</span>
+                        </div>
+                        <p class="event-card__body">Douleurs lombaires basses évoluant depuis 3 jours, apparues après un effort de soulèvement. Douleur mécanique, s'aggravant en position assise prolongée et au lever le matin. Pas d'irradiation dans les membres inférieurs. Pas de trouble sphinctérien. Soulagement partiel avec antalgiques de palier 1.</p>
+                      </div>
+
+                      <!-- Card 3: Dyslipidémie (placeholder ghost dans le Figma) -->
+                      <div class="event-card" style="opacity:.25;pointer-events:none" aria-hidden="true">
+                        <div class="event-card__title-row">
+                          <span class="event-card__title">Dyslipidémie</span>
+                          <span class="pfpill pfpill--warning">Actif <i class="fa-solid fa-chevron-down" style="font-size:1rem"></i></span>
+                        </div>
+                        <div class="event-card__meta">
+                          <span class="pfpill pfpill--neutral">02/2019</span>
+                          <span class="pfpill pfpill--neutral">ALD 6/6</span>
+                          <span class="pfpill pfpill--neutral">E-11</span>
+                        </div>
+                        <p class="event-card__body">Syndrome d'apnée-hypopnée obstructive du sommeil (SAHOS). Traitement par pression positive continue (PPC) la nuit.</p>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <!-- ── Modules épinglés (cachés par défaut, affichés via togglePin) ── -->
+
+                  <div class="coll" id="pinned-pathologies" style="display:none">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Pathologies actives</span>
+                      <button class="pin-btn is-pinned" title="Désépingler" onclick="togglePin('pathologies')"><i class="fa-solid fa-thumbtack"></i></button>
+                    </div>
+                    <div class="apercu-card">
+                      <div class="pinned-row"><span class="pfpill pfpill--positive">Actif</span>Entorse de la cheville droite</div>
+                      <div class="pinned-row"><span class="pfpill pfpill--positive">Actif</span>Douleur lombaire basse</div>
+                      <div class="pinned-row"><span class="pfpill pfpill--positive">Actif</span>Dyslipidémie</div>
+                    </div>
+                  </div>
+
+                  <div class="coll" id="pinned-antecedents" style="display:none">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Antécédents médicaux</span>
+                      <button class="pin-btn is-pinned" title="Désépingler" onclick="togglePin('antecedents')"><i class="fa-solid fa-thumbtack"></i></button>
+                    </div>
+                    <div class="apercu-card">
+                      <div class="pinned-row"><span class="pfpill pfpill--neutral">Inconnu</span>Asthme léger intermittent</div>
+                      <div class="pinned-row"><span class="pfpill pfpill--neutral">Inconnu</span>Fracture du poignet droit – chute 2022</div>
+                      <div class="pinned-row"><span class="pfpill pfpill--neutral">Inconnu</span>Dépression – rémission depuis 2023</div>
+                    </div>
+                  </div>
+
+                  <div class="coll" id="pinned-allergies" style="display:none">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Allergies</span>
+                      <button class="pin-btn is-pinned" title="Désépingler" onclick="togglePin('allergies')"><i class="fa-solid fa-thumbtack"></i></button>
+                    </div>
+                    <div class="apercu-card">
+                      <div class="pinned-row"><span class="pfpill pfpill--confirmed">Confirmé</span>Allergie aux acariens</div>
+                      <div class="pinned-row"><span class="pfpill pfpill--confirmed">Confirmé</span>Allergie au latex</div>
+                    </div>
+                  </div>
+
+                  <div class="coll" id="pinned-procedures" style="display:none">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Procédures</span>
+                      <button class="pin-btn is-pinned" title="Désépingler" onclick="togglePin('procedures')"><i class="fa-solid fa-thumbtack"></i></button>
+                    </div>
+                    <div class="apercu-card">
+                      <div class="pinned-row"><span class="pfpill pfpill--neutral">Inconnu</span>Appendicectomie</div>
+                    </div>
+                  </div>
+
+                  <div class="coll" id="pinned-famille" style="display:none">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Antécédents familiaux</span>
+                      <button class="pin-btn is-pinned" title="Désépingler" onclick="togglePin('famille')"><i class="fa-solid fa-thumbtack"></i></button>
+                    </div>
+                    <div class="apercu-card">
+                      <div class="pinned-row"><span class="pfpill pfpill--neutral">Mère</span>Diabète de type 2</div>
+                      <div class="pinned-row"><span class="pfpill pfpill--neutral">Père</span>Hypertension artérielle</div>
+                    </div>
+                  </div>
+
+                  <div class="coll" id="pinned-gyneco" style="display:none">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Conditions gynécologiques</span>
+                      <button class="pin-btn is-pinned" title="Désépingler" onclick="togglePin('gyneco')"><i class="fa-solid fa-thumbtack"></i></button>
+                    </div>
+                    <div class="apercu-card">
+                      <div class="pinned-row"><span class="pfpill pfpill--neutral">Inconnu</span>G2P2 — deux accouchements par voie basse</div>
+                    </div>
+                  </div>
+
+                  <div class="coll" id="pinned-determinants" style="display:none">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Déterminants sociaux de santé</span>
+                      <button class="pin-btn is-pinned" title="Désépingler" onclick="togglePin('determinants')"><i class="fa-solid fa-thumbtack"></i></button>
+                    </div>
+                    <div class="apercu-card">
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Profession</span><span>Enseignant</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Situation familiale</span><span>Vit seul</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Tabac</span><span>Fumeur actif</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Alcool</span><span>Non renseigné</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Activité physique</span><span>Course à pied (occasionnel)</span></div>
+                    </div>
+                  </div>
+
+                </div><!-- /Santé A -->
+
+                <!-- Historique tab -->
+                <div class="pfm-panel" role="tabpanel" data-panel="historique-a" data-variant="a">
+                  <div class="coll">
+                    <div class="coll__title-row"><span class="coll__title">Historique des consultations</span></div>
+                    <div style="display:flex;flex-direction:column;gap:1.2rem">
+                      <div class="apercu-card">
+                        <div style="display:flex;gap:1.6rem">
+                          <div style="flex-shrink:0;width:7.2rem;text-align:center">
+                            <p style="font-size:1.2rem;color:#3a5978;margin:0">14 juin</p>
+                            <p style="font:var(--oxygen-font-semantic-title-m-bold);color:#107aca;margin:0">2025</p>
+                          </div>
+                          <div style="flex:1;border-left:0.2rem solid #c9d9e8;padding-left:1.6rem">
+                            <p style="font:var(--oxygen-font-semantic-body-m-bold);color:#00264c;margin:0 0 .4rem">Consultation – Douleur lombaire</p>
+                            <p style="font:var(--oxygen-font-semantic-body-s-regular);color:#3a5978;margin:0">Dr. Martin · Non remboursé · 75,00 €</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="apercu-card">
+                        <div style="display:flex;gap:1.6rem">
+                          <div style="flex-shrink:0;width:7.2rem;text-align:center">
+                            <p style="font-size:1.2rem;color:#3a5978;margin:0">22 oct.</p>
+                            <p style="font:var(--oxygen-font-semantic-title-m-bold);color:#107aca;margin:0">2025</p>
+                          </div>
+                          <div style="flex:1;border-left:0.2rem solid #c9d9e8;padding-left:1.6rem">
+                            <p style="font:var(--oxygen-font-semantic-body-m-bold);color:#00264c;margin:0 0 .4rem">Consultation – Entorse cheville</p>
+                            <p style="font:var(--oxygen-font-semantic-body-s-regular);color:#3a5978;margin:0">Dr. Martin · Non remboursé · 75,00 €</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- /Historique A -->
+
+                <!-- Factures tab -->
+                <div class="pfm-panel" role="tabpanel" data-panel="factures-a" data-variant="a">
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Factures récentes</span>
+                      <button class="coll__action-btn" onclick="showToast('Nouvelle facture', 'info')">Nouvelle facture</button>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:1.2rem">
+                      <div class="apercu-card">
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                          <div>
+                            <p style="font:var(--oxygen-font-semantic-body-m-bold);color:#00264c;margin:0 0 .2rem">Consultation – Douleur lombaire</p>
+                            <p style="font:var(--oxygen-font-semantic-body-s-regular);color:#3a5978;margin:0">14 juin 2025 · #2025-142</p>
+                          </div>
+                          <div style="display:flex;align-items:center;gap:1.2rem">
+                            <span style="font:var(--oxygen-font-semantic-body-l-bold);color:#00264c">75,00 €</span>
+                            <span class="ox-badge" style="background:var(--oxygen-color-semantic-positive-prominent-base);color:#fff;padding:.2rem .8rem;border-radius:.6rem;font-size:1.2rem">Payé</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="apercu-card">
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                          <div>
+                            <p style="font:var(--oxygen-font-semantic-body-m-bold);color:#00264c;margin:0 0 .2rem">Consultation – Entorse cheville</p>
+                            <p style="font:var(--oxygen-font-semantic-body-s-regular);color:#3a5978;margin:0">22 oct. 2025 · #2025-198</p>
+                          </div>
+                          <div style="display:flex;align-items:center;gap:1.2rem">
+                            <span style="font:var(--oxygen-font-semantic-body-l-bold);color:#00264c">75,00 €</span>
+                            <span class="ox-badge" style="background:var(--oxygen-color-semantic-positive-prominent-base);color:#fff;padding:.2rem .8rem;border-radius:.6rem;font-size:1.2rem">Payé</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- /Factures A -->
+
+                <!-- Administratif tab -->
+                <div class="pfm-panel" role="tabpanel" data-panel="admin-a" data-variant="a">
+                  <div class="coll">
+                    <div class="coll__title-row"><span class="coll__title">Informations administratives</span></div>
+                    <div class="apercu-card">
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Nom de naissance</span><span>LIGNAC</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Sexe</span><span>Femme</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Date de naissance</span><span>28/02/1991 (35 ans)</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Téléphone</span><span>00 22 44 66 88</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Secteur</span><span>Privé – non remboursé</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Compte Doctolib</span><span>Actif</span></div>
+                    </div>
+                  </div>
+                </div><!-- /Administratif A -->
+
+                <!-- Antécédents médicaux tab -->
+                <div class="pfm-panel" role="tabpanel" data-panel="antecedents-a" data-variant="a">
+
+                  <!-- Section 1 : Pathologies actives -->
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Pathologies actives</span>
+                      <div class="coll__header-actions">
+                        <button class="pin-btn" id="pin-btn-pathologies" title="Épingler sur la vue Santé" onclick="togglePin('pathologies')"><i class="fa-regular fa-thumbtack"></i></button>
+                        <button class="coll__action-btn" onclick="showToast('Ajouter une pathologie', 'info')">Add</button>
+                        <button class="coll__menu-btn"><i class="fa-solid fa-bars"></i></button>
+                      </div>
+                    </div>
+                    <div class="mh-thead">
+                      <div class="mh-th mh-th--drag"></div>
+                      <div class="mh-th mh-th--main">Pathology</div>
+                      <div class="mh-th mh-th--status">Statut</div>
+                      <div class="mh-th mh-th--date">Date</div>
+                      <div class="mh-th mh-th--pin"></div>
+                      <div class="mh-th mh-th--menu"></div>
+                    </div>
+
+                    <!-- Row: Entorse cheville (expanded) -->
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">Entorse de la cheville droite</span>
+                          <button class="mh-chevron" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body">Entorse de la cheville droite survenue lors d'une activité sportive (course à pied). Douleur à la mise en charge, légère tuméfaction en regard du ligament latéral externe. Pas de craquement perçu au moment du traumatisme. Traitement orthopédique par attelle semi-rigide pendant 3 semaines. Rééducation kinésithérapique réalisée. Évolution favorable sans instabilité résiduelle.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">ALD</span>
+                          <span class="pfpill pfpill--neutral">Source</span>
+                          <span class="pfpill pfpill--neutral">ICD10, S93.4</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status"><button class="pfpill pfpill--positive" onclick="showToast('Statut : Actif', 'info')">✓ Actif <i class="fa-solid fa-chevron-down" style="font-size:.9rem"></i></button></div>
+                      <div class="mh-cell mh-cell--date">02/2019</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+
+                    <!-- Row: Douleur lombaire (collapsed) -->
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">Douleur lombaire basse</span>
+                          <button class="mh-chevron is-collapsed" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body is-collapsed">Douleurs lombaires basses évoluant depuis 3 jours, apparues après un effort de soulèvement. Douleur mécanique, s'aggravant en position assise prolongée et au lever le matin. Pas d'irradiation dans les membres inférieurs. Pas de trouble sphinctérien. Soulagement partiel avec antalgiques de palier 1.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">Source</span>
+                          <span class="pfpill pfpill--neutral">ICD10, M54.5</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status"><button class="pfpill pfpill--positive" onclick="showToast('Statut : Actif', 'info')">✓ Actif <i class="fa-solid fa-chevron-down" style="font-size:.9rem"></i></button></div>
+                      <div class="mh-cell mh-cell--date">06/2025</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+
+                    <!-- Row: Dyslipidémie (collapsed) -->
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">Dyslipidémie</span>
+                          <button class="mh-chevron is-collapsed" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body is-collapsed">Hypercholestérolémie mixte découverte lors d'un bilan biologique systématique. LDL cible &lt; 1,15 g/L. Hygiéno-diététique en première intention. Réévaluation prévue à 3 mois.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">Source</span>
+                          <span class="pfpill pfpill--neutral">ICD10, E78.0</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status"><button class="pfpill pfpill--positive" onclick="showToast('Statut : Actif', 'info')">✓ Actif <i class="fa-solid fa-chevron-down" style="font-size:.9rem"></i></button></div>
+                      <div class="mh-cell mh-cell--date">01/2024</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+                  </div><!-- /Pathologies actives -->
+
+                  <!-- Section 2 : Antécédents médicaux -->
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Antécédents médicaux</span>
+                      <div class="coll__header-actions">
+                        <button class="pin-btn" id="pin-btn-antecedents" title="Épingler sur la vue Santé" onclick="togglePin('antecedents')"><i class="fa-regular fa-thumbtack"></i></button>
+                        <button class="coll__action-btn" onclick="showToast('Ajouter un antécédent', 'info')">Add</button>
+                        <button class="coll__menu-btn"><i class="fa-solid fa-bars"></i></button>
+                      </div>
+                    </div>
+                    <div class="mh-thead">
+                      <div class="mh-th mh-th--drag"></div>
+                      <div class="mh-th mh-th--main">Pathology</div>
+                      <div class="mh-th mh-th--status">Statut</div>
+                      <div class="mh-th mh-th--date">Date</div>
+                      <div class="mh-th mh-th--pin"></div>
+                      <div class="mh-th mh-th--menu"></div>
+                    </div>
+
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">Asthme léger intermittent</span>
+                          <button class="mh-chevron is-collapsed" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body is-collapsed">Asthme léger intermittent diagnostiqué à l'enfance. Traitement de crise par bronchodilatateur. Aucune hospitalisation. Actuellement en rémission clinique sans traitement de fond.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">Source</span>
+                          <span class="pfpill pfpill--neutral">ICD10, J45.0</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status"><button class="pfpill pfpill--neutral" onclick="showToast('Statut : Inconnu', 'info')">~ Inconnu <i class="fa-solid fa-chevron-down" style="font-size:.9rem"></i></button></div>
+                      <div class="mh-cell mh-cell--date">03/2015</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">Fracture du poignet droit – chute 2022</span>
+                          <button class="mh-chevron is-collapsed" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body is-collapsed">Fracture du radius distal droit suite à une chute en vélo. Traitement orthopédique par plâtre 6 semaines. Consolidation acquise. Mobilité complète récupérée.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">Source</span>
+                          <span class="pfpill pfpill--neutral">ICD10, S52.5</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status"><button class="pfpill pfpill--neutral" onclick="showToast('Statut : Inconnu', 'info')">~ Inconnu <i class="fa-solid fa-chevron-down" style="font-size:.9rem"></i></button></div>
+                      <div class="mh-cell mh-cell--date">11/2022</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">Dépression – épisode léger, rémission depuis 2023</span>
+                          <button class="mh-chevron is-collapsed" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body is-collapsed">Épisode dépressif léger réactionnel survenu après séparation. Prise en charge en psychothérapie CBT (16 séances). Pas de traitement médicamenteux. Rémission complète.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">Source</span>
+                          <span class="pfpill pfpill--neutral">ICD10, F32.0</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status"><button class="pfpill pfpill--neutral" onclick="showToast('Statut : Inconnu', 'info')">~ Inconnu <i class="fa-solid fa-chevron-down" style="font-size:.9rem"></i></button></div>
+                      <div class="mh-cell mh-cell--date">06/2022</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+                  </div><!-- /Antécédents médicaux -->
+
+                  <!-- Section 3 : Allergies -->
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Allergies</span>
+                      <div class="coll__header-actions">
+                        <button class="pin-btn" id="pin-btn-allergies" title="Épingler sur la vue Santé" onclick="togglePin('allergies')"><i class="fa-regular fa-thumbtack"></i></button>
+                        <button class="coll__action-btn" onclick="showToast('Ajouter une allergie', 'info')">Add</button>
+                        <button class="coll__menu-btn"><i class="fa-solid fa-bars"></i></button>
+                      </div>
+                    </div>
+                    <div class="mh-thead">
+                      <div class="mh-th mh-th--drag"></div>
+                      <div class="mh-th mh-th--main">Pathology</div>
+                      <div class="mh-th mh-th--status">Statut</div>
+                      <div class="mh-th mh-th--date">Date</div>
+                      <div class="mh-th mh-th--pin"></div>
+                      <div class="mh-th mh-th--menu"></div>
+                    </div>
+
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">Allergie aux acariens</span>
+                          <button class="mh-chevron is-collapsed" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body is-collapsed">Rhinite allergique saisonnière aux acariens, confirmée par tests cutanés. Traitement par antihistaminiques H1 en période symptomatique.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">Source</span>
+                          <span class="pfpill pfpill--neutral">ICD10, J30.1</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status"><button class="pfpill pfpill--confirmed" onclick="showToast('Statut : Confirmé', 'info')">✓ Confirmé <i class="fa-solid fa-chevron-down" style="font-size:.9rem"></i></button></div>
+                      <div class="mh-cell mh-cell--date">05/2014</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">Allergie au latex</span>
+                          <button class="mh-chevron is-collapsed" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body is-collapsed">Hypersensibilité au latex de type IgE-médiée. Éviction stricte du latex recommandée. Alerte dossier active.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">ICD10, Z88.8</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status"><button class="pfpill pfpill--confirmed" onclick="showToast('Statut : Confirmé', 'info')">✓ Confirmé <i class="fa-solid fa-chevron-down" style="font-size:.9rem"></i></button></div>
+                      <div class="mh-cell mh-cell--date">06/2018</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+                  </div><!-- /Allergies -->
+
+                  <!-- Section 4 : Procédures -->
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Procédures</span>
+                      <div class="coll__header-actions">
+                        <button class="pin-btn" id="pin-btn-procedures" title="Épingler sur la vue Santé" onclick="togglePin('procedures')"><i class="fa-regular fa-thumbtack"></i></button>
+                        <button class="coll__action-btn" onclick="showToast('Ajouter une procédure', 'info')">Add</button>
+                        <button class="coll__menu-btn"><i class="fa-solid fa-bars"></i></button>
+                      </div>
+                    </div>
+                    <div class="mh-thead">
+                      <div class="mh-th mh-th--drag"></div>
+                      <div class="mh-th mh-th--main">Pathology</div>
+                      <div class="mh-th mh-th--status">Statut</div>
+                      <div class="mh-th mh-th--date">Date</div>
+                      <div class="mh-th mh-th--pin"></div>
+                      <div class="mh-th mh-th--menu"></div>
+                    </div>
+
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">Appendicectomie</span>
+                          <button class="mh-chevron is-collapsed" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body is-collapsed">Appendicectomie par voie laparoscopique pour appendicite aiguë non perforée. Suites simples. Sortie J+2.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">Source</span>
+                          <span class="pfpill pfpill--neutral">ICD10, Z87.3</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status"><button class="pfpill pfpill--neutral" onclick="showToast('Statut : Inconnu', 'info')">~ Inconnu <i class="fa-solid fa-chevron-down" style="font-size:.9rem"></i></button></div>
+                      <div class="mh-cell mh-cell--date">07/2010</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+                  </div><!-- /Procédures -->
+
+                  <!-- Section 5 : Antécédents familiaux -->
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Antécédents familiaux</span>
+                      <div class="coll__header-actions">
+                        <button class="pin-btn" id="pin-btn-famille" title="Épingler sur la vue Santé" onclick="togglePin('famille')"><i class="fa-regular fa-thumbtack"></i></button>
+                        <button class="coll__action-btn" onclick="showToast('Ajouter un antécédent familial', 'info')">Add</button>
+                        <button class="coll__menu-btn"><i class="fa-solid fa-bars"></i></button>
+                      </div>
+                    </div>
+                    <div class="mh-thead">
+                      <div class="mh-th mh-th--drag"></div>
+                      <div class="mh-th mh-th--main">Pathology</div>
+                      <div class="mh-th mh-th--status">Membres de la famille</div>
+                      <div class="mh-th mh-th--date">Date</div>
+                      <div class="mh-th mh-th--pin"></div>
+                      <div class="mh-th mh-th--menu"></div>
+                    </div>
+
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">Diabète de type 2 dans les antécédents familiaux</span>
+                          <button class="mh-chevron is-collapsed" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body is-collapsed">Diabète de type 2 diagnostiqué chez plusieurs membres de la famille maternelle. Risque génétique à surveiller.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">Source</span>
+                          <span class="pfpill pfpill--neutral">ICD10, Z83.3</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status" style="flex-direction:column;gap:0.4rem;align-items:flex-start">
+                        <button class="coll__action-btn" style="font-size:1.2rem;padding:.2rem .6rem" onclick="showToast('Ajouter un membre', 'info')">Add</button>
+                        <span class="mh-family-pill">Mère · 52 ans · 2018</span>
+                        <span class="mh-family-pill">Grand-mère · 78 ans · 2005</span>
+                      </div>
+                      <div class="mh-cell mh-cell--date">12/2018</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">Hypertension artérielle dans les antécédents familiaux</span>
+                          <button class="mh-chevron is-collapsed" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body is-collapsed">HTA essentielle chez le père. Traitement médicamenteux depuis 2015.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">Source</span>
+                          <span class="pfpill pfpill--neutral">ICD10, Z82.4</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status" style="flex-direction:column;gap:0.4rem;align-items:flex-start">
+                        <button class="coll__action-btn" style="font-size:1.2rem;padding:.2rem .6rem" onclick="showToast('Ajouter un membre', 'info')">Add</button>
+                        <span class="mh-family-pill">Père · 60 ans · 2015</span>
+                      </div>
+                      <div class="mh-cell mh-cell--date">06/2015</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+                  </div><!-- /Antécédents familiaux -->
+
+                  <!-- Section 6 : Conditions gynécologiques -->
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Conditions gynécologiques</span>
+                      <div class="coll__header-actions">
+                        <button class="pin-btn" id="pin-btn-gyneco" title="Épingler sur la vue Santé" onclick="togglePin('gyneco')"><i class="fa-regular fa-thumbtack"></i></button>
+                        <button class="coll__action-btn" onclick="showToast('Ajouter', 'info')">Add</button>
+                        <button class="coll__menu-btn"><i class="fa-solid fa-bars"></i></button>
+                      </div>
+                    </div>
+                    <div class="mh-thead">
+                      <div class="mh-th mh-th--drag"></div>
+                      <div class="mh-th mh-th--main">Pathology</div>
+                      <div class="mh-th mh-th--status">Statut</div>
+                      <div class="mh-th mh-th--date">Date</div>
+                      <div class="mh-th mh-th--pin"></div>
+                      <div class="mh-th mh-th--menu"></div>
+                    </div>
+
+                    <div class="mh-row">
+                      <div class="mh-cell mh-cell--drag"><i class="fa-solid fa-grip-vertical"></i></div>
+                      <div class="mh-cell mh-cell--main">
+                        <div class="mh-accordion">
+                          <span class="mh-title">G2P2 — deux grossesses, deux accouchements par voie basse</span>
+                          <button class="mh-chevron is-collapsed" onclick="toggleMhAccordion(this)"><i class="fa-solid fa-chevron-up"></i></button>
+                        </div>
+                        <div class="mh-body is-collapsed">Deux grossesses sans complications (2018, 2021). Accouchements par voie basse à terme. Allaitement maternel pour les deux. Pas de séquelles obstétricales.</div>
+                        <div class="mh-pills">
+                          <span class="pfpill pfpill--neutral">Source</span>
+                          <span class="pfpill pfpill--neutral">ICD10, Z34</span>
+                        </div>
+                      </div>
+                      <div class="mh-cell mh-cell--status"><button class="pfpill pfpill--neutral" onclick="showToast('Statut : Inconnu', 'info')">~ Inconnu <i class="fa-solid fa-chevron-down" style="font-size:.9rem"></i></button></div>
+                      <div class="mh-cell mh-cell--date">09/2021</div>
+                      <div class="mh-cell mh-cell--pin"><i class="fa-regular fa-thumbtack"></i></div>
+                      <div class="mh-cell mh-cell--menu"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                    </div>
+                  </div><!-- /Conditions gynécologiques -->
+
+                  <!-- Empty states -->
+                  <div class="coll">
+                    <div class="mh-empty-row">
+                      <span>Aucun antécédent obstétrical ajouté</span>
+                      <button class="coll__action-btn" onclick="showToast('Ajouter un antécédent obstétrical', 'info')">Add</button>
+                    </div>
+                  </div>
+                  <div class="coll">
+                    <div class="mh-empty-row">
+                      <span>Aucune contraception ajoutée</span>
+                      <button class="coll__action-btn" onclick="showToast('Ajouter une contraception', 'info')">Add</button>
+                    </div>
+                  </div>
+
+                </div><!-- /Antécédents A -->
+
+                <!-- Déterminants sociaux tab -->
+                <div class="pfm-panel" role="tabpanel" data-panel="determinants-a" data-variant="a">
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Déterminants sociaux de santé</span>
+                      <button class="pin-btn" id="pin-btn-determinants" title="Épingler sur la vue Santé" onclick="togglePin('determinants')">
+                        <i class="fa-regular fa-thumbtack"></i>
+                      </button>
+                    </div>
+                    <div class="apercu-card">
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Profession</span><span>Enseignant</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Situation familiale</span><span>Vit seul</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Tabac</span><span>Fumeur actif</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Alcool</span><span>Non renseigné</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Activité physique</span><span>Course à pied (occasionnel)</span></div>
+                    </div>
+                  </div>
+                </div><!-- /Déterminants A -->
+
+              </div><!-- /variant-a-content -->
+
+
+              <!-- ═══════════════════════════════════════════════════════════
+                   OPTION B — SIMPLIFIÉ (4 onglets)
+                   Antécédents et Déterminants sociaux intégrés dans Santé
+                   ═══════════════════════════════════════════════════════════ -->
+              <div id="variant-b-content" class="variant-container" style="display:none">
+
+                <div class="pfm-bar">
+                  <div class="pfm-tabs" role="tablist">
+                    <button class="pfm-tab is-active" role="tab" aria-selected="true"  data-tab="sante-b"      data-variant="b">Santé</button>
+                    <button class="pfm-tab"           role="tab" aria-selected="false" data-tab="historique-b" data-variant="b">Historique</button>
+                    <button class="pfm-tab"           role="tab" aria-selected="false" data-tab="factures-b"   data-variant="b">Factures</button>
+                    <button class="pfm-tab"           role="tab" aria-selected="false" data-tab="admin-b"      data-variant="b">Administratif</button>
+                  </div>
+                  <div class="pfm-cta">
+                    <button class="pfm-cta__btn" type="button" onclick="showToast('Démarrage d\'une observation', 'info')">
+                      <i class="fa-solid fa-play" style="font-size:1.1rem"></i>
+                      Démarrer une observation
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Santé B -->
+                <div class="pfm-panel is-active" role="tabpanel" data-panel="sante-b" data-variant="b">
+
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Aperçu du patient</span>
+                      <button class="coll__action-btn" onclick="showToast('Notes personnelles', 'info')">Afficher les notes personnelles</button>
+                    </div>
+                    <div class="apercu-card">
+                      <div class="apercu-card__row">Enseignant, vit seul, fumeur</div>
+                      <div class="apercu-card__row">
+                        <span>Dernières consultations :</span>
+                        <span class="pfpill pfpill--neutral"><i class="fa-regular fa-calendar" style="font-size:1.1rem"></i> Douleur lombaire · 14/06/25</span>
+                      </div>
+                      <div class="apercu-card__row">
+                        <span>Derniers documents</span>
+                        <span class="pfpill pfpill--primary"><i class="fa-regular fa-file-lines" style="font-size:1.1rem"></i> IRM de l'épaule gauche · 22/10/25</span>
+                        <span class="pfpill pfpill--primary"><i class="fa-solid fa-flask" style="font-size:1.1rem"></i> Résultats de laboratoire · 22/10/25</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Événements de santé</span>
+                      <button class="coll__action-btn" onclick="showToast('Ajout d\'un événement de santé', 'info')">Ajouter un événement de santé</button>
+                    </div>
+                    <div class="coll__cards">
+                      <div class="event-card">
+                        <div class="event-card__title-row">
+                          <span class="event-card__title">Entorse cheville</span>
+                          <button class="pfpill pfpill--warning" type="button">Actif <i class="fa-solid fa-chevron-down" style="font-size:1rem"></i></button>
+                        </div>
+                        <div class="event-card__meta">
+                          <span class="pfpill pfpill--neutral">02/2019</span>
+                          <span class="pfpill pfpill--neutral">ALD 6/6</span>
+                        </div>
+                        <p class="event-card__body">Entorse de la cheville droite lors d'une activité sportive.</p>
+                      </div>
+                      <div class="event-card">
+                        <div class="event-card__title-row">
+                          <span class="event-card__title">Douleur Lombaire</span>
+                          <button class="pfpill pfpill--warning" type="button">Actif <i class="fa-solid fa-chevron-down" style="font-size:1rem"></i></button>
+                        </div>
+                        <div class="event-card__meta">
+                          <span class="pfpill pfpill--neutral">02/2019</span>
+                          <span class="pfpill pfpill--neutral">ALD 6/6</span>
+                        </div>
+                        <p class="event-card__body">Douleurs lombaires basses après un effort de soulèvement.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Antécédents + déterminants fusionnés dans Santé -->
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Contexte patient</span>
+                      <button class="coll__action-btn" onclick="showToast('Modifier', 'info')">Modifier</button>
+                    </div>
+                    <div class="coll__cards">
+                      <div class="event-card">
+                        <div class="event-card__title-row"><span class="event-card__title">Antécédents</span></div>
+                        <p class="event-card__body">Ménopause (2023) – THS en cours.<br>Deux grossesses sans complications.</p>
+                      </div>
+                      <div class="event-card">
+                        <div class="event-card__title-row"><span class="event-card__title">Déterminants sociaux</span></div>
+                        <p class="event-card__body">Enseignant, vit seul, fumeur actif.<br>Course à pied (occasionnel).</p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div><!-- /Santé B -->
+
+                <!-- Historique B -->
+                <div class="pfm-panel" role="tabpanel" data-panel="historique-b" data-variant="b">
+                  <div class="coll">
+                    <div class="coll__title-row"><span class="coll__title">Historique</span></div>
+                    <div style="display:flex;flex-direction:column;gap:1.2rem">
+                      <div class="apercu-card">
+                        <div style="display:flex;gap:1.6rem">
+                          <div style="flex-shrink:0;width:7.2rem;text-align:center">
+                            <p style="font-size:1.2rem;color:#3a5978;margin:0">14 juin</p>
+                            <p style="font:var(--oxygen-font-semantic-title-m-bold);color:#107aca;margin:0">2025</p>
+                          </div>
+                          <div style="flex:1;border-left:0.2rem solid #c9d9e8;padding-left:1.6rem">
+                            <p style="font:var(--oxygen-font-semantic-body-m-bold);color:#00264c;margin:0 0 .4rem">Consultation – Douleur lombaire</p>
+                            <p style="font:var(--oxygen-font-semantic-body-s-regular);color:#3a5978;margin:0">Non remboursé · 75,00 €</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- /Historique B -->
+
+                <!-- Factures B -->
+                <div class="pfm-panel" role="tabpanel" data-panel="factures-b" data-variant="b">
+                  <div class="coll">
+                    <div class="coll__title-row">
+                      <span class="coll__title">Factures</span>
+                      <button class="coll__action-btn" onclick="showToast('Nouvelle facture', 'info')">Nouvelle facture</button>
+                    </div>
+                    <div class="apercu-card">
+                      <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                          <p style="font:var(--oxygen-font-semantic-body-m-bold);color:#00264c;margin:0 0 .2rem">Consultation – Douleur lombaire</p>
+                          <p style="font:var(--oxygen-font-semantic-body-s-regular);color:#3a5978;margin:0">14 juin 2025</p>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:1.2rem">
+                          <span style="font:var(--oxygen-font-semantic-body-l-bold);color:#00264c">75,00 €</span>
+                          <span style="background:var(--oxygen-color-semantic-positive-prominent-base);color:#fff;padding:.2rem .8rem;border-radius:.6rem;font-size:1.2rem">Payé</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- /Factures B -->
+
+                <!-- Administratif B -->
+                <div class="pfm-panel" role="tabpanel" data-panel="admin-b" data-variant="b">
+                  <div class="coll">
+                    <div class="coll__title-row"><span class="coll__title">Informations administratives</span></div>
+                    <div class="apercu-card">
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Nom de naissance</span><span>LIGNAC</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Sexe</span><span>Femme</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Date de naissance</span><span>28/02/1991 (35 ans)</span></div>
+                      <div class="apercu-card__row"><span style="font-weight:600;min-width:18rem;color:#3a5978">Téléphone</span><span>00 22 44 66 88</span></div>
+                    </div>
+                  </div>
+                </div><!-- /Administratif B -->
+
+              </div><!-- /variant-b-content -->
+
+            </div><!-- /ws__main -->
+          </div><!-- /ws__content -->
+
+        </div><!-- /ws__focus -->
+
+        <!-- Toolbox -->
+        <aside class="ws__toolbox" id="toolbox">
+          <div class="pf-actionbar">
+
+            <!-- Card: Facture -->
+            <div class="tb-card">
+              <div class="tb-card__header">
+                <span class="tb-card__title">Facture</span>
+                <button class="tb-card__toggle" type="button"><i class="fa-solid fa-chevron-up"></i></button>
+              </div>
+              <div class="tb-list">
+                <button class="tb-list-item" type="button" onclick="showToast('Facturer avec une note d\'honoraire', 'info')">
+                  <span class="tb-list-icon"><i class="fa-regular fa-folder"></i></span>
+                  <span class="tb-list-text">Facturer avec une note d'honoraire</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Card: Rendez-vous -->
+            <div class="tb-card">
+              <div class="tb-card__header">
+                <span class="tb-card__title">Rendez-vous</span>
+                <button class="tb-card__toggle" type="button"><i class="fa-solid fa-chevron-up"></i></button>
+              </div>
+              <div class="tb-list">
+                <button class="tb-list-item" type="button" onclick="showToast('Prendre un rendez-vous', 'info')">
+                  <span class="tb-list-icon"><i class="fa-regular fa-calendar-plus"></i></span>
+                  <span class="tb-list-text">Prendre un rendez-vous</span>
+                </button>
+                <button class="tb-list-item" type="button" onclick="showToast('Planifier plusieurs rendez-vous', 'info')">
+                  <span class="tb-list-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                  <span class="tb-list-text">Planifier plusieurs rendez-vous</span>
+                </button>
+                <button class="tb-list-item" type="button" onclick="showToast('Imprimer les rendez-vous', 'info')">
+                  <span class="tb-list-icon"><i class="fa-solid fa-print"></i></span>
+                  <span class="tb-list-text">Imprimer les rendez-vous</span>
+                </button>
+                <button class="tb-list-item" type="button" onclick="showToast('Rendez-vous pour maintenant', 'info')">
+                  <span class="tb-list-icon"><i class="fa-regular fa-stopwatch"></i></span>
+                  <span class="tb-list-text">Prendre un rendez-vous pour maintenant</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Card: Care cooperation -->
+            <div class="tb-card">
+              <div class="tb-card__header">
+                <span class="tb-card__title">Care cooperation</span>
+                <button class="tb-card__toggle" type="button"><i class="fa-solid fa-chevron-up"></i></button>
+              </div>
+              <div class="tb-list">
+                <button class="tb-list-item" type="button" onclick="showToast('Adresser chez un confrère', 'info')">
+                  <span class="tb-list-icon"><i class="fa-regular fa-calendar"></i></span>
+                  <span class="tb-list-text">Adresser chez un confrère</span>
+                </button>
+                <button class="tb-list-item" type="button" onclick="showToast('Nouveau cas patient', 'info')">
+                  <span class="tb-list-icon"><i class="fa-regular fa-clipboard"></i></span>
+                  <span class="tb-list-text">Nouveau cas patient</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Card: Patient -->
+            <div class="tb-card">
+              <div class="tb-card__header">
+                <span class="tb-card__title">Patient</span>
+                <button class="tb-card__toggle" type="button"><i class="fa-solid fa-chevron-up"></i></button>
+              </div>
+              <div class="tb-list">
+                <button class="tb-list-item" type="button" onclick="showToast('Envoyer un message', 'info')">
+                  <span class="tb-list-icon"><i class="fa-regular fa-comment"></i></span>
+                  <span class="tb-list-text">Envoyer un message</span>
+                </button>
+                <button class="tb-list-item" type="button" onclick="showToast('Importer des documents', 'info')">
+                  <span class="tb-list-icon"><i class="fa-regular fa-file"></i></span>
+                  <span class="tb-list-text">Importer des documents</span>
+                </button>
+                <button class="tb-list-item" type="button" onclick="showToast('Ajouter une tâche', 'info')">
+                  <span class="tb-list-icon"><i class="fa-regular fa-circle-check"></i></span>
+                  <span class="tb-list-text">Ajouter une tâche</span>
+                </button>
+                <button class="tb-list-item" type="button" onclick="showToast('Voir les tâches du patient', 'info')">
+                  <span class="tb-list-icon"><i class="fa-solid fa-list-check"></i></span>
+                  <span class="tb-list-text">Voir les tâches du patient</span>
+                </button>
+              </div>
+              <button class="tb-more-link" type="button" onclick="showToast('Plus d\'actions', 'info')">Voir plus d'actions</button>
+            </div>
+
+          </div>
+        </aside>
+
+      </div><!-- /ws -->
+    </div><!-- /ox-settings__body -->
+  </main>
+
+</div><!-- /ox-shell -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // Variant switcher
+  document.querySelectorAll('input[name="variant"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      const v = this.value;
+      localStorage.setItem('pf-non-reimbursed-variant', v);
+      document.querySelectorAll('.variant-container').forEach(c => c.style.display = 'none');
+      document.getElementById('variant-' + v + '-content').style.display = 'block';
+    });
+  });
+
+  // Restore saved variant
+  const saved = localStorage.getItem('pf-non-reimbursed-variant') || 'a';
+  document.querySelector('input[value="' + saved + '"]').checked = true;
+  document.querySelectorAll('.variant-container').forEach(c => c.style.display = 'none');
+  document.getElementById('variant-' + saved + '-content').style.display = 'block';
+
+  // Tab switching
+  document.querySelectorAll('.pfm-tab').forEach(tab => {
+    tab.addEventListener('click', function () {
+      const panel   = this.dataset.tab;
+      const variant = this.dataset.variant;
+      document.querySelectorAll(`.pfm-tab[data-variant="${variant}"]`).forEach(t => {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      this.classList.add('is-active');
+      this.setAttribute('aria-selected', 'true');
+      document.querySelectorAll(`.pfm-panel[data-variant="${variant}"]`).forEach(p => p.classList.remove('is-active'));
+      document.querySelector(`.pfm-panel[data-panel="${panel}"][data-variant="${variant}"]`).classList.add('is-active');
+    });
+  });
+
+  // Pin générique — fonctionne depuis la source (antécédents) ET depuis la carte épinglée (santé)
+  function togglePin(id) {
+    const sourceBtn = document.getElementById('pin-btn-' + id);
+    const card      = document.getElementById('pinned-' + id);
+    const newState  = card.style.display === 'none'; // si caché → on épingle
+    if (sourceBtn) {
+      sourceBtn.classList.toggle('is-pinned', newState);
+      sourceBtn.querySelector('i').className = newState ? 'fa-solid fa-thumbtack' : 'fa-regular fa-thumbtack';
+    }
+    card.style.display = newState ? 'block' : 'none';
+    showToast(newState ? 'Module épinglé sur la vue Santé' : 'Module désépinglé', 'info');
+  }
+
+  // Medical history accordion
+  function toggleMhAccordion(btn) {
+    const row = btn.closest('.mh-row');
+    const body = row.querySelector('.mh-body');
+    btn.classList.toggle('is-collapsed');
+    body.classList.toggle('is-collapsed');
+  }
+
+  // Toolbox collapse
+  document.querySelectorAll('.tb-card__toggle').forEach(btn => {
+    btn.addEventListener('click', function () {
+      this.closest('.tb-card').classList.toggle('is-collapsed');
+    });
+  });
+
+  // Toast
+  function showToast(msg, type) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast' + (type ? ' toast--' + type : '');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+</script>
+
+</body>
+</html>
